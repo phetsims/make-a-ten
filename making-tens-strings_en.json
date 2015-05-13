@@ -1,5 +1,14 @@
 {
   "making-tens.name": {
     "value": "Making Tens"
+  },
+  "making-tens.adding.name":{
+    "value":"Adding"
+  },
+  "making-tens.explore.name":{
+    "value":"Explore"
+  },
+  "making-tens.game.name":{
+    "value":"Game"
   }
 }

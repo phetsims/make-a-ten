@@ -2,7 +2,7 @@
 
 /**
  *
- * @author Sharfudeen Ashraf (For Ghent University)
+ * @author Sharfudeen Ashraf
  */
 define( function( require ) {
   'use strict';
@@ -14,12 +14,12 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function MakingTensModel() {
+  function MakingTensGameModel() {
 
     PropertySet.call( this, {} );
   }
 
-  return inherit( PropertySet, MakingTensModel, {
+  return inherit( PropertySet, MakingTensGameModel, {
 
     // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
     step: function( dt ) {

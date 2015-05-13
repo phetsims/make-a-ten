@@ -2,7 +2,7 @@
 
 /**
  *
- * @author Sharfudeen Ashraf (For Ghent University)
+ * @author Sharfudeen Ashraf
  */
 define( function( require ) {
   'use strict';
@@ -13,17 +13,17 @@ define( function( require ) {
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
 
   /**
-   * @param {MakingTensModel} makingTensModel
+   * @param {MakingTensAddingModel} makingTensAddingModel
    * @constructor
    */
-  function MakingTensScreenView( makingTensModel ) {
+  function MakingTensAddingScreenView( makingTensAddingModel ) {
 
     ScreenView.call( this );
 
     // Create and add the Reset All Button in the bottom right, which resets the model
     var resetAllButton = new ResetAllButton( {
       listener: function() {
-        makingTensModel.reset();
+        makingTensAddingModel.reset();
       },
       right:  this.layoutBounds.maxX - 10,
       bottom: this.layoutBounds.maxY - 10
@@ -31,7 +31,7 @@ define( function( require ) {
     this.addChild( resetAllButton );
   }
 
-  return inherit( ScreenView, MakingTensScreenView, {
+  return inherit( ScreenView, MakingTensAddingScreenView, {
 
     // Called by the animation loop. Optional, so if your view has no animation, you can omit this.
     step: function( dt ) {
