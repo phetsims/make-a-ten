@@ -14,22 +14,22 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
 
+
   //constants
   var MULTIPLES_OF_TEN = [ 20, 30, 40, 50, 60, 70, 80, 90, 100 ];
   var MULTIPLES_OF_HUNDRED = [ 200, 300, 400, 500, 600, 700, 800, 900, 1000 ];
 
   /**
    *
-   * @param {number} number
+   * @param {number} numberValue
    * @param {Vector2} initialPosition
    * @constructor
    */
-  function PaperNumberModel( number, initialPosition ) {
-
+  function PaperNumberModel( numberValue, initialPosition ) {
     PropertySet.call( this, {
 
       // number this paper model represents ex 324
-      number: number,
+      numberValue: numberValue,
 
       // Property that indicates where in model space the upper left corner of this shape is.  In general, this should
       // not be set directly outside of this type, and should only be manipulated through the methods defined below.
@@ -50,9 +50,11 @@ define( function( require ) {
     } );
 
     this.baseNumbers = []; // for each of these base number, we have a corresponding image file
+
+    this.decomposeIntoBaseNumbers( this.numberValue );
   }
 
-  return inherit( Object, PaperNumberModel, {
+  return inherit( PropertySet, PaperNumberModel, {
 
     /**
      * A number such as 238 will result in 200,30,8 as base numbers for which we have corresponding images
@@ -60,12 +62,13 @@ define( function( require ) {
      * @param {number} value
      */
     decomposeIntoBaseNumbers: function( value ) {
+      this.baseNumbers = [];
       var valueStr = value + "";
       var digits = valueStr.length;
       for ( var i = 0; i < digits; i++ ) {
         var charPos = valueStr.charAt( i );
         var posValue = (+charPos) * Math.pow( 10, digits - i - 1 );
-        if ( _.startsWith( posValue, "0" ) ) {
+        if ( (posValue + "").startsWith( "0" ) ) {
           continue;
         }
         this.baseNumbers.push( posValue + "" );

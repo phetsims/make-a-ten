@@ -15,6 +15,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
+
   // strings
   var makingTensExploreScreenTitleString = require( 'string!MAKING_TENS/making-tens.explore.name' );
 
@@ -30,7 +31,6 @@ define( function( require ) {
     //TODO PlaceHolder
     var background = new Rectangle( 0, 0, width, height, { fill: 'white' } );
     return new Node( { children: [ background ] } );
-
   };
 
   /**

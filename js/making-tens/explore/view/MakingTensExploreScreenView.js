@@ -14,6 +14,10 @@ define( function( require ) {
   var HSlider = require( 'SUN/HSlider' );
   var Property = require( 'AXON/Property' );
   var Image = require( 'SCENERY/nodes/Image' );
+  var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
+  var PaperNumberNode = require( 'MAKING_TENS/making-tens/common/view/PaperNumberNode' );
+  var Vector2 = require( 'DOT/Vector2' );
+
 
   // images
   var mockupImage = require( 'image!MAKING_TENS/explore-mockup.png' );
@@ -42,6 +46,13 @@ define( function( require ) {
       bottom: this.layoutBounds.maxY - 10
     } );
     this.addChild( resetAllButton );
+
+
+    //test
+    var paperNumberModel = new PaperNumberModel( 453, new Vector2( 200, 200 ) );
+    var paperNumberNode = new PaperNumberNode( paperNumberModel );
+    this.addChild( paperNumberNode );
+
   }
 
   return inherit( ScreenView, MakingTensExploreScreenView, {
