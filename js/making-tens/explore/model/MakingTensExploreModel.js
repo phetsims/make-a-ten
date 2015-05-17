@@ -24,7 +24,7 @@ define( function( require ) {
     this.residentNumbers = new ObservableArray(); // @public, read only
 
     //test
-    var paperNumberModel1 = new PaperNumberModel( 488, new Vector2( 110, 220 ) );
+    var paperNumberModel1 = new PaperNumberModel( 80, new Vector2( 110, 220 ) );
     this.residentNumbers.add( paperNumberModel1 );
   }
 
@@ -39,9 +39,10 @@ define( function( require ) {
      *
      * @param {number} numberValue
      * @param {Vector2} initialPosition
+     * @param {object} options
      */
-    addNewNumber: function( numberValue, initialPosition ) {
-      var newPaperNumberModel = new PaperNumberModel( numberValue, initialPosition );
+    addNewNumber: function( numberValue, initialPosition, options ) {
+      var newPaperNumberModel = new PaperNumberModel( numberValue, initialPosition, options );
       this.residentNumbers.add( newPaperNumberModel );
       return newPaperNumberModel;
     }

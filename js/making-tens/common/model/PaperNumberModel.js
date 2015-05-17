@@ -13,7 +13,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
-
+  var NumberPulledPartModel = require( 'MAKING_TENS/making-tens/common/model/NumberPulledPartModel' );
 
   //constants
   var MULTIPLES_OF_TEN = [ 20, 30, 40, 50, 60, 70, 80, 90, 100 ];
@@ -23,9 +23,13 @@ define( function( require ) {
    *
    * @param {number} numberValue
    * @param {Vector2} initialPosition
+   * @param {object} options
    * @constructor
    */
-  function PaperNumberModel( numberValue, initialPosition ) {
+  function PaperNumberModel( numberValue, initialPosition, options ) {
+
+    options = _.extend( { opacity: 1 }, options );
+
     PropertySet.call( this, {
 
       // number this paper model represents ex 324
@@ -45,7 +49,9 @@ define( function( require ) {
       // Value that indicates how faded out this shape is.  This is used as part of a feature where shapes can fade
       // out.  Once fade has started, it doesn't stop until it is fully faded, i.e. the value is 1.  This should not be
       // set externally.
-      fadeProportion: 0
+      fadeProportion: 0,
+
+      opacity: options.opacity
 
     } );
 
@@ -78,18 +84,24 @@ define( function( require ) {
       }
     },
 
+    canPullApart: function() {
+      return (this.numberValue !== 1);
+    },
+
     /**
      * Handles how the number should be split and returns the new pulledout number
      * Ex : 9 splits into 8 and 1, number 60 splits into 50 and 10 etc
      *
-     * @returns {number} // a value of 0 means nothing is pulled part
+     * @returns {NumberPulledPartModel | null} // null means no value is pulled ot
      */
     pullApart: function() {
       var amountToRemove = 0;
       var amountRemaining = 1;
 
+      var numberPulledPartModel = null;
+
       if ( this.numberValue === 1 ) {
-        return 0;
+        return numberPulledPartModel;
       }
       if ( this.numberValue <= 10 && this.numberValue > 1 ) {
         amountToRemove = 1;
@@ -117,15 +129,15 @@ define( function( require ) {
       }
 
       amountRemaining = this.numberValue - amountToRemove;
-      this.changeCurrentNumber( amountRemaining );
-      return amountToRemove;
+      numberPulledPartModel = new NumberPulledPartModel( this.numberValue, amountToRemove, amountRemaining );
+      return numberPulledPartModel;
     },
 
     /**
      *
      * @param newNumber
      */
-    changeCurrentNumber: function( newNumber ) {
+    changeNumber: function( newNumber ) {
       this.decomposeIntoBaseNumbers( newNumber );
       this.numberValue = newNumber;
     },

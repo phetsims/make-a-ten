@@ -30,6 +30,8 @@ define( function( require ) {
   //based on where the user clicked on the node, determine if it is split or move
   var SPLIT_MODE_HEIGHT_PROPORTION = 0.4;
 
+  var SPLIT_THRESHOLD_DISTANCE = 5;
+
   /**
    *
    * @param {PaperNumberModel} paperNumberModel
@@ -73,6 +75,12 @@ define( function( require ) {
       imageNumberNode.leftTop = newPos;
     } );
 
+    paperNumberModel.opacityProperty.link( function( opacity ) {
+      console.log( opacity );
+      imageNumberNode.opacity = opacity;
+    } );
+
+
     thisNode.addInputListener( new SimpleDragHandler( {
 
       // Allow moving a finger (touch) across this node to interact with it
@@ -81,37 +89,71 @@ define( function( require ) {
       // Based on the pointer position at "start", determine if the user wants to pullApart or move the number
       splitNumberModel: null,
 
-      originalNumber: 0,
+      numberPulledPart: null,
+
+      startOffSet: null,
+
+      currentPoint: null,
+
+      moveMode: false,
 
       start: function( event, trail ) {
         var thisHandler = this;
         thisHandler.splitNumberModel = null;
-        thisHandler.originalNumber = paperNumberModel.numberValue;
-        var touchedLocalPoint = thisNode.globalToParentPoint( event.pointer.point );
+        thisHandler.numberPulledPart = null;
+        thisHandler.moveMode = false;
+        thisHandler.startOffSet = thisNode.globalToParentPoint( event.pointer.point );
+        thisHandler.currentPoint = thisHandler.startOffSet;
         var totalBounds = thisNode.bounds;
         var splitRect = Bounds2.rect( totalBounds.x, totalBounds.y,
           totalBounds.width, totalBounds.height * SPLIT_MODE_HEIGHT_PROPORTION );
-        if ( splitRect.containsPoint( touchedLocalPoint ) ) {
-          var newPulledNumber = paperNumberModel.pullApart();
-          if ( newPulledNumber ) {
-            var initialPosition = thisNode.determinePulledOutNumberPosition( newPulledNumber );
-            thisHandler.splitNumberModel = addNumberToModel( newPulledNumber, initialPosition );
-          }
+        if ( splitRect.containsPoint( thisHandler.startOffSet ) ) {
+          thisHandler.numberPulledPart = paperNumberModel.pullApart();
+        }
+        else {
+          thisHandler.moveMode = true;
         }
       },
 
-      end: function(event, trail) {
+      end: function( event, trail ) {
         var thisHandler = this;
         thisHandler.splitNumberModel = null;
+        thisHandler.numberPulledPart = null;
+        thisHandler.startOffSet = null;
+        thisHandler.currentPoint = null;
+        thisHandler.moveMode = false;
       },
 
       // Handler that moves the shape in model space.
       translate: function( translationParams ) {
-        if ( this.splitNumberModel ) {
-          this.splitNumberModel.setDestination( this.splitNumberModel.position.plus( translationParams.delta ), false );
+        var thisHandler = this;
+        var delta = translationParams.delta;
+        if ( thisHandler.moveMode ) {
+          paperNumberModel.setDestination( paperNumberModel.position.plus( delta ), false );
+          return translationParams.position;
         }
-        else {
-          paperNumberModel.setDestination( paperNumberModel.position.plus( translationParams.delta ), false );
+
+        var transDistance = thisHandler.currentPoint.distance( thisHandler.startOffSet );
+        thisHandler.currentPoint = thisHandler.currentPoint.plus( delta );
+        var overAllDelta = thisHandler.currentPoint.minus( thisHandler.startOffSet );
+
+        if ( thisHandler.numberPulledPart ) {
+          var amountToRemove = thisHandler.numberPulledPart.amountToRemove;
+          var initialPosition = thisNode.determinePulledOutNumberPosition( thisHandler.amountToRemove, overAllDelta );
+          var options = {
+            opacity: 0.9
+          };
+          thisHandler.splitNumberModel = addNumberToModel( amountToRemove, initialPosition, options );
+          paperNumberModel.changeNumber( thisHandler.numberPulledPart.amountRemaining );
+          thisHandler.numberPulledPart = null;
+          return translationParams.position;
+        }
+
+        if ( thisHandler.splitNumberModel ) {
+          thisHandler.splitNumberModel.setDestination( thisHandler.splitNumberModel.position.plus( delta ), false );
+
+          // gradually increase the opacity from 0.8 to 1 as we move away from the nuber, otherwise the change looks sudden
+          thisHandler.splitNumberModel.opacity = 0.9 + (0.005 * Math.min( 20, transDistance / SPLIT_THRESHOLD_DISTANCE ));
         }
         return translationParams.position;
       }
@@ -126,10 +168,11 @@ define( function( require ) {
      * @param newPulledNumber
      * @return {Vector2}
      */
-    determinePulledOutNumberPosition: function( newPulledNumber ) {
+    determinePulledOutNumberPosition: function( newPulledNumber, delta ) {
       var thisNode = this;
       //hardcoded - TODO
-      return thisNode.leftTop.plus( thisNode.baseNumberPositions[ 2 ] || thisNode.baseNumberPositions[ 1 ] );
+      //thisNode.baseNumberPositions[ 2 ] || thisNode.baseNumberPositions[ 1 ]
+      return thisNode.leftTop.plus( delta );
     }
   } );
 } );
