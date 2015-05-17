@@ -13,10 +13,9 @@ define( function( require ) {
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var HSlider = require( 'SUN/HSlider' );
   var Property = require( 'AXON/Property' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Image = require( 'SCENERY/nodes/Image' );
-  var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
   var PaperNumberNode = require( 'MAKING_TENS/making-tens/common/view/PaperNumberNode' );
-  var Vector2 = require( 'DOT/Vector2' );
 
 
   // images
@@ -47,11 +46,30 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
+    var paperNumberLayerNode = new Node();
+    this.addChild( paperNumberLayerNode );
 
-    //test
-    var paperNumberModel = new PaperNumberModel( 453, new Vector2( 200, 200 ) );
-    var paperNumberNode = new PaperNumberNode( paperNumberModel );
-    this.addChild( paperNumberNode );
+    // a function that remembers the particle collection via closure
+    function handleNumberAddListener() {
+      return function handleParticleAdded( addedNumberModel ) {
+        // Add a representation of the number.
+        var paperNumberNode = new PaperNumberNode( addedNumberModel );
+        paperNumberLayerNode.addChild( paperNumberNode );
+
+        makingTensExploreModel.residentNumbers.addItemRemovedListener( function removalListener( removedNumberModel ) {
+          if ( removedNumberModel === addedNumberModel ) {
+            paperNumberLayerNode.removeChild( paperNumberNode );
+            makingTensExploreModel.residentNumbers.removeItemRemovedListener( removalListener );
+          }
+        } );
+      };
+    }
+
+    //Initial Number Node creation
+    makingTensExploreModel.residentNumbers.forEach( handleNumberAddListener() );
+
+   // Observe new items
+    makingTensExploreModel.residentNumbers.addItemAddedListener( handleNumberAddListener() );
 
   }
 

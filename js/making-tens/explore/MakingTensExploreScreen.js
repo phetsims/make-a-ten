@@ -15,7 +15,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
-
   // strings
   var makingTensExploreScreenTitleString = require( 'string!MAKING_TENS/making-tens.explore.name' );
 

@@ -21,7 +21,7 @@ define( function( require ) {
   // how much 2 digit and single digit must offset from parent
   var NUMBER_IMAGE_OFFSET_DIMENSIONS = {
     2: new Vector2( 50, 50 ),
-    1: new Vector2( 55, 22 ),
+    1: new Vector2( 70, 22 ),
     0: new Vector2( 0, 0 )
   };
 
@@ -40,14 +40,13 @@ define( function( require ) {
     paperNumberModel.numberValueProperty.link( function( newNumber ) {
       var baseNumbers = paperNumberModel.baseNumbers;
       imageNumberNode.removeAllChildren();
-      var paperNumberPos = paperNumberModel.position;
       var offsetX = 0;
       var offsetY = 0;
       var index = 1;
       var opacityValue = 1;
       _.each( baseNumbers, function( baseNumber ) {
         var baseNumberImage = PaperImageCollection.getNumberImageNode( baseNumber );
-        var baseNumberImageNode = new Image( baseNumberImage, { x: paperNumberPos.x, y: paperNumberPos.y } );
+        var baseNumberImageNode = new Image( baseNumberImage, { x: 0, y: 0 } );
         imageNumberNode.addChild( baseNumberImageNode );
         baseNumberImageNode.opacity = opacityValue;
         baseNumberImageNode.left = offsetX;
@@ -59,6 +58,11 @@ define( function( require ) {
         opacityValue = opacityValue - 0.03;
       } );
 
+    } );
+
+
+    paperNumberModel.positionProperty.link( function( newPos ) {
+      imageNumberNode.leftTop = newPos;
     } );
 
   }

@@ -10,13 +10,28 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
+  var ObservableArray = require( 'AXON/ObservableArray' );
+  var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @constructor
    */
   function MakingTensExploreModel() {
-
     PropertySet.call( this, {} );
+
+    // Observable array of the numbers that have been placed
+    this.residentNumbers = new ObservableArray(); // @public, read only
+
+    //test
+    var paperNumberModel1 = new PaperNumberModel( 488, new Vector2( 100, 100 ) );
+    var paperNumberModel2 = new PaperNumberModel( 200, new Vector2( 400, 300 ) );
+    var paperNumberModel3 = new PaperNumberModel( 41, new Vector2( 600, 200 ) );
+
+    this.residentNumbers.add( paperNumberModel1 );
+    this.residentNumbers.add( paperNumberModel2 );
+    this.residentNumbers.add( paperNumberModel3 );
+
   }
 
   return inherit( PropertySet, MakingTensExploreModel, {
