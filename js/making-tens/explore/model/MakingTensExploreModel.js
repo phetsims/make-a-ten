@@ -24,14 +24,8 @@ define( function( require ) {
     this.residentNumbers = new ObservableArray(); // @public, read only
 
     //test
-    var paperNumberModel1 = new PaperNumberModel( 488, new Vector2( 100, 100 ) );
-    var paperNumberModel2 = new PaperNumberModel( 200, new Vector2( 400, 300 ) );
-    var paperNumberModel3 = new PaperNumberModel( 41, new Vector2( 600, 200 ) );
-
+    var paperNumberModel1 = new PaperNumberModel( 488, new Vector2( 110, 220 ) );
     this.residentNumbers.add( paperNumberModel1 );
-    this.residentNumbers.add( paperNumberModel2 );
-    this.residentNumbers.add( paperNumberModel3 );
-
   }
 
   return inherit( PropertySet, MakingTensExploreModel, {
@@ -39,6 +33,18 @@ define( function( require ) {
     // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
     step: function( dt ) {
       // Handle model animation here.
+    },
+
+    /**
+     *
+     * @param {number} numberValue
+     * @param {Vector2} initialPosition
+     */
+    addNewNumber: function( numberValue, initialPosition ) {
+      var newPaperNumberModel = new PaperNumberModel( numberValue, initialPosition );
+      this.residentNumbers.add( newPaperNumberModel );
+      return newPaperNumberModel;
     }
+
   } );
 } );

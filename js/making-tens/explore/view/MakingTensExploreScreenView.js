@@ -16,6 +16,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Image = require( 'SCENERY/nodes/Image' );
   var PaperNumberNode = require( 'MAKING_TENS/making-tens/common/view/PaperNumberNode' );
+  var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
 
 
   // images
@@ -27,7 +28,7 @@ define( function( require ) {
    */
   function MakingTensExploreScreenView( makingTensExploreModel ) {
 
-    ScreenView.call( this );
+    ScreenView.call( this, { layoutBounds: MakingTensSharedConstants.LAYOUT_BOUNDS } );
 
     //Show the mock-up and a slider to change its transparency
     var mockupOpacityProperty = new Property( 0.4 );
@@ -49,11 +50,13 @@ define( function( require ) {
     var paperNumberLayerNode = new Node();
     this.addChild( paperNumberLayerNode );
 
+    var addNewNumberModelCallBack = makingTensExploreModel.addNewNumber.bind( makingTensExploreModel );
+
     // a function that remembers the particle collection via closure
     function handleNumberAddListener() {
       return function handleParticleAdded( addedNumberModel ) {
         // Add a representation of the number.
-        var paperNumberNode = new PaperNumberNode( addedNumberModel );
+        var paperNumberNode = new PaperNumberNode( addedNumberModel, addNewNumberModelCallBack );
         paperNumberLayerNode.addChild( paperNumberNode );
 
         makingTensExploreModel.residentNumbers.addItemRemovedListener( function removalListener( removedNumberModel ) {
@@ -68,7 +71,7 @@ define( function( require ) {
     //Initial Number Node creation
     makingTensExploreModel.residentNumbers.forEach( handleNumberAddListener() );
 
-   // Observe new items
+    // Observe new items
     makingTensExploreModel.residentNumbers.addItemAddedListener( handleNumberAddListener() );
 
   }

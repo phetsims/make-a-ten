@@ -49,6 +49,9 @@ define( function( require ) {
 
     } );
 
+    // Destination is used for animation, and should be set through accessor methods only.
+    this.destination = initialPosition.copy(); // @private
+
     this.baseNumbers = []; // for each of these base number, we have a corresponding image file
 
     this.decomposeIntoBaseNumbers( this.numberValue );
@@ -76,45 +79,69 @@ define( function( require ) {
     },
 
     /**
-     * Handles how the number should be split
+     * Handles how the number should be split and returns the new pulledout number
      * Ex : 9 splits into 8 and 1, number 60 splits into 50 and 10 etc
      *
-     * @param {Function} addNumberToModel - A function for adding the new numbers  to the model
+     * @returns {number} // a value of 0 means nothing is pulled part
      */
-    pullApart: function( addNumberToModel ) {
-      var amountToRemove = 1;
+    pullApart: function() {
+      var amountToRemove = 0;
       var amountRemaining = 1;
-      if ( this.number <= 10 && this.number > 1 ) {
+
+      if ( this.numberValue === 1 ) {
+        return 0;
+      }
+      if ( this.numberValue <= 10 && this.numberValue > 1 ) {
         amountToRemove = 1;
       }
-      else if ( this.number > 10 && this.number < 100 ) {
-        amountToRemove = this.number % 10;
+      else if ( this.numberValue > 10 && this.numberValue < 100 ) {
+        amountToRemove = this.numberValue % 10;
       }
-      else if ( this.number >= 100 && this.number < 1000 ) {
-        amountToRemove = this.number % 100;
+      else if ( this.numberValue >= 100 && this.numberValue < 1000 ) {
+        amountToRemove = this.numberValue % 100;
       }
-      else if ( this.number >= 1000 && this.number < 2000 ) {
-        amountToRemove = this.number % 1000;
+      else if ( this.numberValue >= 1000 && this.numberValue < 2000 ) {
+        amountToRemove = this.numberValue % 1000;
       }
 
       if ( amountToRemove < 1 ) {
         amountToRemove = 1;
       }
 
-      if ( _.includes( MULTIPLES_OF_TEN, this.number ) ) {
+      if ( _.contains( MULTIPLES_OF_TEN, this.numberValue ) ) {
         amountToRemove = 10;
       }
 
-      if ( _.includes( MULTIPLES_OF_HUNDRED, this.number ) ) {
+      if ( _.contains( MULTIPLES_OF_HUNDRED, this.numberValue ) ) {
         amountToRemove = 100;
       }
 
+      amountRemaining = this.numberValue - amountToRemove;
       this.changeCurrentNumber( amountRemaining );
-      addNumberToModel( amountToRemove );
+      return amountToRemove;
     },
 
+    /**
+     *
+     * @param newNumber
+     */
     changeCurrentNumber: function( newNumber ) {
+      this.decomposeIntoBaseNumbers( newNumber );
+      this.numberValue = newNumber;
+    },
 
+    /**
+     * @param {Vector2} destination
+     * @param {boolean} animate
+     */
+    setDestination: function( destination, animate ) {
+      this.destination = destination;
+      if ( animate ) {
+        this.animating = true;
+      }
+      else {
+        this.position = destination;
+      }
     }
 
 
