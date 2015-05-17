@@ -99,6 +99,10 @@ define( function( require ) {
 
       start: function( event, trail ) {
         var thisHandler = this;
+        if ( paperNumberModel.numberValue === 1 ) {
+          thisHandler.moveMode = true;
+          return;
+        }
         thisHandler.splitNumberModel = null;
         thisHandler.numberPulledPart = null;
         thisHandler.moveMode = false;
