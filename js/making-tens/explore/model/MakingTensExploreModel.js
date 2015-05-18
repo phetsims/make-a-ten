@@ -24,8 +24,13 @@ define( function( require ) {
     this.residentNumbers = new ObservableArray(); // @public, read only
 
     //test
-    var paperNumberModel1 = new PaperNumberModel( 80, new Vector2( 110, 220 ) );
-    this.residentNumbers.add( paperNumberModel1 );
+   // var paperNumberModel1 = new PaperNumberModel( 80, new Vector2( 110, 220 ) );
+    // var paperNumberModel2 = new PaperNumberModel( 234, new Vector2( 410, 220 ) );
+    var paperNumberModel3 = new PaperNumberModel( 546, new Vector2( 610, 220 ) );
+   // this.residentNumbers.add( paperNumberModel1 );
+    //this.residentNumbers.add( paperNumberModel2 );
+   this.residentNumbers.add( paperNumberModel3 );
+
   }
 
   return inherit( PropertySet, MakingTensExploreModel, {
@@ -45,6 +50,17 @@ define( function( require ) {
       var newPaperNumberModel = new PaperNumberModel( numberValue, initialPosition, options );
       this.residentNumbers.add( newPaperNumberModel );
       return newPaperNumberModel;
+    },
+
+
+
+    /**
+     *
+     * @param {number} numberValue // the value of number dropped
+     * @param {Vector2} droppedPoint
+     */
+    combineNumbersCallback: function(numberValue,droppedPoint) {
+
     }
 
   } );

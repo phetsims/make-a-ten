@@ -14,61 +14,35 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var PaperImageCollection = require( 'MAKING_TENS/making-tens/common/model/PaperImageCollection' );
-  var Vector2 = require( 'DOT/Vector2' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
 
-  // how much 2 digit and single digit must offset from parent
-  var NUMBER_IMAGE_OFFSET_DIMENSIONS = {
-    0: new Vector2( 0, 0 ),
-    1: new Vector2( 70, 22 ),// how much a single digit image has to offset
-    2: new Vector2( 50, 50 )// how much a 2 digit has to offset from its parent (a 3 digit number)
-  };
-
+  // constants
   //based on where the user clicked on the node, determine if it is split or move
   var SPLIT_MODE_HEIGHT_PROPORTION = 0.4;
-
   var SPLIT_THRESHOLD_DISTANCE = 5;
 
   /**
    *
    * @param {PaperNumberModel} paperNumberModel
-   * @param {Function<number,position>} A callback to invoke when a new Number is  added to the model
+   * @param {Function<number,position>} addNewNumberCallback A callback to invoke when a  Number is  split
+   * @param {Function<imageNode,number,droppedPoint>} canDropNumberCallback A callback to invoke when a dropped number can be added to an existng number
+   * @param {Function<imageNode,number,droppedPoint>} combineNumbersCallback A callback to invoke when a  Number is  combined
    * @constructor
    */
-  function PaperNumberNode( paperNumberModel, addNumberToModel ) {
+  function PaperNumberNode( paperNumberModel, addNewNumberCallback, canDropNumberCallback, combineNumbersCallback ) {
     var thisNode = this;
+    thisNode.paperNumberModel = paperNumberModel;
     Node.call( thisNode );
 
     var imageNumberNode = new Node();
     thisNode.addChild( imageNumberNode );
 
-    thisNode.baseNumberPositions = {}; // the base number and its position within this composite node(made up may image nodes)
-
     paperNumberModel.numberValueProperty.link( function( newNumber ) {
-      var baseNumbers = paperNumberModel.baseNumbers;
       imageNumberNode.removeAllChildren();
-      var offsetX = 0;
-      var offsetY = 0;
-      var index = 1;
-      var opacityValue = 1;
-      _.each( baseNumbers, function( baseNumber ) {
-        var baseNumberImage = PaperImageCollection.getNumberImageNode( baseNumber );
-        var baseNumberImageNode = new Image( baseNumberImage );
-        imageNumberNode.addChild( baseNumberImageNode );
-        baseNumberImageNode.opacity = opacityValue;
-        baseNumberImageNode.left = offsetX;
-        baseNumberImageNode.top = offsetY;
-        thisNode.baseNumberPositions[ index ] = new Vector2( offsetX, offsetY );
-        var offSetIndex = baseNumbers.length - index;
-        offsetX += NUMBER_IMAGE_OFFSET_DIMENSIONS[ offSetIndex ].x;
-        offsetY += NUMBER_IMAGE_OFFSET_DIMENSIONS[ offSetIndex ].y;
-        index++;
-        opacityValue = opacityValue - 0.04;
+      _.each( paperNumberModel.baseImages, function( imageNode ) {
+        imageNumberNode.addChild( imageNode );
       } );
-
     } );
 
     paperNumberModel.positionProperty.link( function( newPos ) {
@@ -76,10 +50,8 @@ define( function( require ) {
     } );
 
     paperNumberModel.opacityProperty.link( function( opacity ) {
-      console.log( opacity );
       imageNumberNode.opacity = opacity;
     } );
-
 
     thisNode.addInputListener( new SimpleDragHandler( {
 
@@ -126,6 +98,12 @@ define( function( require ) {
         thisHandler.startOffSet = null;
         thisHandler.currentPoint = null;
         thisHandler.moveMode = false;
+        var droppedPoint = event.pointer.point;
+
+        //check if a number can be combined with the number above which it is dropped
+        if ( canDropNumberCallback( imageNumberNode, paperNumberModel.numberValue, droppedPoint ) ) {
+          combineNumbersCallback( paperNumberModel.numberValue, droppedPoint );
+        }
       },
 
       // Handler that moves the shape in model space.
@@ -143,11 +121,11 @@ define( function( require ) {
 
         if ( thisHandler.numberPulledPart ) {
           var amountToRemove = thisHandler.numberPulledPart.amountToRemove;
-          var initialPosition = thisNode.determinePulledOutNumberPosition( thisHandler.amountToRemove, overAllDelta );
+          var initialPosition = thisNode.determinePulledOutNumberPosition( amountToRemove, overAllDelta );
           var options = {
             opacity: 0.9
           };
-          thisHandler.splitNumberModel = addNumberToModel( amountToRemove, initialPosition, options );
+          thisHandler.splitNumberModel = addNewNumberCallback( amountToRemove, initialPosition, options );
           paperNumberModel.changeNumber( thisHandler.numberPulledPart.amountRemaining );
           thisHandler.numberPulledPart = null;
           return translationParams.position;
@@ -174,9 +152,11 @@ define( function( require ) {
      */
     determinePulledOutNumberPosition: function( newPulledNumber, delta ) {
       var thisNode = this;
+      if ( (newPulledNumber + "").length === (this.paperNumberModel.numberValue + "").length ) {
+        return thisNode.leftTop.plus( delta );
+      }
       //hardcoded - TODO
-      //thisNode.baseNumberPositions[ 2 ] || thisNode.baseNumberPositions[ 1 ]
-      return thisNode.leftTop.plus( delta );
+      return thisNode.leftTop.plus( this.paperNumberModel.getImagePartOffsetPosition( newPulledNumber ) );
     }
   } );
 } );

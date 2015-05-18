@@ -51,12 +51,14 @@ define( function( require ) {
     this.addChild( paperNumberLayerNode );
 
     var addNewNumberModelCallBack = makingTensExploreModel.addNewNumber.bind( makingTensExploreModel );
+    var canDropNumberCallback = this.canDropNumberCallback.bind( this );
+    var combineNumbersCallback = makingTensExploreModel.combineNumbersCallback.bind( makingTensExploreModel );
 
     // a function that remembers the particle collection via closure
     function handleNumberAddListener() {
       return function handleParticleAdded( addedNumberModel ) {
         // Add a representation of the number.
-        var paperNumberNode = new PaperNumberNode( addedNumberModel, addNewNumberModelCallBack );
+        var paperNumberNode = new PaperNumberNode( addedNumberModel, addNewNumberModelCallBack, canDropNumberCallback, combineNumbersCallback );
         paperNumberLayerNode.addChild( paperNumberNode );
 
         makingTensExploreModel.residentNumbers.addItemRemovedListener( function removalListener( removedNumberModel ) {
@@ -81,6 +83,17 @@ define( function( require ) {
     // Called by the animation loop. Optional, so if your view has no animation, you can omit this.
     step: function( dt ) {
       // Handle view animation here.
+    },
+
+    /**
+     *
+     * @param {PaperNumberNode} paperNumberNode // the node which is dragged
+     * @param {number} numberValue // the value of number dropped
+     * @param {Vector2} droppedPoint
+     */
+    canDropNumberCallback: function(paperNumberNode,numberValue,droppedPoint) {
+
     }
+
   } );
 } );

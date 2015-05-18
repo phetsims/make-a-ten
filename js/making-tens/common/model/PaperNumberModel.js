@@ -13,11 +13,21 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
+  var Vector2 = require( 'DOT/Vector2' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var NumberPulledPartModel = require( 'MAKING_TENS/making-tens/common/model/NumberPulledPartModel' );
+  var PaperImageCollection = require( 'MAKING_TENS/making-tens/common/model/PaperImageCollection' );
 
   //constants
   var MULTIPLES_OF_TEN = [ 20, 30, 40, 50, 60, 70, 80, 90, 100 ];
   var MULTIPLES_OF_HUNDRED = [ 200, 300, 400, 500, 600, 700, 800, 900, 1000 ];
+
+  // how much 2 digit and single digit must offset from parent
+  var NUMBER_IMAGE_OFFSET_DIMENSIONS = {
+    0: new Vector2( 0, 0 ),
+    1: new Vector2( 70, 22 ),// how much a single digit image has to offset
+    2: new Vector2( 50, 50 )// how much a 2 digit has to offset from its parent (a 3 digit number)
+  };
 
   /**
    *
@@ -27,7 +37,7 @@ define( function( require ) {
    * @constructor
    */
   function PaperNumberModel( numberValue, initialPosition, options ) {
-
+    var thisModel = this;
     options = _.extend( { opacity: 1 }, options );
 
     PropertySet.call( this, {
@@ -56,11 +66,13 @@ define( function( require ) {
     } );
 
     // Destination is used for animation, and should be set through accessor methods only.
-    this.destination = initialPosition.copy(); // @private
+    thisModel.destination = initialPosition.copy(); // @private
 
-    this.baseNumbers = []; // for each of these base number, we have a corresponding image file
+    thisModel.baseNumbers = []; // for each of these base number, we have a corresponding image file
+    thisModel.baseImages = [];
+    thisModel.baseNumberPositions = {}; // the base number and its position within this composite node(made up may image nodes)
 
-    this.decomposeIntoBaseNumbers( this.numberValue );
+    thisModel.decomposeIntoBaseNumbers( this.numberValue );
   }
 
   return inherit( PropertySet, PaperNumberModel, {
@@ -71,7 +83,8 @@ define( function( require ) {
      * @param {number} value
      */
     decomposeIntoBaseNumbers: function( value ) {
-      this.baseNumbers = [];
+      var self = this;
+      self.baseNumbers = [];
       var valueStr = value + "";
       var digits = valueStr.length;
       for ( var i = 0; i < digits; i++ ) {
@@ -82,6 +95,27 @@ define( function( require ) {
         }
         this.baseNumbers.push( posValue + "" );
       }
+
+      self.baseImages=[];
+      self.baseNumberPositions={};
+      var offsetX = 0;
+      var offsetY = 0;
+      var index = 1;
+      var opacityValue = 1;
+      _.each( self.baseNumbers, function( baseNumber ) {
+        var baseNumberImage = PaperImageCollection.getNumberImageNode( baseNumber );
+        var baseNumberImageNode = new Image( baseNumberImage );
+        baseNumberImageNode.opacity = opacityValue;
+        baseNumberImageNode.left = offsetX;
+        baseNumberImageNode.top = offsetY;
+        self.baseNumberPositions[ index ] = new Vector2( offsetX, offsetY );
+        self.baseImages.push(baseNumberImageNode);
+        var offSetIndex = self.baseNumbers.length - index;
+        offsetX += NUMBER_IMAGE_OFFSET_DIMENSIONS[ offSetIndex ].x;
+        offsetY += NUMBER_IMAGE_OFFSET_DIMENSIONS[ offSetIndex ].y;
+        index++;
+        opacityValue = opacityValue - 0.04;
+      } );
     },
 
     canPullApart: function() {
@@ -131,6 +165,24 @@ define( function( require ) {
       amountRemaining = this.numberValue - amountToRemove;
       numberPulledPartModel = new NumberPulledPartModel( this.numberValue, amountToRemove, amountRemaining );
       return numberPulledPartModel;
+    },
+
+    /**
+     *
+     * @param {number} droppedNumber
+     */
+    canCombineNumbers: function( droppedNumber ) {
+      return true; // TODO (hard coded)
+    },
+
+    /**
+     * At which point the split must happen
+     * @param newPulledNumber
+     * @returns {Vector2}
+     */
+    getImagePartOffsetPosition:function(newPulledNumber){
+      var thisModel = this;
+      return thisModel.baseNumberPositions[ 2 ] || thisModel.baseNumberPositions[ 1 ];
     },
 
     /**
