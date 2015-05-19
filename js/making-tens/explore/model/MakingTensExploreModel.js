@@ -24,12 +24,12 @@ define( function( require ) {
     this.residentNumbers = new ObservableArray(); // @public, read only
 
     //test
-   // var paperNumberModel1 = new PaperNumberModel( 80, new Vector2( 110, 220 ) );
-    // var paperNumberModel2 = new PaperNumberModel( 234, new Vector2( 410, 220 ) );
-    var paperNumberModel3 = new PaperNumberModel( 546, new Vector2( 610, 220 ) );
-   // this.residentNumbers.add( paperNumberModel1 );
-    //this.residentNumbers.add( paperNumberModel2 );
-   this.residentNumbers.add( paperNumberModel3 );
+    var paperNumberModel1 = new PaperNumberModel( 1, new Vector2( 110, 220 ) );
+  //  var paperNumberModel2 = new PaperNumberModel( 234, new Vector2( 410, 220 ) );
+    var paperNumberModel3 = new PaperNumberModel( 2, new Vector2( 610, 420 ) );
+    this.residentNumbers.add( paperNumberModel1 );
+  //  this.residentNumbers.add( paperNumberModel2 );
+    this.residentNumbers.add( paperNumberModel3 );
 
   }
 
@@ -52,15 +52,15 @@ define( function( require ) {
       return newPaperNumberModel;
     },
 
-
-
     /**
      *
-     * @param {number} numberValue // the value of number dropped
-     * @param {Vector2} droppedPoint
+     * @param {PaperNumberModel} droppedPaperNumberModel
      */
-    combineNumbersCallback: function(numberValue,droppedPoint) {
-
+    combineNumbersCallback: function( draggedPaperNumberModel, droppedPaperNumberModel ) {
+      //Which to remove and which to sum depends on the layer index TODO
+      this.residentNumbers.remove( droppedPaperNumberModel );
+      var newSum = draggedPaperNumberModel.numberValue + droppedPaperNumberModel.numberValue;
+      draggedPaperNumberModel.changeNumber( newSum );
     }
 
   } );

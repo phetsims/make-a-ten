@@ -27,7 +27,7 @@ define( function( require ) {
    * @constructor
    */
   function MakingTensExploreScreenView( makingTensExploreModel ) {
-
+    var self = this;
     ScreenView.call( this, { layoutBounds: MakingTensSharedConstants.LAYOUT_BOUNDS } );
 
     //Show the mock-up and a slider to change its transparency
@@ -47,23 +47,24 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
-    var paperNumberLayerNode = new Node();
-    this.addChild( paperNumberLayerNode );
+    self.paperNumberLayerNode = new Node();
+    self.addChild( self.paperNumberLayerNode );
 
     var addNewNumberModelCallBack = makingTensExploreModel.addNewNumber.bind( makingTensExploreModel );
-    var canDropNumberCallback = this.canDropNumberCallback.bind( this );
+    var findPaperNumberNode = this.findPaperNumberNode.bind( this );
+    var canDropNumberCallback = this.findDropNodeCallback.bind( this );
     var combineNumbersCallback = makingTensExploreModel.combineNumbersCallback.bind( makingTensExploreModel );
 
     // a function that remembers the particle collection via closure
     function handleNumberAddListener() {
       return function handleParticleAdded( addedNumberModel ) {
         // Add a representation of the number.
-        var paperNumberNode = new PaperNumberNode( addedNumberModel, addNewNumberModelCallBack, canDropNumberCallback, combineNumbersCallback );
-        paperNumberLayerNode.addChild( paperNumberNode );
+        var paperNumberNode = new PaperNumberNode( addedNumberModel, addNewNumberModelCallBack, canDropNumberCallback, combineNumbersCallback, findPaperNumberNode );
+        self.paperNumberLayerNode.addChild( paperNumberNode );
 
         makingTensExploreModel.residentNumbers.addItemRemovedListener( function removalListener( removedNumberModel ) {
           if ( removedNumberModel === addedNumberModel ) {
-            paperNumberLayerNode.removeChild( paperNumberNode );
+            self.paperNumberLayerNode.removeChild( paperNumberNode );
             makingTensExploreModel.residentNumbers.removeItemRemovedListener( removalListener );
           }
         } );
@@ -75,7 +76,6 @@ define( function( require ) {
 
     // Observe new items
     makingTensExploreModel.residentNumbers.addItemAddedListener( handleNumberAddListener() );
-
   }
 
   return inherit( ScreenView, MakingTensExploreScreenView, {
@@ -87,12 +87,22 @@ define( function( require ) {
 
     /**
      *
-     * @param {PaperNumberNode} paperNumberNode // the node which is dragged
-     * @param {number} numberValue // the value of number dropped
-     * @param {Vector2} droppedPoint
+     * @param {PaperNumberNode} draggedPaperNumberNode // the node which is dragged
+     * @returns {PaperNumberNode|null}
      */
-    canDropNumberCallback: function(paperNumberNode,numberValue,droppedPoint) {
+    findDropNodeCallback: function( draggedPaperNumberNode ) {
+      var self = this;
+      var allPaperNumberNodes = self.paperNumberLayerNode.children;
+      return draggedPaperNumberNode.findDropNodeCallback( allPaperNumberNodes );
+    },
 
+    findPaperNumberNode: function( paperNumberModel ) {
+      var self = this;
+      var allPaperNumberNodes = self.paperNumberLayerNode.children;
+      var node = _.find( allPaperNumberNodes, function( node ) {
+        return node.paperNumberModel === paperNumberModel;
+      } );
+      return node;
     }
 
   } );

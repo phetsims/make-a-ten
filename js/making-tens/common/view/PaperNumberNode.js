@@ -16,6 +16,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var NumberAdditionRules = require( 'MAKING_TENS/making-tens/common/model/NumberAdditionRules' );
 
   // constants
   //based on where the user clicked on the node, determine if it is split or move
@@ -26,11 +27,11 @@ define( function( require ) {
    *
    * @param {PaperNumberModel} paperNumberModel
    * @param {Function<number,position>} addNewNumberCallback A callback to invoke when a  Number is  split
-   * @param {Function<imageNode,number,droppedPoint>} canDropNumberCallback A callback to invoke when a dropped number can be added to an existng number
-   * @param {Function<imageNode,number,droppedPoint>} combineNumbersCallback A callback to invoke when a  Number is  combined
+   * @param {Function<imageNode,droppedPoint>} findDropNodeCallback A callback to invoke when a dropped number can be added to an existng number
+   * @param {Function<imageNode,droppedPoint>} combineNumbersCallback A callback to invoke when a  Number is  combined
    * @constructor
    */
-  function PaperNumberNode( paperNumberModel, addNewNumberCallback, canDropNumberCallback, combineNumbersCallback ) {
+  function PaperNumberNode( paperNumberModel, addNewNumberCallback, findDropNodeCallback, combineNumbersCallback, findPaperNumberNode ) {
     var thisNode = this;
     thisNode.paperNumberModel = paperNumberModel;
     Node.call( thisNode );
@@ -91,21 +92,6 @@ define( function( require ) {
         }
       },
 
-      end: function( event, trail ) {
-        var thisHandler = this;
-        thisHandler.splitNumberModel = null;
-        thisHandler.numberPulledPart = null;
-        thisHandler.startOffSet = null;
-        thisHandler.currentPoint = null;
-        thisHandler.moveMode = false;
-        var droppedPoint = event.pointer.point;
-
-        //check if a number can be combined with the number above which it is dropped
-        if ( canDropNumberCallback( imageNumberNode, paperNumberModel.numberValue, droppedPoint ) ) {
-          combineNumbersCallback( paperNumberModel.numberValue, droppedPoint );
-        }
-      },
-
       // Handler that moves the shape in model space.
       translate: function( translationParams ) {
         var thisHandler = this;
@@ -138,6 +124,31 @@ define( function( require ) {
           thisHandler.splitNumberModel.opacity = 0.9 + (0.005 * Math.min( 20, transDistance / SPLIT_THRESHOLD_DISTANCE ));
         }
         return translationParams.position;
+      },
+
+      end: function( event, trail ) {
+        var thisHandler = this;
+        var dragNode = null;
+        if ( thisHandler.moveMode ) // user is dragging the currentNode itself
+        {
+          dragNode = thisNode;
+        }
+        if ( thisHandler.splitNumberModel ) { // user is dragging the newly split node
+          dragNode = findPaperNumberNode( thisHandler.splitNumberModel );
+        }
+
+        thisHandler.numberPulledPart = null;
+        thisHandler.startOffSet = null;
+        thisHandler.currentPoint = null;
+        thisHandler.moveMode = false;
+        thisHandler.splitNumberModel = null;
+        //check if a number can be combined with the number above which it is dropped
+        if ( dragNode ) {
+          var dropNode = findDropNodeCallback( dragNode );
+          if ( dropNode ) {
+            combineNumbersCallback( dragNode.paperNumberModel, dropNode.paperNumberModel );
+          }
+        }
       }
 
     } ) );
@@ -157,7 +168,43 @@ define( function( require ) {
       }
       //hardcoded - TODO
       return thisNode.leftTop.plus( this.paperNumberModel.getImagePartOffsetPosition( newPulledNumber ) );
+    },
+
+    /**
+     *
+     * @param {Array<Node>}allPaperNumberNodes
+     * @return {PaperNumberNode|null}
+     */
+    findDropNodeCallback: function( allPaperNumberNodes ) {
+      var dropPositionTolerance = 0.15;
+      var draggedPaperNumberNode = this;
+
+      _.remove( allPaperNumberNodes, function( node ) {
+        return node === draggedPaperNumberNode;
+      } );
+
+      var droppedPaperNodes = allPaperNumberNodes;
+
+      droppedPaperNodes.reverse();
+      var draggedNodeWidth = draggedPaperNumberNode.bounds.width;
+      var draggedNodeHeight = draggedPaperNumberNode.bounds.height;
+
+      for ( var i = 0; i < droppedPaperNodes.length; i++ ) {
+        var droppedNode = droppedPaperNodes[ i ];
+        var xDiff = Math.abs( droppedNode.left - draggedPaperNumberNode.left );
+        var yDiff = Math.abs( droppedNode.top - draggedPaperNumberNode.top );
+        if ( (xDiff < dropPositionTolerance * draggedNodeWidth ) &&
+             (yDiff < dropPositionTolerance * draggedNodeHeight ) ) {
+          var numberA = draggedPaperNumberNode.paperNumberModel.numberValue;
+          var numberB = droppedNode.paperNumberModel.numberValue;
+          if ( NumberAdditionRules.canAddNumbers( numberA, numberB ) ) {
+            return droppedNode;
+          }
+        }
+      }
+      return null;
     }
+
   } );
 } );
 

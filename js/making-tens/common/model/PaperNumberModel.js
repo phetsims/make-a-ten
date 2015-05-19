@@ -96,8 +96,8 @@ define( function( require ) {
         this.baseNumbers.push( posValue + "" );
       }
 
-      self.baseImages=[];
-      self.baseNumberPositions={};
+      self.baseImages = [];
+      self.baseNumberPositions = {};
       var offsetX = 0;
       var offsetY = 0;
       var index = 1;
@@ -109,7 +109,7 @@ define( function( require ) {
         baseNumberImageNode.left = offsetX;
         baseNumberImageNode.top = offsetY;
         self.baseNumberPositions[ index ] = new Vector2( offsetX, offsetY );
-        self.baseImages.push(baseNumberImageNode);
+        self.baseImages.push( baseNumberImageNode );
         var offSetIndex = self.baseNumbers.length - index;
         offsetX += NUMBER_IMAGE_OFFSET_DIMENSIONS[ offSetIndex ].x;
         offsetY += NUMBER_IMAGE_OFFSET_DIMENSIONS[ offSetIndex ].y;
@@ -126,7 +126,7 @@ define( function( require ) {
      * Handles how the number should be split and returns the new pulledout number
      * Ex : 9 splits into 8 and 1, number 60 splits into 50 and 10 etc
      *
-     * @returns {NumberPulledPartModel | null} // null means no value is pulled ot
+     * @returns {NumberPulledAPartModel | null} // null means no value is pulled ot
      */
     pullApart: function() {
       var amountToRemove = 0;
@@ -167,20 +167,13 @@ define( function( require ) {
       return numberPulledPartModel;
     },
 
-    /**
-     *
-     * @param {number} droppedNumber
-     */
-    canCombineNumbers: function( droppedNumber ) {
-      return true; // TODO (hard coded)
-    },
 
     /**
      * At which point the split must happen
      * @param newPulledNumber
      * @returns {Vector2}
      */
-    getImagePartOffsetPosition:function(newPulledNumber){
+    getImagePartOffsetPosition: function( newPulledNumber ) {
       var thisModel = this;
       return thisModel.baseNumberPositions[ 2 ] || thisModel.baseNumberPositions[ 1 ];
     },
@@ -206,6 +199,26 @@ define( function( require ) {
       else {
         this.position = destination;
       }
+    },
+
+    /**
+     *
+     * @param {Vector2} position
+     * @param {Bounds2} draggedNodeBounds
+     * @returns {number}
+     */
+    getNumberAt: function( position,draggedNodeBounds ) {
+      if ( this.baseNumbers.length === 1 ) {
+        return this.baseNumbers[ 0 ];
+      }
+      for ( var i = 0; i < this.baseNumberPositions - 1; i++ ) {
+        if ( position.x >= this.baseNumberPositions[ i ].x && position <= this.baseNumberPositions[ i + 1 ].x ) {
+          return this.baseNumbers[ i ];
+        }
+      }
+
+      return this.numberValue;
+
     }
 
 
