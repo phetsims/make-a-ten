@@ -125,7 +125,7 @@ define( function( require ) {
       var index = 1;
       var opacityValue = 1;
       _.each( self.baseNumbers, function( baseNumber ) {
-        var baseNumberImage = PaperImageCollection.getNumberImageNode( baseNumber );
+        var baseNumberImage = PaperImageCollection.getNumberImage( baseNumber );
         var baseNumberImageNode = new Image( baseNumberImage );
         baseNumberImageNode.opacity = opacityValue;
         baseNumberImageNode.left = offsetX;

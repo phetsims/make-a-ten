@@ -15,7 +15,7 @@ define( function( require ) {
     // layout bounds used throughout the simulation for laying out the screens
     LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
     CONTROL_PANEL_BACKGROUND_COLOR: 'rgb( 254, 241, 233 )',
-    SHAPE_CAROUSEL_BACKGROUND_COLOR: 'rgb( 227, 229, 236 )',
+    SHAPE_CAROUSEL_BACKGROUND_COLOR: 'rgb( 208, 222, 239 )',
     EXPLORER_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
     // velocity at which animated elements move
     ANIMATION_VELOCITY: 600, // In screen coordinates per second

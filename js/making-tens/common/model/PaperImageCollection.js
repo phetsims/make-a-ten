@@ -61,7 +61,7 @@ define( function( require ) {
        * @param {number} number
        * @returns {ImageNode}
        */
-      getNumberImageNode: function( number ) {
+      getNumberImage: function( number ) {
         return allImages[ number ];
       }
     } );

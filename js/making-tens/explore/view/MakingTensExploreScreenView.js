@@ -13,19 +13,17 @@ define( function( require ) {
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var HSlider = require( 'SUN/HSlider' );
   var Property = require( 'AXON/Property' );
+  var Panel = require( 'SUN/Panel' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Dimension2 = require( 'DOT/Dimension2' );
   var Image = require( 'SCENERY/nodes/Image' );
   var PaperNumberNode = require( 'MAKING_TENS/making-tens/common/view/PaperNumberNode' );
+  var MakingTensExplorerNode = require( 'MAKING_TENS/making-tens/explore/view/MakingTensExplorerNode' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var NumberAdditionRules = require( 'MAKING_TENS/making-tens/common/model/NumberAdditionRules' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
 
   // images
   var mockupImage = require( 'image!MAKING_TENS/explore-mockup.png' );
-
-  // constants
-  var SHAPE_CAROUSEL_SIZE = new Dimension2( 390, 125 );
 
 
   /**
@@ -38,12 +36,11 @@ define( function( require ) {
     self.makingTensExploreModel = makingTensExploreModel;
 
     self.paperNumberLayerNode = new Node();
-    self.addChild( self.paperNumberLayerNode );
 
     var addUserCreatedNumberModel = makingTensExploreModel.addUserCreatedNumberModel.bind( makingTensExploreModel );
     var combineNumbersIfApplicableCallback = this.combineNumbersIfApplicable.bind( this );
 
-    function handleParticleAdded( addedNumberModel ) {
+    function handlePaperNumberAdded( addedNumberModel ) {
       // Add a representation of the number.
       var paperNumberNode = new PaperNumberNode( addedNumberModel, addUserCreatedNumberModel, combineNumbersIfApplicableCallback );
       self.paperNumberLayerNode.addChild( paperNumberNode );
@@ -64,33 +61,41 @@ define( function( require ) {
     }
 
     //Initial Number Node creation
-    makingTensExploreModel.residentNumberModels.forEach( handleParticleAdded );
+    makingTensExploreModel.residentNumberModels.forEach( handlePaperNumberAdded );
 
     // Observe new items
-    makingTensExploreModel.residentNumberModels.addItemAddedListener( handleParticleAdded );
+    makingTensExploreModel.residentNumberModels.addItemAddedListener( handlePaperNumberAdded );
 
     // shape carousel
-    var shapeContainerCarousel = new Rectangle( 0, 0, SHAPE_CAROUSEL_SIZE.width, SHAPE_CAROUSEL_SIZE.height, 15, 15, {
+    var shapeContainerCarousel = new Node();
+    self.addChild( shapeContainerCarousel );
+
+    var explorerNodes = [];
+    // Create the composite nodes that contain the number collections
+    var exploreHundredsNode = new MakingTensExplorerNode( 100, addUserCreatedNumberModel,combineNumbersIfApplicableCallback );
+    explorerNodes.push( exploreHundredsNode );
+    var exploreTensNode = new MakingTensExplorerNode( 10, addUserCreatedNumberModel,combineNumbersIfApplicableCallback );
+    explorerNodes.push( exploreTensNode );
+    var exploreOnesNode = new MakingTensExplorerNode( 1, addUserCreatedNumberModel,combineNumbersIfApplicableCallback );
+    explorerNodes.push( exploreOnesNode );
+
+
+    // Add a non-scrolling panel
+    var creatorNodeHBox = new HBox( { children: explorerNodes, spacing: 30 } );
+    shapeContainerCarousel.addChild( new Panel( creatorNodeHBox, {
       fill: MakingTensSharedConstants.SHAPE_CAROUSEL_BACKGROUND_COLOR,
       stroke: 'black',
       lineWidth: 1.5,
       bottom:  self.layoutBounds.maxY - 15,
-      centerX: (self.layoutBounds.width / 2) - 12
-    } );
-    self.addChild( shapeContainerCarousel );
+      centerX: (self.layoutBounds.width / 2) - 12,
+      xMargin: 30,
+      yMargin: 5,
+      resize: false
 
-    // Create the composite nodes that contain the shape placement board, the readout, the bucket, the shape creator
-    // nodes, and the eraser button.
-    /* var exploreHundredsNode = new ExploreNode( model.singleShapePlacementBoard, model.addUserCreatedMovableShape.bind( model ),
-     model.movableShapes, model.singleModeBucket, { shapesLayer: singleBoardShapesLayer } );
-     this.addChild( centerExploreNode );
-     var exploreTensNode = new ExploreNode( model.leftShapePlacementBoard, model.addUserCreatedMovableShape.bind( model ),
-     model.movableShapes, model.leftBucket, { shapesLayer: dualBoardShapesLayer } );
-     this.addChild( leftExploreNode );
-     var exploreOnesNode = new ExploreNode( model.rightShapePlacementBoard, model.addUserCreatedMovableShape.bind( model ),
-     model.movableShapes, model.rightBucket, { shapesLayer: dualBoardShapesLayer } );
-     this.addChild( rightExploreNode ); */
+    } ) );
 
+
+    self.addChild( self.paperNumberLayerNode );
 
     //Show the mock-up and a slider to change its transparency
     var mockupOpacityProperty = new Property( 0.4 );

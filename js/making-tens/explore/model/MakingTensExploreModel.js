@@ -11,7 +11,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var ObservableArray = require( 'AXON/ObservableArray' );
-  var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -24,14 +23,6 @@ define( function( require ) {
     this.explrorerScreenBounds = explorerScreenBounds;
     // Observable array of the numbers that have been placed
     this.residentNumberModels = new ObservableArray(); // @public, read only
-
-    //test
-    var paperNumberModel1 = new PaperNumberModel( 1, new Vector2( 110, 220 ) );
-    var paperNumberModel2 = new PaperNumberModel( 32, new Vector2( 310, 220 ) );
-    // var paperNumberModel3 = new PaperNumberModel( 2, new Vector2( 610, 420 ) );
-    this.residentNumberModels.add( paperNumberModel1 );
-    this.residentNumberModels.add( paperNumberModel2 );
-    // this.residentNumberModels.add( paperNumberModel3 );
 
   }
 
