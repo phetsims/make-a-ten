@@ -12,24 +12,26 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
+  var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @constructor
    */
-  function MakingTensExploreModel() {
+  function MakingTensExploreModel( explorerScreenBounds ) {
     PropertySet.call( this, {} );
 
+    this.explrorerScreenBounds = explorerScreenBounds;
     // Observable array of the numbers that have been placed
-    this.residentNumbers = new ObservableArray(); // @public, read only
+    this.residentNumberModels = new ObservableArray(); // @public, read only
 
     //test
     var paperNumberModel1 = new PaperNumberModel( 1, new Vector2( 110, 220 ) );
-  //  var paperNumberModel2 = new PaperNumberModel( 234, new Vector2( 410, 220 ) );
-    var paperNumberModel3 = new PaperNumberModel( 2, new Vector2( 610, 420 ) );
-    this.residentNumbers.add( paperNumberModel1 );
-  //  this.residentNumbers.add( paperNumberModel2 );
-    this.residentNumbers.add( paperNumberModel3 );
+    var paperNumberModel2 = new PaperNumberModel( 32, new Vector2( 310, 220 ) );
+    // var paperNumberModel3 = new PaperNumberModel( 2, new Vector2( 610, 420 ) );
+    this.residentNumberModels.add( paperNumberModel1 );
+    this.residentNumberModels.add( paperNumberModel2 );
+    // this.residentNumberModels.add( paperNumberModel3 );
 
   }
 
@@ -37,30 +39,53 @@ define( function( require ) {
 
     // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
     step: function( dt ) {
-      // Handle model animation here.
+      this.residentNumberModels.forEach( function( numberModel ) { numberModel.step( dt ); } );
     },
 
     /**
      *
-     * @param {number} numberValue
-     * @param {Vector2} initialPosition
-     * @param {object} options
-     */
-    addNewNumber: function( numberValue, initialPosition, options ) {
-      var newPaperNumberModel = new PaperNumberModel( numberValue, initialPosition, options );
-      this.residentNumbers.add( newPaperNumberModel );
-      return newPaperNumberModel;
-    },
-
-    /**
-     *
+     * @param {PaperNumberModel} draggedPaperNumberModel
      * @param {PaperNumberModel} droppedPaperNumberModel
      */
-    combineNumbersCallback: function( draggedPaperNumberModel, droppedPaperNumberModel ) {
-      //Which to remove and which to sum depends on the layer index TODO
-      this.residentNumbers.remove( droppedPaperNumberModel );
+    collapseNumberModels: function( draggedPaperNumberModel, droppedPaperNumberModel ) {
+      this.residentNumberModels.remove( draggedPaperNumberModel );
       var newSum = draggedPaperNumberModel.numberValue + droppedPaperNumberModel.numberValue;
-      draggedPaperNumberModel.changeNumber( newSum );
+      droppedPaperNumberModel.changeNumber( newSum );
+    },
+
+    /**
+     * Function for adding new movable shapes to this model when the user creates them, generally by clicking on some
+     * some sort of creator node.
+     * @public
+     * @param paperNumberModel
+     */
+    addUserCreatedNumberModel: function( paperNumberModel ) {
+      var self = this;
+      this.residentNumberModels.push( paperNumberModel );
+
+      // The number will be removed from the model if and when it returns to its origination point.  This is how a shape
+      // can be 'put back' into the collection.
+      paperNumberModel.on( 'returnedToOrigin', function() {
+        if ( !paperNumberModel.userControlled ) {
+          // The number has been returned to the collection.
+          self.residentNumberModels.remove( paperNumberModel );
+        }
+      } );
+    },
+
+    /**
+     *
+     * @param {PaperNumberModel} paperNumberModel
+     */
+    moveAway: function( paperNumberModel ) {
+      var offsetDistance = MakingTensSharedConstants.MOVE_AWAY_DISTANCE;
+      if ( paperNumberModel.position.x + offsetDistance > this.explrorerScreenBounds.width / 2 ) {
+        offsetDistance *= -1;
+      }
+
+      var delta = new Vector2( offsetDistance, 0 );
+      paperNumberModel.setDestination( paperNumberModel.position.plus( delta ), true );
+
     }
 
   } );

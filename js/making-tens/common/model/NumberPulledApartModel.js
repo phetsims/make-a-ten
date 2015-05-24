@@ -17,11 +17,11 @@ define( function( require ) {
    * @param {number} amountRemaining
    * @constructor
    */
-  function NumberPulledPartModel( originalNumber, amountToRemove, amountRemaining ) {
+  function NumberPulledApartModel( originalNumber, amountToRemove, amountRemaining ) {
     this.originalNumber = originalNumber;
     this.amountToRemove = amountToRemove;
     this.amountRemaining = amountRemaining;
   }
 
-  return inherit( Object, NumberPulledPartModel, {} );
+  return inherit( Object, NumberPulledApartModel, {} );
 } );

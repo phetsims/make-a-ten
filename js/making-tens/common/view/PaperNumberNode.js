@@ -16,7 +16,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var NumberAdditionRules = require( 'MAKING_TENS/making-tens/common/model/NumberAdditionRules' );
+  var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
 
   // constants
   //based on where the user clicked on the node, determine if it is split or move
@@ -26,12 +26,11 @@ define( function( require ) {
   /**
    *
    * @param {PaperNumberModel} paperNumberModel
-   * @param {Function<number,position>} addNewNumberCallback A callback to invoke when a  Number is  split
-   * @param {Function<imageNode,droppedPoint>} findDropNodeCallback A callback to invoke when a dropped number can be added to an existng number
-   * @param {Function<imageNode,droppedPoint>} combineNumbersCallback A callback to invoke when a  Number is  combined
+   * @param {Function<paperNumberModel>} addNumberModelCallBack A callback to invoke when a  Number is  split
+   * @param {Function<paperNumberModel,droppedPoint>} combineNumbersIfApplicableCallback A callback to invoke when a Number is  combined
    * @constructor
    */
-  function PaperNumberNode( paperNumberModel, addNewNumberCallback, findDropNodeCallback, combineNumbersCallback, findPaperNumberNode ) {
+  function PaperNumberNode( paperNumberModel, addNumberModelCallBack, combineNumbersIfApplicableCallback ) {
     var thisNode = this;
     thisNode.paperNumberModel = paperNumberModel;
     Node.call( thisNode );
@@ -47,8 +46,9 @@ define( function( require ) {
     } );
 
     paperNumberModel.positionProperty.link( function( newPos ) {
-      imageNumberNode.leftTop = newPos;
+      thisNode.leftTop = newPos;
     } );
+
 
     paperNumberModel.opacityProperty.link( function( opacity ) {
       imageNumberNode.opacity = opacity;
@@ -59,96 +59,66 @@ define( function( require ) {
       // Allow moving a finger (touch) across this node to interact with it
       allowTouchSnag: true,
 
-      // Based on the pointer position at "start", determine if the user wants to pullApart or move the number
-      splitNumberModel: null,
-
-      numberPulledPart: null,
+      movableObject: null,
 
       startOffSet: null,
 
-      currentPoint: null,
-
-      moveMode: false,
-
       start: function( event, trail ) {
         var thisHandler = this;
+        thisHandler.startOffSet = thisNode.globalToParentPoint( event.pointer.point );
+        thisHandler.movableObject = paperNumberModel;
+        thisHandler.movableObject.userControlled = true;
         if ( paperNumberModel.numberValue === 1 ) {
-          thisHandler.moveMode = true;
           return;
         }
-        thisHandler.splitNumberModel = null;
-        thisHandler.numberPulledPart = null;
-        thisHandler.moveMode = false;
-        thisHandler.startOffSet = thisNode.globalToParentPoint( event.pointer.point );
-        thisHandler.currentPoint = thisHandler.startOffSet;
+
         var totalBounds = thisNode.bounds;
         var splitRect = Bounds2.rect( totalBounds.x, totalBounds.y,
           totalBounds.width, totalBounds.height * SPLIT_MODE_HEIGHT_PROPORTION );
+
         if ( splitRect.containsPoint( thisHandler.startOffSet ) ) {
-          thisHandler.numberPulledPart = paperNumberModel.pullApart();
-        }
-        else {
-          thisHandler.moveMode = true;
+          var numberPulledApart = paperNumberModel.pullApart();
+          var amountToRemove = numberPulledApart.amountToRemove;
+          var amountRemaining = numberPulledApart.amountRemaining;
+          var initialPosition = thisNode.determinePulledOutNumberPosition( amountToRemove );
+          var pulledApartPaperNumberModel = new PaperNumberModel( amountToRemove, initialPosition, {
+            opacity: 0.95
+          } );
+          addNumberModelCallBack( pulledApartPaperNumberModel );
+          paperNumberModel.changeNumber( amountRemaining );
+          thisHandler.movableObject = pulledApartPaperNumberModel;
+          thisHandler.movableObject.userControlled = true;
         }
       },
 
       // Handler that moves the shape in model space.
       translate: function( translationParams ) {
         var thisHandler = this;
+        var movableObject = thisHandler.movableObject;
+
+        // How far it has moved from the original position
         var delta = translationParams.delta;
-        if ( thisHandler.moveMode ) {
-          paperNumberModel.setDestination( paperNumberModel.position.plus( delta ), false );
-          return translationParams.position;
-        }
+        var currentPoint = thisHandler.startOffSet.plus( delta );
+        var transDistance = currentPoint.distance( thisHandler.startOffSet );
+        movableObject.setDestination( movableObject.position.plus( delta ), false );
 
-        var transDistance = thisHandler.currentPoint.distance( thisHandler.startOffSet );
-        thisHandler.currentPoint = thisHandler.currentPoint.plus( delta );
-        var overAllDelta = thisHandler.currentPoint.minus( thisHandler.startOffSet );
-
-        if ( thisHandler.numberPulledPart ) {
-          var amountToRemove = thisHandler.numberPulledPart.amountToRemove;
-          var initialPosition = thisNode.determinePulledOutNumberPosition( amountToRemove, overAllDelta );
-          var options = {
-            opacity: 0.9
-          };
-          thisHandler.splitNumberModel = addNewNumberCallback( amountToRemove, initialPosition, options );
-          paperNumberModel.changeNumber( thisHandler.numberPulledPart.amountRemaining );
-          thisHandler.numberPulledPart = null;
-          return translationParams.position;
-        }
-
-        if ( thisHandler.splitNumberModel ) {
-          thisHandler.splitNumberModel.setDestination( thisHandler.splitNumberModel.position.plus( delta ), false );
-
-          // gradually increase the opacity from 0.8 to 1 as we move away from the nuber, otherwise the change looks sudden
-          thisHandler.splitNumberModel.opacity = 0.9 + (0.005 * Math.min( 20, transDistance / SPLIT_THRESHOLD_DISTANCE ));
+        // if it is a new created object, change the opacity
+        if ( movableObject !== paperNumberModel ) {
+          // gradually increase the opacity from 0.8 to 1 as we move away from the number, otherwise the change looks sudden
+          movableObject.opacity = 0.9 + (0.005 * Math.min( 20, transDistance / SPLIT_THRESHOLD_DISTANCE ));
         }
         return translationParams.position;
       },
 
       end: function( event, trail ) {
         var thisHandler = this;
-        var dragNode = null;
-        if ( thisHandler.moveMode ) // user is dragging the currentNode itself
-        {
-          dragNode = thisNode;
-        }
-        if ( thisHandler.splitNumberModel ) { // user is dragging the newly split node
-          dragNode = findPaperNumberNode( thisHandler.splitNumberModel );
+        var movableObject = thisHandler.movableObject;
+        if ( movableObject ) {
+          movableObject.userControlled = false;
+          var droppedPoint = event.pointer.point;
+          combineNumbersIfApplicableCallback( movableObject, droppedPoint );
         }
 
-        thisHandler.numberPulledPart = null;
-        thisHandler.startOffSet = null;
-        thisHandler.currentPoint = null;
-        thisHandler.moveMode = false;
-        thisHandler.splitNumberModel = null;
-        //check if a number can be combined with the number above which it is dropped
-        if ( dragNode ) {
-          var dropNode = findDropNodeCallback( dragNode );
-          if ( dropNode ) {
-            combineNumbersCallback( dragNode.paperNumberModel, dropNode.paperNumberModel );
-          }
-        }
       }
 
     } ) );
@@ -156,55 +126,71 @@ define( function( require ) {
   }
 
   return inherit( Node, PaperNumberNode, {
-    /**
-     *
-     * @param newPulledNumber
-     * @return {Vector2}
-     */
-    determinePulledOutNumberPosition: function( newPulledNumber, delta ) {
-      var thisNode = this;
-      if ( (newPulledNumber + "").length === (this.paperNumberModel.numberValue + "").length ) {
-        return thisNode.leftTop.plus( delta );
-      }
-      //hardcoded - TODO
-      return thisNode.leftTop.plus( this.paperNumberModel.getImagePartOffsetPosition( newPulledNumber ) );
-    },
+      /**
+       *
+       * @param newPulledNumber
+       */
+      determinePulledOutNumberPosition: function( newPulledNumber ) {
+        var thisNode = this;
+        return thisNode.leftTop.plus( this.paperNumberModel.getImagePartOffsetPosition( newPulledNumber ) );
+      },
 
-    /**
-     *
-     * @param {Array<Node>}allPaperNumberNodes
-     * @return {PaperNumberNode|null}
-     */
-    findDropNodeCallback: function( allPaperNumberNodes ) {
-      var dropPositionTolerance = 0.15;
-      var draggedPaperNumberNode = this;
+      /**
+       * Find all nodes which are attachable to the dragged node. This method is called once th user ends the dragging
+       * @param allPaperNumberNodes
+       * @param {Vector} droppedPoint // in screen coordinates
+       * @returns {Array}
+       */
+      findAttachableNodes: function( allPaperNumberNodes, droppedPoint ) {
 
-      _.remove( allPaperNumberNodes, function( node ) {
-        return node === draggedPaperNumberNode;
-      } );
+        var draggedNode = this;
 
-      var droppedPaperNodes = allPaperNumberNodes;
+        _.remove( allPaperNumberNodes, function( node ) {
+          return node === draggedNode;
+        } );
 
-      droppedPaperNodes.reverse();
-      var draggedNodeWidth = draggedPaperNumberNode.bounds.width;
-      var draggedNodeHeight = draggedPaperNumberNode.bounds.height;
+        var attachableNodeCandidates = allPaperNumberNodes;
+        var attachableNodes = [];
 
-      for ( var i = 0; i < droppedPaperNodes.length; i++ ) {
-        var droppedNode = droppedPaperNodes[ i ];
-        var xDiff = Math.abs( droppedNode.left - draggedPaperNumberNode.left );
-        var yDiff = Math.abs( droppedNode.top - draggedPaperNumberNode.top );
-        if ( (xDiff < dropPositionTolerance * draggedNodeWidth ) &&
-             (yDiff < dropPositionTolerance * draggedNodeHeight ) ) {
-          var numberA = draggedPaperNumberNode.paperNumberModel.numberValue;
-          var numberB = droppedNode.paperNumberModel.numberValue;
-          if ( NumberAdditionRules.canAddNumbers( numberA, numberB ) ) {
-            return droppedNode;
+        for ( var i = 0; i < attachableNodeCandidates.length; i++ ) {
+          var droppedNode = attachableNodeCandidates[ i ];
+          var widerNode = droppedNode;
+          var smallerNode = draggedNode;
+          if ( smallerNode.paperNumberModel.numberValue > widerNode.paperNumberModel.numberValue ) {
+            widerNode = draggedNode;
+            smallerNode = droppedNode;
+          }
+          var widthDiff = widerNode.bounds.width - smallerNode.bounds.width;
+          var xDiff = widerNode.left - (smallerNode.left - widthDiff);
+          var yDiff = Math.abs( droppedNode.top - draggedNode.top );
+
+          var dropPositionWidthTolerance = smallerNode.bounds.width * 0.25;
+          var dropPositionHeightTolerance = smallerNode.bounds.height * 0.25;
+
+          var xInRange = PaperNumberNode.isBetween( xDiff, -dropPositionWidthTolerance, dropPositionWidthTolerance );
+          var yInRange = PaperNumberNode.isBetween( yDiff, -dropPositionHeightTolerance, dropPositionHeightTolerance );
+
+          // TODO console.log( "xDiff " + xDiff + "  yDiff " + yDiff + " Width Tolerance  " + dropPositionWidthTolerance + " Height tolerance " + dropPositionHeightTolerance );
+          // console.log( "xInRange " + xInRange + " yInRange " + yInRange );
+          if ( xInRange && yInRange ) {
+            // console.log( "Drop Candidate " );
+            attachableNodes.push( droppedNode );
           }
         }
-      }
-      return null;
-    }
 
-  } );
-} );
+        return attachableNodes;
+      }
+
+    },
+
+    {
+      isBetween: function( value, a, b ) {
+        var min = Math.min( a, b );
+        var max = Math.max( a, b );
+        return value > min && value < max;
+      }
+
+    } );
+} )
+;
 

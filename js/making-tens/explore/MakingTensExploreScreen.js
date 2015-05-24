@@ -9,6 +9,7 @@ define( function( require ) {
 
   // modules
   var MakingTensExploreModel = require( 'MAKING_TENS/making-tens/explore/model/MakingTensExploreModel' );
+  var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var MakingTensExploreScreenView = require( 'MAKING_TENS/making-tens/explore/view/MakingTensExploreScreenView' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
@@ -40,11 +41,11 @@ define( function( require ) {
     //If this is a single-screen sim, then no icon is necessary.
     //If there are multiple screens, then the icon must be provided here.
     var icon = createScreenIcon();
-
+    var makingTensExplorerScreenBounds = MakingTensSharedConstants.LAYOUT_BOUNDS;
     Screen.call( this, makingTensExploreScreenTitleString, icon,
-      function() { return new MakingTensExploreModel(); },
+      function() { return new MakingTensExploreModel( makingTensExplorerScreenBounds ); },
       function( model ) { return new MakingTensExploreScreenView( model ); },
-      { backgroundColor: 'white' }
+      { backgroundColor: MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR }
     );
   }
 

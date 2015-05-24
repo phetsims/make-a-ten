@@ -13,7 +13,12 @@ define( function( require ) {
 
   return {
     // layout bounds used throughout the simulation for laying out the screens
-    LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 )
-
+    LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
+    CONTROL_PANEL_BACKGROUND_COLOR: 'rgb( 254, 241, 233 )',
+    SHAPE_CAROUSEL_BACKGROUND_COLOR: 'rgb( 227, 229, 236 )',
+    EXPLORER_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
+    // velocity at which animated elements move
+    ANIMATION_VELOCITY: 600, // In screen coordinates per second
+    MOVE_AWAY_DISTANCE: 250 // when numbers cannot be added, the distance to move away from each in screen coordinates
   };
 } );

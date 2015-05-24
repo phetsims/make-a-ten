@@ -15,7 +15,8 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
   var Image = require( 'SCENERY/nodes/Image' );
-  var NumberPulledPartModel = require( 'MAKING_TENS/making-tens/common/model/NumberPulledPartModel' );
+  var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
+  var NumberPulledApartModel = require( 'MAKING_TENS/making-tens/common/model/NumberPulledApartModel' );
   var PaperImageCollection = require( 'MAKING_TENS/making-tens/common/model/PaperImageCollection' );
 
   //constants
@@ -25,8 +26,8 @@ define( function( require ) {
   // how much 2 digit and single digit must offset from parent
   var NUMBER_IMAGE_OFFSET_DIMENSIONS = {
     0: new Vector2( 0, 0 ),
-    1: new Vector2( 70, 22 ),// how much a single digit image has to offset
-    2: new Vector2( 50, 50 )// how much a 2 digit has to offset from its parent (a 3 digit number)
+    1: new Vector2( 90, 22 ),// how much a single digit image has to offset
+    2: new Vector2( 90, 50 )// how much a 2 digit has to offset from its parent (a 3 digit number)
   };
 
   /**
@@ -77,6 +78,27 @@ define( function( require ) {
 
   return inherit( PropertySet, PaperNumberModel, {
 
+    step: function( dt ) {
+
+      if ( !this.userControlled ) {
+
+        // perform any animation
+        var distanceToDestination = this.position.distance( this.destination );
+        if ( distanceToDestination > dt * MakingTensSharedConstants.ANIMATION_VELOCITY ) {
+          // Move a step toward the destination.
+          var stepAngle = Math.atan2( this.destination.y - this.position.y, this.destination.x - this.position.x );
+          var stepVector = Vector2.createPolar( MakingTensSharedConstants.ANIMATION_VELOCITY * dt, stepAngle );
+          this.position = this.position.plus( stepVector );
+        }
+        else if ( this.animating ) {
+          // Less than one time step away, so just go to the destination.
+          this.position = this.destination;
+          this.animating = false;
+        }
+
+      }
+    },
+
     /**
      * A number such as 238 will result in 200,30,8 as base numbers for which we have corresponding images
      *
@@ -116,6 +138,8 @@ define( function( require ) {
         index++;
         opacityValue = opacityValue - 0.04;
       } );
+
+
     },
 
     canPullApart: function() {
@@ -126,7 +150,7 @@ define( function( require ) {
      * Handles how the number should be split and returns the new pulledout number
      * Ex : 9 splits into 8 and 1, number 60 splits into 50 and 10 etc
      *
-     * @returns {NumberPulledAPartModel | null} // null means no value is pulled ot
+     * @returns {NumberPulledApartModel | null} // null means no value is pulled ot
      */
     pullApart: function() {
       var amountToRemove = 0;
@@ -163,7 +187,7 @@ define( function( require ) {
       }
 
       amountRemaining = this.numberValue - amountToRemove;
-      numberPulledPartModel = new NumberPulledPartModel( this.numberValue, amountToRemove, amountRemaining );
+      numberPulledPartModel = new NumberPulledApartModel( this.numberValue, amountToRemove, amountRemaining );
       return numberPulledPartModel;
     },
 
@@ -201,13 +225,26 @@ define( function( require ) {
       }
     },
 
+    getWidth: function() {
+      var self = this;
+      var minX = _.min( self.baseNumberPositions, function( baseNumberPosition ) {
+        return baseNumberPosition.x;
+      } );
+
+      var maxX = _.max( self.baseNumberPositions, function( baseNumberPosition ) {
+        return baseNumberPosition.x;
+      } );
+
+      return (maxX - minX);
+    },
+
     /**
      *
      * @param {Vector2} position
      * @param {Bounds2} draggedNodeBounds
      * @returns {number}
      */
-    getNumberAt: function( position,draggedNodeBounds ) {
+    getNumberAt: function( position, draggedNodeBounds ) {
       if ( this.baseNumbers.length === 1 ) {
         return this.baseNumbers[ 0 ];
       }
@@ -216,9 +253,7 @@ define( function( require ) {
           return this.baseNumbers[ i ];
         }
       }
-
       return this.numberValue;
-
     }
 
 
