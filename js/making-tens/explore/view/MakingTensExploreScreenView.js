@@ -19,7 +19,7 @@ define( function( require ) {
   var PaperNumberNode = require( 'MAKING_TENS/making-tens/common/view/PaperNumberNode' );
   var MakingTensExplorerNode = require( 'MAKING_TENS/making-tens/explore/view/MakingTensExplorerNode' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
-  var NumberAdditionRules = require( 'MAKING_TENS/making-tens/common/model/NumberAdditionRules' );
+  var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
   var HBox = require( 'SCENERY/nodes/HBox' );
 
   // images
@@ -150,7 +150,7 @@ define( function( require ) {
       for ( var i = 0; i < droppedNodes.length; i++ ) {
         var numberA = draggedPaperNumberModel.numberValue;
         var numberB = droppedNodes[ i ].paperNumberModel.numberValue;
-        if ( NumberAdditionRules.canAddNumbers( numberA, numberB ) ) {
+        if ( ArithmeticRules.canAddNumbers( numberA, numberB ) ) {
           var droppedPaperNumberModel = droppedNodes[ i ].paperNumberModel;
           self.makingTensExploreModel.collapseNumberModels( draggedPaperNumberModel, droppedPaperNumberModel );
           return;

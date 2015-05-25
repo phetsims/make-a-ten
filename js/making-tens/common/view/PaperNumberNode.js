@@ -17,11 +17,13 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
+  var MakingTensUtil = require( 'MAKING_TENS/making-tens/common/MakingTensUtil' );
+  var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
 
   // constants
   //based on where the user clicked on the node, determine if it is split or move
   var SPLIT_MODE_HEIGHT_PROPORTION = 0.4;
-  var SPLIT_THRESHOLD_DISTANCE = 5;
+  var SPLIT_OPACITY_FACTOR = 5; // for a distance of 5 apply some transparency to make the split effect realistic
 
   /**
    *
@@ -72,16 +74,25 @@ define( function( require ) {
           return;
         }
 
+        var numberPulledApart = ArithmeticRules.pullApartNumbers( paperNumberModel.numberValue );
+        if ( !numberPulledApart ) {
+          return;
+        }
+
+        var amountToRemove = numberPulledApart.amountToRemove;
+        var amountRemaining = numberPulledApart.amountRemaining;
+
+        // When splitting a single digit from a two, make sure the mouse is near that second digit
+        // in case of splitting equal digits (ex 30 splitting in to 20 and 10) we dont need to check this condition
+        var removalOffsetPosition = thisNode.paperNumberModel.getDigitOffsetPosition( amountToRemove );
         var totalBounds = thisNode.bounds;
-        var splitRect = Bounds2.rect( totalBounds.x, totalBounds.y,
-          totalBounds.width, totalBounds.height * SPLIT_MODE_HEIGHT_PROPORTION );
+        var splitRect = Bounds2.rect( totalBounds.x + removalOffsetPosition.x, totalBounds.y,
+          totalBounds.width - removalOffsetPosition.x, totalBounds.height * SPLIT_MODE_HEIGHT_PROPORTION );
 
         if ( splitRect.containsPoint( thisHandler.startOffSet ) ) {
-          var numberPulledApart = paperNumberModel.pullApart();
-          var amountToRemove = numberPulledApart.amountToRemove;
-          var amountRemaining = numberPulledApart.amountRemaining;
-          var initialPosition = thisNode.determinePulledOutNumberPosition( amountToRemove );
-          var pulledApartPaperNumberModel = new PaperNumberModel( amountToRemove, initialPosition, {
+
+          var pulledOutPosition = thisNode.determinePulledOutNumberPosition( amountToRemove );
+          var pulledApartPaperNumberModel = new PaperNumberModel( amountToRemove, pulledOutPosition, {
             opacity: 0.95
           } );
           addNumberModelCallBack( pulledApartPaperNumberModel );
@@ -99,13 +110,14 @@ define( function( require ) {
         // How far it has moved from the original position
         var delta = translationParams.delta;
         var currentPoint = thisHandler.startOffSet.plus( delta );
+
         var transDistance = currentPoint.distance( thisHandler.startOffSet );
         movableObject.setDestination( movableObject.position.plus( delta ), false );
 
         // if it is a new created object, change the opacity
         if ( movableObject !== paperNumberModel ) {
           // gradually increase the opacity from 0.8 to 1 as we move away from the number, otherwise the change looks sudden
-          movableObject.opacity = 0.9 + (0.005 * Math.min( 20, transDistance / SPLIT_THRESHOLD_DISTANCE ));
+          movableObject.opacity = 0.9 + (0.005 * Math.min( 20, transDistance / SPLIT_OPACITY_FACTOR ));
         }
         return translationParams.position;
       },
@@ -126,71 +138,62 @@ define( function( require ) {
   }
 
   return inherit( Node, PaperNumberNode, {
-      /**
-       *
-       * @param newPulledNumber
-       */
-      determinePulledOutNumberPosition: function( newPulledNumber ) {
-        var thisNode = this;
-        return thisNode.leftTop.plus( this.paperNumberModel.getImagePartOffsetPosition( newPulledNumber ) );
-      },
-
-      /**
-       * Find all nodes which are attachable to the dragged node. This method is called once th user ends the dragging
-       * @param allPaperNumberNodes
-       * @param {Vector} droppedPoint // in screen coordinates
-       * @returns {Array}
-       */
-      findAttachableNodes: function( allPaperNumberNodes, droppedPoint ) {
-
-        var draggedNode = this;
-
-        _.remove( allPaperNumberNodes, function( node ) {
-          return node === draggedNode;
-        } );
-
-        var attachableNodeCandidates = allPaperNumberNodes;
-        var attachableNodes = [];
-
-        for ( var i = 0; i < attachableNodeCandidates.length; i++ ) {
-          var droppedNode = attachableNodeCandidates[ i ];
-          var widerNode = droppedNode;
-          var smallerNode = draggedNode;
-          if ( smallerNode.paperNumberModel.numberValue > widerNode.paperNumberModel.numberValue ) {
-            widerNode = draggedNode;
-            smallerNode = droppedNode;
-          }
-          var widthDiff = widerNode.bounds.width - smallerNode.bounds.width;
-          var xDiff = widerNode.left - (smallerNode.left - widthDiff);
-          var yDiff = Math.abs( droppedNode.top - draggedNode.top );
-
-          var dropPositionWidthTolerance = smallerNode.bounds.width * 0.25;
-          var dropPositionHeightTolerance = smallerNode.bounds.height * 0.25;
-
-          var xInRange = PaperNumberNode.isBetween( xDiff, -dropPositionWidthTolerance, dropPositionWidthTolerance );
-          var yInRange = PaperNumberNode.isBetween( yDiff, -dropPositionHeightTolerance, dropPositionHeightTolerance );
-
-          // TODO console.log( "xDiff " + xDiff + "  yDiff " + yDiff + " Width Tolerance  " + dropPositionWidthTolerance + " Height tolerance " + dropPositionHeightTolerance );
-          // console.log( "xInRange " + xInRange + " yInRange " + yInRange );
-          if ( xInRange && yInRange ) {
-            // console.log( "Drop Candidate " );
-            attachableNodes.push( droppedNode );
-          }
-        }
-
-        return attachableNodes;
-      }
-
+    /**
+     *
+     * @param newPulledNumber
+     */
+    determinePulledOutNumberPosition: function( newPulledNumber ) {
+      var thisNode = this;
+      return thisNode.leftTop.plus( thisNode.paperNumberModel.getDigitOffsetPosition( newPulledNumber ) );
     },
 
-    {
-      isBetween: function( value, a, b ) {
-        var min = Math.min( a, b );
-        var max = Math.max( a, b );
-        return value > min && value < max;
+    /**
+     * Find all nodes which are attachable to the dragged node. This method is called once th user ends the dragging
+     * @param allPaperNumberNodes
+     * @param {Vector} droppedPoint // in screen coordinates
+     * @returns {Array}
+     */
+    findAttachableNodes: function( allPaperNumberNodes, droppedPoint ) {
+
+      var draggedNode = this;
+
+      _.remove( allPaperNumberNodes, function( node ) {
+        return node === draggedNode;
+      } );
+
+      var attachableNodeCandidates = allPaperNumberNodes;
+      var attachableNodes = [];
+
+      for ( var i = 0; i < attachableNodeCandidates.length; i++ ) {
+        var droppedNode = attachableNodeCandidates[ i ];
+        var widerNode = droppedNode;
+        var smallerNode = draggedNode;
+        if ( smallerNode.paperNumberModel.numberValue > widerNode.paperNumberModel.numberValue ) {
+          widerNode = draggedNode;
+          smallerNode = droppedNode;
+        }
+        var widthDiff = widerNode.bounds.width - smallerNode.bounds.width;
+        var xDiff = widerNode.left - (smallerNode.left - widthDiff);
+        var yDiff = Math.abs( droppedNode.top - draggedNode.top );
+
+        var dropPositionWidthTolerance = smallerNode.bounds.width * 0.25;
+        var dropPositionHeightTolerance = smallerNode.bounds.height * 0.25;
+
+        var xInRange = MakingTensUtil.isBetween( xDiff, -dropPositionWidthTolerance, dropPositionWidthTolerance );
+        var yInRange = MakingTensUtil.isBetween( yDiff, -dropPositionHeightTolerance, dropPositionHeightTolerance );
+
+        // TODO console.log( "xDiff " + xDiff + "  yDiff " + yDiff + " Width Tolerance  " + dropPositionWidthTolerance + " Height tolerance " + dropPositionHeightTolerance );
+        // console.log( "xInRange " + xInRange + " yInRange " + yInRange );
+        if ( xInRange && yInRange ) {
+          // console.log( "Drop Candidate " );
+          attachableNodes.push( droppedNode );
+        }
       }
 
-    } );
+      return attachableNodes;
+    }
+
+  } );
 } )
 ;
 

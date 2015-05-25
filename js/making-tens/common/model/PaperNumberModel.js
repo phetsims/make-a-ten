@@ -16,18 +16,14 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var Image = require( 'SCENERY/nodes/Image' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
-  var NumberPulledApartModel = require( 'MAKING_TENS/making-tens/common/model/NumberPulledApartModel' );
   var PaperImageCollection = require( 'MAKING_TENS/making-tens/common/model/PaperImageCollection' );
 
-  //constants
-  var MULTIPLES_OF_TEN = [ 20, 30, 40, 50, 60, 70, 80, 90, 100 ];
-  var MULTIPLES_OF_HUNDRED = [ 200, 300, 400, 500, 600, 700, 800, 900, 1000 ];
-
+  // constants
   // how much 2 digit and single digit must offset from parent
   var NUMBER_IMAGE_OFFSET_DIMENSIONS = {
     0: new Vector2( 0, 0 ),
-    1: new Vector2( 90, 22 ),// how much a single digit image has to offset
-    2: new Vector2( 90, 50 )// how much a 2 digit has to offset from its parent (a 3 digit number)
+    1: new Vector2( 100, 22 ),// how much a single digit image has to offset
+    2: new Vector2( 95, 50 )// how much a 2 digit has to offset from its parent (a 3 digit number)
   };
 
   /**
@@ -146,60 +142,21 @@ define( function( require ) {
       return (this.numberValue !== 1);
     },
 
-    /**
-     * Handles how the number should be split and returns the new pulledout number
-     * Ex : 9 splits into 8 and 1, number 60 splits into 50 and 10 etc
-     *
-     * @returns {NumberPulledApartModel | null} // null means no value is pulled ot
-     */
-    pullApart: function() {
-      var amountToRemove = 0;
-      var amountRemaining = 1;
-
-      var numberPulledPartModel = null;
-
-      if ( this.numberValue === 1 ) {
-        return numberPulledPartModel;
-      }
-      if ( this.numberValue <= 10 && this.numberValue > 1 ) {
-        amountToRemove = 1;
-      }
-      else if ( this.numberValue > 10 && this.numberValue < 100 ) {
-        amountToRemove = this.numberValue % 10;
-      }
-      else if ( this.numberValue >= 100 && this.numberValue < 1000 ) {
-        amountToRemove = this.numberValue % 100;
-      }
-      else if ( this.numberValue >= 1000 && this.numberValue < 2000 ) {
-        amountToRemove = this.numberValue % 1000;
-      }
-
-      if ( amountToRemove < 1 ) {
-        amountToRemove = 1;
-      }
-
-      if ( _.contains( MULTIPLES_OF_TEN, this.numberValue ) ) {
-        amountToRemove = 10;
-      }
-
-      if ( _.contains( MULTIPLES_OF_HUNDRED, this.numberValue ) ) {
-        amountToRemove = 100;
-      }
-
-      amountRemaining = this.numberValue - amountToRemove;
-      numberPulledPartModel = new NumberPulledApartModel( this.numberValue, amountToRemove, amountRemaining );
-      return numberPulledPartModel;
-    },
-
 
     /**
      * At which point the split must happen
      * @param newPulledNumber
      * @returns {Vector2}
      */
-    getImagePartOffsetPosition: function( newPulledNumber ) {
+    getDigitOffsetPosition: function( newPulledNumber ) {
       var thisModel = this;
-      return thisModel.baseNumberPositions[ 2 ] || thisModel.baseNumberPositions[ 1 ];
+
+      //Multiples of 10 or 100 can be split from any position
+      if ( thisModel.numberValue % 10 === 0 ) {
+        return NUMBER_IMAGE_OFFSET_DIMENSIONS[ 0 ];
+      }
+      var digitDifference = (thisModel.numberValue + "").length - (newPulledNumber + "").length;
+      return NUMBER_IMAGE_OFFSET_DIMENSIONS[ digitDifference ];
     },
 
     /**
@@ -255,8 +212,6 @@ define( function( require ) {
       }
       return this.numberValue;
     }
-
-
   } );
 
 } );

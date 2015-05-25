@@ -9,19 +9,26 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var MakingTensUtil = require( 'MAKING_TENS/making-tens/common/MakingTensUtil' );
 
   /**
    *
-   * @param {number} originalNumber
    * @param {number} amountToRemove
    * @param {number} amountRemaining
    * @constructor
    */
-  function NumberPulledApartModel( originalNumber, amountToRemove, amountRemaining ) {
-    this.originalNumber = originalNumber;
+  function NumberPulledApartModel( amountToRemove, amountRemaining ) {
     this.amountToRemove = amountToRemove;
     this.amountRemaining = amountRemaining;
   }
 
-  return inherit( Object, NumberPulledApartModel, {} );
+  return inherit( Object, NumberPulledApartModel, {
+    /**
+     *
+     * @returns {boolean}
+     */
+    isEqualDigitLength: function() {
+      return MakingTensUtil.isEqualDigitLength( this.amountToRemove, this.amountRemaining );
+    }
+  } );
 } );
