@@ -9,7 +9,6 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var MakingTensUtil = require( 'MAKING_TENS/making-tens/common/MakingTensUtil' );
 
   /**
    *
@@ -28,7 +27,7 @@ define( function( require ) {
      * @returns {boolean}
      */
     isEqualDigitLength: function() {
-      return MakingTensUtil.isEqualDigitLength( this.amountToRemove, this.amountRemaining );
+      return (this.amountToRemove + "").length === (this.amountRemaining + "").length;
     }
   } );
 } );

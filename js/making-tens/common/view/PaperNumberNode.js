@@ -24,6 +24,7 @@ define( function( require ) {
   //based on where the user clicked on the node, determine if it is split or move
   var SPLIT_MODE_HEIGHT_PROPORTION = 0.4;
   var SPLIT_OPACITY_FACTOR = 5; // for a distance of 5 apply some transparency to make the split effect realistic
+  var MIN_SPLIT_DISTANCE = 6;
 
   /**
    *
@@ -36,6 +37,9 @@ define( function( require ) {
     var thisNode = this;
     thisNode.paperNumberModel = paperNumberModel;
     Node.call( thisNode );
+
+    addNumberModelCallBack = addNumberModelCallBack || _.noop();
+    combineNumbersIfApplicableCallback = combineNumbersIfApplicableCallback || _.noop();
 
     var imageNumberNode = new Node();
     thisNode.addChild( imageNumberNode );
@@ -65,60 +69,101 @@ define( function( require ) {
 
       startOffSet: null,
 
-      start: function( event, trail ) {
+      currentPoint: null,
+
+      splitObjectContext: null,
+
+
+      reset: function() {
         var thisHandler = this;
-        thisHandler.startOffSet = thisNode.globalToParentPoint( event.pointer.point );
+        thisHandler.startOffSet = null;
+        thisHandler.currentPoint = null;
+        thisHandler.splitObjectContext = null;
+        thisHandler.movableObject = null;
+      },
+
+      startMoving: function( paperNumberModel ) {
+        var thisHandler = this;
         thisHandler.movableObject = paperNumberModel;
         thisHandler.movableObject.userControlled = true;
+      },
+
+      start: function( event, trail ) {
+        var thisHandler = this;
+        thisHandler.reset();
+        thisHandler.startOffSet = thisNode.globalToParentPoint( event.pointer.point );
+        thisHandler.currentPoint = thisHandler.startOffSet.copy();
+
         if ( paperNumberModel.numberValue === 1 ) {
+          this.startMoving( paperNumberModel );
           return;
         }
 
         var numberPulledApart = ArithmeticRules.pullApartNumbers( paperNumberModel.numberValue );
+
+        // it cannot be split - so start moving
         if ( !numberPulledApart ) {
+          this.startMoving( paperNumberModel );
           return;
         }
 
+        //check if split needs to happen
         var amountToRemove = numberPulledApart.amountToRemove;
         var amountRemaining = numberPulledApart.amountRemaining;
 
-        // When splitting a single digit from a two, make sure the mouse is near that second digit
-        // in case of splitting equal digits (ex 30 splitting in to 20 and 10) we dont need to check this condition
+        // When splitting a single digit from a two, make sure the mouse is near that second digit (or third digit)
+        // In the case of splitting equal digits (ex 30 splitting in to 20 and 10) we dont need to check this condition
         var removalOffsetPosition = thisNode.paperNumberModel.getDigitOffsetPosition( amountToRemove );
         var totalBounds = thisNode.bounds;
         var splitRect = Bounds2.rect( totalBounds.x + removalOffsetPosition.x, totalBounds.y,
           totalBounds.width - removalOffsetPosition.x, totalBounds.height * SPLIT_MODE_HEIGHT_PROPORTION );
 
+        //if the below condition is true, start splitting
         if ( splitRect.containsPoint( thisHandler.startOffSet ) ) {
-
           var pulledOutPosition = thisNode.determinePulledOutNumberPosition( amountToRemove );
           var pulledApartPaperNumberModel = new PaperNumberModel( amountToRemove, pulledOutPosition, {
             opacity: 0.95
           } );
-          addNumberModelCallBack( pulledApartPaperNumberModel );
-          paperNumberModel.changeNumber( amountRemaining );
-          thisHandler.movableObject = pulledApartPaperNumberModel;
-          thisHandler.movableObject.userControlled = true;
+          thisHandler.splitObjectContext = {};
+          thisHandler.splitObjectContext.pulledApartPaperNumberModel = pulledApartPaperNumberModel;
+          thisHandler.splitObjectContext.amountRemaining = amountRemaining;
+
+          return;
         }
+
+        // none matched, start moving
+        this.startMoving( paperNumberModel );
+        return;
       },
 
       // Handler that moves the shape in model space.
       translate: function( translationParams ) {
         var thisHandler = this;
-        var movableObject = thisHandler.movableObject;
 
         // How far it has moved from the original position
         var delta = translationParams.delta;
-        var currentPoint = thisHandler.startOffSet.plus( delta );
+        thisHandler.currentPoint = thisHandler.currentPoint.plus( delta );
+        var transDistance = thisHandler.currentPoint.distance( thisHandler.startOffSet );
 
-        var transDistance = currentPoint.distance( thisHandler.startOffSet );
-        movableObject.setDestination( movableObject.position.plus( delta ), false );
-
-        // if it is a new created object, change the opacity
-        if ( movableObject !== paperNumberModel ) {
-          // gradually increase the opacity from 0.8 to 1 as we move away from the number, otherwise the change looks sudden
-          movableObject.opacity = 0.9 + (0.005 * Math.min( 20, transDistance / SPLIT_OPACITY_FACTOR ));
+        //if it is splitMode
+        if ( thisHandler.splitObjectContext && transDistance > MIN_SPLIT_DISTANCE ) {
+          addNumberModelCallBack( thisHandler.splitObjectContext.pulledApartPaperNumberModel );
+          paperNumberModel.changeNumber( thisHandler.splitObjectContext.amountRemaining );
+          this.startMoving( thisHandler.splitObjectContext.pulledApartPaperNumberModel );
+          thisHandler.splitObjectContext = null;
         }
+
+        //in case of split mode, the movableObject is set, only if the move started after a certain distance
+        if ( thisHandler.movableObject ) {
+          var movableObject = thisHandler.movableObject;
+          movableObject.setDestination( movableObject.position.plus( delta ), false );
+          // if it is a new created object, change the opacity
+          if ( movableObject !== paperNumberModel ) {
+            // gradually increase the opacity from 0.8 to 1 as we move away from the number, otherwise the change looks sudden
+            movableObject.opacity = 0.9 + (0.005 * Math.min( 20, transDistance / SPLIT_OPACITY_FACTOR ));
+          }
+        }
+
         return translationParams.position;
       },
 
@@ -131,6 +176,7 @@ define( function( require ) {
           combineNumbersIfApplicableCallback( movableObject, droppedPoint );
         }
 
+        thisHandler.reset();
       }
 
     } ) );
@@ -138,6 +184,7 @@ define( function( require ) {
   }
 
   return inherit( Node, PaperNumberNode, {
+
     /**
      *
      * @param newPulledNumber
