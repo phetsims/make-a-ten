@@ -11,11 +11,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var HSlider = require( 'SUN/HSlider' );
-  var Property = require( 'AXON/Property' );
   var Panel = require( 'SUN/Panel' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var PaperNumberNode = require( 'MAKING_TENS/making-tens/common/view/PaperNumberNode' );
   var SumEquationNode = require( 'MAKING_TENS/making-tens/explore/view/SumEquationNode' );
   var MakingTensExplorerNode = require( 'MAKING_TENS/making-tens/explore/view/MakingTensExplorerNode' );
@@ -26,12 +23,9 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-  // images
-  var mockupImage = require( 'image!MAKING_TENS/explore-mockup.png' );
 
   // strings
   var hideTotalString = require( 'string!MAKING_TENS/making-tens.hide.total' );
-
 
   /**
    * @param {MakingTensExploreModel} makingTensExploreModel
@@ -109,13 +103,6 @@ define( function( require ) {
 
 
     self.addChild( self.paperNumberLayerNode );
-
-    //Show the mock-up and a slider to change its transparency
-    var mockupOpacityProperty = new Property( 0.4 );
-    var image = new Image( mockupImage, { pickable: false } );
-    mockupOpacityProperty.linkAttribute( image, 'opacity' );
-    this.addChild( image );
-    this.addChild( new HSlider( mockupOpacityProperty, { min: 0, max: 1 }, { top: 10, left: 500 } ) );
 
     var sumTextNode = new Text( hideTotalString, { font: new PhetFont( { size: 25, weight: 'bold' } ), fill: "black" } );
     var showSumCheckBox = new Checkbox( sumTextNode, self.makingTensExploreModel.hideTotalProperty, {
