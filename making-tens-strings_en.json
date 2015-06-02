@@ -10,5 +10,8 @@
   },
   "making-tens.game.name":{
     "value":"Game"
+  },
+  "making-tens.hide.total":{
+    "value":"Hide Total"
   }
 }

@@ -22,9 +22,15 @@ define( function( require ) {
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var Checkbox = require( 'SUN/CheckBox' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Text = require( 'SCENERY/nodes/Text' );
 
   // images
   var mockupImage = require( 'image!MAKING_TENS/explore-mockup.png' );
+
+  // strings
+  var hideTotalString = require( 'string!MAKING_TENS/making-tens.hide.total' );
 
 
   /**
@@ -110,6 +116,20 @@ define( function( require ) {
     mockupOpacityProperty.linkAttribute( image, 'opacity' );
     this.addChild( image );
     this.addChild( new HSlider( mockupOpacityProperty, { min: 0, max: 1 }, { top: 10, left: 500 } ) );
+
+    var sumTextNode = new Text( hideTotalString, { font: new PhetFont( { size: 25, weight: 'bold' } ), fill: "black" } );
+    var showSumCheckBox = new Checkbox( sumTextNode, self.makingTensExploreModel.hideTotalProperty, {
+      spacing: 10,
+      boxWidth: 30
+    } );
+    this.addChild( showSumCheckBox );
+
+    showSumCheckBox.right = this.layoutBounds.maxX - 110;
+    showSumCheckBox.bottom = this.layoutBounds.maxY - 20;
+
+    self.makingTensExploreModel.hideTotalProperty.link( function( hideTotal ) {
+      sumEquationNode.visible = !hideTotal;
+    } );
 
     // Create and add the Reset All Button in the bottom right, which resets the model
     var resetAllButton = new ResetAllButton( {

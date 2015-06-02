@@ -20,7 +20,8 @@ define( function( require ) {
   function MakingTensExploreModel( explorerScreenBounds ) {
     var self = this;
     PropertySet.call( this, {
-      sum: 0
+      sum: 0,
+      hideTotal: false
     } );
 
     this.explrorerScreenBounds = explorerScreenBounds;
