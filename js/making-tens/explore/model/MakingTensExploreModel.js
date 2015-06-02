@@ -18,11 +18,18 @@ define( function( require ) {
    * @constructor
    */
   function MakingTensExploreModel( explorerScreenBounds ) {
-    PropertySet.call( this, {} );
+    var self = this;
+    PropertySet.call( this, {
+      sum: 0
+    } );
 
     this.explrorerScreenBounds = explorerScreenBounds;
     // Observable array of the numbers that have been placed
     this.residentNumberModels = new ObservableArray(); // @public, read only
+
+    this.residentNumberModels.lengthProperty.link( function() {
+      self.calculateTotal();
+    } );
 
   }
 
@@ -31,6 +38,18 @@ define( function( require ) {
     // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
     step: function( dt ) {
       this.residentNumberModels.forEach( function( numberModel ) { numberModel.step( dt ); } );
+    },
+
+    /**
+     * Every time the user creates a new paperModel call this to update the sum
+     */
+    calculateTotal: function() {
+      var self = this;
+      var total = 0;
+      self.residentNumberModels.forEach( function( model ) {
+        total += model.numberValue;
+      } );
+      self.sum = total;
     },
 
     /**
@@ -60,6 +79,12 @@ define( function( require ) {
         if ( !paperNumberModel.userControlled ) {
           // The number has been returned to the collection.
           self.residentNumberModels.remove( paperNumberModel );
+        }
+      } );
+
+      paperNumberModel.on( 'changeValue', function() {
+        if ( !paperNumberModel.userControlled ) {
+          self.calculateTotal();
         }
       } );
     },

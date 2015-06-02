@@ -166,6 +166,7 @@ define( function( require ) {
     changeNumber: function( newNumber ) {
       this.decomposeIntoBaseNumbers( newNumber );
       this.numberValue = newNumber;
+      this.trigger( "changeValue" );
     },
 
     /**

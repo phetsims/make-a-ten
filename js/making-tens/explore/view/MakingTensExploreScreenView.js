@@ -17,6 +17,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Image = require( 'SCENERY/nodes/Image' );
   var PaperNumberNode = require( 'MAKING_TENS/making-tens/common/view/PaperNumberNode' );
+  var SumEquationNode = require( 'MAKING_TENS/making-tens/explore/view/SumEquationNode' );
   var MakingTensExplorerNode = require( 'MAKING_TENS/making-tens/explore/view/MakingTensExplorerNode' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
@@ -66,17 +67,23 @@ define( function( require ) {
     // Observe new items
     makingTensExploreModel.residentNumberModels.addItemAddedListener( handlePaperNumberAdded );
 
+    var sumEquationNode = new SumEquationNode( makingTensExploreModel );
+    self.addChild( sumEquationNode );
+    sumEquationNode.left = this.layoutBounds.minX + 20;
+    sumEquationNode.top = this.layoutBounds.minY + 20;
+
     // shape carousel
     var shapeContainerCarousel = new Node();
     self.addChild( shapeContainerCarousel );
 
+
     var explorerNodes = [];
     // Create the composite nodes that contain the number collections
-    var exploreHundredsNode = new MakingTensExplorerNode( 100, addUserCreatedNumberModel,combineNumbersIfApplicableCallback );
+    var exploreHundredsNode = new MakingTensExplorerNode( 100, addUserCreatedNumberModel, combineNumbersIfApplicableCallback );
     explorerNodes.push( exploreHundredsNode );
-    var exploreTensNode = new MakingTensExplorerNode( 10, addUserCreatedNumberModel,combineNumbersIfApplicableCallback );
+    var exploreTensNode = new MakingTensExplorerNode( 10, addUserCreatedNumberModel, combineNumbersIfApplicableCallback );
     explorerNodes.push( exploreTensNode );
-    var exploreOnesNode = new MakingTensExplorerNode( 1, addUserCreatedNumberModel,combineNumbersIfApplicableCallback );
+    var exploreOnesNode = new MakingTensExplorerNode( 1, addUserCreatedNumberModel, combineNumbersIfApplicableCallback );
     explorerNodes.push( exploreOnesNode );
 
 
