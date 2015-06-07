@@ -11,9 +11,18 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var HSlider = require( 'SUN/HSlider' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var Property = require( 'AXON/Property' );
   var Image = require( 'SCENERY/nodes/Image' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+
+  // constants
+  var EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
+  var EQUATION_COLOR = "rgb(63,63,183)";
 
   // images
   var mockupImage = require( 'image!MAKING_TENS/adding-mockup.png' );
@@ -25,6 +34,49 @@ define( function( require ) {
   function MakingTensAddingScreenView( makingTensAddingModel ) {
 
     ScreenView.call( this );
+
+    var leftEditNumberButton = new RectangularPushButton( {
+      content: new Rectangle( 0, 0, 32, 28 ),
+      listener: function() {},
+      baseColor: 'white'
+    } );
+
+    var rightEditNumberButton = new RectangularPushButton( {
+      content: new Rectangle( 0, 0, 32, 28 ),
+      listener: function() {},
+      baseColor: 'white'
+    } );
+
+    var editButtonBox = new HBox( { children: [ leftEditNumberButton, rightEditNumberButton ], spacing: 45 } );
+    this.addChild( editButtonBox );
+    editButtonBox.left = this.layoutBounds.minX + 75;
+    editButtonBox.top = this.layoutBounds.minY + 32;
+
+    var leftNumberDisplay = new Rectangle( 0, 0, 85, 78, 10, 10, {
+      fill: '#fff',
+      stroke: '#000',
+      lineDash: [ 5, 5 ],
+      lineWidth: 2
+    } );
+    var rightNumberDisplay = new Rectangle( 0, 0, 85, 78, 10, 10, {
+      fill: '#fff',
+      stroke: '#000',
+      lineDash: [ 5, 5 ],
+      lineWidth: 2
+    } );
+
+    var pluTextNode = new Text( '+', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
+    var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
+    var emptyNode = new Text( '', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
+
+    var numberDisplayBox = new HBox( {
+      children: [ leftNumberDisplay, pluTextNode,
+        rightNumberDisplay, emptyNode, equalsSignNode ], spacing: 5
+    } );
+    this.addChild( numberDisplayBox );
+
+    numberDisplayBox.left = this.layoutBounds.minX + 38;
+    numberDisplayBox.top = this.layoutBounds.minY + 85;
 
     // Create and add the Reset All Button in the bottom right, which resets the model
     var resetAllButton = new ResetAllButton( {

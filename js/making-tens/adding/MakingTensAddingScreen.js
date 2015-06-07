@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
   var MakingTensAddingModel = require( 'MAKING_TENS/making-tens/adding/model/MakingTensAddingModel' );
   var MakingTensAddingScreenView = require( 'MAKING_TENS/making-tens/adding/view/MakingTensAddingScreenView' );
+  var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -45,7 +46,7 @@ define( function( require ) {
     Screen.call( this, makingTensAddingScreenTitleString, icon,
       function() { return new MakingTensAddingModel(); },
       function( model ) { return new MakingTensAddingScreenView( model ); },
-      { backgroundColor: 'white' }
+      { backgroundColor: MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR }
     );
   }
 
