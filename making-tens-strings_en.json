@@ -13,5 +13,9 @@
   },
   "making-tens.hide.total":{
     "value":"Hide Total"
+  },
+  "making-tens.keypad.submit":{
+    "value":"Submit"
   }
+
 }

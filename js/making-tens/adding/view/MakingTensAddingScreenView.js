@@ -19,6 +19,7 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var KeyBoardPanel = require( 'MAKING_TENS/making-tens/adding/view/KeyBoardPanel' );
 
   // constants
   var EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
@@ -77,6 +78,11 @@ define( function( require ) {
 
     numberDisplayBox.left = this.layoutBounds.minX + 38;
     numberDisplayBox.top = this.layoutBounds.minY + 85;
+
+    var keyBoardPanel = new KeyBoardPanel();
+    this.addChild( keyBoardPanel );
+    keyBoardPanel.centerX = numberDisplayBox.centerX - 25;
+    keyBoardPanel.top = numberDisplayBox.top + 120;
 
     // Create and add the Reset All Button in the bottom right, which resets the model
     var resetAllButton = new ResetAllButton( {
