@@ -9,20 +9,17 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var ScreenView = require( 'JOIST/ScreenView' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Panel = require( 'SUN/Panel' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var PaperNumberNode = require( 'MAKING_TENS/making-tens/common/view/PaperNumberNode' );
+  var MakingTensCommonView = require( 'MAKING_TENS/making-tens/common/view/MakingTensCommonView' );
   var SumEquationNode = require( 'MAKING_TENS/making-tens/explore/view/SumEquationNode' );
   var MakingTensExplorerNode = require( 'MAKING_TENS/making-tens/explore/view/MakingTensExplorerNode' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
-  var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Checkbox = require( 'SUN/CheckBox' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
-
 
   // strings
   var hideTotalString = require( 'string!MAKING_TENS/making-tens.hide.total' );
@@ -33,39 +30,8 @@ define( function( require ) {
    */
   function MakingTensExploreScreenView( makingTensExploreModel ) {
     var self = this;
-    ScreenView.call( this, { layoutBounds: MakingTensSharedConstants.LAYOUT_BOUNDS } );
-    self.makingTensExploreModel = makingTensExploreModel;
-
-    self.paperNumberLayerNode = new Node();
-
-    var addUserCreatedNumberModel = makingTensExploreModel.addUserCreatedNumberModel.bind( makingTensExploreModel );
-    var combineNumbersIfApplicableCallback = this.combineNumbersIfApplicable.bind( this );
-
-    function handlePaperNumberAdded( addedNumberModel ) {
-      // Add a representation of the number.
-      var paperNumberNode = new PaperNumberNode( addedNumberModel, addUserCreatedNumberModel, combineNumbersIfApplicableCallback );
-      self.paperNumberLayerNode.addChild( paperNumberNode );
-
-      // Move the shape to the front of this layer when grabbed by the user.
-      addedNumberModel.userControlledProperty.link( function( userControlled ) {
-        if ( userControlled ) {
-          paperNumberNode.moveToFront();
-        }
-      } );
-
-      makingTensExploreModel.residentNumberModels.addItemRemovedListener( function removalListener( removedNumberModel ) {
-        if ( removedNumberModel === addedNumberModel ) {
-          self.paperNumberLayerNode.removeChild( paperNumberNode );
-          makingTensExploreModel.residentNumberModels.removeItemRemovedListener( removalListener );
-        }
-      } );
-    }
-
-    //Initial Number Node creation
-    makingTensExploreModel.residentNumberModels.forEach( handlePaperNumberAdded );
-
-    // Observe new items
-    makingTensExploreModel.residentNumberModels.addItemAddedListener( handlePaperNumberAdded );
+    var paperNumberNodeLayer = new Node();
+    MakingTensCommonView.call( this, makingTensExploreModel, MakingTensSharedConstants.LAYOUT_BOUNDS, paperNumberNodeLayer );
 
     var sumEquationNode = new SumEquationNode( makingTensExploreModel );
     self.addChild( sumEquationNode );
@@ -75,15 +41,15 @@ define( function( require ) {
     // shape carousel
     var shapeContainerCarousel = new Node();
     self.addChild( shapeContainerCarousel );
-
+    self.addChild( paperNumberNodeLayer );
 
     var explorerNodes = [];
     // Create the composite nodes that contain the number collections
-    var exploreHundredsNode = new MakingTensExplorerNode( 100, addUserCreatedNumberModel, combineNumbersIfApplicableCallback );
+    var exploreHundredsNode = new MakingTensExplorerNode( 100, self.addUserCreatedNumberModel, self.combineNumbersIfApplicableCallback );
     explorerNodes.push( exploreHundredsNode );
-    var exploreTensNode = new MakingTensExplorerNode( 10, addUserCreatedNumberModel, combineNumbersIfApplicableCallback );
+    var exploreTensNode = new MakingTensExplorerNode( 10, self.addUserCreatedNumberModel, self.combineNumbersIfApplicableCallback );
     explorerNodes.push( exploreTensNode );
-    var exploreOnesNode = new MakingTensExplorerNode( 1, addUserCreatedNumberModel, combineNumbersIfApplicableCallback );
+    var exploreOnesNode = new MakingTensExplorerNode( 1, self.addUserCreatedNumberModel, self.combineNumbersIfApplicableCallback );
     explorerNodes.push( exploreOnesNode );
 
 
@@ -102,10 +68,8 @@ define( function( require ) {
     } ) );
 
 
-    self.addChild( self.paperNumberLayerNode );
-
     var sumTextNode = new Text( hideTotalString, { font: new PhetFont( { size: 25, weight: 'bold' } ), fill: "black" } );
-    var showSumCheckBox = new Checkbox( sumTextNode, self.makingTensExploreModel.hideTotalProperty, {
+    var showSumCheckBox = new Checkbox( sumTextNode, makingTensExploreModel.hideTotalProperty, {
       spacing: 10,
       boxWidth: 30
     } );
@@ -114,7 +78,7 @@ define( function( require ) {
     showSumCheckBox.right = this.layoutBounds.maxX - 110;
     showSumCheckBox.bottom = this.layoutBounds.maxY - 20;
 
-    self.makingTensExploreModel.hideTotalProperty.link( function( hideTotal ) {
+    makingTensExploreModel.hideTotalProperty.link( function( hideTotal ) {
       sumEquationNode.visible = !hideTotal;
     } );
 
@@ -128,58 +92,14 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
-
   }
 
-  return inherit( ScreenView, MakingTensExploreScreenView, {
+  return inherit( MakingTensCommonView, MakingTensExploreScreenView, {
 
     // Called by the animation loop. Optional, so if your view has no animation, you can omit this.
     step: function( dt ) {
       // Handle view animation here.
-    },
-
-    findPaperNumberNode: function( paperNumberModel ) {
-      var self = this;
-      var allPaperNumberNodes = self.paperNumberLayerNode.children;
-      var node = _.find( allPaperNumberNodes, function( node ) {
-        return node.paperNumberModel === paperNumberModel;
-      } );
-      return node;
-    },
-
-    /**
-     * When user drops a node on another node , add if the arthimetic rules match
-     * @param {PaperNumberNode} draggedPaperNumberModel
-     * @param {Vector} droppedPoint (on screen coordinates)
-     */
-    combineNumbersIfApplicable: function( draggedPaperNumberModel, droppedPoint ) {
-      var self = this;
-      var draggedNode = self.findPaperNumberNode( draggedPaperNumberModel );
-      var allPaperNumberNodes = self.paperNumberLayerNode.children;
-      var droppedNodes = draggedNode.findAttachableNodes( allPaperNumberNodes, droppedPoint );
-
-      //check them in reverse order (the one on the top should get more priority)
-      droppedNodes.reverse();
-
-      for ( var i = 0; i < droppedNodes.length; i++ ) {
-        var numberA = draggedPaperNumberModel.numberValue;
-        var numberB = droppedNodes[ i ].paperNumberModel.numberValue;
-        if ( ArithmeticRules.canAddNumbers( numberA, numberB ) ) {
-          var droppedPaperNumberModel = droppedNodes[ i ].paperNumberModel;
-          self.makingTensExploreModel.collapseNumberModels( draggedPaperNumberModel, droppedPaperNumberModel );
-          return;
-        }
-        else {
-          // explode away the smaller model - show rejection
-          var smallerModel = draggedNode.paperNumberModel;
-          if ( draggedNode.paperNumberModel.numberValue > droppedNodes[ i ].paperNumberModel.numberValue ) {
-            smallerModel = droppedNodes[ i ].paperNumberModel;
-          }
-          self.makingTensExploreModel.moveAway( smallerModel );
-          return;
-        }
-      }
-
     }
+
   } );
 } );

@@ -9,9 +9,9 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var ScreenView = require( 'JOIST/ScreenView' );
   var HSlider = require( 'SUN/HSlider' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var Image = require( 'SCENERY/nodes/Image' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -22,6 +22,7 @@ define( function( require ) {
   var KeyBoardPanel = require( 'MAKING_TENS/making-tens/adding/view/KeyBoardPanel' );
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
+  var MakingTensCommonView = require( 'MAKING_TENS/making-tens/common/view/MakingTensCommonView' );
 
   // constants
   var EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
@@ -39,8 +40,8 @@ define( function( require ) {
    * @constructor
    */
   function MakingTensAddingScreenView( makingTensAddingModel ) {
-
-    ScreenView.call( this );
+    var paperNumberLayerNode = new Node();
+    MakingTensCommonView.call( this, makingTensAddingModel, MakingTensSharedConstants.LAYOUT_BOUNDS, paperNumberLayerNode );
 
     // type is either "lt" or "rt" - (left or right)
     function createEditNumberButton( termProperty, type ) {
@@ -156,6 +157,7 @@ define( function( require ) {
 
     backGroundRectangle.addInputListener( new DownUpListener( {
         down: function( event, trail ) {
+          console.log( event );
           if ( event.target === backGroundRectangle ) {
             makingTensAddingModel.activeTerm = "none"; // this will close the keyboard button
           }
@@ -181,7 +183,7 @@ define( function( require ) {
     this.addChild( new HSlider( mockupOpacityProperty, { min: 0, max: 1 }, { top: 10, left: 500 } ) );
   }
 
-  return inherit( ScreenView, MakingTensAddingScreenView, {
+  return inherit( MakingTensCommonView, MakingTensAddingScreenView, {
 
     // Called by the animation loop. Optional, so if your view has no animation, you can omit this.
     step: function( dt ) {

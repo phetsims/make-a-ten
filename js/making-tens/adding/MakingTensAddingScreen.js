@@ -42,9 +42,9 @@ define( function( require ) {
     //If this is a single-screen sim, then no icon is necessary.
     //If there are multiple screens, then the icon must be provided here.
     var icon = createScreenIcon();
-
+    var makingTensAddingScreenBounds = MakingTensSharedConstants.LAYOUT_BOUNDS;
     Screen.call( this, makingTensAddingScreenTitleString, icon,
-      function() { return new MakingTensAddingModel(); },
+      function() { return new MakingTensAddingModel(makingTensAddingScreenBounds); },
       function( model ) { return new MakingTensAddingScreenView( model ); },
       { backgroundColor: MakingTensSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR }
     );

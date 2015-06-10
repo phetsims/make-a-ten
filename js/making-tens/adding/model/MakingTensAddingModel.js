@@ -9,25 +9,26 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var MakingTensCommonModel = require( 'MAKING_TENS/making-tens/common/model/MakingTensCommonModel' );
 
   /**
+   *
+   * @param addingScreenBounds
    * @constructor
    */
-  function MakingTensAddingModel() {
-
-    PropertySet.call( this, {
+  function MakingTensAddingModel( addingScreenBounds ) {
+    MakingTensCommonModel.call( this, addingScreenBounds, {
       leftTerm: 0,
       rightTerm: 0,
       activeTerm: "none"
     } );
   }
 
-  return inherit( PropertySet, MakingTensAddingModel, {
+  return inherit( MakingTensCommonModel, MakingTensAddingModel, {
 
     // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
     step: function( dt ) {
-      // Handle model animation here.
+      MakingTensCommonModel.prototype.step.call( this, dt );
     }
   } );
 } );
