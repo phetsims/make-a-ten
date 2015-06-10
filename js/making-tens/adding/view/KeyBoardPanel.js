@@ -23,14 +23,13 @@ define( function( require ) {
   var submitString = require( 'string!MAKING_TENS/making-tens.keypad.submit' );
 
   /**
-   * @param {Object} [options]
+   * @param {Function} onSubmit
    * @constructor
    */
-  function KeyBoardPanel( options ) {
+  function KeyBoardPanel( onSubmit,maxDigits ) {
 
-    var numberEntryControl = new NumberEntryControl( {
-      maxDigits: 3
-    } );
+    var self = this;
+    this.numberEntryControl = new NumberEntryControl( { maxDigits: maxDigits } );
 
     var buttonOptions = {
       font: new PhetFont( 18 ),
@@ -40,15 +39,15 @@ define( function( require ) {
 
     var submitNumberButton = new TextPushButton( submitString, _.extend( {
       listener: function() {
-
+        onSubmit( self.numberEntryControl.getValue() );
       }
     }, buttonOptions ) );
 
-    submitNumberButton.top = numberEntryControl.bottom + 10;
-    submitNumberButton.left = (numberEntryControl.bounds.width - submitNumberButton.bounds.width) / 2;
+    submitNumberButton.top = self.numberEntryControl.bottom + 10;
+    submitNumberButton.left = (self.numberEntryControl.bounds.width - submitNumberButton.bounds.width) / 2;
 
     var numberControlGroup = new Node( {
-      children: [ numberEntryControl, submitNumberButton ]
+      children: [ self.numberEntryControl, submitNumberButton ]
     } );
 
     Panel.call( this, numberControlGroup, {
@@ -61,6 +60,15 @@ define( function( require ) {
     } );
   }
 
-  return inherit( Panel, KeyBoardPanel, {} );
+  return inherit( Panel, KeyBoardPanel, {
+    /**
+     * Sets the readout value of the keypad
+     * @param value
+     */
+    setValue:function(value){
+      this.numberEntryControl.setValue(value);
+    }
+
+  } );
 
 } );

@@ -46,7 +46,7 @@ define( function( require ) {
     Screen.call( this, makingTensAddingScreenTitleString, icon,
       function() { return new MakingTensAddingModel(); },
       function( model ) { return new MakingTensAddingScreenView( model ); },
-      { backgroundColor: MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR }
+      { backgroundColor: MakingTensSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR }
     );
   }
 

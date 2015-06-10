@@ -20,10 +20,16 @@ define( function( require ) {
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var KeyBoardPanel = require( 'MAKING_TENS/making-tens/adding/view/KeyBoardPanel' );
+  var DownUpListener = require( 'SCENERY/input/DownUpListener' );
+  var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
 
   // constants
   var EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
+  var TERM_FONT = new PhetFont( { size: 35, weight: 'bold' } );
   var EQUATION_COLOR = "rgb(63,63,183)";
+  var activeNumberDisplayStyle = { fill: null, stroke: '#000', lineDash: [ 5, 5 ] };
+  var normalNumberDisplayStyle = { fill: null, stroke: null, lineDash: [ 0, 0 ] };
+  var MAX_DIGITS = 3;
 
   // images
   var mockupImage = require( 'image!MAKING_TENS/adding-mockup.png' );
@@ -36,53 +42,126 @@ define( function( require ) {
 
     ScreenView.call( this );
 
-    var leftEditNumberButton = new RectangularPushButton( {
-      content: new Rectangle( 0, 0, 32, 28 ),
-      listener: function() {},
-      baseColor: 'white'
-    } );
+    // type is either "lt" or "rt" - (left or right)
+    function createEditNumberButton( termProperty, type ) {
+      var editNumberButton = new RectangularPushButton( {
+        content: new Rectangle( 0, 0, 32, 28 ),
+        listener: function() {
+          termProperty.set( type );
+        },
+        baseColor: 'white'
+      } );
+      return editNumberButton;
+    }
 
-    var rightEditNumberButton = new RectangularPushButton( {
-      content: new Rectangle( 0, 0, 32, 28 ),
-      listener: function() {},
-      baseColor: 'white'
-    } );
+    // mouse down on background is used for dismissing the active keyboard
+    var backGroundRectangle = new Rectangle( this.layoutBounds.minX,
+      this.layoutBounds.minY, this.layoutBounds.width, this.layoutBounds.height, 0, 0, {
+        lineWidth: 0,
+        fill: MakingTensSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR
+      } );
+
+    this.addChild( backGroundRectangle );
+
+    var leftEditNumberButton = createEditNumberButton( makingTensAddingModel.activeTermProperty, "lt" );
+    var rightEditNumberButton = createEditNumberButton( makingTensAddingModel.activeTermProperty, "rt" );
 
     var editButtonBox = new HBox( { children: [ leftEditNumberButton, rightEditNumberButton ], spacing: 45 } );
     this.addChild( editButtonBox );
     editButtonBox.left = this.layoutBounds.minX + 75;
     editButtonBox.top = this.layoutBounds.minY + 32;
 
-    var leftNumberDisplay = new Rectangle( 0, 0, 85, 78, 10, 10, {
+    var leftNumberDisplayBackground = new Rectangle( 0, 0, 85, 78, 10, 10, {
       fill: '#fff',
       stroke: '#000',
       lineDash: [ 5, 5 ],
       lineWidth: 2
     } );
-    var rightNumberDisplay = new Rectangle( 0, 0, 85, 78, 10, 10, {
+
+    var rightNumberDisplayBackGround = new Rectangle( 0, 0, 85, 78, 10, 10, {
       fill: '#fff',
       stroke: '#000',
       lineDash: [ 5, 5 ],
       lineWidth: 2
     } );
+
+    var leftTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
+    var rightTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
+    leftTermTextNode.setDirection( "rtl" );
+    this.addChild( leftTermTextNode );
+    this.addChild( rightTermTextNode );
 
     var pluTextNode = new Text( '+', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
     var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
     var emptyNode = new Text( '', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
 
+    var spacing = 5;
     var numberDisplayBox = new HBox( {
-      children: [ leftNumberDisplay, pluTextNode,
-        rightNumberDisplay, emptyNode, equalsSignNode ], spacing: 5
+      children: [ leftNumberDisplayBackground, pluTextNode,
+        rightNumberDisplayBackGround, emptyNode, equalsSignNode ], spacing: spacing
     } );
     this.addChild( numberDisplayBox );
 
     numberDisplayBox.left = this.layoutBounds.minX + 38;
     numberDisplayBox.top = this.layoutBounds.minY + 85;
 
-    var keyBoardPanel = new KeyBoardPanel();
+    leftTermTextNode.left = numberDisplayBox.left + leftNumberDisplayBackground.width / 1.2;
+    leftTermTextNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 2;
+
+    rightTermTextNode.left = numberDisplayBox.left + rightNumberDisplayBackGround.left + rightNumberDisplayBackGround.width / 8;
+    rightTermTextNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 2;
+
+    function onNumberSubmit( value ) {
+      if ( makingTensAddingModel.activeTerm === "lt" ) {
+        makingTensAddingModel.leftTerm = value;
+      }
+      if ( makingTensAddingModel.activeTerm === "rt" ) {
+        makingTensAddingModel.rightTerm = value;
+      }
+
+      makingTensAddingModel.activeTerm = "none";
+    }
+
+    var keyBoardPanel = new KeyBoardPanel( onNumberSubmit, MAX_DIGITS );
     this.addChild( keyBoardPanel );
     keyBoardPanel.centerX = numberDisplayBox.centerX - 25;
     keyBoardPanel.top = numberDisplayBox.top + 120;
+
+    makingTensAddingModel.activeTermProperty.link( function( term ) {
+      leftNumberDisplayBackground.mutate( normalNumberDisplayStyle );
+      rightNumberDisplayBackGround.mutate( normalNumberDisplayStyle );
+      if ( term === "none" ) {
+        keyBoardPanel.visible = false;
+        return;
+      }
+
+      keyBoardPanel.visible = true;
+      if ( term === "lt" ) {
+        leftNumberDisplayBackground.mutate( activeNumberDisplayStyle );
+        keyBoardPanel.setValue( leftTermTextNode.text );
+      }
+      if ( term === "rt" ) {
+        rightNumberDisplayBackGround.mutate( activeNumberDisplayStyle );
+        keyBoardPanel.setValue( rightTermTextNode.text );
+      }
+    } );
+
+    makingTensAddingModel.leftTermProperty.link( function( term ) {
+      leftTermTextNode.text = term;
+    } );
+
+    makingTensAddingModel.rightTermProperty.link( function( term ) {
+      rightTermTextNode.text = term;
+    } );
+
+    backGroundRectangle.addInputListener( new DownUpListener( {
+        down: function( event, trail ) {
+          if ( event.target === backGroundRectangle ) {
+            makingTensAddingModel.activeTerm = "none"; // this will close the keyboard button
+          }
+        }
+      }
+    ) );
 
     // Create and add the Reset All Button in the bottom right, which resets the model
     var resetAllButton = new ResetAllButton( {

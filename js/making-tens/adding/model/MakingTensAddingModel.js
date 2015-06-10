@@ -16,7 +16,11 @@ define( function( require ) {
    */
   function MakingTensAddingModel() {
 
-    PropertySet.call( this, {} );
+    PropertySet.call( this, {
+      leftTerm: 0,
+      rightTerm: 0,
+      activeTerm: "none"
+    } );
   }
 
   return inherit( PropertySet, MakingTensAddingModel, {

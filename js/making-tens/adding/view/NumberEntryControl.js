@@ -68,6 +68,11 @@ define( function( require ) {
     getValue: function() {
       return this.value;
     },
+
+    setValue: function( value ) {
+      this.keypad.digitString.set( value );
+    },
+
     clear: function() {
       this.keypad.clear();
     },
