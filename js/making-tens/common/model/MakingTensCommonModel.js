@@ -16,13 +16,13 @@ define( function( require ) {
 
   /**
    *
-   * @param {Bounds2} explorerScreenBounds
+   * @param {Bounds2} screenBounds
    * @param {Object} props
    * @constructor
    */
-  function MakingTensCommonModel( explorerScreenBounds, props ) {
+  function MakingTensCommonModel( screenBounds, props ) {
     PropertySet.call( this, props );
-    this.explrorerScreenBounds = explorerScreenBounds;
+    this.screenBounds = screenBounds;
 
     // Observable array of the numbers that have been placed
     this.residentNumberModels = new ObservableArray();
@@ -64,12 +64,6 @@ define( function( require ) {
           self.residentNumberModels.remove( paperNumberModel );
         }
       } );
-
-      paperNumberModel.on( 'changeValue', function() {
-        if ( !paperNumberModel.userControlled ) {
-          self.calculateTotal();
-        }
-      } );
     },
 
     /**
@@ -78,11 +72,16 @@ define( function( require ) {
      */
     moveAway: function( paperNumberModel ) {
       var offsetDistance = MakingTensSharedConstants.MOVE_AWAY_DISTANCE;
-      if ( paperNumberModel.position.x + offsetDistance > this.explrorerScreenBounds.width / 2 ) {
+      if ( paperNumberModel.position.x + offsetDistance > this.screenBounds.width / 2 ) {
         offsetDistance *= -1;
       }
       var delta = new Vector2( offsetDistance, 0 );
       paperNumberModel.setDestination( paperNumberModel.position.plus( delta ), true );
+    },
+
+
+    clearNumbers:function(){
+      this.residentNumberModels.clear();
     }
 
   } );

@@ -45,6 +45,21 @@ define( function( require ) {
         total += model.numberValue;
       } );
       self.sum = total;
+    },
+
+    addUserCreatedNumberModel: function( paperNumberModel ) {
+      MakingTensCommonModel.prototype.addUserCreatedNumberModel.call( this, paperNumberModel );
+      var self = this;
+      paperNumberModel.on( 'changeValue', function() {
+        if ( !paperNumberModel.userControlled ) {
+          self.calculateTotal();
+        }
+      } );
+    },
+
+    reset: function() {
+      this.residentNumberModels.clear();
+      this.sum = 0;
     }
 
   } );

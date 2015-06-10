@@ -63,6 +63,7 @@ define( function( require ) {
       } );
 
     this.addChild( backGroundRectangle );
+    this.addChild( paperNumberLayerNode );
 
     var leftEditNumberButton = createEditNumberButton( makingTensAddingModel.activeTermProperty, "lt" );
     var rightEditNumberButton = createEditNumberButton( makingTensAddingModel.activeTermProperty, "rt" );
@@ -73,17 +74,11 @@ define( function( require ) {
     editButtonBox.top = this.layoutBounds.minY + 32;
 
     var leftNumberDisplayBackground = new Rectangle( 0, 0, 85, 78, 10, 10, {
-      fill: '#fff',
-      stroke: '#000',
-      lineDash: [ 5, 5 ],
-      lineWidth: 2
+      fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
     } );
 
     var rightNumberDisplayBackGround = new Rectangle( 0, 0, 85, 78, 10, 10, {
-      fill: '#fff',
-      stroke: '#000',
-      lineDash: [ 5, 5 ],
-      lineWidth: 2
+      fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
     } );
 
     var leftTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
@@ -119,6 +114,8 @@ define( function( require ) {
       if ( makingTensAddingModel.activeTerm === "rt" ) {
         makingTensAddingModel.rightTerm = value;
       }
+
+      makingTensAddingModel.createTerms();
 
       makingTensAddingModel.activeTerm = "none";
     }
@@ -157,7 +154,6 @@ define( function( require ) {
 
     backGroundRectangle.addInputListener( new DownUpListener( {
         down: function( event, trail ) {
-          console.log( event );
           if ( event.target === backGroundRectangle ) {
             makingTensAddingModel.activeTerm = "none"; // this will close the keyboard button
           }
