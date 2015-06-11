@@ -58,11 +58,6 @@ define( function( require ) {
 
   return inherit( ScreenView, MakingTensCommonView, {
 
-    // Called by the animation loop. Optional, so if your view has no animation, you can omit this.
-    step: function( dt ) {
-      // Handle view animation here.
-    },
-
     findPaperNumberNode: function( paperNumberModel ) {
       var self = this;
       var allPaperNumberNodes = self.paperNumberLayerNode.children;

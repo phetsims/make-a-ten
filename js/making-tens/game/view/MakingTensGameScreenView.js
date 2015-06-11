@@ -25,17 +25,11 @@ define( function( require ) {
       listener: function() {
         makingTensGameModel.reset();
       },
-      right:  this.layoutBounds.maxX - 10,
+      right: this.layoutBounds.maxX - 10,
       bottom: this.layoutBounds.maxY - 10
     } );
     this.addChild( resetAllButton );
   }
 
-  return inherit( ScreenView, MakingTensGameScreenView, {
-
-    // Called by the animation loop. Optional, so if your view has no animation, you can omit this.
-    step: function( dt ) {
-      // Handle view animation here.
-    }
-  } );
+  return inherit( ScreenView, MakingTensGameScreenView );
 } );
