@@ -33,6 +33,9 @@ define( function( require ) {
       MakingTensCommonModel.prototype.step.call( this, dt );
     },
 
+    /**
+     * creates PaperNumbers based on the values entered through keyboard
+     */
     createTerms: function() {
       var self = this;
       this.residentNumberModels.clear();
