@@ -166,7 +166,7 @@ define( function( require ) {
       listener: function() {
         makingTensAddingModel.reset();
       },
-      right:  this.layoutBounds.maxX - 10,
+      right: this.layoutBounds.maxX - 10,
       bottom: this.layoutBounds.maxY - 10
     } );
     this.addChild( resetAllButton );
@@ -179,11 +179,5 @@ define( function( require ) {
     this.addChild( new HSlider( mockupOpacityProperty, { min: 0, max: 1 }, { top: 10, left: 500 } ) );
   }
 
-  return inherit( MakingTensCommonView, MakingTensAddingScreenView, {
-
-    // Called by the animation loop. Optional, so if your view has no animation, you can omit this.
-    step: function( dt ) {
-      // Handle view animation here.
-    }
-  } );
+  return inherit( MakingTensCommonView, MakingTensAddingScreenView );
 } );

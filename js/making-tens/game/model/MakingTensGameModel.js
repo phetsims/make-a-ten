@@ -19,11 +19,5 @@ define( function( require ) {
     PropertySet.call( this, {} );
   }
 
-  return inherit( PropertySet, MakingTensGameModel, {
-
-    // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
-    step: function( dt ) {
-      // Handle model animation here.
-    }
-  } );
+  return inherit( PropertySet, MakingTensGameModel );
 } );

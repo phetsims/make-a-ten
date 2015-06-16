@@ -94,12 +94,5 @@ define( function( require ) {
 
   }
 
-  return inherit( MakingTensCommonView, MakingTensExploreScreenView, {
-
-    // Called by the animation loop. Optional, so if your view has no animation, you can omit this.
-    step: function( dt ) {
-      // Handle view animation here.
-    }
-
-  } );
+  return inherit( MakingTensCommonView, MakingTensExploreScreenView );
 } );
