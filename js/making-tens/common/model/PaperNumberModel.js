@@ -22,8 +22,8 @@ define( function( require ) {
   // how much 2 digit and single digit must offset from parent
   var NUMBER_IMAGE_OFFSET_DIMENSIONS = {
     0: new Vector2( 0, 0 ),
-    1: new Vector2( 100, 22 ),// how much a single digit image has to offset
-    2: new Vector2( 95, 50 )// how much a 2 digit has to offset from its parent (a 3 digit number)
+    1: new Vector2( 50, 11 ),// how much a single digit image has to offset
+    2: new Vector2( 42, 25 )// how much a 2 digit has to offset from its parent (a 3 digit number)
   };
 
   /**

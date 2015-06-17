@@ -38,7 +38,7 @@ define( function( require ) {
     /**
      * When collapsing, we remove either the dropped object and change the number value of the dragged objects
      * but if the droppedNumber is larger than the dragged number , reverse the objects to remove and change.
-     * 
+     *
      * @param {PaperNumberModel} draggedPaperNumberModel
      * @param {PaperNumberModel} droppedPaperNumberModel
      */

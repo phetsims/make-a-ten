@@ -16,7 +16,7 @@ define( function( require ) {
 
   var NUMBER_CREATOR_OFFSET_POSITIONS = [
     // Offsets used for initial position of paper numbers Empirically determined.
-    new Vector2( -10, -10 ),
+    new Vector2( -8, -8 ),
     new Vector2( 0, 0 )
   ];
 
