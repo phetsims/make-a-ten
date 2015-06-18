@@ -19,11 +19,26 @@ define( function( require ) {
   var PaperImageCollection = require( 'MAKING_TENS/making-tens/common/model/PaperImageCollection' );
 
   // constants
-  // how much 2 digit and single digit must offset from parent
-  var NUMBER_IMAGE_OFFSET_DIMENSIONS = {
+  var TWO_DIGIT_OFFSET_DIMENSIONS = {
     0: new Vector2( 0, 0 ),
-    1: new Vector2( 50, 11 ),// how much a single digit image has to offset
-    2: new Vector2( 42, 25 )// how much a 2 digit has to offset from its parent (a 3 digit number)
+    1: new Vector2( 48, 11 )// how much a single digit image has to offset
+  };
+
+  // how much 2 digit and single digit must offset from parent
+  var THREE_IMAGE_OFFSET_DIMENSIONS = {
+    0: new Vector2( 0, 0 ),
+    1: new Vector2( 48, 30 ),
+    2: new Vector2( 96, 41 )
+  };
+
+  var SINGLE_DIGIT_OFFSET_DIMENSIONS = {
+    0: new Vector2( 0, 0 )
+  };
+
+  var NUMBER_IMAGE_OFFSET_DIMENSIONS = {
+    0: SINGLE_DIGIT_OFFSET_DIMENSIONS,
+    1: TWO_DIGIT_OFFSET_DIMENSIONS,
+    2: THREE_IMAGE_OFFSET_DIMENSIONS
   };
 
   /**
@@ -67,7 +82,7 @@ define( function( require ) {
 
     thisModel.baseNumbers = []; // for each of these base number, we have a corresponding image file
     thisModel.baseImages = [];
-    thisModel.baseNumberPositions = {}; // the base number and its position within this composite node(made up may image nodes)
+    thisModel.baseNumberPositions = []; // the base number and its position within this composite node(made up may image nodes)
 
     thisModel.decomposeIntoBaseNumbers( this.numberValue );
   }
@@ -115,22 +130,21 @@ define( function( require ) {
       }
 
       self.baseImages = [];
-      self.baseNumberPositions = {};
-      var offsetX = 0;
-      var offsetY = 0;
-      var index = 1;
+      self.baseNumberPositions = [];
+      var index = 0;
       var opacityValue = 1;
+      var numberOfSetDimensions = this.getNumberOffSetDimensions( value );
+
       _.each( self.baseNumbers, function( baseNumber ) {
         var baseNumberImage = PaperImageCollection.getNumberImage( baseNumber );
         var baseNumberImageNode = new Image( baseNumberImage );
         baseNumberImageNode.opacity = opacityValue;
+        var offsetX = numberOfSetDimensions[ index ].x;
+        var offsetY = numberOfSetDimensions[ index ].y;
         baseNumberImageNode.left = offsetX;
         baseNumberImageNode.top = offsetY;
-        self.baseNumberPositions[ index ] = new Vector2( offsetX, offsetY );
+        self.baseNumberPositions.push( new Vector2( offsetX, offsetY ) );
         self.baseImages.push( baseNumberImageNode );
-        var offSetIndex = self.baseNumbers.length - index;
-        offsetX += NUMBER_IMAGE_OFFSET_DIMENSIONS[ offSetIndex ].x;
-        offsetY += NUMBER_IMAGE_OFFSET_DIMENSIONS[ offSetIndex ].y;
         index++;
         opacityValue = opacityValue - 0.04;
       } );
@@ -150,14 +164,32 @@ define( function( require ) {
      */
     getDigitOffsetPosition: function( newPulledNumber ) {
       var thisModel = this;
+      var numberOfSetDimensions = this.getNumberOffSetDimensions( thisModel.numberValue );
 
       //Multiples of 10 or 100 can be split from any position
       if ( thisModel.numberValue % 10 === 0 ) {
-        return NUMBER_IMAGE_OFFSET_DIMENSIONS[ 0 ];
+        return numberOfSetDimensions[ 0 ];
       }
       var digitDifference = (thisModel.numberValue + "").length - (newPulledNumber + "").length;
-      return NUMBER_IMAGE_OFFSET_DIMENSIONS[ digitDifference ];
+      return numberOfSetDimensions[ digitDifference ];
     },
+
+    /**
+     *
+     * @param value
+     * @returns {object}
+     */
+    getNumberOffSetDimensions: function( value ) {
+      var digits = (value + "").length;
+      var numberOfSetDimensions = _.clone(NUMBER_IMAGE_OFFSET_DIMENSIONS[ digits - 1 ]);
+
+      //handle numbers like 102 where there are only two base numbers
+      if ( digits === 3 && (value % 100 < 10) ) {
+        numberOfSetDimensions[ 1 ] = numberOfSetDimensions[ 2 ];
+      }
+      return numberOfSetDimensions;
+    },
+
 
     /**
      *
@@ -199,20 +231,29 @@ define( function( require ) {
     /**
      *
      * @param {Vector2} position
-     * @param {Bounds2} draggedNodeBounds
      * @returns {number}
      */
-    getNumberAt: function( position, draggedNodeBounds ) {
+    determineDigitIndex: function( position ) {
       if ( this.baseNumbers.length === 1 ) {
-        return this.baseNumbers[ 0 ];
+        return 0;
       }
-      for ( var i = 0; i < this.baseNumberPositions - 1; i++ ) {
-        if ( position.x >= this.baseNumberPositions[ i ].x && position <= this.baseNumberPositions[ i + 1 ].x ) {
-          return this.baseNumbers[ i ];
+      var positionBuckets = _.map( this.baseNumberPositions, function( pos ) {
+        return pos.x;
+      } );
+
+      var numberOfSetDimensions = this.getNumberOffSetDimensions( this.numberValue );
+
+      positionBuckets[ positionBuckets.length ] = positionBuckets[ positionBuckets.length - 1 ] +
+                                                  numberOfSetDimensions[ positionBuckets.length - 1 ].x;
+
+      for ( var i = 0; i < positionBuckets.length - 1; i++ ) {
+        if ( position.x >= positionBuckets[ i ] && position.x <= positionBuckets[ i + 1 ] ) {
+          return i;
         }
       }
-      return this.numberValue;
+      return 0;
     }
+
   } );
 
 } );

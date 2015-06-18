@@ -16,7 +16,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
-  var makingTensExploreScreenTitleString = require( 'string!MAKING_TENS/making-tens.explore.name' );
+  var makingTensGameScreenTitleString = require( 'string!MAKING_TENS/making-tens.game.name' );
 
   /**
    * Creates the icon for this screen.
@@ -42,7 +42,7 @@ define( function( require ) {
     //If there are multiple screens, then the icon must be provided here.
     var icon = createScreenIcon();
 
-    Screen.call( this, makingTensExploreScreenTitleString, icon,
+    Screen.call( this, makingTensGameScreenTitleString, icon,
       function() { return new MakingTensGameModel(); },
       function( model ) { return new MakingTensGameScreenView( model ); },
       { backgroundColor: 'white' }

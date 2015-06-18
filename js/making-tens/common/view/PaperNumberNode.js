@@ -99,7 +99,8 @@ define( function( require ) {
           return;
         }
 
-        var numberPulledApart = ArithmeticRules.pullApartNumbers( paperNumberModel.numberValue );
+        var pulledOutIndex = thisNode.determineDigitIndex( thisHandler.startOffSet );
+        var numberPulledApart = ArithmeticRules.pullApartNumbers( paperNumberModel.numberValue, pulledOutIndex );
 
         // it cannot be split - so start moving
         if ( !numberPulledApart ) {
@@ -186,12 +187,24 @@ define( function( require ) {
   return inherit( Node, PaperNumberNode, {
 
     /**
+     * Each number is made up of base numbers. This method tells at what position the pulled out number ly
      *
      * @param newPulledNumber
      */
     determinePulledOutNumberPosition: function( newPulledNumber ) {
       var thisNode = this;
       return thisNode.leftTop.plus( thisNode.paperNumberModel.getDigitOffsetPosition( newPulledNumber ) );
+    },
+
+    /**
+     * Based on the position (relative to the node, determine if the point is one the first digit, second etc
+     *
+     * @param position
+     */
+    determineDigitIndex: function( parentPos ) {
+      var thisNode = this;
+      var localPos = thisNode.parentToLocalPoint( parentPos );
+      return thisNode.paperNumberModel.determineDigitIndex( localPos );
     },
 
     /**
@@ -224,7 +237,7 @@ define( function( require ) {
         var yDiff = Math.abs( droppedNode.top - draggedNode.top );
 
         var dropPositionWidthTolerance = smallerNode.bounds.width * 0.25;
-        var dropPositionHeightTolerance = smallerNode.bounds.height * 0.25;
+        var dropPositionHeightTolerance = smallerNode.bounds.height * 0.45;
 
         var xInRange = MakingTensUtil.isBetween( xDiff, -dropPositionWidthTolerance, dropPositionWidthTolerance );
         var yInRange = MakingTensUtil.isBetween( yDiff, -dropPositionHeightTolerance, dropPositionHeightTolerance );

@@ -29,7 +29,7 @@ define( function( require ) {
 
     // Create the node that the user will click upon to add a model element to the view.
     var representation = new Image( PaperImageCollection.getNumberImage( numberValue ) );
-    representation.scale( 0.54, 0.45 );
+    representation.scale( 0.64, 0.55 );
     this.addChild( representation );
 
     // Add the listener that will allow the user to click on this and create a new shape, then position it in the model.
