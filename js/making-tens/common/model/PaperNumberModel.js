@@ -21,14 +21,14 @@ define( function( require ) {
   // constants
   var TWO_DIGIT_OFFSET_DIMENSIONS = {
     0: new Vector2( 0, 0 ),
-    1: new Vector2( 48, 11 )// how much a single digit image has to offset
+    1: new Vector2( 50, 11 )// how much a single digit image has to offset
   };
 
   // how much 2 digit and single digit must offset from parent
   var THREE_IMAGE_OFFSET_DIMENSIONS = {
     0: new Vector2( 0, 0 ),
-    1: new Vector2( 48, 30 ),
-    2: new Vector2( 96, 41 )
+    1: new Vector2( 40, 30 ),
+    2: new Vector2( 90, 41 )
   };
 
   var SINGLE_DIGIT_OFFSET_DIMENSIONS = {
