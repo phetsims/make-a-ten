@@ -43,7 +43,7 @@ define( function( require ) {
           return true;
         }
 
-        var twoDigits = ((numberA + "").length <= 2 && (numberB + "").length <= 2);
+        var twoDigits = (sum >= 10 && sum <= 100);
 
         if ( twoDigits ) {
           // Add with decades. 24 + 50 = 74.
@@ -53,19 +53,20 @@ define( function( require ) {
           if ( modA10 === 0 || modB10 === 0 ) {
             return true;
           }
-        }
 
-        // Add singles to doubles if you don’t go over the decade.(this logic includes the single digit logic above)
-        // 23 + 5 = 28
-        // 23 +7 = 30
-        // cannot cross decades except to meet decade with a single digit.
-        // 23 + 7 = 30 okay.
-        // but not 23 + 37 (neither A nor B <10)
-        // no 23 + 9     (3+9 = 12 not less than = 10)
-        // the sum<100  will force user to make 100 when going over 100.
 
-        if ( (numberA || numberB < 10) && ((modA10 + modB10) <= 10) && sum < 100 ) {
-          return true;
+          // Add singles to doubles if you don’t go over the decade.(this logic includes the single digit logic above)
+          // 23 + 5 = 28
+          // 23 +7 = 30
+          // cannot cross decades except to meet decade with a single digit.
+          // 23 + 7 = 30 okay.
+          // but not 23 + 37 (neither A nor B <10)
+          // no 23 + 9     (3+9 = 12 not less than = 10)
+          // the sum<100  will force user to make 100 when going over 100.
+
+          if ( (numberA || numberB < 10) && ((modA10 + modB10) <= 10) && sum < 100 ) {
+            return true;
+          }
         }
 
         var threeDigits = (sum >= 100 && sum <= 1000);
@@ -83,7 +84,7 @@ define( function( require ) {
             return true;
           }
 
-          if ( ((numberA % 10 + numberA % 10) <= 10) && (numberC + numberD <= 100) ) {
+          if ( ((numberA % 10 + numberB % 10) <= 10) && (numberC + numberD <= 100) ) {
             return true;
           }
 
