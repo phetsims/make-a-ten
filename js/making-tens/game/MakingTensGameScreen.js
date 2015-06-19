@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
   var MakingTensGameModel = require( 'MAKING_TENS/making-tens/game/model/MakingTensGameModel' );
   var MakingTensGameScreenView = require( 'MAKING_TENS/making-tens/game/view/MakingTensGameScreenView' );
+  var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -33,6 +34,7 @@ define( function( require ) {
 
   };
 
+
   /**
    * @constructor
    */
@@ -45,7 +47,7 @@ define( function( require ) {
     Screen.call( this, makingTensGameScreenTitleString, icon,
       function() { return new MakingTensGameModel(); },
       function( model ) { return new MakingTensGameScreenView( model ); },
-      { backgroundColor: 'white' }
+      { backgroundColor: MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR }
     );
   }
 
