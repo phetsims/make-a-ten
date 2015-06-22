@@ -54,7 +54,6 @@ define( function( require ) {
             return true;
           }
 
-
           // Add singles to doubles if you don’t go over the decade.(this logic includes the single digit logic above)
           // 23 + 5 = 28
           // 23 +7 = 30
@@ -71,8 +70,8 @@ define( function( require ) {
 
         var threeDigits = (sum >= 100 && sum <= 1000);
         if ( threeDigits ) {
-          var numberC = numberA > 100 ? numberA % 100 : numberA;
-          var numberD = numberB > 100 ? numberB % 100 : numberB;
+          var numberC = numberA % 100;
+          var numberD = numberB % 100;
 
           //Add with decades. 124 + 150 = 274
           if ( numberC % 10 === 0 || numberD % 10 === 0 ) {
@@ -125,8 +124,8 @@ define( function( require ) {
 
         // 3 digits
         if ( numberValue >= 100 && numberValue < 1000 ) {
-          if ( pulledIndex === 0 ) { // from left
-            amountToRemove = 100; // pull off 100 when left most digit is pulled out
+          if ( pulledIndex === 0 ) {
+            amountToRemove = 100;
           }
           if ( pulledIndex === 1 ) {
             amountToRemove = numberValue % 100;

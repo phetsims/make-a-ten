@@ -154,7 +154,7 @@ define( function( require ) {
           thisHandler.splitObjectContext = null;
         }
 
-        //in case of split mode, the movableObject is set, only if the move started after a certain distance
+        //in case of split mode, the movableObject is set, only if the "move" started after a certain distance
         if ( thisHandler.movableObject ) {
           var movableObject = thisHandler.movableObject;
           movableObject.setDestination( movableObject.position.plus( delta ), false );
@@ -242,10 +242,7 @@ define( function( require ) {
         var xInRange = MakingTensUtil.isBetween( xDiff, -dropPositionWidthTolerance, dropPositionWidthTolerance );
         var yInRange = MakingTensUtil.isBetween( yDiff, -dropPositionHeightTolerance, dropPositionHeightTolerance );
 
-        // TODO console.log( "xDiff " + xDiff + "  yDiff " + yDiff + " Width Tolerance  " + dropPositionWidthTolerance + " Height tolerance " + dropPositionHeightTolerance );
-        // console.log( "xInRange " + xInRange + " yInRange " + yInRange );
         if ( xInRange && yInRange ) {
-          // console.log( "Drop Candidate " );
           attachableNodes.push( droppedNode );
         }
       }
