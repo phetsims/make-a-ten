@@ -4,7 +4,9 @@
   "license": "GPLv3",
   "simTitleStringKey": "MAKING_TENS/making-tens.name",
   "phetLibs": [
-    "making-tens"
+    "making-tens",
+    "vegas",
+    "vibe"
   ],
   "repository": {
     "type": "git",
