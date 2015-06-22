@@ -1,0 +1,67 @@
+{
+  "comment": "# making-tens 1.0.0-dev.1 Mon Jun 22 2015 10:14:42 GMT-0600 (Mountain Daylight Time)",
+  "assert": {
+    "sha": "903564a25a0f26acdbd334d3e104039864b405ef",
+    "branch": "master"
+  },
+  "axon": {
+    "sha": "f4996f9d182deb1b9e799c9ec6282bf8dcfa43bc",
+    "branch": "master"
+  },
+  "brand": {
+    "sha": "b3362651f1d7eddb7f8697d02400472f97f9d140",
+    "branch": "master"
+  },
+  "chipper": {
+    "sha": "bed81ebb33ae6b02bfd1459e9a8697ba607738ca",
+    "branch": "master"
+  },
+  "dot": {
+    "sha": "6fe16dea5cf6243033eff851ac67a9dfe5d77c4c",
+    "branch": "master"
+  },
+  "joist": {
+    "sha": "19b5d746618e05ff788f40ac650e9bf639a73bee",
+    "branch": "master"
+  },
+  "kite": {
+    "sha": "9d2a34ddcb9258544a02afdc65f9632348fd7b73",
+    "branch": "master"
+  },
+  "making-tens": {
+    "sha": "7b9f21cf422c5435993743ae2edb82ce9050f40e",
+    "branch": "master"
+  },
+  "phet-core": {
+    "sha": "328c6e2f6df1ee3da1bdd41877d2113cfc1e4a71",
+    "branch": "master"
+  },
+  "phetcommon": {
+    "sha": "48b8119d27954452d6d8e015ac7ed9c044261285",
+    "branch": "master"
+  },
+  "scenery": {
+    "sha": "61011f28042e8960fd9ed43bf3d3f1e1c38826a1",
+    "branch": "master"
+  },
+  "scenery-phet": {
+    "sha": "ea0e0d835c72338dd5c88d52473759125eb95ee1",
+    "branch": "master"
+  },
+  "sherpa": {
+    "sha": "ab46b0d5ffaf945e58a32759b558af017dcfc63a",
+    "branch": "master"
+  },
+  "sun": {
+    "sha": "cec7fc906bdb209ba0938760f2e60eb25a59912d",
+    "branch": "master"
+  },
+  "vegas": {
+    "sha": "6c26e8ec4b058da90a7bdd8d966a1476dc869e99",
+    "branch": "master"
+  },
+  "vibe": {
+    "sha": "e0930e48a36fe605cd1bf411a531e1067d1c0b5e",
+    "branch": "master"
+  }
+}
