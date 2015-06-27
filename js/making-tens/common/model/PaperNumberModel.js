@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var Image = require( 'SCENERY/nodes/Image' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var PaperImageCollection = require( 'MAKING_TENS/making-tens/common/model/PaperImageCollection' );
@@ -59,7 +60,7 @@ define( function( require ) {
 
       // Property that indicates where in model space the upper left corner of this shape is.  In general, this should
       // not be set directly outside of this type, and should only be manipulated through the methods defined below.
-      position: initialPosition,
+      position: initialPosition.copy(),
 
       // Flag that tracks whether the user is dragging this shape around.  Should be set externally, generally by the a
       // view node.
@@ -79,12 +80,21 @@ define( function( require ) {
 
     // Destination is used for animation, and should be set through accessor methods only.
     thisModel.destination = initialPosition.copy(); // @private
+    thisModel.targetScale = this.scale;
 
     thisModel.baseNumbers = []; // for each of these base number, we have a corresponding image file
     thisModel.baseImages = [];
     thisModel.baseNumberPositions = []; // the base number and its position within this composite node(made up may image nodes)
 
     thisModel.decomposeIntoBaseNumbers( this.numberValue );
+
+    // Trigger an event whenever this shape returns to its original position.
+    this.positionProperty.lazyLink( function( position ) {
+      if ( position.equals( initialPosition ) ) {
+        thisModel.trigger( 'returnedToOrigin' );
+      }
+    } );
+
   }
 
   return inherit( PropertySet, PaperNumberModel, {
@@ -100,6 +110,7 @@ define( function( require ) {
           var stepAngle = Math.atan2( this.destination.y - this.position.y, this.destination.x - this.position.x );
           var stepVector = Vector2.createPolar( MakingTensSharedConstants.ANIMATION_VELOCITY * dt, stepAngle );
           this.position = this.position.plus( stepVector );
+
         }
         else if ( this.animating ) {
           // Less than one time step away, so just go to the destination.
@@ -156,6 +167,17 @@ define( function( require ) {
       return (this.numberValue !== 1);
     },
 
+    getBounds: function() {
+      var maxWidthNode = _.max( this.baseImages, function( node ) {
+        return node.bounds.width;
+      } );
+
+      var maxHeightNode = _.max( this.baseImages, function( node ) {
+        return node.bounds.height;
+      } );
+      return new Bounds2( 0, 0, maxWidthNode.width, maxHeightNode.height );
+    },
+
 
     /**
      * At which point the split must happen
@@ -177,7 +199,7 @@ define( function( require ) {
      */
     getNumberOffSetDimensions: function( value ) {
       var digits = (value + "").length;
-      var numberOfSetDimensions = _.clone(NUMBER_IMAGE_OFFSET_DIMENSIONS[ digits - 1 ]);
+      var numberOfSetDimensions = _.clone( NUMBER_IMAGE_OFFSET_DIMENSIONS[ digits - 1 ] );
 
       //handle numbers like 102 where there are only two base numbers
       if ( digits === 3 && (value % 100 < 10) ) {
@@ -211,17 +233,13 @@ define( function( require ) {
       }
     },
 
-    getWidth: function() {
-      var self = this;
-      var minX = _.min( self.baseNumberPositions, function( baseNumberPosition ) {
-        return baseNumberPosition.x;
-      } );
+    /**
+     * Return the shape to the place where it was originally created.
+     * @param {boolean} animate
+     */
+    returnToOrigin: function( animate ) {
+      this.setDestination( this.positionProperty.initialValue, animate );
 
-      var maxX = _.max( self.baseNumberPositions, function( baseNumberPosition ) {
-        return baseNumberPosition.x;
-      } );
-
-      return (maxX - minX);
     },
 
     /**

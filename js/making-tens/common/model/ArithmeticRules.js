@@ -43,14 +43,14 @@ define( function( require ) {
           return true;
         }
 
-        var twoDigits = (sum >= 10 && sum <= 100);
+        var twoDigits = ((numberA + "").length <= 2 && (numberB + "").length <= 2);
 
         if ( twoDigits ) {
           // Add with decades. 24 + 50 = 74.
           // Add with decades  20 + 50 = 70
           // cannot cross decades
           // no 24 + 59
-          if ( modA10 === 0 || modB10 === 0 ) {
+          if ( (modA10 === 0 || modB10 === 0) && sum <= 100 ) {
             return true;
           }
 
@@ -63,9 +63,11 @@ define( function( require ) {
           // no 23 + 9     (3+9 = 12 not less than = 10)
           // the sum<100  will force user to make 100 when going over 100.
 
-          if ( (numberA || numberB < 10) && ((modA10 + modB10) <= 10) && sum < 100 ) {
+          if ( (numberA || numberB < 10) && ((modA10 + modB10) <= 10) && sum <= 100 ) {
             return true;
           }
+
+          return false;
         }
 
         var threeDigits = (sum >= 100 && sum <= 1000);

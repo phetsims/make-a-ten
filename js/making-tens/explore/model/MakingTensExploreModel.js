@@ -55,6 +55,15 @@ define( function( require ) {
           self.calculateTotal();
         }
       } );
+
+      // The shape will be removed from the model if and when it returns to its origination point.  This is how a shape
+      // can be 'put back' into the panel.
+      paperNumberModel.on( 'returnedToOrigin', function() {
+        if ( !paperNumberModel.userControlled ) {
+          // The shape has been returned to the panel.
+          self.residentNumberModels.remove( paperNumberModel );
+        }
+      } );
     },
 
     reset: function() {

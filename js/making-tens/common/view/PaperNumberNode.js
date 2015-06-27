@@ -60,6 +60,7 @@ define( function( require ) {
       imageNumberNode.opacity = opacity;
     } );
 
+
     thisNode.addInputListener( new SimpleDragHandler( {
 
       // Allow moving a finger (touch) across this node to interact with it

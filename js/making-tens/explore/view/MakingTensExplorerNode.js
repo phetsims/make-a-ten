@@ -20,7 +20,15 @@ define( function( require ) {
     new Vector2( 0, 0 )
   ];
 
-  function MakingTensExplorerNode( numberValue, addShapeToModel, combineNumbersIfApplicableCallback ) {
+  /**
+   *
+   * @param {number} numberValue
+   * @param {Function} addShapeToModel
+   * @param {Function} combineNumbersIfApplicableCallback
+   * @param {Function} canPlaceShape
+   * @constructor
+   */
+  function MakingTensExplorerNode( numberValue, addShapeToModel, combineNumbersIfApplicableCallback,canPlaceShape ) {
     var thisNode = this;
     Node.call( thisNode );
 
@@ -29,7 +37,7 @@ define( function( require ) {
 
     NUMBER_CREATOR_OFFSET_POSITIONS.forEach( function( offset ) {
       var paperNumberCreatorNode = new PaperNumberCreatorNode( numberValue,
-        addShapeToModel, combineNumbersIfApplicableCallback );
+        addShapeToModel, combineNumbersIfApplicableCallback,canPlaceShape );
       numberCollectionLayer.addChild( paperNumberCreatorNode );
       paperNumberCreatorNode.left = offset.x;
       paperNumberCreatorNode.top = offset.y;
@@ -39,8 +47,6 @@ define( function( require ) {
   }
 
   return inherit( Node, MakingTensExplorerNode, {
-    reset: function() {
 
-    }
   } );
 } );

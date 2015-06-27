@@ -20,6 +20,7 @@ define( function( require ) {
   var Checkbox = require( 'SUN/CheckBox' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Bounds2 = require( 'DOT/Bounds2' );
 
   // strings
   var hideTotalString = require( 'string!MAKING_TENS/making-tens.hide.total' );
@@ -39,23 +40,23 @@ define( function( require ) {
     sumEquationNode.top = this.layoutBounds.minY + 20;
 
     // shape carousel
-    var shapeContainerCarousel = new Node();
-    self.addChild( shapeContainerCarousel );
+    this.shapeContainerCarousel = new Node();
+    self.addChild( this.shapeContainerCarousel );
     self.addChild( paperNumberNodeLayer );
 
     var explorerNodes = [];
     // Create the composite nodes that contain the number collections
-    var exploreHundredsNode = new MakingTensExplorerNode( 100, self.addUserCreatedNumberModel, self.combineNumbersIfApplicableCallback );
+    var exploreHundredsNode = new MakingTensExplorerNode( 100, self.addUserCreatedNumberModel, self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ) );
     explorerNodes.push( exploreHundredsNode );
-    var exploreTensNode = new MakingTensExplorerNode( 10, self.addUserCreatedNumberModel, self.combineNumbersIfApplicableCallback );
+    var exploreTensNode = new MakingTensExplorerNode( 10, self.addUserCreatedNumberModel, self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ) );
     explorerNodes.push( exploreTensNode );
-    var exploreOnesNode = new MakingTensExplorerNode( 1, self.addUserCreatedNumberModel, self.combineNumbersIfApplicableCallback );
+    var exploreOnesNode = new MakingTensExplorerNode( 1, self.addUserCreatedNumberModel, self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ) );
     explorerNodes.push( exploreOnesNode );
 
 
     // Add a non-scrolling panel
     var creatorNodeHBox = new HBox( { children: explorerNodes, spacing: 30 } );
-    shapeContainerCarousel.addChild( new Panel( creatorNodeHBox, {
+    this.shapeContainerCarousel.addChild( new Panel( creatorNodeHBox, {
       fill: MakingTensSharedConstants.SHAPE_CAROUSEL_BACKGROUND_COLOR,
       stroke: 'black',
       lineWidth: 1.5,
@@ -91,8 +92,22 @@ define( function( require ) {
       bottom: this.layoutBounds.maxY - 10
     } );
     this.addChild( resetAllButton );
-
   }
 
-  return inherit( MakingTensCommonView, MakingTensExploreScreenView );
+  return inherit( MakingTensCommonView, MakingTensExploreScreenView, {
+    /**
+     *
+     * @param {PaperNumberModel} paperNumberModel
+     * @param {Vector2} droppedPosition
+     */
+    canPlaceShape: function( paperNumberModel, droppedPosition ) {
+      var paperNumberBounds = paperNumberModel.getBounds();
+      var widthPart = paperNumberBounds.width * 0.6;
+      var heightPart = paperNumberBounds.height * 0.6;
+      var bounds2 = new Bounds2( droppedPosition.x, droppedPosition.y, droppedPosition.x + widthPart, droppedPosition.y + heightPart );
+      var intersects = this.shapeContainerCarousel.bounds.intersectsBounds( bounds2 );
+      return !intersects;
+    }
+
+  } );
 } );

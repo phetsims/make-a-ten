@@ -20,9 +20,10 @@ define( function( require ) {
   /**
    * @param {number} numberValue
    * @param {Function} addShapeToModel - A function for adding the created number  to the model
+   * @param {Function} canPlaceShape - A function to determine if the PaperNumber can be placed on the board
    * @constructor
    */
-  function PaperNumberCreatorNode( numberValue, addShapeToModel, combineNumbersIfApplicableCallback ) {
+  function PaperNumberCreatorNode( numberValue, addShapeToModel, combineNumbersIfApplicableCallback, canPlaceShape ) {
 
     Node.call( this, { cursor: 'pointer' } );
     var self = this;
@@ -72,6 +73,13 @@ define( function( require ) {
       end: function( event, trail ) {
         this.paperNumberModel.userControlled = false;
         var droppedPoint = event.pointer.point;
+        var droppedScreenPoint = this.parentScreen.globalToLocalPoint( event.pointer.point );
+        //check if the user has dropped the number within the panel itself, if "yes" return to origin
+        if ( !canPlaceShape( this.paperNumberModel, droppedScreenPoint ) ) {
+          this.paperNumberModel.returnToOrigin( true );
+          this.paperNumberModel = null;
+          return;
+        }
         combineNumbersIfApplicableCallback( this.paperNumberModel, droppedPoint );
         this.paperNumberModel = null;
       }
