@@ -1,6 +1,7 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
+ * Generates a number set based on the Game Level
  *
  *  @author Sharfudeen Ashraf
  */

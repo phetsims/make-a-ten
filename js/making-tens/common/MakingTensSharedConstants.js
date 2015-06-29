@@ -17,6 +17,7 @@ define( function( require ) {
     CONTROL_PANEL_BACKGROUND_COLOR: 'rgb( 254, 241, 233 )',
     SHAPE_CAROUSEL_BACKGROUND_COLOR: 'rgb( 208, 222, 239 )',
     EXPLORER_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
+    GAME_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
     ADDING_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
     // velocity at which animated elements move
     ANIMATION_VELOCITY: 500, // In screen coordinates per second

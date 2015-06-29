@@ -50,11 +50,11 @@ define( function( require ) {
     // Add the digits.
     var digits = new Text( '', { font: READOUT_FONT } );
     this.addChild( digits );
-    this.value = 0; // @private
+    this.value = "0"; // @private
     this.keypad.digitString.link( function( digitString ) {
       digits.text = digitString;
       digits.center = readoutBackground.center;
-      self.value = Number( digitString );
+      self.value = digitString;
     } );
 
     // Layout

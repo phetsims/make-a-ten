@@ -13,7 +13,7 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var Node = require( 'SCENERY/nodes/Node' );
   var MakingTensCommonView = require( 'MAKING_TENS/making-tens/common/view/MakingTensCommonView' );
-  var SumEquationNode = require( 'MAKING_TENS/making-tens/explore/view/SumEquationNode' );
+  var SumEquationNode = require( 'MAKING_TENS/making-tens/common/view/SumEquationNode' );
   var MakingTensExplorerNode = require( 'MAKING_TENS/making-tens/explore/view/MakingTensExplorerNode' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -34,7 +34,7 @@ define( function( require ) {
     var paperNumberNodeLayer = new Node();
     MakingTensCommonView.call( this, makingTensExploreModel, MakingTensSharedConstants.LAYOUT_BOUNDS, paperNumberNodeLayer );
 
-    var sumEquationNode = new SumEquationNode( makingTensExploreModel );
+    var sumEquationNode = new SumEquationNode( makingTensExploreModel.sumProperty, MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR );
     self.addChild( sumEquationNode );
     sumEquationNode.left = this.layoutBounds.minX + 20;
     sumEquationNode.top = this.layoutBounds.minY + 20;

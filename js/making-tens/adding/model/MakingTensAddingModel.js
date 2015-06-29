@@ -15,20 +15,30 @@ define( function( require ) {
 
   /**
    *
-   * @param addingScreenBounds
+   * @param {Bounds2} addingScreenBounds -- The bounds within which PaperNumbers can be dragged
    * @constructor
    */
   function MakingTensAddingModel( addingScreenBounds ) {
+
+    //background style for active Term. When a term is highlighted (ie keyboard is active, indicate to the user using a different background)
+    this.activeNumberDisplayStyle = { fill: null, stroke: '#000', lineDash: [ 5, 5 ] };
+    this.normalNumberDisplayStyle = { fill: null, stroke: null, lineDash: [ 0, 0 ] };
+
     MakingTensCommonModel.call( this, addingScreenBounds, {
       leftTerm: "",
       rightTerm: "",
-      activeTerm: "none"
+      activeTerm: "none",
+      leftTermBackgroundStyle: this.normalNumberDisplayStyle,
+      rightTermBackgoundStyle: this.normalNumberDisplayStyle
     } );
   }
 
   return inherit( MakingTensCommonModel, MakingTensAddingModel, {
 
-    // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
+    /**
+     *
+     * @param {number} dt
+     */
     step: function( dt ) {
       MakingTensCommonModel.prototype.step.call( this, dt );
     },
@@ -45,7 +55,7 @@ define( function( require ) {
         if ( numberValue === "" || numberValue === 0 ) {
           return;
         }
-        var initialPosition = new Vector2( xOffSet, self.screenBounds.height / 4 );
+        var initialPosition = new Vector2( xOffSet, self.screenBounds.height / 3.5 );
         self.addUserCreatedNumberModel( new PaperNumberModel( numberValue, initialPosition ) );
         xOffSet += 350;
       } );

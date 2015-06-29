@@ -15,7 +15,6 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Panel = require( 'SUN/Panel' );
-  var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
 
   // constants
   var SPACING = 15; // spacing between equation elements
@@ -23,13 +22,14 @@ define( function( require ) {
   var EQUATION_COLOR = "rgb(63,63,183)";
 
   /**
-   * @param {MakingTensExploreModel} makingTensExploreModel
+   *
+   * @param {Property<number>} sumProperty
+   * @param {Color} backGroundColor
    * @constructor
    */
-  function SumEquationNode( makingTensExploreModel ) {
+  function SumEquationNode( sumProperty, backGroundColor ) {
     var self = this;
     Node.call( this );
-    self.makingTensExploreModel = makingTensExploreModel;
 
     var sumTextNode = new Text( '0', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
     var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
@@ -43,17 +43,16 @@ define( function( require ) {
     } );
 
     self.addChild( new Panel( equationHBoxNode, {
-      fill: MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR,
+      fill: backGroundColor,
       lineWidth: 0,
       xMargin: 30,
       yMargin: 5,
       resize: false
     } ) );
 
-    makingTensExploreModel.sumProperty.link( function( newSum ) {
+    sumProperty.link( function( newSum ) {
       sumTextNode.text = newSum;
     } );
-
   }
 
   return inherit( Node, SumEquationNode, {} );

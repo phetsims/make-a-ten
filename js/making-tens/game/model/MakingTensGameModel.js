@@ -9,30 +9,34 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
   var Property = require( 'AXON/Property' );
+  var Vector2 = require( 'DOT/Vector2' );
   var GameState = require( 'MAKING_TENS/making-tens/game/model/GameState' );
   var NumberChallengeFactory = require( 'MAKING_TENS/making-tens/game/model/NumberChallengeFactory' );
+  var MakingTensCommonModel = require( 'MAKING_TENS/making-tens/common/model/MakingTensCommonModel' );
+  var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
 
   /**
+   *
+   * @param {Bounds2} screenBounds -- The bounds within which PaperNumbers can be dragged
    * @constructor
    */
-  function MakingTensGameModel( options ) {
+  function MakingTensGameModel( screenBounds ) {
     var thisModel = this;
 
-    options = _.extend( {
-      numberOfLevels: 10
-    }, options );
-
-    PropertySet.call( this, {
+    // Making Tens Commmon Model is a propertySet
+    MakingTensCommonModel.call( this, screenBounds, {
+      sum: "",
       soundEnabled: true,
       timerEnabled: false,
-      level: 10, // Zero-based in the model, though levels appear to the user to start at 1.
+      numberOfLevels: 10,
+      level: 0,
       challengeIndex: 0,
       currentChallenge: null,
       score: 0,
       elapsedTime: 0,
-      numberOfLevels: options.numberOfLevels,
+      leftTerm: 0,
+      rightTerm: 0,
 
       // Current state of the game, see GameState for valid values.
       gameState: GameState.CHOOSING_LEVEL
@@ -49,9 +53,34 @@ define( function( require ) {
     this.numberChallengeFactory = new NumberChallengeFactory();
   }
 
-  return inherit( PropertySet, MakingTensGameModel, {
+  return inherit( MakingTensCommonModel, MakingTensGameModel, {
 
+    /**
+     *
+     * @param {number} dt
+     */
+    step: function( dt ) {
+      MakingTensCommonModel.prototype.step.call( this, dt );
+    },
+
+    // starts new level
     startLevel: function( level ) {
+      this.level = level;
+      this.score = 0;
+      this.restartGameTimer();
+
+      // Set up the model for the next challenge
+      this.currentChallenge = this.generateChallenge( level );
+
+      // Change to new game state.
+      this.gameState = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
+
+      // Flag set to indicate new best time, cleared each time a level is started.
+      this.newBestTime = false;
+    },
+
+
+    generateChallenge: function( level ) {
       var numberChallenge = null;
       switch( level ) {
         case 0:
@@ -86,12 +115,54 @@ define( function( require ) {
           break;
       }
 
-     return numberChallenge;
+      return numberChallenge;
     },
 
+    setChoosingLevelState: function() {
+      this.gameState = GameState.CHOOSING_LEVEL;
+    },
+
+    // @private
+    restartGameTimer: function() {
+      if ( this.gameTimerId !== null ) {
+        window.clearInterval( this.gameTimerId );
+      }
+      this.elapsedTime = 0;
+      var thisModel = this;
+      this.gameTimerId = window.setInterval( function() { thisModel.elapsedTime += 1; }, 1000 );
+    },
+
+    // @private
+    stopGameTimer: function() {
+      window.clearInterval( this.gameTimerId );
+      this.gameTimerId = null;
+    },
+
+    /**
+     * //@private
+     * creates PaperNumbers based on the type of Number Challenge
+     * @param {NumberChallenge} numberChallenge
+     */
+    createTerms: function( numberChallenge ) {
+      var self = this;
+      this.residentNumberModels.clear();
+      this.leftTerm = numberChallenge.leftTerm;
+      this.rightTerm = numberChallenge.rightTerm;
+
+      var valuesToCreate = [ numberChallenge.leftTerm, numberChallenge.rightTerm ];
+      var xOffSet = 200;
+      _.each( valuesToCreate, function( numberValue ) {
+        if ( numberValue === "" || numberValue === 0 ) {
+          return;
+        }
+        var initialPosition = new Vector2( xOffSet, self.screenBounds.height / 4 );
+        self.addUserCreatedNumberModel( new PaperNumberModel( numberValue, initialPosition ) );
+        xOffSet += 350;
+      } );
+    },
 
     reset: function() {
-
+      this.residentNumberModels.clear();
     }
 
   } );

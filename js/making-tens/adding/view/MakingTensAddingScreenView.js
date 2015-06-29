@@ -14,8 +14,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var Image = require( 'SCENERY/nodes/Image' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -23,13 +21,9 @@ define( function( require ) {
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var MakingTensCommonView = require( 'MAKING_TENS/making-tens/common/view/MakingTensCommonView' );
+  var ExpressionTermsNode = require( 'MAKING_TENS/making-tens/common/view/ExpressionTermsNode' );
 
   // constants
-  var EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
-  var TERM_FONT = new PhetFont( { size: 35, weight: 'bold' } );
-  var EQUATION_COLOR = "rgb(63,63,183)";
-  var activeNumberDisplayStyle = { fill: null, stroke: '#000', lineDash: [ 5, 5 ] };
-  var normalNumberDisplayStyle = { fill: null, stroke: null, lineDash: [ 0, 0 ] };
   var MAX_DIGITS = 3;
 
   // images
@@ -73,39 +67,14 @@ define( function( require ) {
     editButtonBox.left = this.layoutBounds.minX + 75;
     editButtonBox.top = this.layoutBounds.minY + 32;
 
-    var leftNumberDisplayBackground = new Rectangle( 0, 0, 85, 78, 10, 10, {
-      fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
-    } );
+    // The node that display "12 + 100 = "
+    var expressionTermsNode = new ExpressionTermsNode( makingTensAddingModel.leftTermProperty,
+      makingTensAddingModel.rightTermProperty, makingTensAddingModel );
+    this.addChild( expressionTermsNode );
 
-    var rightNumberDisplayBackGround = new Rectangle( 0, 0, 85, 78, 10, 10, {
-      fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
-    } );
+    expressionTermsNode.left = this.layoutBounds.minX + 38;
+    expressionTermsNode.top = this.layoutBounds.minY + 85;
 
-    var leftTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
-    var rightTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
-    leftTermTextNode.setDirection( "rtl" );
-    this.addChild( leftTermTextNode );
-    this.addChild( rightTermTextNode );
-
-    var pluTextNode = new Text( '+', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
-    var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
-    var emptyNode = new Text( '', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
-
-    var spacing = 5;
-    var numberDisplayBox = new HBox( {
-      children: [ leftNumberDisplayBackground, pluTextNode,
-        rightNumberDisplayBackGround, emptyNode, equalsSignNode ], spacing: spacing
-    } );
-    this.addChild( numberDisplayBox );
-
-    numberDisplayBox.left = this.layoutBounds.minX + 38;
-    numberDisplayBox.top = this.layoutBounds.minY + 85;
-
-    leftTermTextNode.left = numberDisplayBox.left + leftNumberDisplayBackground.width / 1.2;
-    leftTermTextNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 2;
-
-    rightTermTextNode.left = numberDisplayBox.left + rightNumberDisplayBackGround.left + rightNumberDisplayBackGround.width / 8;
-    rightTermTextNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 2;
 
     function onNumberSubmit( value ) {
       if ( makingTensAddingModel.activeTerm === "lt" ) {
@@ -122,12 +91,13 @@ define( function( require ) {
 
     var keyBoardPanel = new KeyBoardPanel( onNumberSubmit, MAX_DIGITS );
     this.addChild( keyBoardPanel );
-    keyBoardPanel.centerX = numberDisplayBox.centerX - 25;
-    keyBoardPanel.top = numberDisplayBox.top + 120;
+    keyBoardPanel.centerX = expressionTermsNode.centerX - 25;
+    keyBoardPanel.top = expressionTermsNode.top + 120;
 
     makingTensAddingModel.activeTermProperty.link( function( term ) {
-      leftNumberDisplayBackground.mutate( normalNumberDisplayStyle );
-      rightNumberDisplayBackGround.mutate( normalNumberDisplayStyle );
+      makingTensAddingModel.leftTermBackgoundStyle = makingTensAddingModel.normalNumberDisplayStyle;
+      makingTensAddingModel.rightTermBackgoundStyle = makingTensAddingModel.normalNumberDisplayStyle;
+
       if ( term === "none" ) {
         keyBoardPanel.visible = false;
         return;
@@ -135,21 +105,13 @@ define( function( require ) {
 
       keyBoardPanel.visible = true;
       if ( term === "lt" ) {
-        leftNumberDisplayBackground.mutate( activeNumberDisplayStyle );
-        keyBoardPanel.setValue( leftTermTextNode.text );
+        makingTensAddingModel.leftTermBackgroundStyle = makingTensAddingModel.activeNumberDisplayStyle;
+        keyBoardPanel.setValue( makingTensAddingModel.leftTerm );
       }
       if ( term === "rt" ) {
-        rightNumberDisplayBackGround.mutate( activeNumberDisplayStyle );
-        keyBoardPanel.setValue( rightTermTextNode.text );
+        makingTensAddingModel.rightTermBackgroundStyle = makingTensAddingModel.activeNumberDisplayStyle;
+        keyBoardPanel.setValue( makingTensAddingModel.rightTerm );
       }
-    } );
-
-    makingTensAddingModel.leftTermProperty.link( function( term ) {
-      leftTermTextNode.text = term;
-    } );
-
-    makingTensAddingModel.rightTermProperty.link( function( term ) {
-      rightTermTextNode.text = term;
     } );
 
     backGroundRectangle.addInputListener( new DownUpListener( {
@@ -166,7 +128,7 @@ define( function( require ) {
       listener: function() {
         makingTensAddingModel.reset();
       },
-      right: this.layoutBounds.maxX - 10,
+      right:  this.layoutBounds.maxX - 10,
       bottom: this.layoutBounds.maxY - 10
     } );
     this.addChild( resetAllButton );
