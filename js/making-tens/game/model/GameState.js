@@ -14,7 +14,7 @@ define( function() {
     SHOWING_CORRECT_ANSWER_FEEDBACK: 'showingCorrectAnswerFeedback',
     SHOWING_INCORRECT_ANSWER_FEEDBACK_TRY_AGAIN: 'showingIncorrectAnswerFeedbackTryAgain',
     SHOWING_INCORRECT_ANSWER_FEEDBACK_MOVE_ON: 'showingIncorrectAnswerFeedbackMoveOn',
-    DISPLAYING_CORRECT_ANSWER: 'displayingCorrectAnswer',
+    CORRECT_ANSWER: 'CORRECT_ANSWER',
     SHOWING_LEVEL_RESULTS: 'showingLevelResults'
   } );
 } );

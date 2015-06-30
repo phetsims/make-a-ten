@@ -16,10 +16,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
-  var TimerToggleButton = require( 'SCENERY_PHET/buttons/TimerToggleButton' );
   var Vector2 = require( 'DOT/Vector2' );
+
 
   // strings
   var chooseYourLevel = require( 'string!MAKING_TENS/chooseYourLevel' );
@@ -27,9 +25,6 @@ define( function( require ) {
   /**
    * @param {Function} startLevelFunction - Function used to initiate a game
    * level, will be called with a zero-based index value.
-   * @param {Function} resetFunction - Function to reset game and scores.
-   * @param {Property} timerEnabledProperty
-   * @param {Property} soundEnabledProperty
    * @param {Array} iconNodes - Set of iconNodes to use on the buttons, sizes
    * should be the same, length of array must match number of levels.
    * @param {Array} scores - Current scores, used to decide which stars to
@@ -37,7 +32,7 @@ define( function( require ) {
    * @param {Object} [options] - See code below for options and default values.
    * @constructor
    */
-  function StartGameLevelNode( startLevelFunction, resetFunction, timerEnabledProperty, soundEnabledProperty, iconNodes, scores, options ) {
+  function StartGameLevelNode( startLevelFunction, iconNodes, scores, options ) {
     Node.call( this );
     options = _.extend( {
       // Defaults
@@ -83,24 +78,6 @@ define( function( require ) {
         level++;
       }
     }
-
-
-    // Sound and timer controls.
-    var timerToggleButton = new TimerToggleButton( timerEnabledProperty );
-    this.addChild( timerToggleButton );
-    var soundToggleButton = new SoundToggleButton( soundEnabledProperty );
-    this.addChild( soundToggleButton );
-
-    // Reset button.
-    var resetButton = new ResetAllButton( { listener: resetFunction, radius: 22 } );
-    this.addChild( resetButton );
-
-    resetButton.right = options.size.width - options.controlsInset;
-    resetButton.bottom = options.size.height - options.controlsInset;
-    soundToggleButton.left = options.controlsInset;
-    soundToggleButton.bottom = options.size.height - options.controlsInset;
-    timerToggleButton.left = options.controlsInset;
-    timerToggleButton.bottom = soundToggleButton.top - 10;
 
     // Layout
     var buttonSpacingX = levelSelectionButtons[ 0 ].width * 1.2; // Note: Assumes all buttons are the same size.

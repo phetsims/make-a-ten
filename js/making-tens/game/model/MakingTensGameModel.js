@@ -9,12 +9,12 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
   var GameState = require( 'MAKING_TENS/making-tens/game/model/GameState' );
   var NumberChallengeFactory = require( 'MAKING_TENS/making-tens/game/model/NumberChallengeFactory' );
   var MakingTensCommonModel = require( 'MAKING_TENS/making-tens/common/model/MakingTensCommonModel' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
+  var Property = require( 'AXON/Property' );
 
   /**
    *
@@ -30,10 +30,9 @@ define( function( require ) {
       soundEnabled: true,
       timerEnabled: false,
       numberOfLevels: 10,
-      level: 0,
+      currentLevel: 0,
       challengeIndex: 0,
       currentChallenge: null,
-      score: 0,
       elapsedTime: 0,
       leftTerm: 0,
       rightTerm: 0,
@@ -44,13 +43,20 @@ define( function( require ) {
 
     // Best times and scores.
     thisModel.bestTimes = []; // @public
-    thisModel.bestScores = []; // @public
+    thisModel.scores = []; // @public
     _.times( thisModel.numberOfLevels, function() {
-      thisModel.bestTimes.push( null );
-      thisModel.bestScores.push( new Property( 0 ) );
+      thisModel.bestTimes.push( 0 );
+      thisModel.scores.push( new Property( 0 ) );
     } );
 
     this.numberChallengeFactory = new NumberChallengeFactory();
+
+    thisModel.residentNumberModels.lengthProperty.link( function( modelLength, prevModelLength ) {
+      if ( modelLength === 1 && prevModelLength === 2 ) { // The user has added the two numbers, trigger success state
+        thisModel.gameState = GameState.CORRECT_ANSWER;
+      }
+    } );
+
   }
 
   return inherit( MakingTensCommonModel, MakingTensGameModel, {
@@ -65,8 +71,7 @@ define( function( require ) {
 
     // starts new level
     startLevel: function( level ) {
-      this.level = level;
-      this.score = 0;
+      this.currentLevel = level;
       this.restartGameTimer();
 
       // Set up the model for the next challenge
@@ -77,6 +82,14 @@ define( function( require ) {
 
       // Flag set to indicate new best time, cleared each time a level is started.
       this.newBestTime = false;
+    },
+
+    /**
+     * The user can play as many times as wants. And Each time, he
+     * combines the numbers b making Tens his score for that level will be incremented
+     */
+    handleCorrectAnswer: function() {
+      this.scores[ this.currentLevel ].set( this.scores[ this.currentLevel ].get() + 1 );
     },
 
 
@@ -117,6 +130,7 @@ define( function( require ) {
 
       return numberChallenge;
     },
+
 
     setChoosingLevelState: function() {
       this.gameState = GameState.CHOOSING_LEVEL;
@@ -162,7 +176,13 @@ define( function( require ) {
     },
 
     reset: function() {
-      this.residentNumberModels.clear();
+      var thisModel = this;
+      thisModel.residentNumberModels.clear();
+      for ( var i = 0; i < thisModel.numberOfLevels; i++ ) {
+        thisModel.bestTimes[ i ] = 0;
+        thisModel.scores[ i ].set( 0 );
+      }
+
     }
 
   } );
