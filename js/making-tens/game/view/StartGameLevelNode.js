@@ -14,7 +14,7 @@ define( function( require ) {
   // modules
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
+  var LevelSelectionButton = require( 'MAKING_TENS/making-tens/game/view/LevelSelectionButton' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -39,7 +39,6 @@ define( function( require ) {
       numLevels: 10,
       titleString: chooseYourLevel,
       numStarsOnButtons: 1,
-      perfectScore: 10,
       numButtonRows: 1, // For layout
       controlsInset: 12,
       size: MakingTensSharedConstants.LAYOUT_BOUNDS
@@ -59,6 +58,7 @@ define( function( require ) {
     var buttonRows = [ 3, 4, 3 ]; // 3 on the first row,4 on the second amd 3 on the next one
     var levelSelectionButtons = new Array( options.numLevels );
     var level = 0;
+    var perfectScore = 1;
     for ( var row = 0; row < buttonRows.length; row++ ) {
       var numColumns = buttonRows[ row ];
 
@@ -68,8 +68,7 @@ define( function( require ) {
           iconNodes[ level ],
           options.numStarsOnButtons,
           createLevelStartFunction( level ),
-          scores[ level ],
-          options.perfectScore, {
+          scores[ level ], perfectScore, {
             baseColor: buttonColors[ row ]
           }
         );

@@ -88,7 +88,7 @@ define( function( require ) {
       ],
       gameModel.scores,
       {
-        numStarsOnButtons: 0,
+        numStarsOnButtons: 1,
         numLevels: gameModel.numberOfLevels,
         numButtonRows: 3,
         controlsInset: 20
@@ -100,14 +100,14 @@ define( function( require ) {
     //go to Level Selection Mode
     var backButton = new BackButton( {
         listener: function() {gameModel.setChoosingLevelState();},
-        top: this.layoutBounds.centerY,
+        top:  this.layoutBounds.bottom - 100,
         left: this.layoutBounds.left + 20
       }
     );
     this.controlLayer.addChild( backButton );
 
     // Sound and timer controls.
-    var audioAndSoundControlBox = new HBox( {
+    this.audioAndSoundControlBox = new HBox( {
       children: [
         new TimerToggleButton( gameModel.timerEnabledProperty ),
         new SoundToggleButton( gameModel.soundEnabledProperty )
@@ -117,7 +117,7 @@ define( function( require ) {
       bottom: this.layoutBounds.height - 20
     } );
 
-    this.rootNode.addChild( audioAndSoundControlBox );
+    this.rootNode.addChild( this.audioAndSoundControlBox );
 
     // Hook up the audio player to the sound settings.
     this.gameAudioPlayer = new GameAudioPlayer( gameModel.soundEnabledProperty );
@@ -165,7 +165,7 @@ define( function( require ) {
 
     // @private
     handleChoosingLevelState: function() {
-      this.show( [ this.startGameLevelNode, this.resetAllButton ] );
+      this.show( [ this.startGameLevelNode, this.resetAllButton,this.audioAndSoundControlBox ] );
       this.hideChallenge();
     },
 
@@ -176,7 +176,7 @@ define( function( require ) {
 
     // @private, Utility method for hiding all of the game nodes whose visibility changes during the course of a challenge.
     hideAllGameNodes: function() {
-      var gameNodes = [ this.startGameLevelNode, this.resetAllButton, this.challengeLayer, this.controlLayer ];
+      var gameNodes = [ this.startGameLevelNode, this.resetAllButton, this.challengeLayer, this.controlLayer,this.audioAndSoundControlBox ];
       gameNodes.forEach( function( node ) { node.visible = false; } );
     },
 
@@ -186,7 +186,7 @@ define( function( require ) {
       // Make a list of the nodes to be shown in this state.
       var nodesToShow = [ this.challengeLayer, this.controlLayer ];
       this.show( nodesToShow );
-     },
+    },
 
     // @private
     handleCorrectAnswer: function() {
