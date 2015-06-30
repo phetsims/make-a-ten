@@ -144,7 +144,7 @@ define( function( require ) {
       self.baseNumberPositions = [];
       var index = 0;
       var opacityValue = 1;
-      var numberOfSetDimensions = this.getNumberOffSetDimensions( value );
+      var numberOfSetDimensions = this.getOffsetArrayByDigits( value );
 
       _.each( self.baseNumbers, function( baseNumber ) {
         var baseNumberImage = PaperImageCollection.getNumberImage( baseNumber );
@@ -180,29 +180,33 @@ define( function( require ) {
 
 
     /**
-     * At which point the split must happen
+     * Calculates at which point the split must happen
+     *
      * @param newPulledNumber
      * @returns {Vector2}
      */
     getDigitOffsetPosition: function( newPulledNumber ) {
       var thisModel = this;
-      var numberOfSetDimensions = this.getNumberOffSetDimensions( thisModel.numberValue );
+      var numberOfSetDimensions = this.getOffsetArrayByDigits( thisModel.numberValue );
 
       var digitDifference = (thisModel.numberValue + "").length - (newPulledNumber + "").length;
       return numberOfSetDimensions[ digitDifference ];
     },
 
     /**
+     * Based on the number of digits gives an array of offset position
      *
      * @param value
      * @returns {object}
      */
-    getNumberOffSetDimensions: function( value ) {
+    getOffsetArrayByDigits: function( value ) {
       var digits = (value + "").length;
-      var numberOfSetDimensions = _.clone( NUMBER_IMAGE_OFFSET_DIMENSIONS[ digits - 1 ] );
+      var numberOfSetDimensions = _.clone( NUMBER_IMAGE_OFFSET_DIMENSIONS[ digits - 1 ] ); // digits-1 zero based index
 
       //handle numbers like 102 where there are only two base numbers
       if ( digits === 3 && (value % 100 < 10) ) {
+        // the second number (index =1) is at third position For example in numbers like 107, the second base number '7' is at
+        // third position, so assign the third positional value
         numberOfSetDimensions[ 1 ] = numberOfSetDimensions[ 2 ];
       }
       return numberOfSetDimensions;
@@ -243,29 +247,32 @@ define( function( require ) {
     },
 
     /**
+     * Based on the position (relative to the node, determine if the point is one the first digit
+     * or  second digit or third digit
      *
-     * @param {Vector2} position
-     * @returns {number}
+     * Example: if the Number is 134  and user has clicked on 1, the positional index
+     * would be 0 and it if is 3 the positional index would be 1 and if it is 4 the positional index would be 2
+     *
+     * @param {Vector2} position - position local to the node
+     * @returns {number} - The positional index (This is used to calculate which number should be pulled out)
      */
     determineDigitIndex: function( position ) {
       if ( this.baseNumbers.length === 1 ) {
         return 0;
       }
+
+      //Each digit is offset at a certain position, get an array of x offsets of the current number
       var positionBuckets = _.map( this.baseNumberPositions, function( pos ) {
         return pos.x;
       } );
 
-      var numberOfSetDimensions = this.getNumberOffSetDimensions( this.numberValue );
-
-      positionBuckets[ positionBuckets.length ] = positionBuckets[ positionBuckets.length - 1 ] +
-                                                  numberOfSetDimensions[ positionBuckets.length - 1 ].x;
 
       for ( var i = 0; i < positionBuckets.length - 1; i++ ) {
         if ( position.x >= positionBuckets[ i ] && position.x <= positionBuckets[ i + 1 ] ) {
           return i;
         }
       }
-      return 0;
+      return i;
     }
 
   } );

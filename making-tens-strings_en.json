@@ -52,5 +52,9 @@
 
   "triples":{
     "value":"Triples"
+  },
+
+  "next":{
+    "value":"Next"
   }
 }

@@ -198,9 +198,10 @@ define( function( require ) {
     },
 
     /**
-     * Based on the position (relative to the node, determine if the point is one the first digit, second etc
+     * Based on the position (relative to the node, determine if the point is one the first digit
+     * or  second digit or third digit
      *
-     * @param position
+     * @param {number} return value is either 0,1 or 2
      */
     determineDigitIndex: function( parentPos ) {
       var thisNode = this;

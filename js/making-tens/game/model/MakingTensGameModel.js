@@ -90,6 +90,11 @@ define( function( require ) {
      */
     handleCorrectAnswer: function() {
       this.scores[ this.currentLevel ].set( this.scores[ this.currentLevel ].get() + 1 );
+      this.gameState = GameState.MOVE_TO_NEXT_CHALLENGE;
+    },
+
+    nextChallenge: function() {
+      this.generateChallenge( this.currentLevel );
     },
 
 
