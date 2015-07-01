@@ -52,7 +52,7 @@ define( function( require ) {
     this.numberChallengeFactory = new NumberChallengeFactory();
 
     thisModel.residentNumberModels.lengthProperty.link( function( modelLength, prevModelLength ) {
-      if ( modelLength === 1 && prevModelLength === 2 ) { // The user has added the two numbers, trigger success state
+      if ( modelLength === 1 && prevModelLength === 2 && thisModel.gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
         thisModel.gameState = GameState.CORRECT_ANSWER;
       }
     } );
@@ -94,9 +94,9 @@ define( function( require ) {
     },
 
     nextChallenge: function() {
-      this.currentChallenge= this.generateChallenge( this.currentLevel );
+      this.currentChallenge = this.generateChallenge( this.currentLevel );
       this.gameState = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
-      },
+    },
 
 
     generateChallenge: function( level ) {
@@ -140,6 +140,7 @@ define( function( require ) {
 
     setChoosingLevelState: function() {
       this.gameState = GameState.CHOOSING_LEVEL;
+      this.residentNumberModels.clear();
     },
 
     // @private

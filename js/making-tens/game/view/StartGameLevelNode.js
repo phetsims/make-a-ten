@@ -58,7 +58,6 @@ define( function( require ) {
     var buttonRows = [ 3, 4, 3 ]; // 3 on the first row,4 on the second amd 3 on the next one
     var levelSelectionButtons = new Array( options.numLevels );
     var level = 0;
-    var perfectScore = 1;
     for ( var row = 0; row < buttonRows.length; row++ ) {
       var numColumns = buttonRows[ row ];
 
@@ -68,7 +67,7 @@ define( function( require ) {
           iconNodes[ level ],
           options.numStarsOnButtons,
           createLevelStartFunction( level ),
-          scores[ level ], perfectScore, {
+          scores[ level ], {
             baseColor: buttonColors[ row ]
           }
         );

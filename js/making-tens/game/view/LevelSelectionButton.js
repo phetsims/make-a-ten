@@ -20,7 +20,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
+  var ProgressIndicatorLabelNode = require( 'MAKING_TENS/making-tens/game/view/ProgressIndicatorLabelNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -49,11 +49,10 @@ define( function( require ) {
    * @param {number} numStars Number of stars to show in the progress indicator at the bottom of the button
    * @param {function} fireFunction Called when the button fires
    * @param {Property.<number>} scoreProperty
-   * @param {number} perfectScore
    * @param {Object} [options]
    * @constructor
    */
-  function LevelSelectionButton( icon, numStars, fireFunction, scoreProperty, perfectScore, options ) {
+  function LevelSelectionButton( icon, numStars, fireFunction, scoreProperty, options ) {
 
     Node.call( this );
 
@@ -92,7 +91,7 @@ define( function( require ) {
         lineWidth: 1,
         pickable: false
       } );
-    var progressIndicator = new ProgressIndicator( numStars, scoreProperty, perfectScore, {
+    var progressIndicator = new ProgressIndicatorLabelNode( numStars, scoreProperty, {
       pickable: false,
       starDiameter: options.buttonWidth / ( numStars + 1 )
     } );
@@ -119,6 +118,12 @@ define( function( require ) {
     contentNode.addChild( adjustedIcon );
     contentNode.addChild( progressIndicatorBackground );
     contentNode.addChild( progressIndicator );
+
+    scoreProperty.link( function( score ) {
+      if ( score > 0 ) {
+        progressIndicatorBackground.top = adjustedIcon.bottom + options.iconToProgressIndicatorYSpace - 2;
+      }
+    } );
 
     // Create the button
     var buttonOptions = {

@@ -32,7 +32,7 @@ define( function( require ) {
 
     underTwentyChallenge: function() {
       var leftTerm = _.random( 2, 9 );
-      var rightTerm = _.random( leftTerm, 15 - leftTerm );
+      var rightTerm = _.random( Math.min( leftTerm, 15 - leftTerm ), Math.max( leftTerm, 15 - leftTerm ) );
       return new NumberChallenge( leftTerm, rightTerm, {} );
     },
 
@@ -51,7 +51,7 @@ define( function( require ) {
 
     underHundredsChallenge: function() {
       var leftTerm = _.random( 10, 100 );
-      var rightTerm = 100 - leftTerm;
+      var rightTerm = _.random( 10, 100 - leftTerm );
       return new NumberChallenge( leftTerm, rightTerm, {} );
     },
 

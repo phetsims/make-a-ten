@@ -28,8 +28,8 @@ define( function( require ) {
   // how much 2 digit and single digit must offset from parent
   var THREE_IMAGE_OFFSET_DIMENSIONS = {
     0: new Vector2( 0, 0 ),
-    1: new Vector2( 42, 30 ),
-    2: new Vector2( 92, 41 )
+    1: new Vector2( 44, 30 ),
+    2: new Vector2( 94, 41 )
   };
 
   var SINGLE_DIGIT_OFFSET_DIMENSIONS = {
