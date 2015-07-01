@@ -26,13 +26,13 @@ define( function( require ) {
 
     addWithNineChallenge: function() {
       var leftTerm = 9;
-      var rightTerm = _.random( 1, 9 );
+      var rightTerm = _.random( 2, 9 );
       return new NumberChallenge( leftTerm, rightTerm, {} );
     },
 
     underTwentyChallenge: function() {
-      var leftTerm = _.random( 1, 9 );
-      var rightTerm = _.random( 1, 9 );
+      var leftTerm = _.random( 2, 9 );
+      var rightTerm = _.random( leftTerm, 15 - leftTerm );
       return new NumberChallenge( leftTerm, rightTerm, {} );
     },
 

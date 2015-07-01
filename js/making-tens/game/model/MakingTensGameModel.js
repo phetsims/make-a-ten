@@ -94,8 +94,9 @@ define( function( require ) {
     },
 
     nextChallenge: function() {
-      this.generateChallenge( this.currentLevel );
-    },
+      this.currentChallenge= this.generateChallenge( this.currentLevel );
+      this.gameState = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
+      },
 
 
     generateChallenge: function( level ) {
