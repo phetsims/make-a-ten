@@ -9,11 +9,8 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var HSlider = require( 'SUN/HSlider' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Property = require( 'AXON/Property' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -25,9 +22,6 @@ define( function( require ) {
 
   // constants
   var MAX_DIGITS = 3;
-
-  // images
-  var mockupImage = require( 'image!MAKING_TENS/adding-mockup.png' );
 
   /**
    * @param {MakingTensAddingModel} makingTensAddingModel
@@ -132,13 +126,6 @@ define( function( require ) {
       bottom: this.layoutBounds.maxY - 10
     } );
     this.addChild( resetAllButton );
-
-    //Show the mock-up and a slider to change its transparency
-    var mockupOpacityProperty = new Property( 0.4 );
-    var image = new Image( mockupImage, { pickable: false } );
-    mockupOpacityProperty.linkAttribute( image, 'opacity' );
-    this.addChild( image );
-    this.addChild( new HSlider( mockupOpacityProperty, { min: 0, max: 1 }, { top: 10, left: 500 } ) );
   }
 
   return inherit( MakingTensCommonView, MakingTensAddingScreenView );
