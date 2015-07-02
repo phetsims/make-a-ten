@@ -134,7 +134,8 @@ define( function( require ) {
       for ( var i = 0; i < digits; i++ ) {
         var charPos = valueStr.charAt( i );
         var posValue = (+charPos) * Math.pow( 10, digits - i - 1 );
-        if ( (posValue + "").startsWith( "0" ) ) {
+
+        if ((posValue + "").indexOf("0" ) === 0 ) { // startswith
           continue;
         }
         this.baseNumbers.push( posValue + "" );
