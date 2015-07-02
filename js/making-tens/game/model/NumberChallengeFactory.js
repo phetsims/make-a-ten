@@ -76,7 +76,7 @@ define( function( require ) {
 
     triplesChallenge: function() {
       var leftTerm = _.random( 100, 999 );
-      var rightTerm = _.random( 100, 999 );
+      var rightTerm = 1000 - leftTerm;
       return new NumberChallenge( leftTerm, rightTerm, {} );
     }
 
