@@ -43,8 +43,8 @@ define( function( require ) {
      * @param {PaperNumberModel} droppedPaperNumberModel
      */
     collapseNumberModels: function( draggedPaperNumberModel, droppedPaperNumberModel ) {
-      var droppedNumberValue = droppedPaperNumberModel.numberValue;
-      var draggedNumberValue = draggedPaperNumberModel.numberValue;
+      var droppedNumberValue = Number(droppedPaperNumberModel.numberValue);
+      var draggedNumberValue = Number(draggedPaperNumberModel.numberValue);
 
       var modelToRemove = droppedPaperNumberModel;
       var modelToChange = draggedPaperNumberModel;
