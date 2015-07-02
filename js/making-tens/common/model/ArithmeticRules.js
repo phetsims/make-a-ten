@@ -81,7 +81,7 @@ define( function( require ) {
           }
 
           // Add singles to doubles if you don’t go over the decade.   234 + 122 = 156 is ok  but not  97 + 5
-          if ( (numberC < 10 || numberD < 10) ) {
+          if ( (numberC < 10 || numberD < 10) && (numberC + numberD <= 10) ) {
             return true;
           }
 
