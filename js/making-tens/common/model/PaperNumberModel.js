@@ -135,7 +135,7 @@ define( function( require ) {
         var charPos = valueStr.charAt( i );
         var posValue = (+charPos) * Math.pow( 10, digits - i - 1 );
 
-        if ((posValue + "").indexOf("0" ) === 0 ) { // startswith
+        if ( (posValue + "").indexOf( "0" ) === 0 ) { // startswith
           continue;
         }
         this.baseNumbers.push( posValue + "" );
@@ -211,6 +211,10 @@ define( function( require ) {
         numberOfSetDimensions[ 1 ] = numberOfSetDimensions[ 2 ];
       }
       return numberOfSetDimensions;
+    },
+
+    getDigitLength: function() {
+      return (this.numberValue + "").length;
     },
 
 

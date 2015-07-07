@@ -116,6 +116,7 @@ define( function( require ) {
         // When splitting a single digit from a two, make sure the mouse is near that second digit (or third digit)
         // In the case of splitting equal digits (ex 30 splitting in to 20 and 10) we dont need to check this condition
         var removalOffsetPosition = thisNode.paperNumberModel.getDigitOffsetPosition( amountToRemove );
+        var amountRemovingOffsetPosition = thisNode.paperNumberModel.getDigitOffsetPosition( amountRemaining );
         var totalBounds = thisNode.bounds;
         var splitRect = Bounds2.rect( totalBounds.x + removalOffsetPosition.x, totalBounds.y,
           totalBounds.width - removalOffsetPosition.x, totalBounds.height * SPLIT_MODE_HEIGHT_PROPORTION );
@@ -129,7 +130,7 @@ define( function( require ) {
           thisHandler.splitObjectContext = {};
           thisHandler.splitObjectContext.pulledApartPaperNumberModel = pulledApartPaperNumberModel;
           thisHandler.splitObjectContext.amountRemaining = amountRemaining;
-
+          thisHandler.splitObjectContext.amountRemovingOffsetPosition = amountRemovingOffsetPosition;
           return;
         }
 
@@ -152,6 +153,16 @@ define( function( require ) {
           addNumberModelCallBack( thisHandler.splitObjectContext.pulledApartPaperNumberModel );
           paperNumberModel.changeNumber( thisHandler.splitObjectContext.amountRemaining );
           this.startMoving( thisHandler.splitObjectContext.pulledApartPaperNumberModel );
+
+          // After a Number is pulled the  remainaing digits must stay in the same place.We use the amountRemovingOffsetPosition to adjust the new paperModel's position
+          // see issue #7
+          if ( thisHandler.splitObjectContext.pulledApartPaperNumberModel.getDigitLength() >= (thisHandler.splitObjectContext.amountRemaining + "").length ) {
+            paperNumberModel.setDestination( paperNumberModel.position.plus( thisHandler.splitObjectContext.amountRemovingOffsetPosition ) );
+          }
+          if ( thisHandler.splitObjectContext.pulledApartPaperNumberModel.getDigitLength() > (thisHandler.splitObjectContext.amountRemaining + "").length ) {
+            thisNode.moveToFront();
+          }
+
           thisHandler.splitObjectContext = null;
         }
 
