@@ -29,7 +29,7 @@ define( function( require ) {
       rightTerm: "",
       activeTerm: "none",
       leftTermBackgroundStyle: this.normalNumberDisplayStyle,
-      rightTermBackgoundStyle: this.normalNumberDisplayStyle
+      rightTermBackgroundStyle: this.normalNumberDisplayStyle
     } );
   }
 

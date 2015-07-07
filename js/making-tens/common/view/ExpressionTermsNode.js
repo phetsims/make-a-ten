@@ -15,13 +15,11 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  var Property = require( 'AXON/Property' );
 
   // constants
   var TERM_FONT = new PhetFont( { size: 35, weight: 'bold' } );
   var EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
   var EQUATION_COLOR = "rgb(63,63,183)";
-  var normalNumberDisplayStyle = { fill: null, stroke: null, lineDash: [ 0, 0 ] };
 
   /**
    *
@@ -33,10 +31,7 @@ define( function( require ) {
   function ExpressionTermsNode( leftTermProperty, rightTermProperty, options ) {
     Node.call( this );
 
-    options = _.extend( {
-      leftTermBackgroundStyleProperty: new Property( normalNumberDisplayStyle ),
-      rightTermBackgroundStyleProperty: new Property( normalNumberDisplayStyle )
-    }, options || {} );
+    options = options || {};
 
     var leftNumberDisplayBackground = new Rectangle( 0, 0, 85, 78, 10, 10, {
       fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
@@ -77,13 +72,19 @@ define( function( require ) {
     rightTermTextNode.left = numberDisplayBox.left + rightNumberDisplayBackGround.left + rightNumberDisplayBackGround.width / 8;
     rightTermTextNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 2;
 
-    options.leftTermBackgroundStyleProperty.link( function( backgroundStyle ) {
-      leftNumberDisplayBackground.mutate( backgroundStyle );
-    } );
+    if ( options.leftTermBackgroundStyleProperty ) {
+      options.leftTermBackgroundStyleProperty.link( function( backgroundStyle ) {
+        leftNumberDisplayBackground.mutate( backgroundStyle );
+      } );
+    }
 
-    options.rightTermBackgroundStyleProperty.link( function( backgroundStyle ) {
-      rightNumberDisplayBackGround.mutate( backgroundStyle );
-    } );
+    if ( options.rightTermBackgroundStyleProperty ) {
+      options.rightTermBackgroundStyleProperty.link( function( backgroundStyle ) {
+        rightNumberDisplayBackGround.mutate( backgroundStyle );
+      } );
+    }
+
+
   }
 
   return inherit( Node, ExpressionTermsNode );

@@ -76,7 +76,7 @@ define( function( require ) {
           var numberD = numberB % 100;
 
           //Add with decades. 124 + 150 = 274
-          if ( numberC % 10 === 0 || numberD % 10 === 0 ) {
+          if ( (numberC % 10 === 0 || numberD % 10 === 0) && (numberC + numberD <= 100) ) {
             return true;
           }
 

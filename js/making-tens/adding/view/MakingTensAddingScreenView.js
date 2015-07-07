@@ -89,8 +89,8 @@ define( function( require ) {
     keyBoardPanel.top = expressionTermsNode.top + 120;
 
     makingTensAddingModel.activeTermProperty.link( function( term ) {
-      makingTensAddingModel.leftTermBackgoundStyle = makingTensAddingModel.normalNumberDisplayStyle;
-      makingTensAddingModel.rightTermBackgoundStyle = makingTensAddingModel.normalNumberDisplayStyle;
+      makingTensAddingModel.leftTermBackgroundStyle = makingTensAddingModel.normalNumberDisplayStyle;
+      makingTensAddingModel.rightTermBackgroundStyle = makingTensAddingModel.normalNumberDisplayStyle;
 
       if ( term === "none" ) {
         keyBoardPanel.visible = false;
