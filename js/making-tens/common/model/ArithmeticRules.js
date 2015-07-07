@@ -101,6 +101,7 @@ define( function( require ) {
        * @returns {NumberPulledApartModel | null} // null means no value is pulled ot
        */
       pullApartNumbers: function( numberValue, pulledIndex ) {
+        numberValue = Number( numberValue );
         var amountToRemove = 0;
         var amountRemaining = 1;
 

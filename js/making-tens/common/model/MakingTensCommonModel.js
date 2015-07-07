@@ -65,17 +65,7 @@ define( function( require ) {
      * @param paperNumberModel
      */
     addUserCreatedNumberModel: function( paperNumberModel ) {
-      var self = this;
-      this.residentNumberModels.push( paperNumberModel );
-
-      // The number will be removed from the model if and when it returns to its origination point.  This is how a shape
-      // can be 'put back' into the collection.
-      paperNumberModel.on( 'returnedToOrigin', function() {
-        if ( !paperNumberModel.userControlled ) {
-          // The number has been returned to the collection.
-          self.residentNumberModels.remove( paperNumberModel );
-        }
-      } );
+       this.residentNumberModels.push( paperNumberModel );
     },
 
     /**

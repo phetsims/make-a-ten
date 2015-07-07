@@ -156,6 +156,7 @@ define( function( require ) {
 
           // After a Number is pulled the  remainaing digits must stay in the same place.We use the amountRemovingOffsetPosition to adjust the new paperModel's position
           // see issue #7
+
           if ( thisHandler.splitObjectContext.pulledApartPaperNumberModel.getDigitLength() >= (thisHandler.splitObjectContext.amountRemaining + "").length ) {
             paperNumberModel.setDestination( paperNumberModel.position.plus( thisHandler.splitObjectContext.amountRemovingOffsetPosition ) );
           }
