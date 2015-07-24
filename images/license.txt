@@ -1,31 +1,250 @@
-1.png source=Snow Day
-10.png source=Snow Day
-100.png source=Snow Day
-2.png source=Snow Day
-20.png source=Snow Day
-200.png source=Snow Day
-3.png source=Snow Day
-30.png source=Snow Day
-300.png source=Snow Day
-4.png source=Snow Day
-40.png source=Snow Day
-400.png source=Snow Day
-5.png source=Snow Day
-50.png source=Snow Day
-500.png source=Snow Day
-6.png source=Snow Day
-60.png source=Snow Day
-600.png source=Snow Day
-7.png source=Snow Day
-70.png source=Snow Day
-700.png source=Snow Day
-8.png source=Snow Day
-80.png source=Snow Day
-800.png source=Snow Day
-9.png source=Snow Day
-90.png source=Snow Day
-900.png source=Snow Day
-adding-mockup.png source=PhET
-explore-mockup.png source=PhET
-game-mockup.png source=PhET
-levelSelection-mockup.png source=PhET
+{
+  "1.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "10.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "100.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "2.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "20.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "200.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "3.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "30.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "300.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "4.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "40.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "400.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "5.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "50.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "500.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "6.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "60.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "600.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "7.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "70.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "700.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "8.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "80.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "800.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "9.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "90.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "900.png": {
+    "text": [
+      "Copyright 2002-2015 "
+    ],
+    "projectURL": "Snow Day",
+    "license": "",
+    "notes": "from Snow Day Math"
+  },
+  "adding-mockup.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+  "explore-mockup.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+  "game-mockup.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+  "levelSelection-mockup.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  }
+}
