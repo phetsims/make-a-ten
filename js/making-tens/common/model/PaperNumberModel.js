@@ -224,8 +224,17 @@ define( function( require ) {
      */
     changeNumber: function( newNumber ) {
       newNumber = +newNumber;
+      var oldDigitsLength = (this.numberValue + "").length;
       this.decomposeIntoBaseNumbers( newNumber );
       this.numberValue = newNumber;
+      var newDigitLength = (this.numberValue + "").length;
+
+      //Collapsed into a single Number, adjust the positions issue #21
+      if ( newDigitLength - oldDigitsLength > 0 ) {
+        var offsets = NUMBER_IMAGE_OFFSET_DIMENSIONS[ newDigitLength - 1 ];
+        this.setDestination( this.position.plus( new Vector2( -offsets[ 1 ].x, 0 ) ) );
+      }
+
       this.trigger( "changeValue" );
     },
 
