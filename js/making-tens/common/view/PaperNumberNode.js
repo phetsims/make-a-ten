@@ -22,7 +22,7 @@ define( function( require ) {
 
   // constants
   //based on where the user clicked on the node, determine if it is split or move
-  var SPLIT_MODE_HEIGHT_PROPORTION = 0.4;
+  var SPLIT_MODE_HEIGHT_PROPORTION = 0.3;
   var SPLIT_OPACITY_FACTOR = 5; // for a distance of 5 apply some transparency to make the split effect realistic
   var MIN_SPLIT_DISTANCE = 6;
 
@@ -60,8 +60,7 @@ define( function( require ) {
       imageNumberNode.opacity = opacity;
     } );
 
-
-    thisNode.addInputListener( new SimpleDragHandler( {
+    var paperNodeDragHandler = new SimpleDragHandler( {
 
       // Allow moving a finger (touch) across this node to interact with it
       allowTouchSnag: true,
@@ -73,6 +72,8 @@ define( function( require ) {
       currentPoint: null,
 
       splitObjectContext: null,
+
+      dragCursor: null,
 
 
       reset: function() {
@@ -193,7 +194,35 @@ define( function( require ) {
         thisHandler.reset();
       }
 
-    } ) );
+    } );
+
+    thisNode.addInputListener( paperNodeDragHandler );
+
+    // show proper cursor to differentiate move and split
+    paperNodeDragHandler.move = function( event ) {
+
+      // if it is 1, we can only move
+      if ( paperNumberModel.numberValue === 1 ) {
+        thisNode.cursor = 'move';
+        return;
+      }
+
+      var localNodeBounds = thisNode.localBounds;
+      var pullBounds = Bounds2.rect( localNodeBounds.x, localNodeBounds.y,
+        localNodeBounds.width, localNodeBounds.height * SPLIT_MODE_HEIGHT_PROPORTION );
+
+      var globalBounds = thisNode.localToGlobalBounds( pullBounds );
+      if ( globalBounds.containsPoint( event.pointer.point ) ) {
+        thisNode.cursor = 'pointer';
+      }
+      else {
+        thisNode.cursor = 'move';
+      }
+    };
+
+    paperNodeDragHandler.out = function( args ) {
+      thisNode.cursor = 'default';
+    };
 
   }
 
