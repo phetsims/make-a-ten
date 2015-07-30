@@ -22,14 +22,14 @@ define( function( require ) {
   // constants
   var TWO_DIGIT_OFFSET_DIMENSIONS = {
     0: new Vector2( 0, 0 ),
-    1: new Vector2( 50, 11 )// how much a single digit image has to offset
+    1: new Vector2( 70, 4 )// how much a single digit image has to offset
   };
 
   // how much 2 digit and single digit must offset from parent
   var THREE_IMAGE_OFFSET_DIMENSIONS = {
     0: new Vector2( 0, 0 ),
-    1: new Vector2( 44, 30 ),
-    2: new Vector2( 94, 41 )
+    1: new Vector2( 55, 18 ),
+    2: new Vector2( 125, 22 ) // the diff between 2 and 3 is same as diff between first and second in TWO_DIGIT
   };
 
   var SINGLE_DIGIT_OFFSET_DIMENSIONS = {
@@ -158,7 +158,7 @@ define( function( require ) {
         self.baseNumberPositions.push( new Vector2( offsetX, offsetY ) );
         self.baseImages.push( baseNumberImageNode );
         index++;
-        opacityValue = opacityValue - 0.04;
+        opacityValue = opacityValue - 0.03;
       } );
 
 

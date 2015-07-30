@@ -25,6 +25,8 @@ define( function( require ) {
   var SPLIT_MODE_HEIGHT_PROPORTION = 0.3;
   var SPLIT_OPACITY_FACTOR = 5; // for a distance of 5 apply some transparency to make the split effect realistic
   var MIN_SPLIT_DISTANCE = 6;
+  var DROP_BOUNDS_WIDTH_PROPORTION = 0.35; // the bounds proportion within which if user drops a number we can consider collapsing them
+  var DROP_BOUNDS_HEIGHT_PROPORTION = 0.35; // the bounds proportion within which if user drops a number we can consider collapsing them
 
   /**
    *
@@ -279,8 +281,8 @@ define( function( require ) {
         var xDiff = widerNode.left - (smallerNode.left - widthDiff);
         var yDiff = Math.abs( droppedNode.top - draggedNode.top );
 
-        var dropPositionWidthTolerance = smallerNode.bounds.width * 0.25;
-        var dropPositionHeightTolerance = smallerNode.bounds.height * 0.45;
+        var dropPositionWidthTolerance = smallerNode.bounds.width * DROP_BOUNDS_WIDTH_PROPORTION;
+        var dropPositionHeightTolerance = smallerNode.bounds.height * DROP_BOUNDS_HEIGHT_PROPORTION;
 
         var xInRange = MakingTensUtil.isBetween( xDiff, -dropPositionWidthTolerance, dropPositionWidthTolerance );
         var yInRange = MakingTensUtil.isBetween( yDiff, -dropPositionHeightTolerance, dropPositionHeightTolerance );
