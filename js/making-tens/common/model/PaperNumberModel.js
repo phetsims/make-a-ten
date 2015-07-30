@@ -189,7 +189,6 @@ define( function( require ) {
     getDigitOffsetPosition: function( newPulledNumber ) {
       var thisModel = this;
       var numberOfSetDimensions = this.getOffsetArrayByDigits( thisModel.numberValue );
-
       var digitDifference = (thisModel.numberValue + "").length - (newPulledNumber + "").length;
       return numberOfSetDimensions[ digitDifference ];
     },
@@ -204,8 +203,9 @@ define( function( require ) {
       var digits = (value + "").length;
       var numberOfSetDimensions = _.clone( NUMBER_IMAGE_OFFSET_DIMENSIONS[ digits - 1 ] ); // digits-1 zero based index
 
-      //handle numbers like 102 where there are only two base numbers
-      if ( digits === 3 && (value % 100 < 10) ) {
+      //handle numbers like 102 where there are only two base numbers and the second number is at third position
+      var isBase2NumbersWithOffset = (value % 100 > 0) && (value % 100 < 10);
+      if ( digits === 3 && isBase2NumbersWithOffset ) {
         // the second number (index =1) is at third position For example in numbers like 107, the second base number '7' is at
         // third position, so assign the third positional value
         numberOfSetDimensions[ 1 ] = numberOfSetDimensions[ 2 ];
