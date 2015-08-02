@@ -86,6 +86,8 @@ define( function( require ) {
     thisModel.baseImages = [];
     thisModel.baseNumberPositions = []; // the base number and its position within this composite node(made up may image nodes)
 
+    thisModel.velocity = MakingTensSharedConstants.ANIMATION_VELOCITY;
+
     thisModel.decomposeIntoBaseNumbers( this.numberValue );
 
     // Trigger an event whenever this shape returns to its original position.
@@ -100,15 +102,15 @@ define( function( require ) {
   return inherit( PropertySet, PaperNumberModel, {
 
     step: function( dt ) {
-
+      var thisModel = this;
       if ( !this.userControlled ) {
 
         // perform any animation
         var distanceToDestination = this.position.distance( this.destination );
-        if ( distanceToDestination > dt * MakingTensSharedConstants.ANIMATION_VELOCITY ) {
+        if ( distanceToDestination > dt * thisModel.velocity ) {
           // Move a step toward the destination.
           var stepAngle = Math.atan2( this.destination.y - this.position.y, this.destination.x - this.position.x );
-          var stepVector = Vector2.createPolar( MakingTensSharedConstants.ANIMATION_VELOCITY * dt, stepAngle );
+          var stepVector = Vector2.createPolar( thisModel.velocity * dt, stepAngle );
           this.position = this.position.plus( stepVector );
 
         }
@@ -241,9 +243,13 @@ define( function( require ) {
     /**
      * @param {Vector2} destination
      * @param {boolean} animate
+     * @param {number} velocity
      */
-    setDestination: function( destination, animate ) {
+    setDestination: function( destination, animate, velocity ) {
       this.destination = destination;
+      if ( !velocity ) {
+        this.velocity = MakingTensSharedConstants.ANIMATION_VELOCITY;
+      }
       if ( animate ) {
         this.animating = true;
       }
@@ -255,8 +261,12 @@ define( function( require ) {
     /**
      * Return the shape to the place where it was originally created.
      * @param {boolean} animate
+     * @param {number} velocity
      */
-    returnToOrigin: function( animate ) {
+    returnToOrigin: function( animate, velocity ) {
+      if ( !velocity ) {
+        this.velocity = MakingTensSharedConstants.ANIMATION_VELOCITY;
+      }
       this.setDestination( this.positionProperty.initialValue, animate );
 
     },

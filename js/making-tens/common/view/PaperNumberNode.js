@@ -40,7 +40,7 @@ define( function( require ) {
     thisNode.paperNumberModel = paperNumberModel;
     Node.call( thisNode );
 
-    addNumberModelCallBack = addNumberModelCallBack || _.noop();
+    thisNode.addNumberModelCallBack = addNumberModelCallBack || _.noop();
     combineNumbersIfApplicableCallback = combineNumbersIfApplicableCallback || _.noop();
 
     var imageNumberNode = new Node();
@@ -153,7 +153,7 @@ define( function( require ) {
 
         //if it is splitMode
         if ( thisHandler.splitObjectContext && transDistance > MIN_SPLIT_DISTANCE ) {
-          addNumberModelCallBack( thisHandler.splitObjectContext.pulledApartPaperNumberModel );
+          thisNode.addNumberModelCallBack( thisHandler.splitObjectContext.pulledApartPaperNumberModel );
           paperNumberModel.changeNumber( thisHandler.splitObjectContext.amountRemaining );
           this.startMoving( thisHandler.splitObjectContext.pulledApartPaperNumberModel );
 
@@ -191,6 +191,9 @@ define( function( require ) {
           movableObject.userControlled = false;
           var droppedPoint = event.pointer.point;
           combineNumbersIfApplicableCallback( movableObject, droppedPoint );
+
+          movableObject.trigger("endDrag");
+
         }
 
         thisHandler.reset();
