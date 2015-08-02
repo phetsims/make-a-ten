@@ -90,12 +90,11 @@ define( function( require ) {
           return;
         }
         else {
-          // explode away the smaller model - show rejection
-          var smallerModel = draggedNode.paperNumberModel;
-          if ( draggedNode.paperNumberModel.numberValue > droppedNodes[ i ].paperNumberModel.numberValue ) {
-            smallerModel = droppedNodes[ i ].paperNumberModel;
-          }
-          self.makingTensModel.moveAway( smallerModel );
+
+          // repel numbers - show rejection
+          var paperNumberModel1 = draggedNode.paperNumberModel;
+          var paperNumberModel2 = droppedNodes[ i ].paperNumberModel;
+          self.makingTensModel.repelAway( paperNumberModel1, paperNumberModel2 );
           return;
         }
       }

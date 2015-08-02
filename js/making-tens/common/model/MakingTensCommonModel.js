@@ -43,8 +43,8 @@ define( function( require ) {
      * @param {PaperNumberModel} droppedPaperNumberModel
      */
     collapseNumberModels: function( draggedPaperNumberModel, droppedPaperNumberModel ) {
-      var droppedNumberValue = Number(droppedPaperNumberModel.numberValue);
-      var draggedNumberValue = Number(draggedPaperNumberModel.numberValue);
+      var droppedNumberValue = Number( droppedPaperNumberModel.numberValue );
+      var draggedNumberValue = Number( draggedPaperNumberModel.numberValue );
 
       var modelToRemove = droppedPaperNumberModel;
       var modelToChange = draggedPaperNumberModel;
@@ -65,20 +65,48 @@ define( function( require ) {
      * @param paperNumberModel
      */
     addUserCreatedNumberModel: function( paperNumberModel ) {
-       this.residentNumberModels.push( paperNumberModel );
+      this.residentNumberModels.push( paperNumberModel );
     },
 
     /**
      *
-     * @param {PaperNumberModel} paperNumberModel
+     * @param {PaperNumberModel} paperNumberModel1
+     * @param {PaperNumberModel} paperNumberModel2
      */
-    moveAway: function( paperNumberModel ) {
-      var offsetDistance = MakingTensSharedConstants.MOVE_AWAY_DISTANCE;
-      if ( paperNumberModel.position.x + offsetDistance > this.screenBounds.width / 2 ) {
-        offsetDistance *= -1;
+    repelAway: function( paperNumberModel1, paperNumberModel2 ) {
+      var width1 = paperNumberModel1.getBounds().width;
+      var width2 = paperNumberModel2.getBounds().width;
+
+      var repelRightDistance = MakingTensSharedConstants.MOVE_AWAY_DISTANCE[ (paperNumberModel1.numberValue + "").length ];
+      var repelLeftDistance = MakingTensSharedConstants.MOVE_AWAY_DISTANCE[ (paperNumberModel2.numberValue + "").length ] * -1;
+
+      var rightPaperModel = paperNumberModel1;
+      var leftPaperModel = paperNumberModel2;
+
+      if(rightPaperModel.position.x < leftPaperModel.position.x ){
+        rightPaperModel = paperNumberModel2;
+        leftPaperModel = paperNumberModel1;
+       }
+
+      // repel right
+      if ( rightPaperModel.position.x + repelRightDistance > this.screenBounds.width - width1 ) {
+        repelRightDistance = 0;
+        repelLeftDistance = repelLeftDistance * 1.5;
       }
-      var delta = new Vector2( offsetDistance, 0 );
-      paperNumberModel.setDestination( paperNumberModel.position.plus( delta ), true );
+
+      // repel left
+      if ( paperNumberModel2.position.x - repelLeftDistance < this.screenBounds.minX - width2 ) {
+        repelLeftDistance = 0;
+        repelRightDistance = repelRightDistance * 1.5;
+      }
+
+      var delta = new Vector2( repelRightDistance, 0 );
+      rightPaperModel.setDestination( rightPaperModel.position.plus( delta ), true );
+
+      delta = new Vector2( repelLeftDistance, 0 );
+      leftPaperModel.setDestination( leftPaperModel.position.plus( delta ), true );
+
+
     },
 
 

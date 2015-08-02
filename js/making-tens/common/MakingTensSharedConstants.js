@@ -21,6 +21,6 @@ define( function( require ) {
     ADDING_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
     // velocity at which animated elements move
     ANIMATION_VELOCITY: 500, // In screen coordinates per second
-    MOVE_AWAY_DISTANCE: 200 // when numbers cannot be added, the distance to move away from each in screen coordinates
+    MOVE_AWAY_DISTANCE: { 1: 50, 2: 100, 3: 150 } // when numbers cannot be added, the distance to move away from each in screen coordinates
   };
 } );
