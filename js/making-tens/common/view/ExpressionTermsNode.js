@@ -31,7 +31,9 @@ define( function( require ) {
   function ExpressionTermsNode( leftTermProperty, rightTermProperty, options ) {
     Node.call( this );
 
-    options = options || {};
+    options = _.extend( {
+      showTermBackground: true
+    }, options );
 
     var leftNumberDisplayBackground = new Rectangle( 0, 0, 85, 78, 10, 10, {
       fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
@@ -71,6 +73,11 @@ define( function( require ) {
 
     rightTermTextNode.left = numberDisplayBox.left + rightNumberDisplayBackGround.left + rightNumberDisplayBackGround.width / 8;
     rightTermTextNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 2;
+
+    if ( !options.showTermBackground ) {
+      leftNumberDisplayBackground.visible = false;
+      rightNumberDisplayBackGround.visible = false;
+    }
 
     if ( options.leftTermBackgroundStyleProperty ) {
       options.leftTermBackgroundStyleProperty.link( function( backgroundStyle ) {
