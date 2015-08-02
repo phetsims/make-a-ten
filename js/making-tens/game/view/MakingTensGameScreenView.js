@@ -20,7 +20,6 @@ define( function( require ) {
     var GameState = require( 'MAKING_TENS/making-tens/game/model/GameState' );
     var GameIconNode = require( 'MAKING_TENS/making-tens/game/view/GameIconNode' );
     var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
-    var TimerToggleButton = require( 'SCENERY_PHET/buttons/TimerToggleButton' );
     var HBox = require( 'SCENERY/nodes/HBox' );
     var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
 
@@ -121,7 +120,6 @@ define( function( require ) {
       // Sound and timer controls.
       this.audioAndSoundControlBox = new HBox( {
         children: [
-          new TimerToggleButton( gameModel.timerEnabledProperty ),
           new SoundToggleButton( gameModel.soundEnabledProperty )
         ],
         spacing: 10,
