@@ -112,11 +112,15 @@ define( function( require ) {
      */
     generateAddWithSinglesChallengeTerms: function() {
 
-      this.addWithSinglesChallengeTerms = this.underTwentyChallengeTerms.map( function( term ) {
+      for ( var i = 0; i < this.underTwentyChallengeTerms.length; i++ ) {
+        var term = this.underTwentyChallengeTerms[ i ];
         var randomDecade = _.random( 1, 8 ) * 10;
         var tensTerm = [ term[ 0 ] + randomDecade, term[ 1 ] ];
-        return tensTerm;
-      } );
+        this.addWithSinglesChallengeTerms.push( tensTerm );
+        tensTerm = [ term[ 1 ], term[ 0 ] + randomDecade ];
+        this.addWithSinglesChallengeTerms.push( tensTerm );
+
+      }
 
     },
 
@@ -136,6 +140,7 @@ define( function( require ) {
 
       for ( i = 0; i < 39; i++ ) {
         this.underHundredsChallengeTerms.push( [ lTerms[ i ], rTerms[ i ] ] );
+        this.underHundredsChallengeTerms.push( [ rTerms[ i ], lTerms[ i ] ] );
       }
     },
 
@@ -154,6 +159,7 @@ define( function( require ) {
 
       for ( i = 0; i < 49; i++ ) {
         this.overHundredsChallengeTerms.push( [ lTerms[ i ], rTerms[ i ] ] );
+        this.overHundredsChallengeTerms.push( [ rTerms[ i ], lTerms[ i ] ] );
       }
     },
 
