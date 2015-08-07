@@ -113,7 +113,7 @@ define( function( require ) {
     generateAddWithSinglesChallengeTerms: function() {
 
       this.addWithSinglesChallengeTerms = this.underTwentyChallengeTerms.map( function( term ) {
-        var randomDecade = _.random( 1, 9 ) * 10;
+        var randomDecade = _.random( 1, 8 ) * 10;
         var tensTerm = [ term[ 0 ] + randomDecade, term[ 1 ] ];
         return tensTerm;
       } );
@@ -159,12 +159,13 @@ define( function( require ) {
 
 
     /**
+     * Level 1 should include challenges that sum to 10 and under
      *
      * @returns {NumberChallenge}
      */
     tenAndUnderChallenge: function() {
       var leftTerm = _.random( 1, 9 );
-      var rightTerm = 10 - leftTerm;
+      var rightTerm = _.random( 1, 10 - leftTerm );
       return new NumberChallenge( leftTerm, rightTerm, {} );
     },
 
