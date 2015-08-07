@@ -1,13 +1,4 @@
 {
-  "0.png": {
-    "text": [
-      "from Snow Day Math"
-    ],
-    "projectURL": "",
-    "license": "",
-    "notes": "from Snow Day Math",
-    "exception": "Snow Day Math images will not be used in the final version, this exception will allow the build to pass without errors"
-  },
   "1.png": {
     "text": [
       "from Snow Day Math"
@@ -251,45 +242,84 @@
     "notes": "from Snow Day Math",
     "exception": "Snow Day Math images will not be used in the final version, this exception will allow the build to pass without errors"
   },
-  "1000.png": {
+
+  "ding.mp3": {
     "text": [
       "from Snow Day Math"
     ],
     "projectURL": "",
     "license": "",
     "notes": "from Snow Day Math",
-    "exception": "Snow Day Math images will not be used in the final version, this exception will allow the build to pass without errors"
+    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
   },
-  "adding-mockup.png": {
+
+  "boing.mp3": {
     "text": [
-      "Copyright 2002-2015 University of Colorado Boulder"
+      "from Snow Day Math"
     ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
+    "projectURL": "",
+    "license": "",
+    "notes": "from Snow Day Math",
+    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
   },
-  "explore-mockup.png": {
+
+  "trumpet.mp3": {
     "text": [
-      "Copyright 2002-2015 University of Colorado Boulder"
+      "from Snow Day Math"
     ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
+    "projectURL": "",
+    "license": "",
+    "notes": "from Snow Day Math",
+    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
   },
-  "game-mockup.png": {
+
+  "cheer.mp3": {
     "text": [
-      "Copyright 2002-2015 University of Colorado Boulder"
+      "from Snow Day Math"
     ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
+    "projectURL": "",
+    "license": "",
+    "notes": "from Snow Day Math",
+    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
   },
-  "levelSelection-mockup.png": {
+
+  "ding.ogg": {
     "text": [
-      "Copyright 2002-2015 University of Colorado Boulder"
+      "from Snow Day Math"
     ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
+    "projectURL": "",
+    "license": "",
+    "notes": "from Snow Day Math",
+    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
+  },
+
+  "boing.ogg": {
+    "text": [
+      "from Snow Day Math"
+    ],
+    "projectURL": "",
+    "license": "",
+    "notes": "from Snow Day Math",
+    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
+  },
+
+  "trumpet.ogg": {
+    "text": [
+      "from Snow Day Math"
+    ],
+    "projectURL": "",
+    "license": "",
+    "notes": "from Snow Day Math",
+    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
+  },
+
+  "cheer.ogg": {
+    "text": [
+      "from Snow Day Math"
+    ],
+    "projectURL": "",
+    "license": "",
+    "notes": "from Snow Day Math",
+    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
   }
 }
