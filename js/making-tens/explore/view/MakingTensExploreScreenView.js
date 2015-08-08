@@ -19,7 +19,7 @@ define( function( require ) {
   var MakingTensExplorerNode = require( 'MAKING_TENS/making-tens/explore/view/MakingTensExplorerNode' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  var Checkbox = require( 'SUN/CheckBox' );
+  var CheckBox = require( 'SUN/CheckBox' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Bounds2 = require( 'DOT/Bounds2' );
@@ -85,7 +85,7 @@ define( function( require ) {
 
 
     var sumTextNode = new Text( hideTotalString, { font: new PhetFont( { size: 25, weight: 'bold' } ), fill: "black" } );
-    var showSumCheckBox = new Checkbox( sumTextNode, makingTensExploreModel.hideTotalProperty, {
+    var showSumCheckBox = new CheckBox( sumTextNode, makingTensExploreModel.hideTotalProperty, {
       spacing: 10,
       boxWidth: 30
     } );
