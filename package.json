@@ -2,6 +2,7 @@
   "name": "making-tens",
   "version": "1.0.0-dev.2",
   "license": "GPLv3",
+  "requirejsNamespace": "MAKING_TENS",
   "simTitleStringKey": "MAKING_TENS/making-tens.name",
   "phetLibs": [
     "making-tens",
