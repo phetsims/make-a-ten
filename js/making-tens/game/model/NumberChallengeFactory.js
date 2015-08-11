@@ -14,7 +14,11 @@ define( function( require ) {
 
 
   function NumberChallengeFactory() {
-    this.addWithNineChallengeTerms = [];
+
+    this.addWithNineChallengeTermsLeft9 = [];
+    this.addWithNineChallengeTermsRight9 = [];
+    this.addWithNineChallengeTermAlternator = 1;
+
     this.underTwentyChallengeTerms = [];
     this.addWithTensChallengeTerms = [];
     this.addWithSinglesChallengeTerms = [];
@@ -43,10 +47,10 @@ define( function( require ) {
      */
     generateAddWithNineChallengeTerms: function() {
       for ( var i = 0; i < 8; i++ ) {
-        this.addWithNineChallengeTerms.push( [ 9, i + 2 ] );
+        this.addWithNineChallengeTermsLeft9.push( [ 9, i + 2 ] );
       }
       for ( i = 0; i < 7; i++ ) {
-        this.addWithNineChallengeTerms.push( this.addWithNineChallengeTerms[ i ].reverse() );
+        this.addWithNineChallengeTermsRight9.push( [ this.addWithNineChallengeTermsLeft9[ i ][ 1 ], this.addWithNineChallengeTermsLeft9[ i ][ 0 ] ] );
       }
     },
 
@@ -67,31 +71,34 @@ define( function( require ) {
       for ( var i = 0; i < 6; i++ ) {
         _8basedTerms.push( [ 8, i + 3 ] );
 
-        for ( i = 0; i < 5; i++ ) {
-          _8basedTerms.push( _8basedTerms[ i ].reverse() );
-        }
       }
+      for ( i = 0; i < 5; i++ ) {
+        _8basedTerms.push( [ _8basedTerms[ i ][ 1 ], _8basedTerms[ i ][ 0 ] ] );
+      }
+
 
       var _7basedTerms = [];
 
       for ( i = 0; i < 4; i++ ) {
         _7basedTerms.push( [ 7, i + 4 ] );
-
-        for ( i = 0; i < 3; i++ ) {
-          _7basedTerms.push( _7basedTerms[ i ].reverse() );
-        }
       }
+
+      for ( i = 0; i < 3; i++ ) {
+        _7basedTerms.push( [ _7basedTerms[ i ][ 1 ], _7basedTerms[ i ][ 0 ] ] );
+      }
+
 
       var _6basedTerms = [];
 
       for ( i = 0; i < 2; i++ ) {
         _6basedTerms.push( [ 6, i + 5 ] );
-
-        for ( i = 0; i < 1; i++ ) {
-          _6basedTerms.push( _6basedTerms[ i ].reverse() );
-        }
       }
-      this.underTwentyChallengeTerms = [].concat( this.addWithNineChallengeTerms, _8basedTerms, _7basedTerms, _6basedTerms );
+
+      for ( i = 0; i < 1; i++ ) {
+        _6basedTerms.push( [ _6basedTerms[ i ][ 1 ], _6basedTerms[ i ][ 0 ] ] );
+      }
+
+      this.underTwentyChallengeTerms = [].concat( this.addWithNineChallengeTermsLeft9, this.addWithNineChallengeTermsRight9, _8basedTerms, _7basedTerms, _6basedTerms );
     },
 
     /**
@@ -119,7 +126,6 @@ define( function( require ) {
         this.addWithSinglesChallengeTerms.push( tensTerm );
         tensTerm = [ term[ 1 ], term[ 0 ] + randomDecade ];
         this.addWithSinglesChallengeTerms.push( tensTerm );
-
       }
 
     },
@@ -176,12 +182,21 @@ define( function( require ) {
     },
 
     /**
+     * This is Level 2
      *
+     * Alternates between n,9 and 9,n
      * @returns {NumberChallenge}
      */
     addWithNineChallenge: function() {
-      var termIndex = _.random( 0, this.addWithNineChallengeTerms.length - 1 );
-      return new NumberChallenge( this.addWithNineChallengeTerms[ termIndex ][ 0 ], this.addWithNineChallengeTerms[ termIndex ][ 1 ], {} );
+
+      var addWithNineChallengeTerms = this.addWithNineChallengeTermsLeft9;
+      if ( this.addWithNineChallengeTermAlternator < 0 ) {
+        addWithNineChallengeTerms = this.addWithNineChallengeTermsRight9;
+      }
+      this.addWithNineChallengeTermAlternator *= -1;
+
+      var termIndex = _.random( 0, addWithNineChallengeTerms.length - 1 );
+      return new NumberChallenge( addWithNineChallengeTerms[ termIndex ][ 0 ], addWithNineChallengeTerms[ termIndex ][ 1 ], {} );
     },
 
     /**
@@ -194,7 +209,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Level 3
      * @returns {NumberChallenge}
      */
     underTwentyChallenge: function() {
