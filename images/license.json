@@ -243,6 +243,16 @@
     "exception": "Snow Day Math images will not be used in the final version, this exception will allow the build to pass without errors"
   },
 
+  "1000.png": {
+    "text": [
+      "from Snow Day Math"
+    ],
+    "projectURL": "",
+    "license": "",
+    "notes": "from Snow Day Math",
+    "exception": "Snow Day Math images will not be used in the final version, this exception will allow the build to pass without errors"
+  },
+
   "ding.mp3": {
     "text": [
       "from Snow Day Math"

@@ -15,7 +15,7 @@ define( function( require ) {
   var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
 
   /**
-   * @param {MakingTensExploreModel} makingTensCommonModel
+   * @param {MakingTensCommonModel} makingTensCommonModel
    * @constructor
    */
   function MakingTensCommonView( makingTensModel, screenBounds, paperNumberNodeLayer ) {

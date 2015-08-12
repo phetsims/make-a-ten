@@ -117,12 +117,11 @@ define( function( require ) {
         var amountRemaining = numberPulledApart.amountRemaining;
 
         // When splitting a single digit from a two, make sure the mouse is near that second digit (or third digit)
-        // In the case of splitting equal digits (ex 30 splitting in to 20 and 10) we dont need to check this condition
-        var removalOffsetPosition = thisNode.paperNumberModel.getDigitOffsetPosition( amountToRemove );
+        // In the case of splitting equal digits (ex 30 splitting in to 20 and 10) we don't need to check this condition
         var amountRemovingOffsetPosition = thisNode.paperNumberModel.getDigitOffsetPosition( amountRemaining );
         var totalBounds = thisNode.bounds;
-        var splitRect = Bounds2.rect( totalBounds.x + removalOffsetPosition.x, totalBounds.y,
-          totalBounds.width - removalOffsetPosition.x, totalBounds.height * SPLIT_MODE_HEIGHT_PROPORTION );
+        var splitRect = Bounds2.rect( totalBounds.x , totalBounds.y,
+          totalBounds.width, totalBounds.height * SPLIT_MODE_HEIGHT_PROPORTION );
 
         //if the below condition is true, start splitting
         if ( splitRect.containsPoint( thisHandler.startOffSet ) ) {
@@ -157,7 +156,7 @@ define( function( require ) {
           paperNumberModel.changeNumber( thisHandler.splitObjectContext.amountRemaining );
           this.startMoving( thisHandler.splitObjectContext.pulledApartPaperNumberModel );
 
-          // After a Number is pulled the  remainaing digits must stay in the same place.We use the amountRemovingOffsetPosition to adjust the new paperModel's position
+          // After a Number is pulled the  remaining digits must stay in the same place.We use the amountRemovingOffsetPosition to adjust the new paperModel's position
           // see issue #7
 
           if ( thisHandler.splitObjectContext.pulledApartPaperNumberModel.getDigitLength() >= (thisHandler.splitObjectContext.amountRemaining + "").length ) {

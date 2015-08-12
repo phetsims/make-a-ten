@@ -72,26 +72,49 @@ define( function( require ) {
 
         var threeDigits = (sum >= 100 && sum <= 1000);
         if ( threeDigits ) {
-          var numberC = numberA % 100;
-          var numberD = numberB % 100;
-
-          //Add with decades. 124 + 150 = 274
-          if ( (numberC % 10 === 0 || numberD % 10 === 0) && (numberC + numberD <= 100) ) {
-            return true;
-          }
-
-          // Add singles to doubles if you don’t go over the decade.   234 + 122 = 156 is ok  but not  97 + 5
-          if ( (numberC < 10 || numberD < 10) && (numberC + numberD <= 10) ) {
-            return true;
-          }
-
-          if ( ((numberA % 10 + numberB % 10) <= 10) && (numberC + numberD <= 100) ) {
-            return true;
-          }
-
+          return this.validateAdditionForThreeDigits( numberA, numberB );
         }
+
+        var fourDigits = (sum > 1000);
+        if ( fourDigits ) {
+          if ( numberA === 1000 || numberB === 1000 ) {
+            return true;
+          }
+          var numberC = numberA % 1000;
+          var numberD = numberB % 1000;
+
+          // The only way to add over 1000 is to make 1000.
+          if ( (numberC + numberD > 1000) ) {
+            return false;
+          }
+
+          return this.validateAdditionForThreeDigits( numberA, numberB );
+        }
+
         return false;
       },
+
+      validateAdditionForThreeDigits: function( numberA, numberB ) {
+        var numberC = numberA % 100;
+        var numberD = numberB % 100;
+        //Add with decades. 124 + 150 = 274
+        if ( (numberC % 10 === 0 || numberD % 10 === 0) && (numberC + numberD <= 100) ) {
+          return true;
+        }
+
+        // Add singles to doubles if you don’t go over the decade.   234 + 122 = 156 is ok  but not  97 + 5
+        if ( (numberC < 10 || numberD < 10) && (numberC + numberD <= 10) ) {
+          return true;
+        }
+
+        if ( ((numberA % 10 + numberB % 10) <= 10) && (numberC + numberD <= 100) ) {
+          return true;
+        }
+
+        return false;
+
+      },
+
 
       /**
        * Handles how the number should be split and returns the new pulledout number
@@ -140,7 +163,18 @@ define( function( require ) {
 
         // 4 digits
         if ( numberValue >= 1000 && numberValue < 2000 ) {
-          amountToRemove = numberValue % 1000;
+          if ( pulledIndex === 0 ) {
+            amountToRemove = 1000;
+          }
+          if ( pulledIndex === 1 ) {
+            amountToRemove = numberValue % 1000;
+          }
+          if ( pulledIndex === 2 ) {
+            amountToRemove = numberValue % 100;
+          }
+          if ( pulledIndex === 3 ) {
+            amountToRemove = numberValue % 10;
+          }
         }
 
         if ( amountToRemove < 1 ) {

@@ -36,6 +36,7 @@ define( function( require ) {
   var image700 = require( 'image!MAKING_TENS/700.png' );
   var image800 = require( 'image!MAKING_TENS/800.png' );
   var image900 = require( 'image!MAKING_TENS/900.png' );
+  var image1000 = require( 'image!MAKING_TENS/1000.png' );
 
   var allImages = {
     1: image1, 2: image2, 3: image3,
@@ -46,7 +47,8 @@ define( function( require ) {
     70: image70, 80: image80, 90: image90,
     100: image100, 200: image200, 300: image300,
     400: image400, 500: image500, 600: image600,
-    700: image700, 800: image800, 900: image900
+    700: image700, 800: image800, 900: image900,
+    1000: image1000
   };
 
   function PaperImageCollection() {

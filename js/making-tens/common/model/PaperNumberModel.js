@@ -26,10 +26,17 @@ define( function( require ) {
   };
 
   // how much 2 digit and single digit must offset from parent
-  var THREE_IMAGE_OFFSET_DIMENSIONS = {
+  var THREE_DIGIT_OFFSET_DIMENSIONS = {
     0: new Vector2( 0, 0 ),
     1: new Vector2( 55, 18 ),
     2: new Vector2( 125, 22 ) // the diff between 2 and 3 is same as diff between first and second in TWO_DIGIT
+  };
+
+  var FOUR_DIGIT_OFFSET_DIMENSIONS = {
+    0: new Vector2( 0, 0 ),
+    1: new Vector2( 65, 6 ),
+    2: new Vector2( 120, 28 ),
+    3: new Vector2( 190, 32 )
   };
 
   var SINGLE_DIGIT_OFFSET_DIMENSIONS = {
@@ -39,7 +46,8 @@ define( function( require ) {
   var NUMBER_IMAGE_OFFSET_DIMENSIONS = {
     0: SINGLE_DIGIT_OFFSET_DIMENSIONS,
     1: TWO_DIGIT_OFFSET_DIMENSIONS,
-    2: THREE_IMAGE_OFFSET_DIMENSIONS
+    2: THREE_DIGIT_OFFSET_DIMENSIONS,
+    3: FOUR_DIGIT_OFFSET_DIMENSIONS
   };
 
   /**
@@ -190,8 +198,9 @@ define( function( require ) {
      */
     getDigitOffsetPosition: function( newPulledNumber ) {
       var thisModel = this;
-      var numberOfSetDimensions = this.getOffsetArrayByDigits( thisModel.numberValue );
-      var digitDifference = (thisModel.numberValue + "").length - (newPulledNumber + "").length;
+      var newPulledNumberLength = (newPulledNumber + "").length;
+      var numberOfSetDimensions = _.clone( NUMBER_IMAGE_OFFSET_DIMENSIONS[ this.getDigitLength() - 1 ] ); // digits-1 zero based index
+      var digitDifference = (thisModel.numberValue + "").length - newPulledNumberLength;
       return numberOfSetDimensions[ digitDifference ];
     },
 
@@ -206,14 +215,34 @@ define( function( require ) {
       var numberOfSetDimensions = _.clone( NUMBER_IMAGE_OFFSET_DIMENSIONS[ digits - 1 ] ); // digits-1 zero based index
 
       //handle numbers like 102 where there are only two base numbers and the second number is at third position
-      var isBase2NumbersWithOffset = (value % 100 > 0) && (value % 100 < 10);
-      if ( digits === 3 && isBase2NumbersWithOffset ) {
-        // the second number (index =1) is at third position For example in numbers like 107, the second base number '7' is at
-        // third position, so assign the third positional value
-        numberOfSetDimensions[ 1 ] = numberOfSetDimensions[ 2 ];
+      if ( digits === 3 ) {
+        var isBase2NumbersWithOffset = (value % 100 > 0) && (value % 100 < 10);
+        if ( isBase2NumbersWithOffset ) {
+          // the second number (index =1) is at third position For example in numbers like 107, the second base number '7' is at
+          // third position, so assign the third positional value
+          numberOfSetDimensions[ 1 ] = numberOfSetDimensions[ 2 ];
+        }
+      }
+
+      if ( digits === 4 ) {
+
+        var twoDigitOffset = (value % 1000 >= 10) && (value % 1000 < 100);
+        if ( twoDigitOffset ) {
+          //handle numbers like 1070
+          numberOfSetDimensions[ 1 ] = numberOfSetDimensions[ 2 ];
+          numberOfSetDimensions[ 2 ] = numberOfSetDimensions[ 3 ];
+        }
+
+        var singleDigitOffset = (value % 100 > 0) && (value % 100 < 10);
+        if ( singleDigitOffset ) {
+          //handle numbers like 1007
+          numberOfSetDimensions[ 1 ] = numberOfSetDimensions[ 3 ];
+        }
+
       }
       return numberOfSetDimensions;
     },
+
 
     getDigitLength: function() {
       return (this.numberValue + "").length;
@@ -286,11 +315,12 @@ define( function( require ) {
         return 0;
       }
 
+      var basePositions = NUMBER_IMAGE_OFFSET_DIMENSIONS[ this.getDigitLength() - 1 ];
+
       //Each digit is offset at a certain position, get an array of x offsets of the current number
-      var positionBuckets = _.map( this.baseNumberPositions, function( pos ) {
+      var positionBuckets = _.map( basePositions, function( pos ) {
         return pos.x;
       } );
-
 
       for ( var i = 0; i < positionBuckets.length - 1; i++ ) {
         if ( position.x >= positionBuckets[ i ] && position.x <= positionBuckets[ i + 1 ] ) {

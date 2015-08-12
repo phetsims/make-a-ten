@@ -267,11 +267,10 @@ define( function( require ) {
      * @returns {NumberChallenge}
      */
     triplesChallenge: function() {
-      var leftTerm = _.random( 100, 999 );
-      var rightTerm = 1000 - leftTerm;
+      var leftTerm = _.random( 101, 998 );
+      var rightTerm = _.random( 101, 998 );
       return new NumberChallenge( leftTerm, rightTerm, {} );
     }
-
 
   } );
 } );
