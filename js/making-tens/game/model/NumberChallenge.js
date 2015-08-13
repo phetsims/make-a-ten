@@ -17,7 +17,7 @@ define( function( require ) {
    *
    * @param {number} leftTerm
    * @param {number} rightTerm
-   * @param {object} options
+   * @param {Object} options
    * @constructor
    */
   function NumberChallenge( leftTerm, rightTerm, options ) {

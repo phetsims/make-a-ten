@@ -54,7 +54,7 @@ define( function( require ) {
    *
    * @param {number} numberValue
    * @param {Vector2} initialPosition
-   * @param {object} options
+   * @param {Object} options
    * @constructor
    */
   function PaperNumberModel( numberValue, initialPosition, options ) {
