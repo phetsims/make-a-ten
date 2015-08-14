@@ -120,7 +120,7 @@ define( function( require ) {
         // In the case of splitting equal digits (ex 30 splitting in to 20 and 10) we don't need to check this condition
         var amountRemovingOffsetPosition = thisNode.paperNumberModel.getDigitOffsetPosition( amountRemaining );
         var totalBounds = thisNode.bounds;
-        var splitRect = Bounds2.rect( totalBounds.x , totalBounds.y,
+        var splitRect = Bounds2.rect( totalBounds.x, totalBounds.y,
           totalBounds.width, totalBounds.height * SPLIT_MODE_HEIGHT_PROPORTION );
 
         //if the below condition is true, start splitting
@@ -191,7 +191,7 @@ define( function( require ) {
           var droppedPoint = event.pointer.point;
           combineNumbersIfApplicableCallback( movableObject, droppedPoint );
 
-          movableObject.trigger("endDrag");
+          movableObject.trigger( "endDrag" );
 
         }
 
@@ -280,7 +280,11 @@ define( function( require ) {
           smallerNode = droppedNode;
         }
         var widthDiff = widerNode.bounds.width - smallerNode.bounds.width;
+        var smallerDigitLength = smallerNode.paperNumberModel.getDigitLength();
         var xDiff = widerNode.left - (smallerNode.left - widthDiff);
+        if ( smallerDigitLength === 1 && (widerNode.right - smallerNode.right) > smallerNode.bounds.width / 4 ) {
+          xDiff -= smallerNode.bounds.width / 2;
+        }
         var yDiff = Math.abs( droppedNode.top - draggedNode.top );
 
         var dropPositionWidthTolerance = smallerNode.bounds.width * DROP_BOUNDS_WIDTH_PROPORTION;
