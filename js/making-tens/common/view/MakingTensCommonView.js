@@ -15,10 +15,14 @@ define( function( require ) {
   var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
 
   /**
-   * @param {MakingTensCommonModel} makingTensCommonModel
+   *
+   * @param {MakingTensModel} makingTensModel
+   * @param {Bounds2} screenBounds
+   * @param {Node} paperNumberNodeLayer
+   * @param {Function} addUserCreatedNumberModel - callback
    * @constructor
    */
-  function MakingTensCommonView( makingTensModel, screenBounds, paperNumberNodeLayer ) {
+  function MakingTensCommonView( makingTensModel, screenBounds, paperNumberNodeLayer,addUserCreatedNumberModel ) {
     var self = this;
     ScreenView.call( this, { layoutBounds: screenBounds } );
     self.makingTensModel = makingTensModel;
@@ -26,7 +30,7 @@ define( function( require ) {
     self.paperNumberLayerNode = new Node();
     paperNumberNodeLayer.addChild( self.paperNumberLayerNode );
 
-    self.addUserCreatedNumberModel = makingTensModel.addUserCreatedNumberModel.bind( makingTensModel );
+    self.addUserCreatedNumberModel = addUserCreatedNumberModel ||  makingTensModel.addUserCreatedNumberModel.bind( makingTensModel );
     self.combineNumbersIfApplicableCallback = this.combineNumbersIfApplicable.bind( this );
 
     function handlePaperNumberAdded( addedNumberModel ) {

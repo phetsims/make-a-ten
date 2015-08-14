@@ -34,7 +34,7 @@ define( function( require ) {
   function MakingTensExploreScreenView( makingTensExploreModel ) {
     var self = this;
     var paperNumberNodeLayer = new Node();
-    MakingTensCommonView.call( this, makingTensExploreModel, MakingTensSharedConstants.LAYOUT_BOUNDS, paperNumberNodeLayer );
+    MakingTensCommonView.call( this, makingTensExploreModel, MakingTensSharedConstants.LAYOUT_BOUNDS, paperNumberNodeLayer, self.addUserCreatedNumberModelToExplorerView.bind( self ) );
 
     var sumEquationNode = new SumEquationNode( makingTensExploreModel.sumProperty, MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR );
     self.addChild( sumEquationNode );

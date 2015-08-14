@@ -190,9 +190,7 @@ define( function( require ) {
           movableObject.userControlled = false;
           var droppedPoint = event.pointer.point;
           combineNumbersIfApplicableCallback( movableObject, droppedPoint );
-
           movableObject.trigger( "endDrag" );
-
         }
 
         thisHandler.reset();
