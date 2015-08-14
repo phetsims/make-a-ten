@@ -263,7 +263,7 @@ define( function( require ) {
       //Collapsed into a single Number, adjust the positions issue #21
       if ( newDigitLength - oldDigitsLength > 0 ) {
         var offsets = NUMBER_IMAGE_OFFSET_DIMENSIONS[ newDigitLength - 1 ];
-        this.setDestination( this.position.plus( new Vector2( -offsets[ 1 ].x, 0 ) ) );
+        this.setDestination( this.position.plus( new Vector2( -offsets[ 1 ].x,  -offsets[ 1 ].y ) ) );
       }
 
       this.trigger( "changeValue" );
