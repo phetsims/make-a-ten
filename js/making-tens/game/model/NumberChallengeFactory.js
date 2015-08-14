@@ -34,6 +34,8 @@ define( function( require ) {
     this.generateUnderHundredsChallengeTerms();
     this.generateOverHundredsChallengeTerms();
 
+    this.addWithSinglesThreeDigitsAlternator = 1;
+
   }
 
   return inherit( Object, NumberChallengeFactory, {
@@ -247,7 +249,12 @@ define( function( require ) {
     addWithSinglesThreeDigit: function() {
       var leftTerm = _.random( 1, 9 ) * 100;
       var rightTerm = _.random( 1, 9 );
-      return new NumberChallenge( leftTerm, rightTerm, {} );
+      var terms = [ leftTerm, rightTerm ];
+      if ( this.addWithSinglesThreeDigitsAlternator < 0 ) {
+        terms.reverse();
+      }
+      this.addWithSinglesThreeDigitsAlternator *= -1;
+      return new NumberChallenge( terms[ 0 ], terms[ 1 ], {} );
     },
 
     /**
