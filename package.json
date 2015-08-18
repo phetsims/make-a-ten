@@ -2,13 +2,6 @@
   "name": "making-tens",
   "version": "1.0.0-dev.2",
   "license": "GPLv3",
-  "requirejsNamespace": "MAKING_TENS",
-  "simTitleStringKey": "MAKING_TENS/making-tens.name",
-  "phetLibs": [
-    "making-tens",
-    "vegas",
-    "vibe"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/phetsims/making-tens.git"
@@ -19,5 +12,14 @@
     "grunt-contrib-jshint": "~0.6.4",
     "uglify-js": "~2.4.0",
     "requirejs": "~2.1.8"
+  },
+  "phet": {
+    "requirejsNamespace": "MAKING_TENS",
+    "simTitleStringKey": "MAKING_TENS/making-tens.name",
+    "phetLibs": [
+      "making-tens",
+      "vegas",
+      "vibe"
+    ]
   }
 }
