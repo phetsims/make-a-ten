@@ -17,7 +17,6 @@
     "requirejsNamespace": "MAKING_TENS",
     "simTitleStringKey": "MAKING_TENS/making-tens.name",
     "phetLibs": [
-      "making-tens",
       "vegas",
       "vibe"
     ]
