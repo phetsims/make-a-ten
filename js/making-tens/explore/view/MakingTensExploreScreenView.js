@@ -50,13 +50,13 @@ define( function( require ) {
     var explorerNodes = [];
     // Create the composite nodes that contain the number collections
     var exploreHundredsNode = new MakingTensExplorerNode( 100, self.addUserCreatedNumberModelToExplorerView.bind( self ),
-      self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ),self );
+      self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ), self );
     explorerNodes.push( exploreHundredsNode );
     var exploreTensNode = new MakingTensExplorerNode( 10, self.addUserCreatedNumberModelToExplorerView.bind( self ),
-      self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ),self );
+      self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ), self );
     explorerNodes.push( exploreTensNode );
     var exploreOnesNode = new MakingTensExplorerNode( 1, self.addUserCreatedNumberModelToExplorerView.bind( self ),
-      self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ),self );
+      self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ), self );
     explorerNodes.push( exploreOnesNode );
 
 
@@ -121,9 +121,9 @@ define( function( require ) {
      */
     canPlaceShape: function( paperNumberModel, droppedPosition ) {
       var paperNumberBounds = paperNumberModel.getBounds();
-      var widthPart = paperNumberBounds.width * 0.6;
-      var heightPart = paperNumberBounds.height * 0.6;
-      var bounds2 = new Bounds2( droppedPosition.x, droppedPosition.y, droppedPosition.x + widthPart, droppedPosition.y + heightPart );
+      var widthPart = paperNumberBounds.width * 0.3;
+      var heightPart = paperNumberBounds.height * 0.3;
+      var bounds2 = Bounds2.rect( droppedPosition.x, droppedPosition.y, widthPart, heightPart );
       var intersects = this.shapeContainerCarousel.bounds.intersectsBounds( bounds2 );
       return !intersects;
     },
@@ -158,7 +158,7 @@ define( function( require ) {
 
             //currentPosition
             paperNumberPart.position = paperNumberModel.position.plus( baseNumberPositions[ i ] );
-            paperNumberPart.returnToOrigin( true, MakingTensSharedConstants.ANIMATION_VELOCITY / 5 );// true is for animate and return
+            paperNumberPart.returnToOrigin( true, MakingTensSharedConstants.ANIMATION_VELOCITY / 1.5 );// true is for animate and return
           }
 
           paperNumberModel.returnToOrigin();

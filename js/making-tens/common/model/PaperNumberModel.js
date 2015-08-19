@@ -275,9 +275,8 @@ define( function( require ) {
      */
     setDestination: function( destination, animate, velocity ) {
       this.destination = destination;
-      if ( !velocity ) {
-        this.velocity = MakingTensSharedConstants.ANIMATION_VELOCITY;
-      }
+      this.velocity = velocity || MakingTensSharedConstants.ANIMATION_VELOCITY;
+
       if ( animate ) {
         this.animating = true;
       }
@@ -303,11 +302,7 @@ define( function( require ) {
      * @param {number} velocity
      */
     returnToOrigin: function( animate, velocity ) {
-      if ( !velocity ) {
-        this.velocity = MakingTensSharedConstants.ANIMATION_VELOCITY;
-      }
-      this.setDestination( this.positionProperty.initialValue, animate );
-
+       this.setDestination( this.positionProperty.initialValue, animate,velocity );
     },
 
     /**
