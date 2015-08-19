@@ -20,7 +20,7 @@ define( function( require ) {
 
   // constants
   // Debug flag to show the view bounds, the region within which the user can move the numbers
-  var showAvailableBounds = true;
+  var showAvailableBounds = false;
 
   /**
    *

@@ -18,7 +18,7 @@ define( function( require ) {
 
   // constants
   var TERM_FONT = new PhetFont( { size: 35, weight: 'bold' } );
-  var EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
+  var EQUATION_FONT = new PhetFont( { size: 50, weight: 'bold' } );
   var EQUATION_COLOR = "rgb(63,63,183)";
 
   /**
