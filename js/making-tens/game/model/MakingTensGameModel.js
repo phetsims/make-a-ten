@@ -18,7 +18,7 @@ define( function( require ) {
 
   /**
    *
-   * @param {Bounds2} screenBounds -- The bounds within which PaperNumbers can be dragged
+   * @param {Bounds2} screenBounds -- The bounds used for randomly positioning papernumbers
    * @constructor
    */
   function MakingTensGameModel( screenBounds ) {

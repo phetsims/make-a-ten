@@ -13,11 +13,7 @@ define( function( require ) {
   var MakingTensCommonModel = require( 'MAKING_TENS/making-tens/common/model/MakingTensCommonModel' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
 
-  /**
-   *
-   * @param {Bounds2} addingScreenBounds -- The bounds within which PaperNumbers can be dragged
-   * @constructor
-   */
+
   function MakingTensAddingModel( addingScreenBounds ) {
 
     //background style for active Term. When a term is highlighted (ie keyboard is active, indicate to the user using a different background)

@@ -31,13 +31,15 @@ define( function( require ) {
   /**
    *
    * @param {PaperNumberModel} paperNumberModel
+   * @param {MakingTensCommonView} makingTensView
    * @param {Function<paperNumberModel>} addNumberModelCallBack A callback to invoke when a  Number is  split
    * @param {Function<paperNumberModel,droppedPoint>} combineNumbersIfApplicableCallback A callback to invoke when a Number is  combined
    * @constructor
    */
-  function PaperNumberNode( paperNumberModel, addNumberModelCallBack, combineNumbersIfApplicableCallback ) {
+  function PaperNumberNode( paperNumberModel, makingTensView, addNumberModelCallBack, combineNumbersIfApplicableCallback ) {
     var thisNode = this;
     thisNode.paperNumberModel = paperNumberModel;
+    thisNode.makingTensView = makingTensView;
     Node.call( thisNode );
 
     thisNode.addNumberModelCallBack = addNumberModelCallBack || _.noop();
@@ -172,7 +174,11 @@ define( function( require ) {
         //in case of split mode, the movableObject is set, only if the "move" started after a certain distance
         if ( thisHandler.movableObject ) {
           var movableObject = thisHandler.movableObject;
-          movableObject.setDestination( movableObject.position.plus( delta ), false );
+          var newPosition = movableObject.position.plus( delta );
+          //constrain
+          newPosition = movableObject.constrainPosition( makingTensView.availableViewBoundsProperty.get(), newPosition );
+          movableObject.setDestination( newPosition, false );
+
           // if it is a new created object, change the opacity
           if ( movableObject !== paperNumberModel ) {
             // gradually increase the opacity from 0.8 to 1 as we move away from the number, otherwise the change looks sudden

@@ -10,9 +10,18 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var ScreenView = require( 'JOIST/ScreenView' );
+  var DotRectangle = require( 'DOT/Rectangle' );
+  var Property = require( 'AXON/Property' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Path = require( 'SCENERY/nodes/Path' );
+  var Shape = require( 'KITE/Shape' );
+  var Vector2 = require( 'DOT/Vector2' );
   var PaperNumberNode = require( 'MAKING_TENS/making-tens/common/view/PaperNumberNode' );
   var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
+
+  // constants
+  // Debug flag to show the view bounds, the region within which the user can move the numbers
+  var showAvailableBounds = true;
 
   /**
    *
@@ -22,7 +31,7 @@ define( function( require ) {
    * @param {Function} addUserCreatedNumberModel - callback
    * @constructor
    */
-  function MakingTensCommonView( makingTensModel, screenBounds, paperNumberNodeLayer,addUserCreatedNumberModel ) {
+  function MakingTensCommonView( makingTensModel, screenBounds, paperNumberNodeLayer, addUserCreatedNumberModel ) {
     var self = this;
     ScreenView.call( this, { layoutBounds: screenBounds } );
     self.makingTensModel = makingTensModel;
@@ -30,12 +39,12 @@ define( function( require ) {
     self.paperNumberLayerNode = new Node();
     paperNumberNodeLayer.addChild( self.paperNumberLayerNode );
 
-    self.addUserCreatedNumberModel = addUserCreatedNumberModel ||  makingTensModel.addUserCreatedNumberModel.bind( makingTensModel );
+    self.addUserCreatedNumberModel = addUserCreatedNumberModel || makingTensModel.addUserCreatedNumberModel.bind( makingTensModel );
     self.combineNumbersIfApplicableCallback = this.combineNumbersIfApplicable.bind( this );
 
     function handlePaperNumberAdded( addedNumberModel ) {
       // Add a representation of the number.
-      var paperNumberNode = new PaperNumberNode( addedNumberModel, self.addUserCreatedNumberModel, self.combineNumbersIfApplicableCallback );
+      var paperNumberNode = new PaperNumberNode( addedNumberModel, self, self.addUserCreatedNumberModel, self.combineNumbersIfApplicableCallback );
       self.paperNumberLayerNode.addChild( paperNumberNode );
 
       // Move the shape to the front of this layer when grabbed by the user.
@@ -58,6 +67,22 @@ define( function( require ) {
 
     // Observe new items
     makingTensModel.residentNumberModels.addItemAddedListener( handlePaperNumberAdded );
+
+    // used to prevent numbers from moving outside the visible model bounds when dragged
+    this.availableViewBoundsProperty = new Property( null );// filled by layout method
+
+    // For debugging the visible bounds
+    if ( showAvailableBounds ) {
+      this.viewBoundsPath = new Path( null, { pickable: false, stroke: 'red', lineWidth: 10 } );
+      this.addChild( this.viewBoundsPath );
+    }
+
+    this.availableViewBoundsProperty.lazyLink( function( newBounds ) {
+      makingTensModel.residentNumberModels.forEach( function( numberModel ) {
+        var newPos = numberModel.constrainPosition( newBounds, numberModel.position );
+        numberModel.setDestination( newPos, false );
+      } );
+    } );
   }
 
   return inherit( ScreenView, MakingTensCommonView, {
@@ -101,6 +126,34 @@ define( function( require ) {
           self.makingTensModel.repelAway( paperNumberModel1, paperNumberModel2 );
           return;
         }
+      }
+
+    },
+
+    layout: function( width, height ) {
+      this.resetTransform();
+
+      var scale = this.getLayoutScale( width, height );
+      this.setScaleMagnitude( scale );
+
+      var offsetX = 0;
+      var offsetY = 0;
+
+      // Move to bottom vertically
+      if ( scale === width / this.layoutBounds.width ) {
+        offsetY = (height / scale - this.layoutBounds.height);
+      }
+
+      // center horizontally
+      else if ( scale === height / this.layoutBounds.height ) {
+        offsetX = (width - this.layoutBounds.width * scale) / 2 / scale;
+      }
+      this.translate( offsetX, offsetY );
+
+      this.availableViewBoundsProperty.value = new DotRectangle( -offsetX, -offsetY, width / scale, height / scale );
+      // Show it for debugging
+      if ( showAvailableBounds ) {
+        this.viewBoundsPath.shape = Shape.bounds( this.availableViewBoundsProperty.get() );
       }
 
     }

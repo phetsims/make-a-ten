@@ -34,7 +34,8 @@ define( function( require ) {
   function MakingTensExploreScreenView( makingTensExploreModel ) {
     var self = this;
     var paperNumberNodeLayer = new Node();
-    MakingTensCommonView.call( this, makingTensExploreModel, MakingTensSharedConstants.LAYOUT_BOUNDS, paperNumberNodeLayer, self.addUserCreatedNumberModelToExplorerView.bind( self ) );
+    MakingTensCommonView.call( this, makingTensExploreModel, MakingTensSharedConstants.LAYOUT_BOUNDS, paperNumberNodeLayer,
+      self.addUserCreatedNumberModelToExplorerView.bind( self ) );
 
     var sumEquationNode = new SumEquationNode( makingTensExploreModel.sumProperty, MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR );
     self.addChild( sumEquationNode );
@@ -48,11 +49,14 @@ define( function( require ) {
 
     var explorerNodes = [];
     // Create the composite nodes that contain the number collections
-    var exploreHundredsNode = new MakingTensExplorerNode( 100, self.addUserCreatedNumberModelToExplorerView.bind( self ), self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ) );
+    var exploreHundredsNode = new MakingTensExplorerNode( 100, self.addUserCreatedNumberModelToExplorerView.bind( self ),
+      self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ),self );
     explorerNodes.push( exploreHundredsNode );
-    var exploreTensNode = new MakingTensExplorerNode( 10, self.addUserCreatedNumberModelToExplorerView.bind( self ), self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ) );
+    var exploreTensNode = new MakingTensExplorerNode( 10, self.addUserCreatedNumberModelToExplorerView.bind( self ),
+      self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ),self );
     explorerNodes.push( exploreTensNode );
-    var exploreOnesNode = new MakingTensExplorerNode( 1, self.addUserCreatedNumberModelToExplorerView.bind( self ), self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ) );
+    var exploreOnesNode = new MakingTensExplorerNode( 1, self.addUserCreatedNumberModelToExplorerView.bind( self ),
+      self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ),self );
     explorerNodes.push( exploreOnesNode );
 
 

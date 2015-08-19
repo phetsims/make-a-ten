@@ -15,13 +15,12 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   *
    * @param {Bounds2} screenBounds
    * @param {Object} props
    * @constructor
    */
-  function MakingTensCommonModel( screenBounds, props ) {
-    PropertySet.call( this, props );
+  function MakingTensCommonModel(screenBounds,props ) {
+    PropertySet.call( this,props );
     this.screenBounds = screenBounds;
 
     // Observable array of the numbers that have been placed

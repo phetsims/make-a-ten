@@ -248,7 +248,6 @@ define( function( require ) {
       return (this.numberValue + "").length;
     },
 
-
     /**
      *
      * @param newNumber
@@ -263,7 +262,7 @@ define( function( require ) {
       //Collapsed into a single Number, adjust the positions issue #21
       if ( newDigitLength - oldDigitsLength > 0 ) {
         var offsets = NUMBER_IMAGE_OFFSET_DIMENSIONS[ newDigitLength - 1 ];
-        this.setDestination( this.position.plus( new Vector2( -offsets[ 1 ].x,  -offsets[ 1 ].y ) ) );
+        this.setDestination( this.position.plus( new Vector2( -offsets[ 1 ].x, -offsets[ 1 ].y ) ) );
       }
 
       this.trigger( "changeValue" );
@@ -285,6 +284,17 @@ define( function( require ) {
       else {
         this.position = destination;
       }
+    },
+
+    /**
+     * Make sure the paper number is with view Port
+     * @param {Bounds2} viewBounds
+     * @param position
+     */
+    constrainPosition: function( viewBounds, newPosition ) {
+      var paperBounds = this.getBounds();
+      var overAllBounds = Bounds2.rect( viewBounds.x, viewBounds.y, viewBounds.width - paperBounds.width, viewBounds.height - paperBounds.height );
+      return overAllBounds.closestPointTo( newPosition );
     },
 
     /**

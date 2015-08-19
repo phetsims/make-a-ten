@@ -23,7 +23,7 @@ define( function( require ) {
    * @param {Function} canPlaceShape - A function to determine if the PaperNumber can be placed on the board
    * @constructor
    */
-  function PaperNumberCreatorNode( numberValue, addShapeToModel, combineNumbersIfApplicableCallback, canPlaceShape ) {
+  function PaperNumberCreatorNode( numberValue, addShapeToModel, combineNumbersIfApplicableCallback, canPlaceShape, makingTensView ) {
 
     Node.call( this, { cursor: 'pointer' } );
     var self = this;
@@ -67,7 +67,9 @@ define( function( require ) {
       },
 
       translate: function( translationParams ) {
-        this.paperNumberModel.setDestination( this.paperNumberModel.position.plus( translationParams.delta ) );
+        var newPos = this.paperNumberModel.position.plus( translationParams.delta );
+        newPos = this.paperNumberModel.constrainPosition( makingTensView.availableViewBoundsProperty.get(), newPos );
+        this.paperNumberModel.setDestination( newPos );
       },
 
       end: function( event, trail ) {
