@@ -82,6 +82,8 @@ define( function( require ) {
         numberModel.setDestination( newPos, false );
       } );
     } );
+
+    this.availableViewBoundsProperty.linkAttribute( makingTensModel, "viewPortBounds" );
   }
 
   return inherit( ScreenView, MakingTensCommonView, {

@@ -56,17 +56,41 @@ define( function( require ) {
     var spacing = 5;
     var numberDisplayBox = new HBox( {
       children: [ leftNumberDisplayBackground, pluTextNode,
-        rightNumberDisplayBackGround, emptyNode, equalsSignNode ], spacing: spacing
+        rightNumberDisplayBackGround, emptyNode ], spacing: spacing
     } );
+
     this.addChild( numberDisplayBox );
+    this.addChild( equalsSignNode );
+
+
+    function updateEqualSpacing() {
+      var termSpacing = 50;
+      equalsSignNode.left = numberDisplayBox.right + rightTermTextNode.bounds.width - termSpacing;
+      equalsSignNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 1.9;
+    }
 
     leftTermProperty.link( function( leftTerm ) {
       leftTermTextNode.text = leftTerm;
+      updateEqualSpacing();
     } );
 
     rightTermProperty.link( function( rightTerm ) {
       rightTermTextNode.text = rightTerm;
+      updateEqualSpacing();
     } );
+
+
+    if ( options.activeTermProperty ) {
+      options.activeTermProperty.link( function( term ) {
+        if ( term === "none" && !_.isEmpty( leftTermProperty.get() ) && !_.isEmpty( rightTermProperty.get() ) ) {
+          equalsSignNode.visible = true;
+        }
+        else {
+          equalsSignNode.visible = false;
+        }
+      } );
+    }
+
 
     leftTermTextNode.left = numberDisplayBox.left + leftNumberDisplayBackground.width / 1.2;
     leftTermTextNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 2;
