@@ -15,7 +15,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
-  var Vector2 = require( 'DOT/Vector2' );
   var PaperNumberNode = require( 'MAKING_TENS/making-tens/common/view/PaperNumberNode' );
   var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
 
