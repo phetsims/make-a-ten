@@ -1,35 +1,35 @@
 {
-  "comment": "# making-tens 1.0.0-dev.2 Mon Jul 06 2015 11:00:20 GMT-0600 (MDT)",
+  "comment": "# making-tens 1.0.0-dev.3 Thu Aug 20 2015 16:04:31 GMT-0600 (Mountain Daylight Time)",
   "assert": {
-    "sha": "903564a25a0f26acdbd334d3e104039864b405ef",
+    "sha": "858e65ac477bf1861883ce06eed56d9fdefa5027",
     "branch": "master"
   },
   "axon": {
-    "sha": "f4996f9d182deb1b9e799c9ec6282bf8dcfa43bc",
+    "sha": "5be7fe049bbc0963a28c0125dc90039f04fb651c",
     "branch": "master"
   },
   "brand": {
-    "sha": "18176b2e089fa2739fc342ad619f4ae39ae56959",
-    "branch": "phet"
+    "sha": "ffae69f4b1dfb6cebf84a20a92b8203ec5328cf3",
+    "branch": "master"
   },
   "chipper": {
-    "sha": "3a4ef0e457b5ca250fa541b64b3d9500b24449b6",
+    "sha": "3b8315d49a6c69adad59e9fa776cba754871b4bb",
     "branch": "master"
   },
   "dot": {
-    "sha": "d19258b9bcd0b83abc8c214edf2ca4fe4e7503b0",
+    "sha": "e34c6b2c53b83ea1f8d2a5091cadfdc6353a501d",
     "branch": "master"
   },
   "joist": {
-    "sha": "8379a5e89b5f78882b5b2e4f954a63c037fe77ad",
+    "sha": "4d0be309e555c3c2be1355d230e66f3299216fec",
     "branch": "master"
   },
   "kite": {
-    "sha": "6a46e847321af03e39f8b5df1ef4024ea9d5b591",
+    "sha": "2497814682e359a8500fcb2a6dca2e276a00b6f9",
     "branch": "master"
   },
   "making-tens": {
-    "sha": "e036d482278491df6f9aeb50d714d8448ba9f020",
+    "sha": "f44fcf73e52eb62b284865768d24a46b9745198a",
     "branch": "master"
   },
   "phet-core": {
@@ -37,31 +37,31 @@
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "bc55eba71d6c7da06619d95545eb8a16910c3629",
+    "sha": "e33e2f8ca8a4d8e98c23b6c3c9c0336b387643a7",
     "branch": "master"
   },
   "scenery": {
-    "sha": "80ed5de58cd4223c9381abc84216f343eea0206f",
+    "sha": "3c146e8fdc133a50751851374dd51e6729ac374d",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "0fb0354ee1c1f716be2b0057a6088f56b47f38cf",
+    "sha": "2e69cd4e4aa6614a8cc5a0df2f3451a22b3ba88d",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "d6441e3e4d7ab3af844899243c7d5c0f55a12ae2",
+    "sha": "1759eadefb4f6d680f85aef394ea7727df1928e6",
     "branch": "master"
   },
   "sun": {
-    "sha": "21b0c9a4ed62927fd77ef8c08dfb3b4f7cf01179",
+    "sha": "3a82cad397f5300e37e29016ff9e62ab9ef44505",
     "branch": "master"
   },
   "vegas": {
-    "sha": "2f0356af12362069d7c5e7e162efb7f1795d1340",
+    "sha": "c9cfddaea071b0a24c7199e1b4cd4914c9b5c900",
     "branch": "master"
   },
   "vibe": {
-    "sha": "e0930e48a36fe605cd1bf411a531e1067d1c0b5e",
+    "sha": "9cb472b8d9700041b0d19115a587b3373f5160f4",
     "branch": "master"
   }
 }
