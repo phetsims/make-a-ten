@@ -292,7 +292,9 @@ define( function( require ) {
      */
     constrainPosition: function( viewBounds, newPosition ) {
       var paperBounds = this.getBounds();
-      var overAllBounds = Bounds2.rect( viewBounds.x, viewBounds.y, viewBounds.width - paperBounds.width, viewBounds.height - paperBounds.height );
+      var halfWidth = paperBounds.width / 2;
+      var halfHeight = paperBounds.height/ 2;
+      var overAllBounds = Bounds2.rect( viewBounds.x - halfWidth, viewBounds.y - halfHeight, viewBounds.width, viewBounds.height );
       return overAllBounds.closestPointTo( newPosition );
     },
 
@@ -302,7 +304,7 @@ define( function( require ) {
      * @param {number} velocity
      */
     returnToOrigin: function( animate, velocity ) {
-       this.setDestination( this.positionProperty.initialValue, animate,velocity );
+      this.setDestination( this.positionProperty.initialValue, animate, velocity );
     },
 
     /**
