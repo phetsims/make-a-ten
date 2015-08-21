@@ -15,7 +15,6 @@
   },
   "phet": {
     "requirejsNamespace": "MAKING_TENS",
-    "simTitleStringKey": "MAKING_TENS/making-tens.name",
     "phetLibs": [
       "vegas",
       "vibe"
