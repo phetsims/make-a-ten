@@ -25,8 +25,8 @@ define( function( require ) {
   var SPLIT_MODE_HEIGHT_PROPORTION = 0.3;
   var SPLIT_OPACITY_FACTOR = 5; // for a distance of 5 apply some transparency to make the split effect realistic
   var MIN_SPLIT_DISTANCE = 6;
-  var DROP_BOUNDS_WIDTH_PROPORTION = 0.35; // the bounds proportion within which if user drops a number we can consider collapsing them
   var DROP_BOUNDS_HEIGHT_PROPORTION = 0.35; // the bounds proportion within which if user drops a number we can consider collapsing them
+  var MIN_DISTANCE_DIFFERENCE_TO_COLLAPSE = 30;
 
   /**
    *
@@ -283,23 +283,37 @@ define( function( require ) {
           widerNode = draggedNode;
           smallerNode = droppedNode;
         }
-        var widthDiff = widerNode.bounds.width - smallerNode.bounds.width;
+
         var smallerDigitLength = smallerNode.paperNumberModel.getDigitLength();
-        var xDiff = widerNode.left - (smallerNode.left - widthDiff);
-        if ( smallerDigitLength === 1 && (widerNode.right - smallerNode.right) > smallerNode.bounds.width / 4 ) {
-          xDiff -= smallerNode.bounds.width / 2;
-        }
+        var widerDigitLength = widerNode.paperNumberModel.getDigitLength();
+
         var yDiff = Math.abs( droppedNode.top - draggedNode.top );
-
-        var dropPositionWidthTolerance = smallerNode.bounds.width * DROP_BOUNDS_WIDTH_PROPORTION;
         var dropPositionHeightTolerance = smallerNode.bounds.height * DROP_BOUNDS_HEIGHT_PROPORTION;
-
-        var xInRange = MakingTensUtil.isBetween( xDiff, -dropPositionWidthTolerance, dropPositionWidthTolerance );
         var yInRange = MakingTensUtil.isBetween( yDiff, -dropPositionHeightTolerance, dropPositionHeightTolerance );
 
-        if ( xInRange && yInRange ) {
+        var withinXRange = false;
+        var distanceBetweenEdges = 10000;
+        //if same length
+        if ( smallerDigitLength === widerDigitLength ) {
+          distanceBetweenEdges = Math.abs( widerNode.x - smallerNode.x );
+          //if the distance is between 2 left edges is less than half the width, consider close enough
+          withinXRange = distanceBetweenEdges < MIN_DISTANCE_DIFFERENCE_TO_COLLAPSE;
+        }
+        else {
+          distanceBetweenEdges = Math.abs( widerNode.bounds.maxX - smallerNode.bounds.maxX );
+          if ( smallerNode.bounds.maxX > widerNode.bounds.maxX ) {
+            withinXRange = distanceBetweenEdges < MIN_DISTANCE_DIFFERENCE_TO_COLLAPSE / 2;
+          }
+          else {
+            withinXRange = distanceBetweenEdges < MIN_DISTANCE_DIFFERENCE_TO_COLLAPSE;
+          }
+        }
+
+
+        if ( withinXRange && yInRange ) {
           attachableNodes.push( droppedNode );
         }
+
       }
 
       return attachableNodes;
