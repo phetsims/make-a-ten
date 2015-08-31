@@ -17,7 +17,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
 
   // constants
-  var TERM_FONT = new PhetFont( { size: 35, weight: 'bold' } );
+  var TERM_FONT = new PhetFont( { size: 45, weight: 'bold' } );
   var EQUATION_FONT = new PhetFont( { size: 50, weight: 'bold' } );
   var EQUATION_COLOR = "rgb(63,63,183)";
 
@@ -64,7 +64,7 @@ define( function( require ) {
 
 
     function updateEqualSpacing() {
-      var termSpacing = 50;
+      var termSpacing = 45;
       equalsSignNode.left = numberDisplayBox.right + rightTermTextNode.bounds.width - termSpacing;
       equalsSignNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 1.9;
     }
