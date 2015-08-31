@@ -18,7 +18,7 @@ define( function( require ) {
 
   // constants
   var TERM_FONT = new PhetFont( { size: 45, weight: 'bold' } );
-  var EQUATION_FONT = new PhetFont( { size: 50, weight: 'bold' } );
+  var EQUATION_FONT = new PhetFont( { size: 45, weight: 'bold' } );
   var EQUATION_COLOR = "rgb(63,63,183)";
 
   /**
@@ -35,11 +35,11 @@ define( function( require ) {
       showTermBackground: true
     }, options );
 
-    var leftNumberDisplayBackground = new Rectangle( 0, 0, 85, 78, 10, 10, {
+    var leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, {
       fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
     } );
 
-    var rightNumberDisplayBackGround = new Rectangle( 0, 0, 85, 78, 10, 10, {
+    var rightNumberDisplayBackGround = new Rectangle( 0, 0, 100, 78, 10, 10, {
       fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
     } );
 
@@ -64,7 +64,7 @@ define( function( require ) {
 
 
     function updateEqualSpacing() {
-      var termSpacing = 45;
+      var termSpacing = 60;
       equalsSignNode.left = numberDisplayBox.right + rightTermTextNode.bounds.width - termSpacing;
       equalsSignNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 1.9;
     }
