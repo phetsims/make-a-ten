@@ -92,7 +92,7 @@ define( function( require ) {
 
     thisModel.baseNumbers = []; // for each of these base number, we have a corresponding image file
     thisModel.baseImages = [];
-    thisModel.baseNumberPositions = []; // the base number and its position within this composite node(made up may image nodes)
+    thisModel.baseNumberPositions = []; // the base number and its local position within this composite node(made up may image nodes)
 
     thisModel.velocity = MakingTensSharedConstants.ANIMATION_VELOCITY;
 

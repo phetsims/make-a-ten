@@ -170,13 +170,16 @@ define( function( require ) {
           var baseNumbers = paperNumberModel.baseNumbers;
           var baseNumberPositions = paperNumberModel.baseNumberPositions;
 
+          //create as many number of papernumber nodes as the base numbers and animate each of them
           for ( var i = 0; i < baseNumbers.length; i++ ) {
             var digits = (baseNumbers[ i ] + "").length;
-            var initialPos = thisNode.explorePanelPositions[ digits ].plus( baseNumberPositions[ i ] );
+
+            // We have reference to the explorer's digit collection, give that value as the initial position based on the digit length
+            var initialPos = thisNode.explorePanelPositions[ digits ];
             var paperNumberPart = new PaperNumberModel( baseNumbers[ i ], initialPos );
             thisNode.makingTensModel.addUserCreatedNumberModel( paperNumberPart );
 
-            //currentPosition
+            //Each part's position needs to offset from the currentPosition, so the split begins at the right place
             paperNumberPart.position = paperNumberModel.position.plus( baseNumberPositions[ i ] );
             paperNumberPart.returnToOrigin( true, MakingTensSharedConstants.ANIMATION_VELOCITY / 1.5 );// true is for animate and return
           }

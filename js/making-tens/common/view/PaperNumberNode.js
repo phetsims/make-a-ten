@@ -69,7 +69,7 @@ define( function( require ) {
     // Set up the mouse and touch areas for this node so that so that we can pass
     // the query parameter ?showPointerAreas to visualize the areas
     var paperNumberBounds = paperNumberModel.getBounds();
-    
+
     var mouseArea = new Shape.rectangle( 0, 0,
       paperNumberBounds.width,
       paperNumberBounds.height );
