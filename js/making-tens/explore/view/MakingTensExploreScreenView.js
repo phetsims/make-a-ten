@@ -29,7 +29,7 @@ define( function( require ) {
 
   // These offsets are with respect to ViewPort Bounds not layout bounds
   // this is done to make sure the sumEquationNode is always at top left even after window resize and scale
-  var sumNodeOffSetX = 220;
+  var sumNodeOffSetX = 30;
   var sumNodeOffSetY = 30;
 
   /**
