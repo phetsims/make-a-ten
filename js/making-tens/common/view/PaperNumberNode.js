@@ -15,6 +15,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
   var MakingTensUtil = require( 'MAKING_TENS/making-tens/common/MakingTensUtil' );
@@ -64,6 +65,18 @@ define( function( require ) {
       imageNumberNode.opacity = opacity;
     } );
 
+
+    // Set up the mouse and touch areas for this node so that so that we can pass
+    // the query parameter ?showPointerAreas to visualize the areas
+    var paperNumberBounds = paperNumberModel.getBounds();
+    
+    var mouseArea = new Shape.rectangle( 0, 0,
+      paperNumberBounds.width,
+      paperNumberBounds.height );
+
+    thisNode.touchArea = mouseArea;
+    thisNode.mouseArea = mouseArea;
+
     var paperNodeDragHandler = new SimpleDragHandler( {
 
       // Allow moving a finger (touch) across this node to interact with it
@@ -78,7 +91,6 @@ define( function( require ) {
       splitObjectContext: null,
 
       dragCursor: null,
-
 
       reset: function() {
         var thisHandler = this;
