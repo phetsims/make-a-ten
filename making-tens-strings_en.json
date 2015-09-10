@@ -1,14 +1,14 @@
 {
-  "making-tens.name": {
+  "making-tens.title": {
     "value": "Making Tens"
   },
-  "making-tens.adding.name":{
+  "screen.adding":{
     "value":"Adding"
   },
-  "making-tens.explore.name":{
+  "screen.explore":{
     "value":"Explore"
   },
-  "making-tens.game.name":{
+  "screen.game":{
     "value":"Game"
   },
   "making-tens.hide.total":{

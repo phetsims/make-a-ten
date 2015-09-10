@@ -17,7 +17,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
-  var makingTensExploreScreenTitleString = require( 'string!MAKING_TENS/making-tens.explore.name' );
+  var makingTensExploreScreenTitleString = require( 'string!MAKING_TENS/screen.explore' );
 
   /**
    * Creates the icon for this screen.
