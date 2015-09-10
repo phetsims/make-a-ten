@@ -54,7 +54,23 @@ define( function( require ) {
       _.each( paperNumberModel.baseImages, function( imageNode ) {
         imageNumberNode.addChild( imageNode );
       } );
+
+      changeMouseAndTouchAreas();
+
     } );
+
+    function changeMouseAndTouchAreas(){
+      // Set up the mouse and touch areas for this node so that so that we can pass
+      // the query parameter ?showPointerAreas to visualize the areas
+      var paperNumberBounds = paperNumberModel.getBounds();
+
+      var mouseArea = new Shape.rectangle( 0, 0,
+        paperNumberBounds.width,
+        paperNumberBounds.height );
+
+      thisNode.touchArea = mouseArea;
+      thisNode.mouseArea = mouseArea;
+    }
 
     paperNumberModel.positionProperty.link( function( newPos ) {
       thisNode.leftTop = newPos;
@@ -66,16 +82,7 @@ define( function( require ) {
     } );
 
 
-    // Set up the mouse and touch areas for this node so that so that we can pass
-    // the query parameter ?showPointerAreas to visualize the areas
-    var paperNumberBounds = paperNumberModel.getBounds();
 
-    var mouseArea = new Shape.rectangle( 0, 0,
-      paperNumberBounds.width,
-      paperNumberBounds.height );
-
-    thisNode.touchArea = mouseArea;
-    thisNode.mouseArea = mouseArea;
 
     var paperNodeDragHandler = new SimpleDragHandler( {
 
