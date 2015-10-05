@@ -120,7 +120,7 @@ define( function( require ) {
        * Handles how the number should be split and returns the new pulledout number
        * Ex : 9 splits into 8 and 1, number 60 splits into 50 and 10 etc
        *
-       * @param {number} pulledIndex
+       * @param {number} pulledIndex // in number 309 if the pulled index is 2, it mean users pulled 9
        * @returns {NumberPulledApartModel | null} // null means no value is pulled ot
        */
       pullApartNumbers: function( numberValue, pulledIndex ) {
@@ -158,6 +158,11 @@ define( function( require ) {
           }
           if ( pulledIndex === 2 ) {
             amountToRemove = numberValue % 10;
+
+            // issue #38
+            if ( amountToRemove === 0 ) {
+              amountToRemove = numberValue % 100;
+            }
           }
         }
 
@@ -171,9 +176,17 @@ define( function( require ) {
           }
           if ( pulledIndex === 2 ) {
             amountToRemove = numberValue % 100;
+            // issue #38
+            if ( amountToRemove === 0 ) {
+              amountToRemove = numberValue % 1000;
+            }
           }
           if ( pulledIndex === 3 ) {
             amountToRemove = numberValue % 10;
+            // issue #38
+            if ( amountToRemove === 0 ) {
+              amountToRemove = numberValue % 100;
+            }
           }
         }
 

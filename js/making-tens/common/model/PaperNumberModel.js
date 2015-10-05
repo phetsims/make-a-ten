@@ -218,29 +218,40 @@ define( function( require ) {
       if ( digits === 3 ) {
         var isBase2NumbersWithOffset = (value % 100 > 0) && (value % 100 < 10);
         if ( isBase2NumbersWithOffset ) {
-          // the second number (index =1) is at third position For example in numbers like 107, the second base number '7' is at
-          // third position, so assign the third positional value
+          // the second number (index =1) is at third position For example in numbers like 107, the second
+          // base number '7' is at third position, so assign the third positional value
           numberOfSetDimensions[ 1 ] = numberOfSetDimensions[ 2 ];
         }
       }
 
       if ( digits === 4 ) {
 
+        //handle numbers like 1070
         var twoDigitOffset = (value % 1000 >= 10) && (value % 1000 < 100);
         if ( twoDigitOffset ) {
-          //handle numbers like 1070
           numberOfSetDimensions[ 1 ] = numberOfSetDimensions[ 2 ];
           numberOfSetDimensions[ 2 ] = numberOfSetDimensions[ 3 ];
+          return numberOfSetDimensions;
         }
 
-        var singleDigitOffset = (value % 100 > 0) && (value % 100 < 10);
+        //handle numbers like 1007
+        var singleDigitOffset = (value % 1000 < 10 );
         if ( singleDigitOffset ) {
-          //handle numbers like 1007
           numberOfSetDimensions[ 1 ] = numberOfSetDimensions[ 3 ];
+          return numberOfSetDimensions;
+        }
+
+        //handle number line 1107
+        var intermediateOffset = (value % 1000 > 100 && value % 100 < 10);
+        if ( intermediateOffset ) {
+          numberOfSetDimensions[ 2 ] = numberOfSetDimensions[ 3 ];
+          return numberOfSetDimensions;
         }
 
       }
+
       return numberOfSetDimensions;
+
     },
 
 
@@ -293,7 +304,7 @@ define( function( require ) {
     constrainPosition: function( viewBounds, newPosition ) {
       var paperBounds = this.getBounds();
       var halfWidth = paperBounds.width / 2;
-      var halfHeight = paperBounds.height/ 2;
+      var halfHeight = paperBounds.height / 2;
       var overAllBounds = Bounds2.rect( viewBounds.x - halfWidth, viewBounds.y - halfHeight, viewBounds.width, viewBounds.height );
       return overAllBounds.closestPointTo( newPosition );
     },

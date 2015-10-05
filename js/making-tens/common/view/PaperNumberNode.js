@@ -59,7 +59,7 @@ define( function( require ) {
 
     } );
 
-    function changeMouseAndTouchAreas(){
+    function changeMouseAndTouchAreas() {
       // Set up the mouse and touch areas for this node so that so that we can pass
       // the query parameter ?showPointerAreas to visualize the areas
       var paperNumberBounds = paperNumberModel.getBounds();
@@ -80,9 +80,6 @@ define( function( require ) {
     paperNumberModel.opacityProperty.link( function( opacity ) {
       imageNumberNode.opacity = opacity;
     } );
-
-
-
 
     var paperNodeDragHandler = new SimpleDragHandler( {
 
