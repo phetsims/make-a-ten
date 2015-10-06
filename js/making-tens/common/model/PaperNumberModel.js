@@ -139,16 +139,16 @@ define( function( require ) {
     decomposeIntoBaseNumbers: function( value ) {
       var self = this;
       self.baseNumbers = [];
-      var valueStr = value + "";
+      var valueStr = value + '';
       var digits = valueStr.length;
       for ( var i = 0; i < digits; i++ ) {
         var charPos = valueStr.charAt( i );
         var posValue = (+charPos) * Math.pow( 10, digits - i - 1 );
 
-        if ( (posValue + "").indexOf( "0" ) === 0 ) { // startswith
+        if ( (posValue + '').indexOf( '0' ) === 0 ) { // startswith
           continue;
         }
-        this.baseNumbers.push( posValue + "" );
+        this.baseNumbers.push( posValue + '' );
       }
 
       self.baseImages = [];
@@ -198,9 +198,9 @@ define( function( require ) {
      */
     getDigitOffsetPosition: function( newPulledNumber ) {
       var thisModel = this;
-      var newPulledNumberLength = (newPulledNumber + "").length;
+      var newPulledNumberLength = (newPulledNumber + '').length;
       var numberOfSetDimensions = _.clone( NUMBER_IMAGE_OFFSET_DIMENSIONS[ this.getDigitLength() - 1 ] ); // digits-1 zero based index
-      var digitDifference = (thisModel.numberValue + "").length - newPulledNumberLength;
+      var digitDifference = (thisModel.numberValue + '').length - newPulledNumberLength;
       return numberOfSetDimensions[ digitDifference ];
     },
 
@@ -211,7 +211,7 @@ define( function( require ) {
      * @returns {object}
      */
     getOffsetArrayByDigits: function( value ) {
-      var digits = (value + "").length;
+      var digits = (value + '').length;
       var numberOfSetDimensions = _.clone( NUMBER_IMAGE_OFFSET_DIMENSIONS[ digits - 1 ] ); // digits-1 zero based index
 
       //handle numbers like 102 where there are only two base numbers and the second number is at third position
@@ -256,7 +256,7 @@ define( function( require ) {
 
 
     getDigitLength: function() {
-      return (this.numberValue + "").length;
+      return (this.numberValue + '').length;
     },
 
     /**
@@ -265,10 +265,10 @@ define( function( require ) {
      */
     changeNumber: function( newNumber ) {
       newNumber = +newNumber;
-      var oldDigitsLength = (this.numberValue + "").length;
+      var oldDigitsLength = (this.numberValue + '').length;
       this.decomposeIntoBaseNumbers( newNumber );
       this.numberValue = newNumber;
-      var newDigitLength = (this.numberValue + "").length;
+      var newDigitLength = (this.numberValue + '').length;
 
       //Collapsed into a single Number, adjust the positions issue #21
       if ( newDigitLength - oldDigitsLength > 0 ) {
@@ -276,7 +276,7 @@ define( function( require ) {
         this.setDestination( this.position.plus( new Vector2( -offsets[ 1 ].x, -offsets[ 1 ].y ) ) );
       }
 
-      this.trigger( "changeValue" );
+      this.trigger( 'changeValue' );
     },
 
     /**

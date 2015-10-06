@@ -83,7 +83,7 @@ define( function( require ) {
       } );
     } );
 
-    this.availableViewBoundsProperty.linkAttribute( makingTensModel, "viewPortBounds" );
+    this.availableViewBoundsProperty.linkAttribute( makingTensModel, 'viewPortBounds' );
   }
 
   return inherit( ScreenView, MakingTensCommonView, {

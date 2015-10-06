@@ -27,7 +27,7 @@ define( function( require ) {
      * @returns {boolean}
      */
     isEqualDigitLength: function() {
-      return (this.amountToRemove + "").length === (this.amountRemaining + "").length;
+      return (this.amountToRemove + '').length === (this.amountRemaining + '').length;
     }
   } );
 } );

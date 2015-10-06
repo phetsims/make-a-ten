@@ -43,7 +43,7 @@ define( function( require ) {
           return true;
         }
 
-        var twoDigits = ((numberA + "").length <= 2 && (numberB + "").length <= 2);
+        var twoDigits = ((numberA + '').length <= 2 && (numberB + '').length <= 2);
 
         if ( twoDigits ) {
           // Add with decades. 24 + 50 = 74.

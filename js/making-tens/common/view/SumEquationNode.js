@@ -19,7 +19,7 @@ define( function( require ) {
   // constants
   var SPACING = 15; // spacing between equation elements
   var EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
-  var EQUATION_COLOR = "rgb(63,63,183)";
+  var EQUATION_COLOR = 'rgb(63,63,183)';
 
   /**
    *

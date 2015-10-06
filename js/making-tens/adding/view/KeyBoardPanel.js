@@ -53,8 +53,8 @@ define( function( require ) {
     Panel.call( this, numberControlGroup, {
       xMargin: 30,
       yMargin: 15,
-      fill: "lightgray",
-      stroke: "black",
+      fill: 'lightgray',
+      stroke: 'black',
       lineWidth: 1,
       resize: false
     } );

@@ -26,7 +26,7 @@ define( function( require ) {
 
     // Making Tens Commmon Model is a propertySet
     MakingTensCommonModel.call( this, screenBounds, {
-      sum: "",
+      sum: '',
       soundEnabled: true,
       timerEnabled: false,
       numberOfLevels: 10,
@@ -173,7 +173,7 @@ define( function( require ) {
       var valuesToCreate = [ numberChallenge.leftTerm, numberChallenge.rightTerm ];
       var xOffSet = 200;
       _.each( valuesToCreate, function( numberValue ) {
-        if ( numberValue === "" || numberValue === 0 ) {
+        if ( numberValue === '' || numberValue === 0 ) {
           return;
         }
         var initialPosition = new Vector2( xOffSet, self.screenBounds.height / 4 );

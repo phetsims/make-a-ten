@@ -98,7 +98,7 @@ define( function( require ) {
           size: 25,
           weight: 'bold'
         } ),
-      fill: "black"
+      fill: 'black'
     } );
 
     var showSumCheckBox = new CheckBox( sumTextNode, makingTensExploreModel.hideTotalProperty, {
@@ -160,7 +160,7 @@ define( function( require ) {
       this.makingTensModel.addUserCreatedNumberModel( paperNumberModel );
 
       // see if the user has dropped the paperNumber on Explorer panel, if yes return it t origin
-      paperNumberModel.on( "endDrag", function() {
+      paperNumberModel.on( 'endDrag', function() {
 
         var panelBounds = thisNode.shapeContainerCarousel.bounds;
         var paperNumberBounds = paperNumberModel.getBounds(); // local
@@ -172,7 +172,7 @@ define( function( require ) {
 
           //create as many number of papernumber nodes as the base numbers and animate each of them
           for ( var i = 0; i < baseNumbers.length; i++ ) {
-            var digits = (baseNumbers[ i ] + "").length;
+            var digits = (baseNumbers[ i ] + '').length;
 
             // We have reference to the explorer's digit collection, give that value as the initial position based on the digit length
             var initialPos = thisNode.explorePanelPositions[ digits ];

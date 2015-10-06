@@ -15,7 +15,7 @@ define( function( require ) {
   // constants
   var TITLE_FONT = new PhetFont( 10 );
   var EQUATION_FONT = new PhetFont( { size: 20 } );
-  var EQUATION_COLOR = "rgb(63,63,183)";
+  var EQUATION_COLOR = 'rgb(63,63,183)';
 
   /**
    *
@@ -27,7 +27,7 @@ define( function( require ) {
   function GameIconNode( terms, levelString ) {
     Node.call( this );
 
-    var expression = terms[ 0 ] + " + " + terms[ 1 ];
+    var expression = terms[ 0 ] + ' + ' + terms[ 1 ];
     var expressionNode = new Text( expression, { font: EQUATION_FONT, fill: EQUATION_COLOR } );
     this.addChild( expressionNode );
 

@@ -53,8 +53,8 @@ define( function( require ) {
     this.addChild( backGroundRectangle );
     this.addChild( paperNumberLayerNode );
 
-    var leftEditNumberButton = createEditNumberButton( makingTensAddingModel.activeTermProperty, "lt" );
-    var rightEditNumberButton = createEditNumberButton( makingTensAddingModel.activeTermProperty, "rt" );
+    var leftEditNumberButton = createEditNumberButton( makingTensAddingModel.activeTermProperty, 'lt' );
+    var rightEditNumberButton = createEditNumberButton( makingTensAddingModel.activeTermProperty, 'rt' );
 
     var editButtonBox = new HBox( { children: [ leftEditNumberButton, rightEditNumberButton ], spacing: 45 } );
     this.addChild( editButtonBox );
@@ -71,16 +71,16 @@ define( function( require ) {
 
 
     function onNumberSubmit( value ) {
-      if ( makingTensAddingModel.activeTerm === "lt" ) {
+      if ( makingTensAddingModel.activeTerm === 'lt' ) {
         makingTensAddingModel.leftTerm = value;
       }
-      if ( makingTensAddingModel.activeTerm === "rt" ) {
+      if ( makingTensAddingModel.activeTerm === 'rt' ) {
         makingTensAddingModel.rightTerm = value;
       }
 
       makingTensAddingModel.createTerms();
 
-      makingTensAddingModel.activeTerm = "none";
+      makingTensAddingModel.activeTerm = 'none';
     }
 
     var keyBoardPanel = new KeyBoardPanel( onNumberSubmit, MAX_DIGITS );
@@ -92,17 +92,17 @@ define( function( require ) {
       makingTensAddingModel.leftTermBackgroundStyle = makingTensAddingModel.normalNumberDisplayStyle;
       makingTensAddingModel.rightTermBackgroundStyle = makingTensAddingModel.normalNumberDisplayStyle;
 
-      if ( term === "none" ) {
+      if ( term === 'none' ) {
         keyBoardPanel.visible = false;
         return;
       }
 
       keyBoardPanel.visible = true;
-      if ( term === "lt" ) {
+      if ( term === 'lt' ) {
         makingTensAddingModel.leftTermBackgroundStyle = makingTensAddingModel.activeNumberDisplayStyle;
         keyBoardPanel.setValue( makingTensAddingModel.leftTerm );
       }
-      if ( term === "rt" ) {
+      if ( term === 'rt' ) {
         makingTensAddingModel.rightTermBackgroundStyle = makingTensAddingModel.activeNumberDisplayStyle;
         keyBoardPanel.setValue( makingTensAddingModel.rightTerm );
       }
@@ -111,7 +111,7 @@ define( function( require ) {
     backGroundRectangle.addInputListener( new DownUpListener( {
         down: function( event, trail ) {
           if ( event.target === backGroundRectangle ) {
-            makingTensAddingModel.activeTerm = "none"; // this will close the keyboard button
+            makingTensAddingModel.activeTerm = 'none'; // this will close the keyboard button
           }
         }
       }

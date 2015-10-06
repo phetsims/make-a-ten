@@ -19,7 +19,7 @@ define( function( require ) {
   // constants
   var TERM_FONT = new PhetFont( { size: 45, weight: 'bold' } );
   var EQUATION_FONT = new PhetFont( { size: 45, weight: 'bold' } );
-  var EQUATION_COLOR = "rgb(63,63,183)";
+  var EQUATION_COLOR = 'rgb(63,63,183)';
 
   /**
    *
@@ -45,7 +45,7 @@ define( function( require ) {
 
     var leftTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
     var rightTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
-    leftTermTextNode.setDirection( "rtl" );
+    leftTermTextNode.setDirection( 'rtl' );
     this.addChild( leftTermTextNode );
     this.addChild( rightTermTextNode );
 
@@ -82,7 +82,7 @@ define( function( require ) {
 
     if ( options.activeTermProperty ) {
       options.activeTermProperty.link( function( term ) {
-        if ( term === "none" && !_.isEmpty( leftTermProperty.get() ) && !_.isEmpty( rightTermProperty.get() ) ) {
+        if ( term === 'none' && !_.isEmpty( leftTermProperty.get() ) && !_.isEmpty( rightTermProperty.get() ) ) {
           equalsSignNode.visible = true;
         }
         else {

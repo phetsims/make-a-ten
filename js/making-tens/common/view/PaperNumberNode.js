@@ -177,10 +177,10 @@ define( function( require ) {
           // After a Number is pulled the  remaining digits must stay in the same place.We use the amountRemovingOffsetPosition to adjust the new paperModel's position
           // see issue #7
 
-          if ( thisHandler.splitObjectContext.pulledApartPaperNumberModel.getDigitLength() >= (thisHandler.splitObjectContext.amountRemaining + "").length ) {
+          if ( thisHandler.splitObjectContext.pulledApartPaperNumberModel.getDigitLength() >= (thisHandler.splitObjectContext.amountRemaining + '').length ) {
             paperNumberModel.setDestination( paperNumberModel.position.plus( thisHandler.splitObjectContext.amountRemovingOffsetPosition ) );
           }
-          if ( thisHandler.splitObjectContext.pulledApartPaperNumberModel.getDigitLength() > (thisHandler.splitObjectContext.amountRemaining + "").length ) {
+          if ( thisHandler.splitObjectContext.pulledApartPaperNumberModel.getDigitLength() > (thisHandler.splitObjectContext.amountRemaining + '').length ) {
             thisNode.moveToFront();
           }
 
@@ -212,7 +212,7 @@ define( function( require ) {
           movableObject.userControlled = false;
           var droppedPoint = event.pointer.point;
           combineNumbersIfApplicableCallback( movableObject, droppedPoint );
-          movableObject.trigger( "endDrag" );
+          movableObject.trigger( 'endDrag' );
         }
 
         thisHandler.reset();

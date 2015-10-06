@@ -77,8 +77,8 @@ define( function( require ) {
      * @param {PaperNumberModel} paperNumberModel2
      */
     repelAway: function( paperNumberModel1, paperNumberModel2 ) {
-      var repelRightDistance = MakingTensSharedConstants.MOVE_AWAY_DISTANCE[ (paperNumberModel1.numberValue + "").length ];
-      var repelLeftDistance = MakingTensSharedConstants.MOVE_AWAY_DISTANCE[ (paperNumberModel2.numberValue + "").length ] * -1;
+      var repelRightDistance = MakingTensSharedConstants.MOVE_AWAY_DISTANCE[ (paperNumberModel1.numberValue + '').length ];
+      var repelLeftDistance = MakingTensSharedConstants.MOVE_AWAY_DISTANCE[ (paperNumberModel2.numberValue + '').length ] * -1;
 
       var rightPaperModel = paperNumberModel1;
       var leftPaperModel = paperNumberModel2;

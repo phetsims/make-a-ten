@@ -21,9 +21,9 @@ define( function( require ) {
     this.normalNumberDisplayStyle = { fill: null, stroke: null, lineDash: [ 0, 0 ] };
 
     MakingTensCommonModel.call( this, addingScreenBounds, {
-      leftTerm: "",
-      rightTerm: "",
-      activeTerm: "none",
+      leftTerm: '',
+      rightTerm: '',
+      activeTerm: 'none',
       leftTermBackgroundStyle: this.normalNumberDisplayStyle,
       rightTermBackgroundStyle: this.normalNumberDisplayStyle
     } );
@@ -48,7 +48,7 @@ define( function( require ) {
       var valuesToCreate = [ self.leftTerm, self.rightTerm ];
       var xOffSet = 200;
       _.each( valuesToCreate, function( numberValue ) {
-        if ( numberValue === "" || numberValue === 0 ) {
+        if ( numberValue === '' || numberValue === 0 ) {
           return;
         }
         var initialPosition = new Vector2( xOffSet, self.screenBounds.height / 3.5 );
@@ -59,9 +59,9 @@ define( function( require ) {
 
     reset: function() {
       this.residentNumberModels.clear();
-      this.leftTerm = "";
-      this.rightTerm = "";
-      this.activeTerm = "none";
+      this.leftTerm = '';
+      this.rightTerm = '';
+      this.activeTerm = 'none';
     }
 
   } );
