@@ -10,7 +10,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var DotRectangle = require( 'DOT/Rectangle' );
+  var DotRectangle = require( 'DOT/Rectangle' ); // eslint-disable-line require-statement-match
   var Property = require( 'AXON/Property' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
