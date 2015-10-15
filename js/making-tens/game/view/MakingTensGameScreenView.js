@@ -23,6 +23,17 @@ define( function( require ) {
     var HBox = require( 'SCENERY/nodes/HBox' );
     var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
 
+    // images
+    var levelIcon1 = require( 'image!MAKING_TENS/level-1.png' );
+    var levelIcon2 = require( 'image!MAKING_TENS/level-2.png' );
+    var levelIcon3 = require( 'image!MAKING_TENS/level-3.png' );
+    var levelIcon4 = require( 'image!MAKING_TENS/level-4.png' );
+    var levelIcon5 = require( 'image!MAKING_TENS/level-5.png' );
+    var levelIcon6 = require( 'image!MAKING_TENS/level-6.png' );
+    var levelIcon7 = require( 'image!MAKING_TENS/level-7.png' );
+    var levelIcon8 = require( 'image!MAKING_TENS/level-8.png' );
+    var levelIcon9 = require( 'image!MAKING_TENS/level-9.png' );
+    var levelIcon10 = require( 'image!MAKING_TENS/level-10.png' );
 
     //strings
     var tenAndUnderString = require( 'string!MAKING_TENS/tenAndUnder' );
@@ -35,6 +46,7 @@ define( function( require ) {
     var triplesString = require( 'string!MAKING_TENS/triples' );
     var nextString = require( 'string!MAKING_TENS/next' );
 
+    var LEVEL_ICONS = [ levelIcon1, levelIcon2, levelIcon3, levelIcon4, levelIcon5, levelIcon6, levelIcon7, levelIcon8, levelIcon9, levelIcon10 ];
 
     /**
      * @param {MakingTensGameModel} gameModel
@@ -78,16 +90,16 @@ define( function( require ) {
       this.startGameLevelNode = new StartGameLevelNode(
         function( level ) { gameModel.startLevel( level ); },
         [
-          new GameIconNode( [ 7, 3 ], tenAndUnderString ),
-          new GameIconNode( [ 9, 7 ], addWithNineString ),
-          new GameIconNode( [ 7, 8 ], underTwentyString ),
-          new GameIconNode( [ 70, 80 ], addWithTensString ),
-          new GameIconNode( [ 29, 7 ], addWithSinglesString ),
-          new GameIconNode( [ 17, 49 ], underHundredString ),
-          new GameIconNode( [ 87, 59 ], overHundredString ),
-          new GameIconNode( [ 200, 7 ], addWithSinglesString ),
-          new GameIconNode( [ 270, 310 ], addWithTensString ),
-          new GameIconNode( [ 317, 949 ], triplesString )
+          new GameIconNode( LEVEL_ICONS[ 0 ], tenAndUnderString ),
+          new GameIconNode( LEVEL_ICONS[ 1 ], addWithNineString ),
+          new GameIconNode( LEVEL_ICONS[ 2 ], underTwentyString ),
+          new GameIconNode( LEVEL_ICONS[ 3 ], addWithTensString ),
+          new GameIconNode( LEVEL_ICONS[ 4 ], addWithSinglesString ),
+          new GameIconNode( LEVEL_ICONS[ 5 ], underHundredString ),
+          new GameIconNode( LEVEL_ICONS[ 6 ], overHundredString ),
+          new GameIconNode( LEVEL_ICONS[ 7 ], addWithSinglesString ),
+          new GameIconNode( LEVEL_ICONS[ 8 ], addWithTensString ),
+          new GameIconNode( LEVEL_ICONS[ 9 ], triplesString )
         ],
         gameModel.scores,
         {
