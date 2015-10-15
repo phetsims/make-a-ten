@@ -183,7 +183,7 @@ define( function( require ) {
             amountToRemove = numberValue % 10;
             // issue #38
             if ( amountToRemove === 0 ) {
-              amountToRemove = numberValue % 100;
+              amountToRemove = numberValue % 1000;
             }
           }
         }
