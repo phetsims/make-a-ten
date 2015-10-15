@@ -19,8 +19,6 @@ define( function( require ) {
    * @constructor
    */
   function ArithmeticRules() {
-
-
   }
 
   return inherit( Object, ArithmeticRules, {},
@@ -167,7 +165,7 @@ define( function( require ) {
         }
 
         // 4 digits
-        if ( numberValue >= 1000 && numberValue < 2000 ) {
+        if ( numberValue >= 1000 && numberValue < 9000 ) {
           if ( pulledIndex === 0 ) {
             amountToRemove = 1000;
           }

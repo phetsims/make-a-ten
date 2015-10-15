@@ -37,6 +37,14 @@ define( function( require ) {
   var image800 = require( 'image!MAKING_TENS/800.png' );
   var image900 = require( 'image!MAKING_TENS/900.png' );
   var image1000 = require( 'image!MAKING_TENS/1000.png' );
+  var image2000 = require( 'image!MAKING_TENS/2000.png' );
+  var image3000 = require( 'image!MAKING_TENS/3000.png' );
+  var image4000 = require( 'image!MAKING_TENS/4000.png' );
+  var image5000 = require( 'image!MAKING_TENS/5000.png' );
+  var image6000 = require( 'image!MAKING_TENS/6000.png' );
+  var image7000 = require( 'image!MAKING_TENS/7000.png' );
+  var image8000 = require( 'image!MAKING_TENS/8000.png' );
+  var image9000 = require( 'image!MAKING_TENS/9000.png' );
 
   var allImages = {
     1: image1, 2: image2, 3: image3,
@@ -48,7 +56,9 @@ define( function( require ) {
     100: image100, 200: image200, 300: image300,
     400: image400, 500: image500, 600: image600,
     700: image700, 800: image800, 900: image900,
-    1000: image1000
+    1000: image1000, 2000: image2000, 3000: image3000,
+    4000: image4000, 5000: image5000, 6000: image6000,
+    7000: image7000, 8000: image8000, 9000: image9000
   };
 
   function PaperImageCollection() {
