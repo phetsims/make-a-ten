@@ -11,17 +11,24 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Dimension2 = require( 'DOT/Dimension2' );
   var KeyBoardPanel = require( 'MAKING_TENS/making-tens/adding/view/KeyBoardPanel' );
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var MakingTensCommonView = require( 'MAKING_TENS/making-tens/common/view/MakingTensCommonView' );
   var ExpressionTermsNode = require( 'MAKING_TENS/making-tens/common/view/ExpressionTermsNode' );
+  var MakingTensUtil = require( 'MAKING_TENS/making-tens/common/MakingTensUtil' );
+
+  //images
+  var editIcon = require( 'image!MAKING_TENS/edit.png' );
 
   // constants
   var MAX_DIGITS = 3;
+  var EDIT_ICON_SIZE = new Dimension2( 32, 28 );
 
   /**
    * @param {MakingTensAddingModel} makingTensAddingModel
@@ -31,10 +38,11 @@ define( function( require ) {
     var paperNumberLayerNode = new Node();
     MakingTensCommonView.call( this, makingTensAddingModel, MakingTensSharedConstants.LAYOUT_BOUNDS, paperNumberLayerNode );
 
+    var scaledIcon = MakingTensUtil.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE );
     // type is either "lt" or "rt" - (left or right)
     function createEditNumberButton( termProperty, type ) {
       var editNumberButton = new RectangularPushButton( {
-        content: new Rectangle( 0, 0, 32, 28 ),
+        content: scaledIcon,
         listener: function() {
           termProperty.set( type );
         },
