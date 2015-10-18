@@ -109,6 +109,10 @@ define( function( require ) {
 
   return inherit( PropertySet, PaperNumberModel, {
 
+    /**
+     *
+     * @param {number} dt
+     */
     step: function( dt ) {
       var thisModel = this;
       if ( !this.userControlled ) {
@@ -303,9 +307,10 @@ define( function( require ) {
      */
     constrainPosition: function( viewBounds, newPosition ) {
       var paperBounds = this.getBounds();
-      var halfWidth = paperBounds.width / 2;
-      var halfHeight = paperBounds.height / 2;
-      var overAllBounds = Bounds2.rect( viewBounds.x - halfWidth, viewBounds.y - halfHeight, viewBounds.width, viewBounds.height );
+      var paperWidth = paperBounds.width;
+      var paperHeight = paperBounds.height;
+      var overAllBounds = Bounds2.rect( viewBounds.x, viewBounds.y,
+        viewBounds.width - paperWidth, viewBounds.height - paperHeight );
       return overAllBounds.closestPointTo( newPosition );
     },
 
