@@ -60,7 +60,8 @@ define( function( require ) {
     var exploreTensNode = new MakingTensExplorerNode( 10, self.addUserCreatedNumberModelToExplorerView.bind( self ),
       self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ), self );
     explorerNodes.push( exploreTensNode );
-    var exploreOnesNode = new MakingTensExplorerNode( 1, self.addUserCreatedNumberModelToExplorerView.bind( self ),
+    var exploreOnesNode = new MakingTensExplorerNode( 1,
+      self.addUserCreatedNumberModelToExplorerView.bind( self ),
       self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ), self );
     explorerNodes.push( exploreOnesNode );
 
@@ -79,11 +80,15 @@ define( function( require ) {
 
     } ) );
 
-    var carouselContainerStartPos = this.shapeContainerCarousel.leftTop.plus( new Vector2( this.shapeContainerCarousel.xMargin, this.shapeContainerCarousel.yMargin ) );
+    var carouselContainerStartPos = this.shapeContainerCarousel.leftTop.plus(
+      new Vector2( this.shapeContainerCarousel.xMargin, this.shapeContainerCarousel.yMargin ) );
 
-    var shapeCreatorHundredsContainerPos = carouselContainerStartPos.plus( creatorNodeHBox.children[ 0 ].leftTop );
-    var shapeCreatorTensContainerPos = carouselContainerStartPos.plus( creatorNodeHBox.children[ 1 ].leftTop );
-    var shapeCreatorSinglesContainer = carouselContainerStartPos.plus( creatorNodeHBox.children[ 2 ].leftTop );
+    var shapeCreatorHundredsContainerPos = carouselContainerStartPos.plus(
+      creatorNodeHBox.children[ 0 ].leftTop );
+    var shapeCreatorTensContainerPos = carouselContainerStartPos.plus(
+      creatorNodeHBox.children[ 1 ].leftTop );
+    var shapeCreatorSinglesContainer = carouselContainerStartPos.plus(
+      creatorNodeHBox.children[ 2 ].leftTop );
 
     // used for sending PaperNumber models to its origin
     this.explorePanelPositions = {
@@ -131,20 +136,27 @@ define( function( require ) {
       sumEquationNode.left = newBounds.minX + sumNodeOffSetX;
       sumEquationNode.top = newBounds.minY + sumNodeOffSetY;
     } );
+
+    var shareContainerBounds = this.shapeContainerCarousel.bounds;
+    this.returnZoneBounds = new Bounds2( shareContainerBounds.minX, shareContainerBounds.minY,
+      shareContainerBounds.maxX, this.layoutBounds.maxY );
   }
 
   return inherit( MakingTensCommonView, MakingTensExploreScreenView, {
+
     /**
      *
      * @param {PaperNumberModel} paperNumberModel
      * @param {Vector2} droppedPosition
      */
     canPlaceShape: function( paperNumberModel, droppedPosition ) {
+
       var paperNumberBounds = paperNumberModel.getBounds();
       var widthPart = paperNumberBounds.width * 0.3;
       var heightPart = paperNumberBounds.height * 0.3;
-      var bounds2 = Bounds2.rect( droppedPosition.x, droppedPosition.y, widthPart, heightPart );
-      var intersects = this.shapeContainerCarousel.bounds.intersectsBounds( bounds2 );
+      var maxY = Math.min( droppedPosition.y, this.layoutBounds.maxY );
+      var bounds2 = Bounds2.rect( droppedPosition.x, maxY, widthPart, heightPart );
+      var intersects = this.returnZoneBounds.intersectsBounds( bounds2 );
       return !intersects;
     },
 
