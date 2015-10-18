@@ -171,12 +171,13 @@ define( function( require ) {
       var thisNode = this;
       this.makingTensModel.addUserCreatedNumberModel( paperNumberModel );
 
-      // see if the user has dropped the paperNumber on Explorer panel, if yes return it t origin
+      // see if the user has dropped the paperNumber on Explorer panel, if yes return it to origin
       paperNumberModel.on( 'endDrag', function() {
 
-        var panelBounds = thisNode.shapeContainerCarousel.bounds;
+        var panelBounds = thisNode.returnZoneBounds;
         var paperNumberBounds = paperNumberModel.getBounds(); // local
-        var paperCenter = new Vector2( paperNumberModel.position.x + paperNumberBounds.width * 0.5, paperNumberModel.position.y + paperNumberBounds.height * 0.5 );
+        var paperCenter = new Vector2( paperNumberModel.position.x + paperNumberBounds.width * 0.5,
+          paperNumberModel.position.y + paperNumberBounds.height * 0.5 );
 
         if ( panelBounds.containsPoint( paperCenter ) ) {
           var baseNumbers = paperNumberModel.baseNumbers;
@@ -186,12 +187,14 @@ define( function( require ) {
           for ( var i = 0; i < baseNumbers.length; i++ ) {
             var digits = (baseNumbers[ i ] + '').length;
 
-            // We have reference to the explorer's digit collection, give that value as the initial position based on the digit length
+            // We have reference to the explorer's digit collection, give that value as the initial
+            // position based on the digit length
             var initialPos = thisNode.explorePanelPositions[ digits ];
             var paperNumberPart = new PaperNumberModel( baseNumbers[ i ], initialPos );
             thisNode.makingTensModel.addUserCreatedNumberModel( paperNumberPart );
 
-            //Each part's position needs to offset from the currentPosition, so the split begins at the right place
+            //Each part's position needs to offset from the currentPosition, so the split begins at the
+            // right place
             paperNumberPart.position = paperNumberModel.position.plus( baseNumberPositions[ i ] );
             paperNumberPart.returnToOrigin( true, MakingTensSharedConstants.ANIMATION_VELOCITY / 1.5 );// true is for animate and return
           }
