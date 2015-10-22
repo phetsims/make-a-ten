@@ -64,7 +64,7 @@ define( function( require ) {
       // the query parameter ?showPointerAreas to visualize the areas
       var paperNumberBounds = paperNumberModel.getBounds();
 
-      var mouseArea = new Shape.rectangle( 0, 0,
+      var mouseArea = Shape.rectangle( 0, 0,
         paperNumberBounds.width,
         paperNumberBounds.height );
 
