@@ -309,8 +309,8 @@ define( function( require ) {
       var paperBounds = this.getBounds();
       var paperWidth = paperBounds.width;
       var paperHeight = paperBounds.height;
-      var overAllBounds = Bounds2.rect( viewBounds.x, viewBounds.y,
-        viewBounds.width - paperWidth, viewBounds.height - paperHeight );
+      var overAllBounds = Bounds2.rect( viewBounds.x - paperWidth / 2, viewBounds.y - paperHeight / 2,
+        viewBounds.width, viewBounds.height - paperHeight / 2 );
       return overAllBounds.closestPointTo( newPosition );
     },
 
