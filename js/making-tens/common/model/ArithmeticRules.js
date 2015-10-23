@@ -165,7 +165,7 @@ define( function( require ) {
         }
 
         // 4 digits
-        if ( numberValue >= 1000 && numberValue < 9000 ) {
+        if ( numberValue >= 1000 && numberValue < 9999 ) {
           if ( pulledIndex === 0 ) {
             amountToRemove = 1000;
           }

@@ -20,10 +20,9 @@ define( function( require ) {
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
   var MakingTensUtil = require( 'MAKING_TENS/making-tens/common/MakingTensUtil' );
   var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
+  var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
 
   // constants
-  //based on where the user clicked on the node, determine if it is split or move
-  var SPLIT_BOUNDARY_HEIGHT_PROPORTION = 0.4;
   var SPLIT_OPACITY_FACTOR = 5; // for a distance of 5 apply some transparency to make the split effect realistic
   var MIN_SPLIT_DISTANCE = 6;
   var DROP_BOUNDS_HEIGHT_PROPORTION = 0.35; // the bounds proportion within which if user drops a number, we can consider collapsing them
@@ -139,7 +138,7 @@ define( function( require ) {
         var amountRemovingOffsetPosition = thisNode.paperNumberModel.getDigitOffsetPosition( amountRemaining );
         var totalBounds = thisNode.bounds;
         var splitRect = Bounds2.rect( totalBounds.x, totalBounds.y,
-          totalBounds.width, totalBounds.height * SPLIT_BOUNDARY_HEIGHT_PROPORTION );
+          totalBounds.width, totalBounds.height * MakingTensSharedConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION );
 
         //if the below condition is true, start splitting
         if ( splitRect.containsPoint( thisHandler.startOffSet ) ) {
@@ -233,7 +232,7 @@ define( function( require ) {
 
       var localNodeBounds = thisNode.localBounds;
       var pullBounds = Bounds2.rect( localNodeBounds.x, localNodeBounds.y,
-        localNodeBounds.width, localNodeBounds.height * SPLIT_BOUNDARY_HEIGHT_PROPORTION );
+        localNodeBounds.width, localNodeBounds.height * MakingTensSharedConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION );
 
       var globalBounds = thisNode.localToGlobalBounds( pullBounds );
       if ( globalBounds.containsPoint( event.pointer.point ) ) {

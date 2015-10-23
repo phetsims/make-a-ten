@@ -12,10 +12,13 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ScreenView = require( 'JOIST/ScreenView' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
   var PaperImageCollection = require( 'MAKING_TENS/making-tens/common/model/PaperImageCollection' );
+  var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
+
 
   /**
    * @param {number} numberValue
@@ -23,10 +26,10 @@ define( function( require ) {
    * @param {Function} canPlaceShape - A function to determine if the PaperNumber can be placed on the board
    * @constructor
    */
-  function PaperNumberCreatorNode( numberValue, addShapeToModel, combineNumbersIfApplicableCallback, canPlaceShape, makingTensView ) {
-
-    Node.call( this, { cursor: 'pointer' } );
-    var self = this;
+  function PaperNumberCreatorNode( numberValue, addShapeToModel, combineNumbersIfApplicableCallback, canPlaceShape,
+                                   makingTensView ) {
+    Node.call( this );
+    var thisNode = this;
 
     // Create the node that the user will click upon to add a model element to the view.
     var representation = new Image( PaperImageCollection.getNumberImage( numberValue ) );
@@ -34,7 +37,7 @@ define( function( require ) {
     this.addChild( representation );
 
     // Add the listener that will allow the user to click on this and create a new shape, then position it in the model.
-    this.addInputListener( new SimpleDragHandler( {
+    var paperNumberNodeCreatorDragHandler = new SimpleDragHandler( {
 
       parentScreen: null, // needed for coordinate transforms
       paperNumberModel: null,
@@ -44,8 +47,9 @@ define( function( require ) {
 
       start: function( event, trail ) {
 
+        this.paperNumberModel = null;
         // Find the parent screen by moving up the scene graph.
-        var testNode = self;
+        var testNode = thisNode;
         while ( testNode !== null ) {
           if ( testNode instanceof ScreenView ) {
             this.parentScreen = testNode;
@@ -54,8 +58,14 @@ define( function( require ) {
           testNode = testNode.parents[ 0 ]; // Move up the scene graph by one level
         }
 
+        // check if the touched point is within the bottom portion of the node - issue #41
+        var allowedGlobalCreationBounds = thisNode.getGlobalObjectCreationBounds();
+        if ( !allowedGlobalCreationBounds.containsPoint( event.pointer.point ) ) {
+          return;
+        }
+
         // Determine the initial position of the new element as a function of the event position and this node's bounds.
-        var upperLeftCornerGlobal = self.parentToGlobalPoint( self.leftTop );
+        var upperLeftCornerGlobal = thisNode.parentToGlobalPoint( thisNode.leftTop );
         var initialPositionOffset = upperLeftCornerGlobal.minus( event.pointer.point );
         var initialPosition = this.parentScreen.globalToLocalPoint( event.pointer.point.plus( initialPositionOffset ) );
 
@@ -67,16 +77,22 @@ define( function( require ) {
       },
 
       translate: function( translationParams ) {
+        if ( !this.paperNumberModel ) {
+          return;
+        }
         var newPos = this.paperNumberModel.position.plus( translationParams.delta );
         newPos = this.paperNumberModel.constrainPosition( makingTensView.availableViewBoundsProperty.get(), newPos );
         this.paperNumberModel.setDestination( newPos );
       },
 
       end: function( event, trail ) {
+        if ( !this.paperNumberModel ) {
+          return;
+        }
         this.paperNumberModel.userControlled = false;
         var droppedPoint = event.pointer.point;
         var droppedScreenPoint = this.parentScreen.globalToLocalPoint( event.pointer.point );
-        //check if the user has dropped the number within the panel itself, if "yes" return to origin
+        //check if the user has dropped the number within the panel itthisNode, if "yes" return to origin
         if ( !canPlaceShape( this.paperNumberModel, droppedScreenPoint ) ) {
           this.paperNumberModel.returnToOrigin( true );
           this.paperNumberModel = null;
@@ -85,9 +101,41 @@ define( function( require ) {
         combineNumbersIfApplicableCallback( this.paperNumberModel, droppedPoint );
         this.paperNumberModel = null;
       }
-    } ) );
+    } );
+
+    thisNode.addInputListener( paperNumberNodeCreatorDragHandler );
+
+    // show proper cursor to indicate the paperNumber can be dragged out
+    paperNumberNodeCreatorDragHandler.move = function( event ) {
+      var allowedGlobalCreationBounds = thisNode.getGlobalObjectCreationBounds();
+      if ( allowedGlobalCreationBounds.containsPoint( event.pointer.point ) ) {
+        thisNode.cursor = 'pointer';
+      }
+      else {
+        thisNode.cursor = 'default';
+      }
+    };
+
+    paperNumberNodeCreatorDragHandler.out = function() {
+      thisNode.cursor = 'default';
+    };
 
   }
 
-  return inherit( Node, PaperNumberCreatorNode );
+  return inherit( Node, PaperNumberCreatorNode, {
+
+    /**
+     * returns {Bound2}  the bounds only within which a new PaperNumberModel can be pulled out and created
+     */
+    getGlobalObjectCreationBounds: function() {
+      var thisNode = this;
+      var localNodeBounds = thisNode.localBounds;
+      var pullBounds = Bounds2.rect( localNodeBounds.x, localNodeBounds.height * MakingTensSharedConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION,
+        localNodeBounds.width, localNodeBounds.height );
+      var globalCreationBounds = thisNode.localToGlobalBounds( pullBounds );
+      return globalCreationBounds;
+    }
+
+  } );
+
 } );

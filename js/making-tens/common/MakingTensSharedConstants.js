@@ -19,6 +19,9 @@ define( function( require ) {
     EXPLORER_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
     GAME_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
     ADDING_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
+
+    //based on where the user clicked on the node, determine if it is split or move
+    SPLIT_BOUNDARY_HEIGHT_PROPORTION: 0.4,
     // velocity at which animated elements move
     ANIMATION_VELOCITY: 400, // In screen coordinates per second
     MOVE_AWAY_DISTANCE: { 1: 50, 2: 100, 3: 150, 4: 160 } // when numbers cannot be added, the distance to move away from each in screen coordinates
