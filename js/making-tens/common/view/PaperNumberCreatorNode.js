@@ -13,6 +13,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Vector2 = require( 'DOT/Vector2' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
   var PaperImageCollection = require( 'MAKING_TENS/making-tens/common/model/PaperImageCollection' );
@@ -58,19 +59,22 @@ define( function( require ) {
           testNode = testNode.parents[ 0 ]; // Move up the scene graph by one level
         }
 
-        // check if the touched point is within the bottom portion of the node - issue #41
-        var allowedGlobalCreationBounds = thisNode.getGlobalObjectCreationBounds();
-        if ( !allowedGlobalCreationBounds.containsPoint( event.pointer.point ) ) {
-          return;
-        }
 
         // Determine the initial position of the new element as a function of the event position and this node's bounds.
         var upperLeftCornerGlobal = thisNode.parentToGlobalPoint( thisNode.leftTop );
-        var initialPositionOffset = upperLeftCornerGlobal.minus( event.pointer.point );
-        var initialPosition = this.parentScreen.globalToLocalPoint( event.pointer.point.plus( initialPositionOffset ) );
-
+        var initialPosition = this.parentScreen.globalToLocalPoint( upperLeftCornerGlobal );
+        
         // Create and add the new model element.
         this.paperNumberModel = new PaperNumberModel( numberValue, initialPosition );
+
+        //offset based on clicked position
+        var selectedPositionOffset = upperLeftCornerGlobal.minus( event.pointer.point );
+        // check if the touched point is within the bottom portion of the node else move appropriate distance - issue #41
+        var allowedGlobalCreationBounds = thisNode.getGlobalObjectCreationBounds();
+        var offsetY = -allowedGlobalCreationBounds.height - selectedPositionOffset.y;
+        var selectedPosition = initialPosition.plus( new Vector2( 0, offsetY ) );
+
+        this.paperNumberModel.setDestination( selectedPosition );
         this.paperNumberModel.userControlled = true;
         addShapeToModel( this.paperNumberModel );
 
@@ -92,7 +96,8 @@ define( function( require ) {
         this.paperNumberModel.userControlled = false;
         var droppedPoint = event.pointer.point;
         var droppedScreenPoint = this.parentScreen.globalToLocalPoint( event.pointer.point );
-        //check if the user has dropped the number within the panel itthisNode, if "yes" return to origin
+
+        //check if the user has dropped the number within the panel, if "yes" return to origin
         if ( !canPlaceShape( this.paperNumberModel, droppedScreenPoint ) ) {
           this.paperNumberModel.returnToOrigin( true );
           this.paperNumberModel = null;
@@ -119,6 +124,7 @@ define( function( require ) {
     paperNumberNodeCreatorDragHandler.out = function() {
       thisNode.cursor = 'default';
     };
+
 
   }
 

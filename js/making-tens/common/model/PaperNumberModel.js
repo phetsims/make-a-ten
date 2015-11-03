@@ -218,7 +218,7 @@ define( function( require ) {
       var digits = (value + '').length;
       var numberOfSetDimensions = _.clone( NUMBER_IMAGE_OFFSET_DIMENSIONS[ digits - 1 ] ); // digits-1 zero based index
 
-      //handle numbers like 102 where there are only two base numbers and the second number is at third position
+      // handle numbers like 102 where there are only two base numbers and the second number is at third position
       if ( digits === 3 ) {
         var isBase2NumbersWithOffset = (value % 100 > 0) && (value % 100 < 10);
         if ( isBase2NumbersWithOffset ) {
