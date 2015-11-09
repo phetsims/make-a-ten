@@ -25,7 +25,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
 
   // strings
-  var hideTotalString = require( 'string!MAKING_TENS/making-tens.hide.total' );
+  var makingTensHideTotalString = require( 'string!MAKING_TENS/making-tens.hide.total' );
 
   // These offsets are with respect to ViewPort Bounds not layout bounds
   // this is done to make sure the sumEquationNode is always at top left even after window resize and scale
@@ -97,7 +97,7 @@ define( function( require ) {
       1: shapeCreatorSinglesContainer
     };
 
-    var sumTextNode = new Text( hideTotalString, {
+    var sumTextNode = new Text( makingTensHideTotalString, {
       font: new PhetFont(
         {
           size: 25,

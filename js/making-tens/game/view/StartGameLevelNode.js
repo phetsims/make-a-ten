@@ -20,7 +20,7 @@ define( function( require ) {
 
 
   // strings
-  var chooseYourLevel = require( 'string!MAKING_TENS/chooseYourLevel' );
+  var chooseYourLevelString = require( 'string!MAKING_TENS/chooseYourLevel' );
 
   /**
    * @param {Function} startLevelFunction - Function used to initiate a game
@@ -37,7 +37,7 @@ define( function( require ) {
     options = _.extend( {
       // Defaults
       numLevels: 10,
-      titleString: chooseYourLevel,
+      titleString: chooseYourLevelString,
       numStarsOnButtons: 1,
       numButtonRows: 1, // For layout
       controlsInset: 12,
