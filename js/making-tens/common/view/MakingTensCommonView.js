@@ -117,7 +117,6 @@ define( function( require ) {
         self.makingTensModel.interactionAttempted = true;
       }
 
-
       for ( var i = 0; i < droppedNodes.length; i++ ) {
         var numberA = draggedPaperNumberModel.numberValue;
         var numberB = droppedNodes[ i ].paperNumberModel.numberValue;
@@ -136,9 +135,20 @@ define( function( require ) {
         }
       }
 
+      // if the dragged number is  larger than the the node below it (dropped node), reorder
+      // them in a way to bring small number on the top. see issue #39
+      for ( i = 0; i < allPaperNumberNodes.length; i++ ) {
+        if ( allPaperNumberNodes[ i ] === draggedNode ) {
+          continue;
+        }
 
+        if ( allPaperNumberNodes[i].bounds.intersectsBounds( draggedNode.bounds ) ) {
+          if ( draggedNode.bounds.width > allPaperNumberNodes[i ].bounds.width ) {
+            allPaperNumberNodes[ i ].moveToFront();
+          }
+        }
 
-
+      }
     },
 
     layout: function( width, height ) {
