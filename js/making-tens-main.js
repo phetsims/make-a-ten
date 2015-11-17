@@ -1,4 +1,4 @@
-// Copyright 2002-2015, University of Colorado Boulder
+// Copyright 2015, University of Colorado Boulder
 
 /**
  * Main entry point for the sim.
@@ -16,7 +16,7 @@ define( function( require ) {
   var SimLauncher = require( 'JOIST/SimLauncher' );
 
   // strings
-  var simTitle = require( 'string!MAKING_TENS/making-tens.title' );
+  var makingTensTitleString = require( 'string!MAKING_TENS/making-tens.title' );
 
   var simOptions = {
     credits: {
@@ -38,7 +38,7 @@ define( function( require ) {
   }
 
   SimLauncher.launch( function() {
-    var sim = new Sim( simTitle, [ new MakingTensExploreScreen(), new MakingTensAddingScreen(), new MakingTensGameScreen() ], simOptions );
+    var sim = new Sim( makingTensTitleString, [ new MakingTensExploreScreen(), new MakingTensAddingScreen(), new MakingTensGameScreen() ], simOptions );
     sim.start();
   } );
 } );

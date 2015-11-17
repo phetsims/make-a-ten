@@ -1,4 +1,4 @@
-// Copyright 2002-2015, University of Colorado Boulder
+// Copyright 2015, University of Colorado Boulder
 
 /**
  *
@@ -17,7 +17,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
-  var makingTensAddingScreenTitleString = require( 'string!MAKING_TENS/screen.adding' );
+  var screenAddingString = require( 'string!MAKING_TENS/screen.adding' );
 
   /**
    * Creates the icon for this screen.
@@ -43,7 +43,7 @@ define( function( require ) {
     //If there are multiple screens, then the icon must be provided here.
     var icon = createScreenIcon();
     var makingTensAddingScreenBounds = MakingTensSharedConstants.LAYOUT_BOUNDS;
-    Screen.call( this, makingTensAddingScreenTitleString, icon,
+    Screen.call( this, screenAddingString, icon,
       function() { return new MakingTensAddingModel(makingTensAddingScreenBounds); },
       function( model ) { return new MakingTensAddingScreenView( model ); },
       { backgroundColor: MakingTensSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR }

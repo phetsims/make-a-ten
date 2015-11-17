@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2015, University of Colorado Boulder
 
 /**
  * A scenery node that looks like a key pad and allows the user to enter digits.  The entered digits are not displayed
@@ -20,7 +20,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
 
   // strings
-  var submitString = require( 'string!MAKING_TENS/making-tens.keypad.submit' );
+  var makingTensKeypadSubmitString = require( 'string!MAKING_TENS/making-tens.keypad.submit' );
 
   /**
    * @param {Function} onSubmit
@@ -37,7 +37,7 @@ define( function( require ) {
       cornerRadius: 4
     };
 
-    var submitNumberButton = new TextPushButton( submitString, _.extend( {
+    var submitNumberButton = new TextPushButton( makingTensKeypadSubmitString, _.extend( {
       listener: function() {
         onSubmit( self.numberEntryControl.getValue() );
       }

@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2015, University of Colorado Boulder
 
 /**
  * A node that pretty much fills the screen and that allows the user to select the game level that they wish to play.
@@ -20,7 +20,7 @@ define( function( require ) {
 
 
   // strings
-  var chooseYourLevel = require( 'string!MAKING_TENS/chooseYourLevel' );
+  var chooseYourLevelString = require( 'string!MAKING_TENS/chooseYourLevel' );
 
   /**
    * @param {Function} startLevelFunction - Function used to initiate a game
@@ -37,7 +37,7 @@ define( function( require ) {
     options = _.extend( {
       // Defaults
       numLevels: 10,
-      titleString: chooseYourLevel,
+      titleString: chooseYourLevelString,
       numStarsOnButtons: 1,
       numButtonRows: 1, // For layout
       controlsInset: 12,
