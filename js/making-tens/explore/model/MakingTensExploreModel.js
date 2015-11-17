@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var MakingTensCommonModel = require( 'MAKING_TENS/making-tens/common/model/MakingTensCommonModel' );
+  var ArrowCueModel = require( 'MAKING_TENS/making-tens/explore/model/ArrowCueModel' );
 
   /**
    *
@@ -20,8 +21,12 @@ define( function( require ) {
     var self = this;
     MakingTensCommonModel.call( this, explorerScreenBounds, {
       sum: 0,
-      hideTotal: false
+      hideTotal: false,
+      interactionAttempted: false,
+      interactionSucceeded: false
     } );
+
+    this.arrowCueModel = new ArrowCueModel();
 
     self.residentNumberModels.lengthProperty.link( function() {
       self.calculateTotal();
@@ -33,6 +38,7 @@ define( function( require ) {
     // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
     step: function( dt ) {
       MakingTensCommonModel.prototype.step.call( this, dt );
+      this.arrowCueModel.step( dt );
     },
 
     /**
@@ -53,6 +59,7 @@ define( function( require ) {
       paperNumberModel.on( 'changeValue', function() {
         if ( !paperNumberModel.userControlled ) {
           self.calculateTotal();
+          self.interactionSucceeded = true;
         }
       } );
 

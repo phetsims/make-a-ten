@@ -17,6 +17,7 @@ define( function( require ) {
   var SumEquationNode = require( 'MAKING_TENS/making-tens/common/view/SumEquationNode' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
   var MakingTensExplorerNode = require( 'MAKING_TENS/making-tens/explore/view/MakingTensExplorerNode' );
+  var ArrowCueNode = require( 'MAKING_TENS/making-tens/explore/view/ArrowCueNode' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var CheckBox = require( 'SUN/CheckBox' );
@@ -140,6 +141,22 @@ define( function( require ) {
     var shareContainerBounds = this.shapeContainerCarousel.bounds;
     this.returnZoneBounds = new Bounds2( shareContainerBounds.minX, shareContainerBounds.minY,
       shareContainerBounds.maxX, this.layoutBounds.maxY );
+
+    var arrowCueNode = new ArrowCueNode( makingTensExploreModel.arrowCueModel );
+    this.addChild( arrowCueNode );
+
+    makingTensExploreModel.interactionAttemptedProperty.link( function( interactionAttempted ) {
+      if ( interactionAttempted ) {
+        makingTensExploreModel.arrowCueModel.visible = true;
+      }
+    } );
+
+    makingTensExploreModel.interactionSucceededProperty.link( function( interactionSucceeded ) {
+      if ( interactionSucceeded ) {
+        makingTensExploreModel.arrowCueModel.fadeAway();
+      }
+    } );
+
   }
 
   return inherit( MakingTensCommonView, MakingTensExploreScreenView, {
@@ -150,7 +167,6 @@ define( function( require ) {
      * @param {Vector2} droppedPosition
      */
     canPlaceShape: function( paperNumberModel, droppedPosition ) {
-
       var paperNumberBounds = paperNumberModel.getBounds();
       var widthPart = paperNumberBounds.width * 0.3;
       var heightPart = paperNumberBounds.height * 0.3;
@@ -201,6 +217,7 @@ define( function( require ) {
 
           paperNumberModel.returnToOrigin();
         }
+
       } );
 
     }

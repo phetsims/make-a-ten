@@ -1,8 +1,6 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
-
- *
  * @author Sharfudeen Ashraf
  */
 define( function( require ) {
@@ -29,7 +27,7 @@ define( function( require ) {
    * @param {MakingTensCommonView} makingTensView
    * @constructor
    */
-  function MakingTensExplorerNode( numberValue, addShapeToModel, combineNumbersIfApplicableCallback,canPlaceShape,makingTensView ) {
+  function MakingTensExplorerNode( numberValue, addShapeToModel, combineNumbersIfApplicableCallback, canPlaceShape, makingTensView ) {
     var thisNode = this;
     Node.call( thisNode );
 
@@ -38,7 +36,7 @@ define( function( require ) {
 
     NUMBER_CREATOR_OFFSET_POSITIONS.forEach( function( offset ) {
       var paperNumberCreatorNode = new PaperNumberCreatorNode( numberValue,
-        addShapeToModel, combineNumbersIfApplicableCallback,canPlaceShape,makingTensView );
+        addShapeToModel, combineNumbersIfApplicableCallback, canPlaceShape, makingTensView );
       numberCollectionLayer.addChild( paperNumberCreatorNode );
       paperNumberCreatorNode.left = offset.x;
       paperNumberCreatorNode.top = offset.y;
@@ -47,7 +45,5 @@ define( function( require ) {
 
   }
 
-  return inherit( Node, MakingTensExplorerNode, {
-
-  } );
+  return inherit( Node, MakingTensExplorerNode, {} );
 } );

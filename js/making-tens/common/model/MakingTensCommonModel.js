@@ -96,8 +96,6 @@ define( function( require ) {
       delta = new Vector2( repelLeftDistance, 0 );
       newPos = leftPaperModel.constrainPosition( this.viewPortBounds, leftPaperModel.position.plus( delta ) );
       leftPaperModel.setDestination( newPos, true );
-
-
     },
 
 

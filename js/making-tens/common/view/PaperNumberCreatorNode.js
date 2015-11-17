@@ -63,7 +63,7 @@ define( function( require ) {
         // Determine the initial position of the new element as a function of the event position and this node's bounds.
         var upperLeftCornerGlobal = thisNode.parentToGlobalPoint( thisNode.leftTop );
         var initialPosition = this.parentScreen.globalToLocalPoint( upperLeftCornerGlobal );
-        
+
         // Create and add the new model element.
         this.paperNumberModel = new PaperNumberModel( numberValue, initialPosition );
 

@@ -111,6 +111,13 @@ define( function( require ) {
       //check them in reverse order (the one on the top should get more priority)
       droppedNodes.reverse();
 
+      //Show Arrow cue if user hasn't succeeded in combining or splitting a number
+      if ( !self.makingTensModel.interactionSucceeded ) {
+        self.makingTensModel.arrowCueModel.positionAt( draggedPaperNumberModel );
+        self.makingTensModel.interactionAttempted = true;
+      }
+
+
       for ( var i = 0; i < droppedNodes.length; i++ ) {
         var numberA = draggedPaperNumberModel.numberValue;
         var numberB = droppedNodes[ i ].paperNumberModel.numberValue;
@@ -128,6 +135,9 @@ define( function( require ) {
           return;
         }
       }
+
+
+
 
     },
 
