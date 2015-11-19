@@ -253,83 +253,200 @@
     "exception": "Snow Day Math images will not be used in the final version, this exception will allow the build to pass without errors"
   },
 
-  "ding.mp3": {
+  "2000.png": {
     "text": [
       "from Snow Day Math"
     ],
     "projectURL": "",
     "license": "",
     "notes": "from Snow Day Math",
-    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
+    "exception": "Snow Day Math images will not be used in the final version, this exception will allow the build to pass without errors"
   },
 
-  "boing.mp3": {
+  "3000.png": {
     "text": [
       "from Snow Day Math"
     ],
     "projectURL": "",
     "license": "",
     "notes": "from Snow Day Math",
-    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
+    "exception": "Snow Day Math images will not be used in the final version, this exception will allow the build to pass without errors"
   },
 
-  "trumpet.mp3": {
+  "4000.png": {
     "text": [
       "from Snow Day Math"
     ],
     "projectURL": "",
     "license": "",
     "notes": "from Snow Day Math",
-    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
+    "exception": "Snow Day Math images will not be used in the final version, this exception will allow the build to pass without errors"
   },
 
-  "cheer.mp3": {
+  "5000.png": {
     "text": [
       "from Snow Day Math"
     ],
     "projectURL": "",
     "license": "",
     "notes": "from Snow Day Math",
-    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
+    "exception": "Snow Day Math images will not be used in the final version, this exception will allow the build to pass without errors"
   },
 
-  "ding.ogg": {
+  "6000.png": {
     "text": [
       "from Snow Day Math"
     ],
     "projectURL": "",
     "license": "",
     "notes": "from Snow Day Math",
-    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
+    "exception": "Snow Day Math images will not be used in the final version, this exception will allow the build to pass without errors"
   },
 
-  "boing.ogg": {
+  "7000.png": {
     "text": [
       "from Snow Day Math"
     ],
     "projectURL": "",
     "license": "",
     "notes": "from Snow Day Math",
-    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
+    "exception": "Snow Day Math images will not be used in the final version, this exception will allow the build to pass without errors"
   },
 
-  "trumpet.ogg": {
+  "8000.png": {
     "text": [
       "from Snow Day Math"
     ],
     "projectURL": "",
     "license": "",
     "notes": "from Snow Day Math",
-    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
+    "exception": "Snow Day Math images will not be used in the final version, this exception will allow the build to pass without errors"
   },
 
-  "cheer.ogg": {
+  "9000.png": {
     "text": [
       "from Snow Day Math"
     ],
     "projectURL": "",
     "license": "",
     "notes": "from Snow Day Math",
-    "exception": "Snow Day Math Audio will not be used in the final version, this exception will allow the build to pass without errors"
+    "exception": "Snow Day Math images will not be used in the final version, this exception will allow the build to pass without errors"
+  },
+
+  "move-cue.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+
+  "split-cue.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+
+  "edit.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+
+  "level-1.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+
+  "level-2.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+
+  "level-3.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+
+  "level-4.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+
+  "level-5.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+
+  "level-6.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+
+  "level-7.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+
+  "level-8.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+
+  "level-9.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+
+  "level-10.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
   }
 }
