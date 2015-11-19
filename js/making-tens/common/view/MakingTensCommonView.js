@@ -112,7 +112,7 @@ define( function( require ) {
       droppedNodes.reverse();
 
       //Show Arrow cue if user hasn't succeeded in combining or splitting a number
-      if ( !self.makingTensModel.interactionSucceeded ) {
+      if ( !self.makingTensModel.interactionSucceeded && self.makingTensModel.arrowCueModel ) {
         self.makingTensModel.arrowCueModel.positionAt( draggedPaperNumberModel );
         self.makingTensModel.interactionAttempted = true;
       }
