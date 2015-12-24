@@ -48,7 +48,7 @@ define( function( require ) {
       var valuesToCreate = [ self.leftTerm, self.rightTerm ];
       var xOffSet = 200;
       _.each( valuesToCreate, function( numberValue ) {
-        if ( numberValue === '' || numberValue === 0 ) {
+        if ( numberValue === '' || +numberValue === 0 ) {
           return;
         }
         var initialPosition = new Vector2( xOffSet, self.screenBounds.height / 3.5 );

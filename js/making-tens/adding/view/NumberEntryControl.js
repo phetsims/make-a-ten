@@ -12,7 +12,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Keypad = require( 'MAKING_TENS/making-tens/adding/view/Keypad' );
+  var NumberKeypad = require( 'SCENERY_PHET/NumberKeypad' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -33,7 +33,7 @@ define( function( require ) {
     }, options );
 
     // Add the keypad.
-    this.keypad = new Keypad( { maxDigits: options.maxDigits } );
+    this.keypad = new NumberKeypad( { maxDigits: options.maxDigits } );
     this.addChild( this.keypad );
 
     // Add the number readout background.
@@ -51,7 +51,7 @@ define( function( require ) {
     var digits = new Text( '', { font: READOUT_FONT } );
     this.addChild( digits );
     this.value = '0'; // @private
-    this.keypad.digitString.link( function( digitString ) {
+    this.keypad.digitStringProperty.link( function( digitString ) {
       digits.text = digitString;
       digits.center = readoutBackground.center;
       self.value = digitString;
@@ -70,7 +70,7 @@ define( function( require ) {
     },
 
     setValue: function( value ) {
-      this.keypad.digitString.set( value );
+      this.keypad.digitStringProperty.set( value );
     },
 
     clear: function() {
