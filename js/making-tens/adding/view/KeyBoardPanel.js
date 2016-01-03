@@ -26,7 +26,7 @@ define( function( require ) {
    * @param {Function} onSubmit
    * @constructor
    */
-  function KeyBoardPanel( onSubmit,maxDigits ) {
+  function KeyBoardPanel( onSubmit, maxDigits ) {
 
     var self = this;
     this.numberEntryControl = new NumberEntryControl( { maxDigits: maxDigits } );
@@ -65,8 +65,8 @@ define( function( require ) {
      * Sets the readout value of the keypad
      * @param value
      */
-    setValue:function(value){
-      this.numberEntryControl.setValue(value);
+    setValue: function( value ) {
+      this.numberEntryControl.setValue( value );
     }
 
   } );

@@ -44,7 +44,7 @@ define( function( require ) {
     var icon = createScreenIcon();
     var makingTensAddingScreenBounds = MakingTensSharedConstants.LAYOUT_BOUNDS;
     Screen.call( this, screenAddingString, icon,
-      function() { return new MakingTensAddingModel(makingTensAddingScreenBounds); },
+      function() { return new MakingTensAddingModel( makingTensAddingScreenBounds ); },
       function( model ) { return new MakingTensAddingScreenView( model ); },
       { backgroundColor: MakingTensSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR }
     );

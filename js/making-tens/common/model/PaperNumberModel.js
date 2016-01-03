@@ -82,6 +82,9 @@ define( function( require ) {
       // set externally.
       fadeProportion: 0,
 
+      //no of digits
+      digitLength: 0,
+
       opacity: options.opacity
 
     } );
@@ -103,6 +106,10 @@ define( function( require ) {
       if ( position.equals( initialPosition ) ) {
         thisModel.trigger( 'returnedToOrigin' );
       }
+    } );
+
+    this.numberValueProperty.link( function( newValue ) {
+      thisModel.digitLength = (newValue + '').length;
     } );
 
   }
@@ -203,8 +210,8 @@ define( function( require ) {
     getDigitOffsetPosition: function( newPulledNumber ) {
       var thisModel = this;
       var newPulledNumberLength = (newPulledNumber + '').length;
-      var numberOfSetDimensions = _.clone( NUMBER_IMAGE_OFFSET_DIMENSIONS[ this.getDigitLength() - 1 ] ); // digits-1 zero based index
-      var digitDifference = (thisModel.numberValue + '').length - newPulledNumberLength;
+      var numberOfSetDimensions = _.clone( NUMBER_IMAGE_OFFSET_DIMENSIONS[ thisModel.digitLength - 1 ] ); // digits-1 zero based index
+      var digitDifference = thisModel.digitLength - newPulledNumberLength;
       return numberOfSetDimensions[ digitDifference ];
     },
 
@@ -259,20 +266,16 @@ define( function( require ) {
     },
 
 
-    getDigitLength: function() {
-      return (this.numberValue + '').length;
-    },
-
     /**
      *
      * @param newNumber
      */
     changeNumber: function( newNumber ) {
       newNumber = +newNumber;
-      var oldDigitsLength = (this.numberValue + '').length;
+      var oldDigitsLength = this.digitLength;
       this.decomposeIntoBaseNumbers( newNumber );
       this.numberValue = newNumber;
-      var newDigitLength = (this.numberValue + '').length;
+      var newDigitLength = this.digitLength;
 
       //Collapsed into a single Number, adjust the positions issue #21
       if ( newDigitLength - oldDigitsLength > 0 ) {
@@ -338,7 +341,7 @@ define( function( require ) {
         return 0;
       }
 
-      var basePositions = NUMBER_IMAGE_OFFSET_DIMENSIONS[ this.getDigitLength() - 1 ];
+      var basePositions = NUMBER_IMAGE_OFFSET_DIMENSIONS[ this.digitLength - 1 ];
 
       //Each digit is offset at a certain position, get an array of x offsets of the current number
       var positionBuckets = _.map( basePositions, function( pos ) {

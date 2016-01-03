@@ -142,8 +142,8 @@ define( function( require ) {
           continue;
         }
 
-        if ( allPaperNumberNodes[i].bounds.intersectsBounds( draggedNode.bounds ) ) {
-          if ( draggedNode.bounds.width > allPaperNumberNodes[i ].bounds.width ) {
+        if ( allPaperNumberNodes[ i ].bounds.intersectsBounds( draggedNode.bounds ) ) {
+          if ( draggedNode.bounds.width > allPaperNumberNodes[ i ].bounds.width ) {
             allPaperNumberNodes[ i ].moveToFront();
           }
         }

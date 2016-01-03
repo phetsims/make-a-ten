@@ -43,10 +43,10 @@ define( function( require ) {
 
     // mouse down on background is used for dismissing the active keyboard
     var backGroundRectangle = new Rectangle( this.layoutBounds.minX,
-        this.layoutBounds.minY, this.layoutBounds.width, this.layoutBounds.height, 0, 0, {
-          lineWidth: 0,
-          fill: MakingTensSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR
-        } );
+      this.layoutBounds.minY, this.layoutBounds.width, this.layoutBounds.height, 0, 0, {
+        lineWidth: 0,
+        fill: MakingTensSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR
+      } );
 
 
     // type is either "lt" or "rt" - (left or right)
@@ -55,13 +55,12 @@ define( function( require ) {
         content: scaledIcon,
         listener: function() {
           termProperty.set( type );
-          paperNumberLayerNode.setPickable(false);// Make the NumberKeyPad - a Modal Window issue #52
+          paperNumberLayerNode.setPickable( false );// Make the NumberKeyPad - a Modal Window issue #52
         },
         baseColor: 'white'
       } );
       return editNumberButton;
     }
-
 
 
     this.addChild( backGroundRectangle );
@@ -95,7 +94,7 @@ define( function( require ) {
       makingTensAddingModel.createTerms();
       makingTensAddingModel.activeTerm = 'none';
 
-      paperNumberLayerNode.setPickable(true);// make the papernumber layer interactive again.
+      paperNumberLayerNode.setPickable( true );// make the papernumber layer interactive again.
     }
 
     var keyBoardPanel = new KeyBoardPanel( onNumberSubmit, MAX_DIGITS );
@@ -123,11 +122,12 @@ define( function( require ) {
       }
     } );
 
+    //handle the interaction when keyboard is in opened state
     backGroundRectangle.addInputListener( new DownUpListener( {
         down: function( event, trail ) {
           if ( event.target === backGroundRectangle ) {
             makingTensAddingModel.activeTerm = 'none'; // this will close the keyboard button
-            paperNumberLayerNode.setPickable(true);// make the papernumber layer interactive again.
+            paperNumberLayerNode.setPickable( true );// make the papernumber layer interactive again.
           }
         }
       }

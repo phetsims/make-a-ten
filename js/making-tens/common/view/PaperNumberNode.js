@@ -177,12 +177,12 @@ define( function( require ) {
           // to adjust the new paperModel's position
           // see issue #7
 
-          if ( thisHandler.splitObjectContext.pulledApartPaperNumberModel.getDigitLength() >=
+          if ( thisHandler.splitObjectContext.pulledApartPaperNumberModel.digitLength >=
                (thisHandler.splitObjectContext.amountRemaining + '').length ) {
             paperNumberModel.setDestination( paperNumberModel.position.plus(
               thisHandler.splitObjectContext.amountRemovingOffsetPosition ) );
           }
-          if ( thisHandler.splitObjectContext.pulledApartPaperNumberModel.getDigitLength() >
+          if ( thisHandler.splitObjectContext.pulledApartPaperNumberModel.digitLength >
                (thisHandler.splitObjectContext.amountRemaining + '').length ) {
             thisNode.moveToFront();
           }
@@ -303,8 +303,8 @@ define( function( require ) {
           smallerNode = droppedNode;
         }
 
-        var smallerDigitLength = smallerNode.paperNumberModel.getDigitLength();
-        var widerDigitLength = widerNode.paperNumberModel.getDigitLength();
+        var smallerDigitLength = smallerNode.paperNumberModel.digitLength;
+        var widerDigitLength = widerNode.paperNumberModel.digitLength;
 
         var yDiff = Math.abs( droppedNode.top - draggedNode.top );
         var dropPositionHeightTolerance = smallerNode.bounds.height * DROP_BOUNDS_HEIGHT_PROPORTION;

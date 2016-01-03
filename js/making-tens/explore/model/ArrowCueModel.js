@@ -66,7 +66,7 @@ define( function( require ) {
       var paperNumberBounds = paperNumberModel.getBounds();
 
       var rightTop = new Vector2( paperNumberModel.position.x + paperNumberBounds.width - CUE_IMAGE_DIMENSION.width / 2,
-        paperNumberModel.position.y + paperNumberBounds.height * 0.15 - CUE_IMAGE_DIMENSION.height / 2);
+        paperNumberModel.position.y + paperNumberBounds.height * 0.15 - CUE_IMAGE_DIMENSION.height / 2 );
 
       var bottomCenter = new Vector2( paperNumberModel.position.x + paperNumberBounds.width * 0.5 - CUE_IMAGE_DIMENSION.width / 2,
         paperNumberModel.position.y + paperNumberBounds.height * 0.8 - CUE_IMAGE_DIMENSION.height / 2 );
