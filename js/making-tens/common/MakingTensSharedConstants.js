@@ -19,6 +19,12 @@ define( function( require ) {
     EXPLORER_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
     GAME_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
     ADDING_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
+    PAPER_NUMBER_DIMENSIONS: {
+      1: new Bounds2( 0, 0, 67, 128 ), // key is digitLength
+      2: new Bounds2( 0, 0, 156, 141 ),
+      3: new Bounds2( 0, 0, 215, 177 ),
+      4: new Bounds2( 0, 0, 272, 189 )
+    },
 
     //based on where the user clicked on the node, determine if it is split or move
     SPLIT_BOUNDARY_HEIGHT_PROPORTION: 0.4,

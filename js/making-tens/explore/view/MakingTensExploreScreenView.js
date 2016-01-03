@@ -197,21 +197,20 @@ define( function( require ) {
 
         if ( panelBounds.containsPoint( paperCenter ) ) {
           var baseNumbers = paperNumberModel.baseNumbers;
-          var baseNumberPositions = paperNumberModel.baseNumberPositions;
 
           //create as many number of papernumber nodes as the base numbers and animate each of them
           for ( var i = 0; i < baseNumbers.length; i++ ) {
-            var digits = (baseNumbers[ i ] + '').length;
+            var digits = baseNumbers[ i ].digitLength;
 
             // We have reference to the explorer's digit collection, give that value as the initial
             // position based on the digit length
             var initialPos = thisNode.explorePanelPositions[ digits ];
-            var paperNumberPart = new PaperNumberModel( baseNumbers[ i ], initialPos );
+            var paperNumberPart = new PaperNumberModel( baseNumbers[ i ].numberValue, initialPos );
             thisNode.makingTensModel.addUserCreatedNumberModel( paperNumberPart );
 
             //Each part's position needs to offset from the currentPosition, so the split begins at the
             // right place
-            paperNumberPart.position = paperNumberModel.position.plus( baseNumberPositions[ i ] );
+            paperNumberPart.position = paperNumberModel.position.plus( baseNumbers[ i ].position );
             paperNumberPart.returnToOrigin( true, MakingTensSharedConstants.ANIMATION_VELOCITY / 1.5 );// true is for animate and return
           }
 

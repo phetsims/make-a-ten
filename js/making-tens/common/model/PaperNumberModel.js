@@ -15,9 +15,8 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
-  var PaperImageCollection = require( 'MAKING_TENS/making-tens/common/model/PaperImageCollection' );
+  var BaseNumber = require( 'MAKING_TENS/making-tens/common/model/BaseNumber' );
 
   // constants
   var TWO_DIGIT_OFFSET_DIMENSIONS = {
@@ -93,9 +92,9 @@ define( function( require ) {
     thisModel.destination = initialPosition.copy(); // @private
     thisModel.targetScale = this.scale;
 
-    thisModel.baseNumbers = []; // for each of these base number, we have a corresponding image file
-    thisModel.baseImages = [];
-    thisModel.baseNumberPositions = []; // the base number and its local position within this composite node(made up may image nodes)
+    // A number like 120 is composed of  to 2 number images in this simulation.
+    // The baseNumber object represents the "parts"
+    thisModel.baseNumbers = [];
 
     thisModel.velocity = MakingTensSharedConstants.ANIMATION_VELOCITY;
 
@@ -150,54 +149,40 @@ define( function( require ) {
     decomposeIntoBaseNumbers: function( value ) {
       var self = this;
       self.baseNumbers = [];
+      var numberOfSetDimensions = this.getOffsetArrayByDigits( value );
       var valueStr = value + '';
       var digits = valueStr.length;
+      var opacityValue = 1;
+      var numberPositionIndex = 0;
+
       for ( var i = 0; i < digits; i++ ) {
         var charPos = valueStr.charAt( i );
-        var posValue = (+charPos) * Math.pow( 10, digits - i - 1 );
+        var baseNumberValue = (+charPos) * Math.pow( 10, digits - i - 1 );
 
-        if ( (posValue + '').indexOf( '0' ) === 0 ) { // startswith
+        if ( (baseNumberValue + '').indexOf( '0' ) === 0 ) { // startswith
           continue;
         }
-        this.baseNumbers.push( posValue + '' );
-      }
+        var offsetX = numberOfSetDimensions[ numberPositionIndex ].x;
+        var offsetY = numberOfSetDimensions[ numberPositionIndex ].y;
+        var baseNumber = new BaseNumber( baseNumberValue, new Vector2( offsetX, offsetY ), opacityValue );
+        this.baseNumbers.push( baseNumber );
 
-      self.baseImages = [];
-      self.baseNumberPositions = [];
-      var index = 0;
-      var opacityValue = 1;
-      var numberOfSetDimensions = this.getOffsetArrayByDigits( value );
-
-      _.each( self.baseNumbers, function( baseNumber ) {
-        var baseNumberImage = PaperImageCollection.getNumberImage( baseNumber );
-        var baseNumberImageNode = new Image( baseNumberImage );
-        baseNumberImageNode.opacity = opacityValue;
-        var offsetX = numberOfSetDimensions[ index ].x;
-        var offsetY = numberOfSetDimensions[ index ].y;
-        baseNumberImageNode.left = offsetX;
-        baseNumberImageNode.top = offsetY;
-        self.baseNumberPositions.push( new Vector2( offsetX, offsetY ) );
-        self.baseImages.push( baseNumberImageNode );
-        index++;
+        //keep reducing the opacity for numbers placed on the top
         opacityValue = opacityValue - 0.03;
-      } );
-
-
+        numberPositionIndex++;
+      }
     },
 
     canPullApart: function() {
       return (this.numberValue !== 1);
     },
 
+    /**
+     * returns the Bounds of the Model (based on Image Size)
+     * @returns {*}
+     */
     getBounds: function() {
-      var maxWidthNode = _.max( this.baseImages, function( node ) {
-        return node.bounds.width;
-      } );
-
-      var maxHeightNode = _.max( this.baseImages, function( node ) {
-        return node.bounds.height;
-      } );
-      return new Bounds2( 0, 0, maxWidthNode.width, maxHeightNode.height );
+      return MakingTensSharedConstants.PAPER_NUMBER_DIMENSIONS[ this.digitLength ];
     },
 
 

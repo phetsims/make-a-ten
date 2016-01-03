@@ -21,6 +21,8 @@ define( function( require ) {
   var MakingTensUtil = require( 'MAKING_TENS/making-tens/common/MakingTensUtil' );
   var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
+  var PaperImageCollection = require( 'MAKING_TENS/making-tens/common/model/PaperImageCollection' );
+  var Image = require( 'SCENERY/nodes/Image' );
 
   // constants
   var SPLIT_OPACITY_FACTOR = 5; // for a distance of 5 apply some transparency to make the split effect realistic
@@ -50,8 +52,13 @@ define( function( require ) {
 
     paperNumberModel.numberValueProperty.link( function( newNumber ) {
       imageNumberNode.removeAllChildren();
-      _.each( paperNumberModel.baseImages, function( imageNode ) {
-        imageNumberNode.addChild( imageNode );
+
+      _.each( paperNumberModel.baseNumbers, function( baseNumberObj ) {
+        var baseNumberImage = PaperImageCollection.getNumberImage( baseNumberObj.numberValue );
+        var baseNumberImageNode = new Image( baseNumberImage );
+        baseNumberImageNode.leftTop = baseNumberObj.position;
+        baseNumberImageNode.opacity = baseNumberObj.opacity;
+        imageNumberNode.addChild( baseNumberImageNode );
       } );
 
       changeMouseAndTouchAreas();
@@ -59,9 +66,9 @@ define( function( require ) {
     } );
 
     function changeMouseAndTouchAreas() {
-      // Set up the mouse and touch areas for this node so that so that we can pass
+      // Set up the mouse and touch areas for this node so that we can pass
       // the query parameter ?showPointerAreas to visualize the areas
-      var paperNumberBounds = paperNumberModel.getBounds();
+      var paperNumberBounds = thisNode.getBounds();
 
       var mouseArea = Shape.rectangle( 0, 0,
         paperNumberBounds.width,
@@ -284,9 +291,7 @@ define( function( require ) {
      * @returns {Array}
      */
     findAttachableNodes: function( allPaperNumberNodes, droppedPoint ) {
-
       var draggedNode = this;
-
       _.remove( allPaperNumberNodes, function( node ) {
         return node === draggedNode;
       } );
