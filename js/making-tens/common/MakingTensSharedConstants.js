@@ -26,6 +26,8 @@ define( function( require ) {
       4: new Bounds2( 0, 0, 272, 189 )
     },
 
+    HOVER_OPACITY: 0.95,
+
     //based on where the user clicked on the node, determine if it is split or move
     SPLIT_BOUNDARY_HEIGHT_PROPORTION: 0.4,
     // velocity at which animated elements move

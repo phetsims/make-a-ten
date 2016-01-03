@@ -17,6 +17,7 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var PaperNumberNode = require( 'MAKING_TENS/making-tens/common/view/PaperNumberNode' );
   var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
+  var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
 
   // constants
   // Debug flag to show the view bounds, the region within which the user can move the numbers
@@ -40,6 +41,8 @@ define( function( require ) {
 
     self.addUserCreatedNumberModel = addUserCreatedNumberModel || makingTensModel.addUserCreatedNumberModel.bind( makingTensModel );
     self.combineNumbersIfApplicableCallback = this.combineNumbersIfApplicable.bind( this );
+
+    self.paperNumberNodes = [];
 
     function handlePaperNumberAdded( addedNumberModel ) {
       // Add a representation of the number.
@@ -87,6 +90,48 @@ define( function( require ) {
   }
 
   return inherit( ScreenView, MakingTensCommonView, {
+
+    /**
+     * @override
+     * @param {number} dt
+     */
+    step: function( st ) {
+
+      // if objects overlap  each other, both should'nt be a full solid,
+      // the object hovering over should have some transparency -> issue #69
+      var allPaperNumberNodes = this.paperNumberLayerNode.children;
+
+      //reset the default opacity
+      for ( var i = 0; i < allPaperNumberNodes.length; i++ ) {
+        allPaperNumberNodes[ i ].paperNumberModel.resetOpacity();
+      }
+
+      for ( i = 0; i < allPaperNumberNodes.length; i++ ) {
+        for ( var j = 0; j < allPaperNumberNodes.length; j++ ) {
+
+          var paperNumberNode1 = allPaperNumberNodes[ i ];
+          var paperNumberNode2 = allPaperNumberNodes[ j ];
+
+          if ( paperNumberNode1 === paperNumberNode2 ) {
+            continue;
+          }
+
+          if ( paperNumberNode1.getBounds().intersectsBounds( paperNumberNode2.getBounds() ) ) {
+
+            var displayOrder1 = allPaperNumberNodes.indexOf( paperNumberNode1 );
+            var displayOrder2 = allPaperNumberNodes.indexOf( paperNumberNode2 );
+
+            //the node, that hovers over other, should have minimum opacity
+            if ( displayOrder1 > displayOrder2 ) {
+              paperNumberNode1.paperNumberModel.opacity = MakingTensSharedConstants.HOVER_OPACITY;
+            }
+            else {
+              paperNumberNode2.paperNumberModel.opacity = MakingTensSharedConstants.HOVER_OPACITY;
+            }
+          }
+        }
+      }
+    },
 
     findPaperNumberNode: function( paperNumberModel ) {
       var self = this;

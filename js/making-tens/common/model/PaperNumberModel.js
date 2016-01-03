@@ -84,8 +84,9 @@ define( function( require ) {
       //no of digits
       digitLength: 0,
 
-      opacity: options.opacity
+      opacity: options.opacity,
 
+      initialOpacity: options.opacity
     } );
 
     // Destination is used for animation, and should be set through accessor methods only.
@@ -339,6 +340,10 @@ define( function( require ) {
         }
       }
       return i;
+    },
+
+    resetOpacity: function() {
+      this.opacity = this.initialOpacity;
     }
 
   } );

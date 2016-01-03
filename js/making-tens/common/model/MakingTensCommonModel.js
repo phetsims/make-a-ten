@@ -36,6 +36,7 @@ define( function( require ) {
     // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
     step: function( dt ) {
       this.residentNumberModels.forEach( function( numberModel ) { numberModel.step( dt ); } );
+
     },
 
     /**
