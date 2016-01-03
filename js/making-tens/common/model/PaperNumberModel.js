@@ -76,11 +76,6 @@ define( function( require ) {
       // Flag that indicates whether this element is animating from one location to another, should not be set externally.
       animating: false,
 
-      // Value that indicates how faded out this shape is.  This is used as part of a feature where shapes can fade
-      // out.  Once fade has started, it doesn't stop until it is fully faded, i.e. the value is 1.  This should not be
-      // set externally.
-      fadeProportion: 0,
-
       //no of digits
       digitLength: 0,
 
