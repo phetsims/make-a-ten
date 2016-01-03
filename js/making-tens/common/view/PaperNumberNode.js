@@ -162,7 +162,6 @@ define( function( require ) {
 
         // none matched, start moving
         this.startMoving( paperNumberModel );
-        return;
       },
 
       // Handler that moves the shape in model space.
