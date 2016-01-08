@@ -20,7 +20,6 @@ define( function( require ) {
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
 
-
   /**
    * @param {number} numberValue
    * @param {Function} addShapeToModel - A function for adding the created number  to the model
@@ -40,7 +39,7 @@ define( function( require ) {
     // Add the listener that will allow the user to click on this and create a new shape, then position it in the model.
     var paperNumberNodeCreatorDragHandler = new SimpleDragHandler( {
 
-      parentScreen: null, // needed for coordinate transforms
+      parentScreenView: null, // needed for coordinate transforms
       paperNumberModel: null,
 
       // Allow moving a finger (touch) across this node to interact with it
@@ -49,20 +48,23 @@ define( function( require ) {
       start: function( event, trail ) {
 
         this.paperNumberModel = null;
-        // Find the parent screen by moving up the scene graph.
-        var testNode = thisNode;
-        while ( testNode !== null ) {
-          if ( testNode instanceof ScreenView ) {
-            this.parentScreen = testNode;
-            break;
-          }
-          testNode = testNode.parents[ 0 ]; // Move up the scene graph by one level
-        }
 
+        // find the parent screen if not already found by moving up the scene graph
+        if ( !this.parentScreenView ) {
+          var testNode = thisNode;
+          while ( testNode !== null ) {
+            if ( testNode instanceof ScreenView ) {
+              this.parentScreenView = testNode;
+              break;
+            }
+            testNode = testNode.parents[ 0 ]; // move up the scene graph by one level
+          }
+          assert && assert( this.parentScreenView, 'unable to find parent screen view' );
+        }
 
         // Determine the initial position of the new element as a function of the event position and this node's bounds.
         var upperLeftCornerGlobal = thisNode.parentToGlobalPoint( thisNode.leftTop );
-        var initialPosition = this.parentScreen.globalToLocalPoint( upperLeftCornerGlobal );
+        var initialPosition = this.parentScreenView.globalToLocalPoint( upperLeftCornerGlobal );
 
         // Create and add the new model element.
         this.paperNumberModel = new PaperNumberModel( numberValue, initialPosition );
@@ -95,7 +97,7 @@ define( function( require ) {
         }
         this.paperNumberModel.userControlled = false;
         var droppedPoint = event.pointer.point;
-        var droppedScreenPoint = this.parentScreen.globalToLocalPoint( event.pointer.point );
+        var droppedScreenPoint = this.parentScreenView.globalToLocalPoint( event.pointer.point );
 
         //check if the user has dropped the number within the panel, if "yes" return to origin
         if ( !canPlaceShape( this.paperNumberModel, droppedScreenPoint ) ) {
