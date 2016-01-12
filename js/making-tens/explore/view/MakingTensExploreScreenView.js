@@ -32,8 +32,8 @@ define( function( require ) {
   // this is done to make sure the sumEquationNode is always at top left even after window resize and scale
   var sumNodeOffSetX = 30;
   var sumNodeOffSetY = 30;
-  var TOUCH_AREA_EXPAND_X = 10;
-  var TOUCH_AREA_EXPAND_Y = 4;
+  var TOUCH_AREA_X_DILATION = 10;
+  var TOUCH_AREA_Y_DILATION = 4;
 
   /**
    * @param {MakingTensExploreModel} makingTensExploreModel
@@ -117,7 +117,7 @@ define( function( require ) {
     showSumCheckBox.bottom = this.layoutBounds.maxY - 20;
 
     showSumCheckBox.touchArea = showSumCheckBox.
-      localBounds.dilatedXY( TOUCH_AREA_EXPAND_X, TOUCH_AREA_EXPAND_Y );
+      localBounds.dilatedXY( TOUCH_AREA_X_DILATION, TOUCH_AREA_Y_DILATION );
 
     makingTensExploreModel.hideTotalProperty.link( function( hideTotal ) {
       sumEquationNode.visible = !hideTotal;
