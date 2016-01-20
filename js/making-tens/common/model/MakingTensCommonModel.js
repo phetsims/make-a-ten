@@ -36,7 +36,6 @@ define( function( require ) {
     // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
     step: function( dt ) {
       this.residentNumberModels.forEach( function( numberModel ) { numberModel.step( dt ); } );
-
     },
 
     /**
@@ -47,8 +46,8 @@ define( function( require ) {
      * @param {PaperNumberModel} droppedPaperNumberModel
      */
     collapseNumberModels: function( draggedPaperNumberModel, droppedPaperNumberModel ) {
-      var droppedNumberValue = Number( droppedPaperNumberModel.numberValue );
-      var draggedNumberValue = Number( draggedPaperNumberModel.numberValue );
+      var droppedNumberValue = droppedPaperNumberModel.numberValue;
+      var draggedNumberValue = draggedPaperNumberModel.numberValue;
 
       var modelToRemove = droppedPaperNumberModel;
       var modelToChange = draggedPaperNumberModel;

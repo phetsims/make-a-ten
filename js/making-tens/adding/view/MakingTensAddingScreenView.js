@@ -82,7 +82,6 @@ define( function( require ) {
     expressionTermsNode.left = this.layoutBounds.minX + 38;
     expressionTermsNode.top = this.layoutBounds.minY + 85;
 
-
     function onNumberSubmit( value ) {
       if ( makingTensAddingModel.activeTerm === 'lt' ) {
         makingTensAddingModel.leftTerm = value;

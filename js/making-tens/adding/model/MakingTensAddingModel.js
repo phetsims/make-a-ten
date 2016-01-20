@@ -52,7 +52,9 @@ define( function( require ) {
           return;
         }
         var initialPosition = new Vector2( xOffSet, self.screenBounds.height / 3.5 );
-        self.addUserCreatedNumberModel( new PaperNumberModel( numberValue, initialPosition ) );
+
+        //Keyboard Terms returns as String, so cast it to number
+        self.addUserCreatedNumberModel( new PaperNumberModel( +numberValue, initialPosition ) );
         xOffSet += 350;
       } );
     },
