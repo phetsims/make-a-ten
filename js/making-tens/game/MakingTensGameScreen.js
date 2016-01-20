@@ -45,7 +45,7 @@ define( function( require ) {
     var icon = createScreenIcon();
 
     Screen.call( this, screenGameString, icon,
-      function() { return new MakingTensGameModel( MakingTensSharedConstants.LAYOUT_BOUNDS ); },
+      function() { return new MakingTensGameModel(  ); },
       function( model ) { return new MakingTensGameScreenView( model ); },
       { backgroundColor: MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR }
     );

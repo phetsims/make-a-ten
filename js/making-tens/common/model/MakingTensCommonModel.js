@@ -15,17 +15,15 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * @param {Bounds2} screenBounds
+   *
    * @param {Object} props
    * @constructor
    */
-  function MakingTensCommonModel( screenBounds, props ) {
-    PropertySet.call( this, _.extend( {
-      //filled by View
-      viewPortBounds: null
-    }, props ) );
+  function MakingTensCommonModel( props ) {
+    PropertySet.call( this, props );
 
-    this.screenBounds = screenBounds;
+    //filled by View
+    this.viewPortBounds = null; // filled by the view during resize
 
     // Observable array of the numbers that have been placed
     this.residentNumberModels = new ObservableArray();
@@ -95,6 +93,10 @@ define( function( require ) {
       delta = new Vector2( repelLeftDistance, 0 );
       newPos = leftPaperModel.constrainPosition( this.viewPortBounds, leftPaperModel.position.plus( delta ) );
       leftPaperModel.setDestination( newPos, true );
+    },
+
+    reset: function() {
+      PropertySet.prototype.reset.call( this );
     }
 
   } );

@@ -16,6 +16,8 @@ define( function( require ) {
     LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
     CONTROL_PANEL_BACKGROUND_COLOR: 'rgb( 254, 241, 233 )',
     SHAPE_CAROUSEL_BACKGROUND_COLOR: 'rgb( 208, 222, 239 )',
+    //Bounds within which we can randomly place the PaperNumber objects
+    PAPER_NUMBER_PLACEMENT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
     EXPLORER_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
     GAME_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
     ADDING_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',

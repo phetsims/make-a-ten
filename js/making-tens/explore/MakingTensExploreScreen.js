@@ -41,9 +41,8 @@ define( function( require ) {
     //If this is a single-screen sim, then no icon is necessary.
     //If there are multiple screens, then the icon must be provided here.
     var icon = createScreenIcon();
-    var makingTensExplorerScreenBounds = MakingTensSharedConstants.LAYOUT_BOUNDS;
     Screen.call( this, screenExploreString, icon,
-      function() { return new MakingTensExploreModel( makingTensExplorerScreenBounds ); },
+      function() { return new MakingTensExploreModel(); },
       function( model ) { return new MakingTensExploreScreenView( model ); },
       { backgroundColor: MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR }
     );

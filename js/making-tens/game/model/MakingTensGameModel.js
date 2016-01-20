@@ -14,18 +14,18 @@ define( function( require ) {
   var NumberChallengeFactory = require( 'MAKING_TENS/making-tens/game/model/NumberChallengeFactory' );
   var MakingTensCommonModel = require( 'MAKING_TENS/making-tens/common/model/MakingTensCommonModel' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
+  var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var Property = require( 'AXON/Property' );
 
   /**
    *
-   * @param {Bounds2} screenBounds -- The bounds used for randomly positioning papernumbers
    * @constructor
    */
-  function MakingTensGameModel( screenBounds ) {
+  function MakingTensGameModel(  ) {
     var thisModel = this;
 
     // Making Tens Commmon Model is a propertySet
-    MakingTensCommonModel.call( this, screenBounds, {
+    MakingTensCommonModel.call( this, {
       sum: '',
       soundEnabled: true,
       timerEnabled: false,
@@ -176,7 +176,7 @@ define( function( require ) {
         if ( numberValue === '' || numberValue === 0 ) {
           return;
         }
-        var initialPosition = new Vector2( xOffSet, self.screenBounds.height / 4 );
+        var initialPosition = new Vector2( xOffSet, MakingTensSharedConstants.PAPER_NUMBER_PLACEMENT_BOUNDS.height / 4 );
         self.addUserCreatedNumberModel( new PaperNumberModel( numberValue, initialPosition ) );
         xOffSet += 350;
       } );

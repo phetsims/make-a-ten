@@ -12,15 +12,19 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var MakingTensCommonModel = require( 'MAKING_TENS/making-tens/common/model/MakingTensCommonModel' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
+  var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
 
-
-  function MakingTensAddingModel( addingScreenBounds ) {
+    /**
+   *
+   * @constructor
+   */
+  function MakingTensAddingModel() {
 
     //background style for active Term. When a term is highlighted (ie keyboard is active, indicate to the user using a different background)
     this.activeNumberDisplayStyle = { fill: null, stroke: '#000', lineDash: [ 5, 5 ] };
     this.normalNumberDisplayStyle = { fill: null, stroke: null, lineDash: [ 0, 0 ] };
 
-    MakingTensCommonModel.call( this, addingScreenBounds, {
+    MakingTensCommonModel.call( this, {
       leftTerm: '',
       rightTerm: '',
       activeTerm: 'none',
@@ -46,11 +50,12 @@ define( function( require ) {
       var self = this;
       this.residentNumberModels.clear();
       var valuesToCreate = [ self.leftTerm, self.rightTerm ];
+
       var xOffSet = 200;
       _.each( valuesToCreate, function( numberValue ) {
         numberValue = +numberValue;
         if ( numberValue > 0 ) {
-          var initialPosition = new Vector2( xOffSet, self.screenBounds.height / 3.5 );
+          var initialPosition = new Vector2( xOffSet, MakingTensSharedConstants.PAPER_NUMBER_PLACEMENT_BOUNDS.height / 3.5 );
           //Keyboard Terms returns as String, so cast it to number
           self.addUserCreatedNumberModel( new PaperNumberModel( numberValue, initialPosition ) );
           xOffSet += 350;
@@ -59,7 +64,11 @@ define( function( require ) {
       } );
     },
 
+    /**
+     * @override
+     */
     reset: function() {
+      MakingTensCommonModel.prototype.reset.call( this );
       this.residentNumberModels.clear();
       this.leftTerm = '';
       this.rightTerm = '';

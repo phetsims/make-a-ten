@@ -14,12 +14,11 @@ define( function( require ) {
 
   /**
    *
-   * @param explorerScreenBounds
    * @constructor
    */
-  function MakingTensExploreModel( explorerScreenBounds ) {
+  function MakingTensExploreModel(  ) {
     var self = this;
-    MakingTensCommonModel.call( this, explorerScreenBounds, {
+    MakingTensCommonModel.call( this, {
       sum: 0,
       hideTotal: false,
       interactionAttempted: false,
