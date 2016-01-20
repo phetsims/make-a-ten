@@ -124,7 +124,6 @@ define( function( require ) {
       pullApartNumbers: function( numberValue, pulledIndex ) {
         numberValue = Number( numberValue );
         var amountToRemove = 0;
-        var amountRemaining = 1;
 
         var numberPulledPartModel = null;
         if ( numberValue === 1 ) {
@@ -204,7 +203,7 @@ define( function( require ) {
           amountToRemove = 100;
         }
 
-        amountRemaining = numberValue - amountToRemove;
+        var amountRemaining = numberValue - amountToRemove;
         numberPulledPartModel = new NumberPulledApartModel( amountToRemove, amountRemaining );
 
         return numberPulledPartModel;
