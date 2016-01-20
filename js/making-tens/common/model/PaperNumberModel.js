@@ -63,7 +63,7 @@ define( function( require ) {
     PropertySet.call( this, {
 
       // number this paper model represents ex 324
-      numberValue: +numberValue,
+      numberValue: numberValue,
 
       // Property that indicates where in model space the upper left corner of this shape is.  In general, this should
       // not be set directly outside of this type, and should only be manipulated through the methods defined below.
