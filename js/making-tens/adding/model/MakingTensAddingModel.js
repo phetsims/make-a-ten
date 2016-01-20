@@ -48,14 +48,14 @@ define( function( require ) {
       var valuesToCreate = [ self.leftTerm, self.rightTerm ];
       var xOffSet = 200;
       _.each( valuesToCreate, function( numberValue ) {
-        if ( numberValue === '' || +numberValue === 0 ) {
-          return;
+        numberValue = +numberValue;
+        if ( numberValue > 0 ) {
+          var initialPosition = new Vector2( xOffSet, self.screenBounds.height / 3.5 );
+          //Keyboard Terms returns as String, so cast it to number
+          self.addUserCreatedNumberModel( new PaperNumberModel( numberValue, initialPosition ) );
+          xOffSet += 350;
         }
-        var initialPosition = new Vector2( xOffSet, self.screenBounds.height / 3.5 );
 
-        //Keyboard Terms returns as String, so cast it to number
-        self.addUserCreatedNumberModel( new PaperNumberModel( +numberValue, initialPosition ) );
-        xOffSet += 350;
       } );
     },
 

@@ -55,7 +55,6 @@ define( function( require ) {
         content: scaledIcon,
         listener: function() {
           termProperty.set( type );
-          paperNumberLayerNode.setPickable( false );// Make the NumberKeyPad - a Modal Window issue #52
         },
         baseColor: 'white'
       } );
@@ -83,6 +82,9 @@ define( function( require ) {
     expressionTermsNode.top = this.layoutBounds.minY + 85;
 
     function onNumberSubmit( value ) {
+      if ( value === '0' ) { // dont display Zero
+        value = '';
+      }
       if ( makingTensAddingModel.activeTerm === 'lt' ) {
         makingTensAddingModel.leftTerm = value;
       }
@@ -93,7 +95,6 @@ define( function( require ) {
       makingTensAddingModel.createTerms();
       makingTensAddingModel.activeTerm = 'none';
 
-      paperNumberLayerNode.setPickable( true );// make the papernumber layer interactive again.
     }
 
     var keyBoardPanel = new KeyBoardPanel( onNumberSubmit, MAX_DIGITS );
@@ -126,7 +127,7 @@ define( function( require ) {
         down: function( event, trail ) {
           if ( event.target === backGroundRectangle ) {
             makingTensAddingModel.activeTerm = 'none'; // this will close the keyboard button
-            paperNumberLayerNode.setPickable( true );// make the papernumber layer interactive again.
+
           }
         }
       }
