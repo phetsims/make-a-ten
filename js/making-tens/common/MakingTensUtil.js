@@ -10,6 +10,8 @@ define( function( require ) {
   'use strict';
 
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var Image = require( 'SCENERY/nodes/Image' );
   // constants
   var SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
 
@@ -40,10 +42,28 @@ define( function( require ) {
       icon.center = background.center;
       background.addChild( icon );
       return background;
+    },
+
+    /**
+     * Creates an icon using an image over a background fill.
+     * @public
+     *
+     * @param {HTMLImageElement} image
+     * @param {scenery.fill} backgroundFill
+     * @returns {Node}
+     */
+    createIconWithBackgroundColor: function( image, backgroundFill ) {
+      var imageNode = new Image( image );
+
+      return new Node( {
+        children: [
+          new Rectangle( 0, 0, imageNode.imageWidth, imageNode.imageHeight, { fill: backgroundFill } ),
+          imageNode
+        ]
+      } );
     }
 
   };
-
 
   return MakingTensUtil;
 

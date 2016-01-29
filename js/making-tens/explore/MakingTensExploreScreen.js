@@ -10,41 +10,30 @@ define( function( require ) {
   // modules
   var MakingTensExploreModel = require( 'MAKING_TENS/making-tens/explore/model/MakingTensExploreModel' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
+  var MakingTensUtil = require( 'MAKING_TENS/making-tens/common/MakingTensUtil' );
   var MakingTensExploreScreenView = require( 'MAKING_TENS/making-tens/explore/view/MakingTensExploreScreenView' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+
+  var exploreHomeScreenImage = require( 'image!MAKING_TENS/explore-home-screen.png' );
+  var exploreNavBarImage = require( 'image!MAKING_TENS/explore-nav-bar.png' );
 
   // strings
   var screenExploreString = require( 'string!MAKING_TENS/screen.explore' );
 
   /**
-   * Creates the icon for this screen.
-   * @returns {Node}
-   */
-  var createScreenIcon = function() {
-
-    var width = Screen.HOME_SCREEN_ICON_SIZE.width;
-    var height = Screen.HOME_SCREEN_ICON_SIZE.height;
-
-    //TODO PlaceHolder
-    var background = new Rectangle( 0, 0, width, height, { fill: 'white' } );
-    return new Node( { children: [ background ] } );
-  };
-
-  /**
    * @constructor
    */
   function MakingTensExploreScreen() {
+    var homeScreenIcon = MakingTensUtil.createIconWithBackgroundColor( exploreHomeScreenImage, MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR );
+    var navigationBarIcon = MakingTensUtil.createIconWithBackgroundColor( exploreNavBarImage, MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR );
 
-    //If this is a single-screen sim, then no icon is necessary.
-    //If there are multiple screens, then the icon must be provided here.
-    var icon = createScreenIcon();
-    Screen.call( this, screenExploreString, icon,
+    Screen.call( this, screenExploreString, homeScreenIcon,
       function() { return new MakingTensExploreModel(); },
-      function( model ) { return new MakingTensExploreScreenView( model ); },
-      { backgroundColor: MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR }
+      function( model ) { return new MakingTensExploreScreenView( model ); }, {
+        backgroundColor: MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR,
+        navigationBarIcon: navigationBarIcon
+      }
     );
   }
 
