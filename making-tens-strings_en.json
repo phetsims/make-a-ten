@@ -22,38 +22,6 @@
     "value": "Choose Your Level!"
   },
 
-  "tenAndUnder":{
-    "value":"10 and Under"
-  },
-
-  "addWithNine":{
-    "value":"Add with 9"
-  },
-
-  "underTwenty":{
-    "value":"Under 20"
-  },
-
-  "addWithTens":{
-    "value":"Add with 10s"
-  },
-
-  "addWithSingles":{
-    "value":"Add with Singles"
-  },
-
-  "underHundred":{
-    "value":"Under 100"
-  },
-
-  "overHundred":{
-    "value":"Over 100"
-  },
-
-  "triples":{
-    "value":"Triples"
-  },
-
   "next":{
     "value":"Next"
   }

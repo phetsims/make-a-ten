@@ -36,14 +36,6 @@ define( function( require ) {
     var levelIcon10 = require( 'image!MAKING_TENS/level-10.png' );
 
     //strings
-    var tenAndUnderString = require( 'string!MAKING_TENS/tenAndUnder' );
-    var addWithNineString = require( 'string!MAKING_TENS/addWithNine' );
-    var underTwentyString = require( 'string!MAKING_TENS/underTwenty' );
-    var addWithTensString = require( 'string!MAKING_TENS/addWithTens' );
-    var addWithSinglesString = require( 'string!MAKING_TENS/addWithSingles' );
-    var underHundredString = require( 'string!MAKING_TENS/underHundred' );
-    var overHundredString = require( 'string!MAKING_TENS/overHundred' );
-    var triplesString = require( 'string!MAKING_TENS/triples' );
     var nextString = require( 'string!MAKING_TENS/next' );
 
     var LEVEL_ICONS = [ levelIcon1, levelIcon2, levelIcon3, levelIcon4, levelIcon5, levelIcon6, levelIcon7, levelIcon8, levelIcon9, levelIcon10 ];
@@ -89,18 +81,7 @@ define( function( require ) {
       // Add the node that allows the user to choose a game level to play.
       this.startGameLevelNode = new StartGameLevelNode(
         function( level ) { gameModel.startLevel( level ); },
-        [
-          new GameIconNode( LEVEL_ICONS[ 0 ], tenAndUnderString ),
-          new GameIconNode( LEVEL_ICONS[ 1 ], addWithNineString ),
-          new GameIconNode( LEVEL_ICONS[ 2 ], underTwentyString ),
-          new GameIconNode( LEVEL_ICONS[ 3 ], addWithTensString ),
-          new GameIconNode( LEVEL_ICONS[ 4 ], addWithSinglesString ),
-          new GameIconNode( LEVEL_ICONS[ 5 ], underHundredString ),
-          new GameIconNode( LEVEL_ICONS[ 6 ], overHundredString ),
-          new GameIconNode( LEVEL_ICONS[ 7 ], addWithSinglesString ),
-          new GameIconNode( LEVEL_ICONS[ 8 ], addWithTensString ),
-          new GameIconNode( LEVEL_ICONS[ 9 ], triplesString )
-        ],
+        LEVEL_ICONS.map( function( icon ) { return new GameIconNode( icon ); } ),
         gameModel.scores,
         {
           numStarsOnButtons: 1,
