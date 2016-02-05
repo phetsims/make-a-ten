@@ -75,7 +75,7 @@ define( function( require ) {
       bestTimeFill: 'black',
       bestTimeFont: new PhetFont( 24 ),
       bestTimeYSpacing: 10,  // vertical space between drop shadow and best time
-      // together.js
+      // phetio.js
       togetherID: null
     }, options );
 
