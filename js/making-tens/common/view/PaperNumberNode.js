@@ -201,8 +201,7 @@ define( function( require ) {
           var movableObject = thisHandler.movableObject;
           var newPosition = movableObject.position.plus( delta );
           //constrain
-          newPosition = movableObject.constrainPosition( makingTensView.availableViewBoundsProperty.get(), newPosition );
-          movableObject.setDestination( newPosition, false );
+          movableObject.constrainPosition( makingTensView.availableViewBoundsProperty.get(), newPosition );
 
           // if it is a new created object, change the opacity
           if ( movableObject !== paperNumberModel ) {

@@ -86,13 +86,12 @@ define( function( require ) {
         leftPaperModel = paperNumberModel1;
       }
 
+      var animateToDestination = true;
       var delta = new Vector2( repelRightDistance, 0 );
-      var newPos = rightPaperModel.constrainPosition( this.viewPortBounds, rightPaperModel.position.plus( delta ) );
-      rightPaperModel.setDestination( newPos, true );
+      rightPaperModel.constrainPosition( this.viewPortBounds, rightPaperModel.position.plus( delta ), animateToDestination );
 
       delta = new Vector2( repelLeftDistance, 0 );
-      newPos = leftPaperModel.constrainPosition( this.viewPortBounds, leftPaperModel.position.plus( delta ) );
-      leftPaperModel.setDestination( newPos, true );
+      leftPaperModel.constrainPosition( this.viewPortBounds, leftPaperModel.position.plus( delta ), animateToDestination );
     },
 
     reset: function() {

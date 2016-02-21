@@ -285,17 +285,20 @@ define( function( require ) {
     },
 
     /**
-     * Make sure the paper number is with view Port
+     *
+     * Make sure the paper number is within view Port
      * @param {Bounds2} viewBounds
-     * @param position
+     * @param {Vector2} position
+     * @param {boolean} animate // (optional) indicates if the new constrained position should be directly set or animated
      */
-    constrainPosition: function( viewBounds, newPosition ) {
+    constrainPosition: function( viewBounds, newPosition, animate ) {
       var paperBounds = this.getBounds();
       var paperWidth = paperBounds.width;
       var paperHeight = paperBounds.height;
       var overAllBounds = Bounds2.rect( viewBounds.x - paperWidth / 2, viewBounds.y - paperHeight / 2,
         viewBounds.width, viewBounds.height - paperHeight / 2 );
-      return overAllBounds.closestPointTo( newPosition );
+      var newPos = overAllBounds.closestPointTo( newPosition );
+      this.setDestination( newPos, animate );
     },
 
     /**

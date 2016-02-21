@@ -87,8 +87,7 @@ define( function( require ) {
           return;
         }
         var newPos = this.paperNumberModel.position.plus( translationParams.delta );
-        newPos = this.paperNumberModel.constrainPosition( makingTensView.availableViewBoundsProperty.get(), newPos );
-        this.paperNumberModel.setDestination( newPos );
+        this.paperNumberModel.constrainPosition( makingTensView.availableViewBoundsProperty.get(), newPos );
       },
 
       end: function( event, trail ) {
