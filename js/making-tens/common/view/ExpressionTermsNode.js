@@ -56,7 +56,9 @@ define( function( require ) {
     var spacing = 5;
     var numberDisplayBox = new HBox( {
       children: [ leftNumberDisplayBackground, pluTextNode,
-        rightNumberDisplayBackGround, emptyNode ], spacing: spacing
+        rightNumberDisplayBackGround, emptyNode ],
+      spacing: spacing,
+      resize: false
     } );
 
     this.addChild( numberDisplayBox );
