@@ -122,7 +122,7 @@ define( function( require ) {
        * @returns {NumberPulledApartModel | null} // null means no value is pulled ot
        */
       pullApartNumbers: function( numberValue, pulledIndex ) {
-        numberValue = Number( numberValue );
+        numberValue = numberValue;
         var amountToRemove = 0;
 
         var numberPulledPartModel = null;
