@@ -33,7 +33,9 @@ define( function( require ) {
     }, options );
 
     // Add the keypad.
-    this.keypad = new NumberKeypad( { maxDigits: options.maxDigits } );
+    this.keypad = new NumberKeypad( {
+      maxDigits: options.maxDigits
+    } );
     this.addChild( this.keypad );
 
     // Add the number readout background.

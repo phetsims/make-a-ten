@@ -61,7 +61,6 @@ define( function( require ) {
       return editNumberButton;
     }
 
-
     this.addChild( backGroundRectangle );
     this.addChild( paperNumberLayerNode );
 
@@ -99,6 +98,7 @@ define( function( require ) {
 
     var keyBoardPanel = new KeyBoardPanel( onNumberSubmit, MAX_DIGITS );
     this.addChild( keyBoardPanel );
+
     keyBoardPanel.centerX = expressionTermsNode.centerX - 25;
     keyBoardPanel.top = expressionTermsNode.top + 120;
 
@@ -127,7 +127,6 @@ define( function( require ) {
         down: function( event, trail ) {
           if ( event.target === backGroundRectangle ) {
             makingTensAddingModel.activeTerm = 'none'; // this will close the keyboard button
-
           }
         }
       }

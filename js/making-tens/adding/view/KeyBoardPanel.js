@@ -56,7 +56,8 @@ define( function( require ) {
       fill: 'lightgray',
       stroke: 'black',
       lineWidth: 1,
-      resize: false
+      resize: false,
+      backgroundPickable: true
     } );
   }
 

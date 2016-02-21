@@ -81,8 +81,7 @@ define( function( require ) {
 
     this.availableViewBoundsProperty.lazyLink( function( newBounds ) {
       makingTensModel.residentNumberModels.forEach( function( numberModel ) {
-        var newPos = numberModel.constrainPosition( newBounds, numberModel.position );
-        numberModel.setDestination( newPos, false );
+        numberModel.constrainPosition( newBounds, numberModel.position );
       } );
     } );
 
