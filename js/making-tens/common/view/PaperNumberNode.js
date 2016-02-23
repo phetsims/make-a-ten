@@ -87,52 +87,46 @@ define( function( require ) {
       imageNumberNode.opacity = opacity;
     } );
 
+    var movableObject = null;
+    var startOffset = null;
+    var splitObjectContext = null;
+    var currentPoint = null;
+
+    function resetDrag() {
+      startOffset = null;
+      currentPoint = null;
+      splitObjectContext = null;
+      movableObject = null;
+    }
+
+    function startMoving( paperNumberModel ) {
+      movableObject = paperNumberModel;
+      movableObject.userControlled = true;
+    }
+
     var paperNodeDragHandler = new SimpleDragHandler( {
 
       // Allow moving a finger (touch) across this node to interact with it
       allowTouchSnag: true,
 
-      movableObject: null,
-
-      startOffSet: null,
-
-      currentPoint: null,
-
-      splitObjectContext: null,
-
       dragCursor: null,
 
-      reset: function() {
-        var thisHandler = this;
-        thisHandler.startOffSet = null;
-        thisHandler.currentPoint = null;
-        thisHandler.splitObjectContext = null;
-        thisHandler.movableObject = null;
-      },
-
-      startMoving: function( paperNumberModel ) {
-        var thisHandler = this;
-        thisHandler.movableObject = paperNumberModel;
-        thisHandler.movableObject.userControlled = true;
-      },
-
       start: function( event, trail ) {
-        var thisHandler = this;
-        thisHandler.reset();
-        thisHandler.startOffSet = thisNode.globalToParentPoint( event.pointer.point );
-        thisHandler.currentPoint = thisHandler.startOffSet.copy();
+        resetDrag();
+        startOffset = thisNode.globalToParentPoint( event.pointer.point );
+        currentPoint = startOffset.copy();
 
         if ( paperNumberModel.numberValue === 1 ) {
-          this.startMoving( paperNumberModel );
+          startMoving( paperNumberModel );
           return;
         }
 
-        var pulledOutIndex = thisNode.determineDigitIndex( thisHandler.startOffSet );
+        var pulledOutIndex = thisNode.determineDigitIndex( startOffset );
         var numberPulledApart = ArithmeticRules.pullApartNumbers( paperNumberModel.numberValue, pulledOutIndex );
 
         // it cannot be split - so start moving
         if ( !numberPulledApart ) {
-          this.startMoving( paperNumberModel );
+          startMoving( paperNumberModel );
           return;
         }
 
@@ -148,57 +142,54 @@ define( function( require ) {
           totalBounds.width, totalBounds.height * MakingTensSharedConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION );
 
         //if the below condition is true, start splitting
-        if ( splitRect.containsPoint( thisHandler.startOffSet ) ) {
+        if ( splitRect.containsPoint( startOffset ) ) {
           var pulledOutPosition = thisNode.determinePulledOutNumberPosition( amountToRemove );
           var pulledApartPaperNumberModel = new PaperNumberModel( amountToRemove, pulledOutPosition, {
             opacity: 0.95
           } );
-          thisHandler.splitObjectContext = {};
-          thisHandler.splitObjectContext.pulledApartPaperNumberModel = pulledApartPaperNumberModel;
-          thisHandler.splitObjectContext.amountRemaining = amountRemaining;
-          thisHandler.splitObjectContext.amountRemovingOffsetPosition = amountRemovingOffsetPosition;
+          splitObjectContext = {};
+          splitObjectContext.pulledApartPaperNumberModel = pulledApartPaperNumberModel;
+          splitObjectContext.amountRemaining = amountRemaining;
+          splitObjectContext.amountRemovingOffsetPosition = amountRemovingOffsetPosition;
           return;
         }
 
         // none matched, start moving
-        this.startMoving( paperNumberModel );
+        startMoving( paperNumberModel );
       },
 
       // Handler that moves the shape in model space.
       translate: function( translationParams ) {
-        var thisHandler = this;
-
         // How far it has moved from the original position
         var delta = translationParams.delta;
-        thisHandler.currentPoint = thisHandler.currentPoint.plus( delta );
-        var transDistance = thisHandler.currentPoint.distance( thisHandler.startOffSet );
+        currentPoint = currentPoint.plus( delta );
+        var transDistance = currentPoint.distance( startOffset );
 
         //if it is splitMode
-        if ( thisHandler.splitObjectContext && transDistance > MIN_SPLIT_DISTANCE ) {
-          thisNode.addNumberModelCallBack( thisHandler.splitObjectContext.pulledApartPaperNumberModel );
-          paperNumberModel.changeNumber( thisHandler.splitObjectContext.amountRemaining );
-          this.startMoving( thisHandler.splitObjectContext.pulledApartPaperNumberModel );
+        if ( splitObjectContext && transDistance > MIN_SPLIT_DISTANCE ) {
+          thisNode.addNumberModelCallBack( splitObjectContext.pulledApartPaperNumberModel );
+          paperNumberModel.changeNumber( splitObjectContext.amountRemaining );
+          startMoving( splitObjectContext.pulledApartPaperNumberModel );
 
           // After a Number is pulled the  remaining digits must stay in the same place.We use the amountRemovingOffsetPosition
           // to adjust the new paperModel's position
           // see issue #7
 
-          if ( thisHandler.splitObjectContext.pulledApartPaperNumberModel.digitLength >=
-               (thisHandler.splitObjectContext.amountRemaining + '').length ) {
+          if ( splitObjectContext.pulledApartPaperNumberModel.digitLength >=
+               (splitObjectContext.amountRemaining + '').length ) {
             paperNumberModel.setDestination( paperNumberModel.position.plus(
-              thisHandler.splitObjectContext.amountRemovingOffsetPosition ) );
+              splitObjectContext.amountRemovingOffsetPosition ) );
           }
-          if ( thisHandler.splitObjectContext.pulledApartPaperNumberModel.digitLength >
-               (thisHandler.splitObjectContext.amountRemaining + '').length ) {
+          if ( splitObjectContext.pulledApartPaperNumberModel.digitLength >
+               (splitObjectContext.amountRemaining + '').length ) {
             thisNode.moveToFront();
           }
 
-          thisHandler.splitObjectContext = null;
+          splitObjectContext = null;
         }
 
         //in case of split mode, the movableObject is set, only if the "move" started after a certain distance
-        if ( thisHandler.movableObject ) {
-          var movableObject = thisHandler.movableObject;
+        if ( movableObject ) {
           var newPosition = movableObject.position.plus( delta );
           //constrain
           movableObject.constrainPosition( makingTensView.availableViewBoundsProperty.get(), newPosition );
@@ -214,8 +205,6 @@ define( function( require ) {
       },
 
       end: function( event, trail ) {
-        var thisHandler = this;
-        var movableObject = thisHandler.movableObject;
         if ( movableObject ) {
           movableObject.userControlled = false;
           var droppedPoint = event.pointer.point;
@@ -223,7 +212,7 @@ define( function( require ) {
           movableObject.trigger( 'endDrag' );
         }
 
-        thisHandler.reset();
+        resetDrag();
       }
 
     } );

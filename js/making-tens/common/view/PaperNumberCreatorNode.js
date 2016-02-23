@@ -36,38 +36,36 @@ define( function( require ) {
     representation.scale( 0.64, 0.55 );
     this.addChild( representation );
 
+    var paperNumberModel;
+    var parentScreenView = null; // needed for coordinate transforms
+
     // Add the listener that will allow the user to click on this and create a new shape, then position it in the model.
     var paperNumberNodeCreatorDragHandler = new SimpleDragHandler( {
-
-      parentScreenView: null, // needed for coordinate transforms
-      paperNumberModel: null,
 
       // Allow moving a finger (touch) across this node to interact with it
       allowTouchSnag: true,
 
       start: function( event, trail ) {
 
-        this.paperNumberModel = null;
-
         // find the parent screen if not already found by moving up the scene graph
-        if ( !this.parentScreenView ) {
+        if ( !parentScreenView ) {
           var testNode = thisNode;
           while ( testNode !== null ) {
             if ( testNode instanceof ScreenView ) {
-              this.parentScreenView = testNode;
+              parentScreenView = testNode;
               break;
             }
             testNode = testNode.parents[ 0 ]; // move up the scene graph by one level
           }
-          assert && assert( this.parentScreenView, 'unable to find parent screen view' );
+          assert && assert( parentScreenView, 'unable to find parent screen view' );
         }
 
         // Determine the initial position of the new element as a function of the event position and this node's bounds.
         var upperLeftCornerGlobal = thisNode.parentToGlobalPoint( thisNode.leftTop );
-        var initialPosition = this.parentScreenView.globalToLocalPoint( upperLeftCornerGlobal );
+        var initialPosition = parentScreenView.globalToLocalPoint( upperLeftCornerGlobal );
 
         // Create and add the new model element.
-        this.paperNumberModel = new PaperNumberModel( numberValue, initialPosition );
+        paperNumberModel = new PaperNumberModel( numberValue, initialPosition );
 
         //offset based on clicked position
         var selectedPositionOffset = upperLeftCornerGlobal.minus( event.pointer.point );
@@ -76,36 +74,36 @@ define( function( require ) {
         var offsetY = -allowedGlobalCreationBounds.height - selectedPositionOffset.y;
         var selectedPosition = initialPosition.plus( new Vector2( 0, offsetY ) );
 
-        this.paperNumberModel.setDestination( selectedPosition );
-        this.paperNumberModel.userControlled = true;
-        addShapeToModel( this.paperNumberModel );
+        paperNumberModel.setDestination( selectedPosition );
+        paperNumberModel.userControlled = true;
+        addShapeToModel( paperNumberModel );
 
       },
 
       translate: function( translationParams ) {
-        if ( !this.paperNumberModel ) {
+        if ( !paperNumberModel ) {
           return;
         }
-        var newPos = this.paperNumberModel.position.plus( translationParams.delta );
-        this.paperNumberModel.constrainPosition( makingTensView.availableViewBoundsProperty.get(), newPos );
+        var newPos = paperNumberModel.position.plus( translationParams.delta );
+        paperNumberModel.constrainPosition( makingTensView.availableViewBoundsProperty.get(), newPos );
       },
 
       end: function( event, trail ) {
-        if ( !this.paperNumberModel ) {
+        if ( !paperNumberModel ) {
           return;
         }
-        this.paperNumberModel.userControlled = false;
+        paperNumberModel.userControlled = false;
         var droppedPoint = event.pointer.point;
-        var droppedScreenPoint = this.parentScreenView.globalToLocalPoint( event.pointer.point );
+        var droppedScreenPoint = parentScreenView.globalToLocalPoint( event.pointer.point );
 
         //check if the user has dropped the number within the panel, if "yes" return to origin
-        if ( !canPlaceShape( this.paperNumberModel, droppedScreenPoint ) ) {
-          this.paperNumberModel.returnToOrigin( true );
-          this.paperNumberModel = null;
+        if ( !canPlaceShape( paperNumberModel, droppedScreenPoint ) ) {
+          paperNumberModel.returnToOrigin( true );
+          paperNumberModel = null;
           return;
         }
-        combineNumbersIfApplicableCallback( this.paperNumberModel, droppedPoint );
-        this.paperNumberModel = null;
+        combineNumbersIfApplicableCallback( paperNumberModel, droppedPoint );
+        paperNumberModel = null;
       }
     } );
 
