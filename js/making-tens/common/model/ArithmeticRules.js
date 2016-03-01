@@ -25,94 +25,21 @@ define( function( require ) {
 
     {
       /**
+       * @param a
+       * @param b
        *
-       * @param numberA
-       * @param numberB
        * @returns {boolean}
        */
-      canAddNumbers: function( numberA, numberB ) {
-        numberA = +numberA; // make it an int
-        numberB = +numberB;
-        var sum = numberA + numberB;
-        var modA10 = numberA % 10;
-        var modB10 = numberB % 10;
+      canAddNumbers: function( a, b ) {
+        assert && assert( typeof a === 'number' );
+        assert && assert( typeof b === 'number' );
 
-        if ( sum <= 10 ) {
-          return true;
-        }
-
-        var twoDigits = ((numberA + '').length <= 2 && (numberB + '').length <= 2);
-
-        if ( twoDigits ) {
-          // Add with decades. 24 + 50 = 74.
-          // Add with decades  20 + 50 = 70
-          // cannot cross decades
-          // no 24 + 59
-          if ( (modA10 === 0 || modB10 === 0) && sum <= 100 ) {
-            return true;
-          }
-
-          // Add singles to doubles if you don’t go over the decade.(this logic includes the single digit logic above)
-          // 23 + 5 = 28
-          // 23 +7 = 30
-          // cannot cross decades except to meet decade with a single digit.
-          // 23 + 7 = 30 okay.
-          // but not 23 + 37 (neither A nor B <10)
-          // no 23 + 9     (3+9 = 12 not less than = 10)
-          // the sum<100  will force user to make 100 when going over 100.
-
-          if ( (numberA || numberB < 10) && ((modA10 + modB10) <= 10) && sum <= 100 ) {
-            return true;
-          }
-
-          return false;
-        }
-
-        var threeDigits = (sum >= 100 && sum <= 1000);
-        if ( threeDigits ) {
-          return this.validateAdditionForThreeDigits( numberA, numberB );
-        }
-
-        var fourDigits = (sum > 1000);
-        if ( fourDigits ) {
-          if ( numberA === 1000 || numberB === 1000 ) {
-            return true;
-          }
-          var numberC = numberA % 1000;
-          var numberD = numberB % 1000;
-
-          // The only way to add over 1000 is to make 1000.
-          if ( (numberC + numberD > 1000) ) {
-            return false;
-          }
-
-          return this.validateAdditionForThreeDigits( numberA, numberB );
-        }
-
-        return false;
+        // Don't allow carrying "past" the 10s, 100s or 1000s place.
+        return ( a % 1000 ) + ( b % 1000 ) <= 1000 &&
+               ( a % 100 ) + ( b % 100 ) <= 100 &&
+               ( a % 10 ) + ( b % 10 ) <= 10 &&
+               ( a < 11 || b < 11 || a + b >= 100 || ( a + b ) % 10 > 0 );
       },
-
-      validateAdditionForThreeDigits: function( numberA, numberB ) {
-        var numberC = numberA % 100;
-        var numberD = numberB % 100;
-        //Add with decades. 124 + 150 = 274
-        if ( (numberC % 10 === 0 || numberD % 10 === 0) && (numberC + numberD <= 100) ) {
-          return true;
-        }
-
-        // Add singles to doubles if you don’t go over the decade.   234 + 122 = 156 is ok  but not  97 + 5
-        if ( (numberC < 10 || numberD < 10) && (numberC + numberD <= 10) ) {
-          return true;
-        }
-
-        if ( ((numberA % 10 + numberB % 10) <= 10) && (numberC + numberD <= 100) ) {
-          return true;
-        }
-
-        return false;
-
-      },
-
 
       /**
        * Handles how the number should be split and returns the new pulledout number
