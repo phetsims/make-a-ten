@@ -94,10 +94,10 @@ define( function( require ) {
         }
         paperNumberModel.userControlled = false;
         var droppedPoint = event.pointer.point;
-        var droppedScreenPoint = parentScreenView.globalToLocalPoint( event.pointer.point );
+        var droppedViewPoint = parentScreenView.globalToLocalPoint( event.pointer.point );
 
         //check if the user has dropped the number within the panel, if "yes" return to origin
-        if ( !canPlaceShape( paperNumberModel, droppedScreenPoint ) ) {
+        if ( !canPlaceShape( paperNumberModel, droppedViewPoint ) ) {
           paperNumberModel.returnToOrigin( true );
           paperNumberModel = null;
           return;
