@@ -27,6 +27,7 @@ define( function( require ) {
 
     // Observable array of the numbers that have been placed
     this.residentNumberModels = new ObservableArray();
+
   }
 
   return inherit( PropertySet, MakingTensCommonModel, {

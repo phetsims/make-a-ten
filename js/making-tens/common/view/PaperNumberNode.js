@@ -300,7 +300,7 @@ define( function( require ) {
 
         var yDiff = Math.abs( droppedNode.top - draggedNode.top );
         var dropPositionHeightTolerance = smallerNode.bounds.height * DROP_BOUNDS_HEIGHT_PROPORTION;
-        var yInRange = MakingTensUtil.isBetween( yDiff, -dropPositionHeightTolerance, dropPositionHeightTolerance );
+        var yInRange = Math.abs( yDiff ) < dropPositionHeightTolerance;
 
         var withinXRange = false;
         var distanceBetweenEdges = 10000;

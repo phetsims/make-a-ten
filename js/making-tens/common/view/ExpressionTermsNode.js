@@ -64,7 +64,6 @@ define( function( require ) {
     this.addChild( numberDisplayBox );
     this.addChild( equalsSignNode );
 
-
     function updateEqualSpacing() {
       var termSpacing = 60;
       equalsSignNode.left = numberDisplayBox.right + rightTermTextNode.bounds.width - termSpacing;

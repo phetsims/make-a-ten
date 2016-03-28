@@ -17,12 +17,6 @@ define( function( require ) {
 
 
   var MakingTensUtil = {
-    isBetween: function( value, a, b ) {
-      var min = Math.min( a, b );
-      var max = Math.max( a, b );
-      return value > min && value < max;
-    },
-
     /**
      * Code is copied over from LevelSelectionButton
      * Create a node that is scaled and padded out to meet the size specification.
