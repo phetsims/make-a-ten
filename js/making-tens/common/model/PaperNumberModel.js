@@ -158,9 +158,8 @@ define( function( require ) {
         if ( (baseNumberValue + '').indexOf( '0' ) === 0 ) { // startswith
           continue;
         }
-        var offsetX = numberOfSetDimensions[ numberPositionIndex ].x;
-        var offsetY = numberOfSetDimensions[ numberPositionIndex ].y;
-        var baseNumber = new BaseNumber( baseNumberValue, new Vector2( offsetX, offsetY ), opacityValue );
+        var offset = numberOfSetDimensions[ numberPositionIndex ];
+        var baseNumber = new BaseNumber( baseNumberValue, offset.copy(), opacityValue );
         this.baseNumbers.push( baseNumber );
 
         //keep reducing the opacity for numbers placed on the top
