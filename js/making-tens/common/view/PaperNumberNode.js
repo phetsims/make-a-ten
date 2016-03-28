@@ -18,7 +18,6 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
-  var MakingTensUtil = require( 'MAKING_TENS/making-tens/common/MakingTensUtil' );
   var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var PaperImageCollection = require( 'MAKING_TENS/making-tens/common/model/PaperImageCollection' );
@@ -274,10 +273,9 @@ define( function( require ) {
     /**
      * Find all nodes which are attachable to the dragged node. This method is called once th user ends the dragging
      * @param allPaperNumberNodes
-     * @param {Vector} droppedPoint // in screen coordinates
      * @returns {Array}
      */
-    findAttachableNodes: function( allPaperNumberNodes, droppedPoint ) {
+    findAttachableNodes: function( allPaperNumberNodes ) {
       var draggedNode = this;
       _.remove( allPaperNumberNodes, function( node ) {
         return node === draggedNode;

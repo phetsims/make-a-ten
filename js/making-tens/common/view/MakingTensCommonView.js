@@ -150,7 +150,7 @@ define( function( require ) {
       var self = this;
       var draggedNode = self.findPaperNumberNode( draggedPaperNumberModel );
       var allPaperNumberNodes = self.paperNumberLayerNode.children;
-      var droppedNodes = draggedNode.findAttachableNodes( allPaperNumberNodes, droppedPoint );
+      var droppedNodes = draggedNode.findAttachableNodes( allPaperNumberNodes );
 
       //check them in reverse order (the one on the top should get more priority)
       droppedNodes.reverse();
