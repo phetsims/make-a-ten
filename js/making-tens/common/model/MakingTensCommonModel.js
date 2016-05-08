@@ -32,9 +32,14 @@ define( function( require ) {
 
   return inherit( PropertySet, MakingTensCommonModel, {
 
-    // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
+    /**
+     *
+     * @param {number} dt
+     */
     step: function( dt ) {
-      this.residentNumberModels.forEach( function( numberModel ) { numberModel.step( dt ); } );
+      for ( var i = 0; i < this.residentNumberModels.length; i++ ) {
+        this.residentNumberModels.get( i ).step( dt );
+      }
     },
 
     /**
