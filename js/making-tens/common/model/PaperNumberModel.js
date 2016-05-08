@@ -86,7 +86,7 @@ define( function( require ) {
 
     // Destination is used for animation, and should be set through accessor methods only.
     thisModel.destination = initialPosition.copy(); // @private
-    thisModel.targetScale = this.scale;
+
 
     // A number like 120 is composed of  to 2 number images in this simulation.
     // The baseNumber object represents the "parts"
