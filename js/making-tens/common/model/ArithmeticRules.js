@@ -9,7 +9,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var NumberPulledApartModel = require( 'MAKING_TENS/making-tens/common/model/NumberPulledApartModel' );
+
 
   //constants
   var MULTIPLES_OF_TEN = [ 20, 30, 40, 50, 60, 70, 80, 90, 100 ];
@@ -46,10 +46,10 @@ define( function( require ) {
        * Ex : 9 splits into 8 and 1, number 60 splits into 50 and 10 etc
        *
        * @param {number} pulledIndex // in number 309 if the pulled index is 2, it mean users pulled 9
-       * @returns {NumberPulledApartModel | null} // null means no value is pulled ot
+       * @returns {number} // zero means no value is pulled out
        */
       pullApartNumbers: function( numberValue, pulledIndex ) {
-        numberValue = numberValue;
+
         var amountToRemove = 0;
 
         var numberPulledPartModel = null;
@@ -130,10 +130,8 @@ define( function( require ) {
           amountToRemove = 100;
         }
 
-        var amountRemaining = numberValue - amountToRemove;
-        numberPulledPartModel = new NumberPulledApartModel( amountToRemove, amountRemaining );
 
-        return numberPulledPartModel;
+        return amountToRemove;
       }
 
 

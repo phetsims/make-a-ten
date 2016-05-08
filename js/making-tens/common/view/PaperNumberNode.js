@@ -121,17 +121,14 @@ define( function( require ) {
         }
 
         var pulledOutIndex = thisNode.determineDigitIndex( startOffset );
-        var numberPulledApart = ArithmeticRules.pullApartNumbers( paperNumberModel.numberValue, pulledOutIndex );
+        var amountToRemove = ArithmeticRules.pullApartNumbers( paperNumberModel.numberValue, pulledOutIndex );
+        var amountRemaining = paperNumberModel.numberValue - amountToRemove;
 
         // it cannot be split - so start moving
-        if ( !numberPulledApart ) {
+        if ( !amountToRemove ) {
           startMoving( paperNumberModel );
           return;
         }
-
-        //check if split needs to happen
-        var amountToRemove = numberPulledApart.amountToRemove;
-        var amountRemaining = numberPulledApart.amountRemaining;
 
         // When splitting a single digit from a two, make sure the mouse is near that second digit (or third digit)
         // In the case of splitting equal digits (ex 30 splitting in to 20 and 10) we don't need to check this condition
