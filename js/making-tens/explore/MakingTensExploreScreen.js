@@ -8,6 +8,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var MakingTensExploreModel = require( 'MAKING_TENS/making-tens/explore/model/MakingTensExploreModel' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var MakingTensUtil = require( 'MAKING_TENS/making-tens/common/MakingTensUtil' );
@@ -36,6 +37,8 @@ define( function( require ) {
       }
     );
   }
+
+  makingTens.register( 'MakingTensExploreScreen', MakingTensExploreScreen );
 
   return inherit( Screen, MakingTensExploreScreen );
 } );

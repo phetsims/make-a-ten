@@ -11,6 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var StarNode = require( 'SCENERY_PHET/StarNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -70,6 +71,8 @@ define( function( require ) {
 
     this.mutate( options );
   }
+
+  makingTens.register( 'ProgressIndicatorLabelNode', ProgressIndicatorLabelNode );
 
   return inherit( HBox, ProgressIndicatorLabelNode );
 } );

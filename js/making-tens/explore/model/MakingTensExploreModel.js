@@ -8,6 +8,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MakingTensCommonModel = require( 'MAKING_TENS/making-tens/common/model/MakingTensCommonModel' );
   var ArrowCueModel = require( 'MAKING_TENS/making-tens/explore/model/ArrowCueModel' );
@@ -31,6 +32,8 @@ define( function( require ) {
       self.calculateTotal();
     } );
   }
+
+  makingTens.register( 'MakingTensExploreModel', MakingTensExploreModel );
 
   return inherit( MakingTensCommonModel, MakingTensExploreModel, {
 

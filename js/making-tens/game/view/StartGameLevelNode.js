@@ -12,6 +12,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelSelectionButton = require( 'MAKING_TENS/making-tens/game/view/LevelSelectionButton' );
@@ -92,10 +93,9 @@ define( function( require ) {
         buttonIndex++;
       }
     }
-
-
   }
 
-  // Inherit from Node.
+  makingTens.register( 'StartGameLevelNode', StartGameLevelNode );
+
   return inherit( Node, StartGameLevelNode );
 } );

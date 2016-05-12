@@ -8,6 +8,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var ObservableArray = require( 'AXON/ObservableArray' );
@@ -29,6 +30,8 @@ define( function( require ) {
     this.residentNumberModels = new ObservableArray();
 
   }
+
+  makingTens.register( 'MakingTensCommonModel', MakingTensCommonModel );
 
   return inherit( PropertySet, MakingTensCommonModel, {
 

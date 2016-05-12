@@ -11,6 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberKeypad = require( 'SCENERY_PHET/NumberKeypad' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -67,6 +68,8 @@ define( function( require ) {
     // Pass options through to parent class.
     this.mutate( options );
   }
+
+  makingTens.register( 'NumberEntryControl', NumberEntryControl );
 
   return inherit( Node, NumberEntryControl, {
     getValue: function() {

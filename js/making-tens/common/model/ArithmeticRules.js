@@ -8,8 +8,8 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
-
 
   //constants
   var MULTIPLES_OF_TEN = [ 20, 30, 40, 50, 60, 70, 80, 90, 100 ];
@@ -20,6 +20,8 @@ define( function( require ) {
    */
   function ArithmeticRules() {
   }
+
+  makingTens.register( 'ArithmeticRules', ArithmeticRules );
 
   return inherit( Object, ArithmeticRules, {},
 

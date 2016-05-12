@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberChallenge = require( 'MAKING_TENS/making-tens/game/model/NumberChallenge' );
 
@@ -37,6 +38,8 @@ define( function( require ) {
     this.addWithSinglesThreeDigitsAlternator = 1;
 
   }
+
+  makingTens.register( 'NumberChallengeFactory', NumberChallengeFactory );
 
   return inherit( Object, NumberChallengeFactory, {
 

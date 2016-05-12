@@ -8,8 +8,8 @@
 define( function( require ) {
   'use strict';
 
-// modules
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
 
@@ -51,6 +51,8 @@ define( function( require ) {
 
   }
 
-  return inherit( Node, ArrowCueNode, {} );
+  makingTens.register( 'ArrowCueNode', ArrowCueNode );
+
+  return inherit( Node, ArrowCueNode );
 
 } );

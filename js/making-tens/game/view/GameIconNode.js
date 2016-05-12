@@ -7,6 +7,7 @@ define( function( require ) {
   'use strict';
 
   // imports
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var MakingTensUtil = require( 'MAKING_TENS/making-tens/common/MakingTensUtil' );
@@ -27,6 +28,8 @@ define( function( require ) {
     var scaledImage = MakingTensUtil.createSizedImageNode( new Image( levelIconImage ), ICON_SIZE );
     this.addChild( scaledImage );
   }
+
+  makingTens.register( 'GameIconNode', GameIconNode );
 
   return inherit( Node, GameIconNode );
 } );

@@ -8,6 +8,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -29,6 +30,8 @@ define( function( require ) {
       visible: false
     } );
   }
+
+  makingTens.register( 'ArrowCueModel', ArrowCueModel );
 
   return inherit( PropertySet, ArrowCueModel, {
 

@@ -12,6 +12,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -60,6 +61,8 @@ define( function( require ) {
       backgroundPickable: true
     } );
   }
+
+  makingTens.register( 'KeyBoardPanel', KeyBoardPanel );
 
   return inherit( Panel, KeyBoardPanel, {
     /**

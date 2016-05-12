@@ -8,6 +8,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var MakingTensAddingModel = require( 'MAKING_TENS/making-tens/adding/model/MakingTensAddingModel' );
   var MakingTensAddingScreenView = require( 'MAKING_TENS/making-tens/adding/view/MakingTensAddingScreenView' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
@@ -36,6 +37,8 @@ define( function( require ) {
       }
     );
   }
+
+  makingTens.register( 'MakingTensAddingScreen', MakingTensAddingScreen );
 
   return inherit( Screen, MakingTensAddingScreen );
 } );

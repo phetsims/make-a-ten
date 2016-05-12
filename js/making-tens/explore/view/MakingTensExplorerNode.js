@@ -7,6 +7,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PaperNumberCreatorNode = require( 'MAKING_TENS/making-tens/common/view/PaperNumberCreatorNode' );
@@ -45,5 +46,7 @@ define( function( require ) {
 
   }
 
-  return inherit( Node, MakingTensExplorerNode, {} );
+  makingTens.register( 'MakingTensExplorerNode', MakingTensExplorerNode );
+
+  return inherit( Node, MakingTensExplorerNode );
 } );

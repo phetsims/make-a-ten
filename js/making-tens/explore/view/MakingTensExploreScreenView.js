@@ -8,6 +8,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Panel = require( 'SUN/Panel' );
@@ -159,6 +160,8 @@ define( function( require ) {
 
   }
 
+  makingTens.register( 'MakingTensExploreScreenView', MakingTensExploreScreenView );
+
   return inherit( MakingTensCommonView, MakingTensExploreScreenView, {
 
     /**
@@ -218,8 +221,6 @@ define( function( require ) {
         }
 
       } );
-
     }
-
   } );
 } );

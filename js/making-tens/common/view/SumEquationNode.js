@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -54,6 +55,8 @@ define( function( require ) {
       sumTextNode.text = newSum;
     } );
   }
+
+  makingTens.register( 'SumEquationNode', SumEquationNode );
 
   return inherit( Node, SumEquationNode, {} );
 

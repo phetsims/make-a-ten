@@ -11,6 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
@@ -25,6 +26,8 @@ define( function( require ) {
     this.rightTerm = rightTerm;
     this.options = options;
   }
+
+  makingTens.register( 'NumberChallenge', NumberChallenge );
 
   return inherit( Object, NumberChallenge );
 } );

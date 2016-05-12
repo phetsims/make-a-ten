@@ -8,6 +8,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var DotRectangle = require( 'DOT/Rectangle' ); // eslint-disable-line require-statement-match
@@ -87,6 +88,8 @@ define( function( require ) {
 
     this.availableViewBoundsProperty.linkAttribute( makingTensModel, 'viewPortBounds' );
   }
+
+  makingTens.register( 'MakingTensCommonView', MakingTensCommonView );
 
   return inherit( ScreenView, MakingTensCommonView, {
 

@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -118,6 +119,8 @@ define( function( require ) {
 
 
   }
+
+  makingTens.register( 'ExpressionTermsNode', ExpressionTermsNode );
 
   return inherit( Node, ExpressionTermsNode );
 

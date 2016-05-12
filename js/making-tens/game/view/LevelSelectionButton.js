@@ -15,6 +15,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var GameTimer = require( 'VEGAS/GameTimer' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -155,6 +156,8 @@ define( function( require ) {
     // Pass options to parent class
     this.mutate( options );
   }
+
+  makingTens.register( 'LevelSelectionButton', LevelSelectionButton );
 
   return inherit( Node, LevelSelectionButton );
 } );

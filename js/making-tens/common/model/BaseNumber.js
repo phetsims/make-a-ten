@@ -13,8 +13,8 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
-
 
   /**
    *
@@ -29,6 +29,8 @@ define( function( require ) {
     this.opacity = opacity;
     this.digitLength = (numberValue + '').length;
   }
+
+  makingTens.register( 'BaseNumber', BaseNumber );
 
   return inherit( Object, BaseNumber );
 

@@ -9,9 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var Bounds2 = require( 'DOT/Bounds2' );
 
-  return {
+  var MakingTensSharedConstants = {
     // layout bounds used throughout the simulation for laying out the screens
     LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
     CONTROL_PANEL_BACKGROUND_COLOR: 'rgb( 254, 241, 233 )',
@@ -36,4 +37,8 @@ define( function( require ) {
     ANIMATION_VELOCITY: 400, // In screen coordinates per second
     MOVE_AWAY_DISTANCE: { 1: 50, 2: 100, 3: 150, 4: 160 } // when numbers cannot be added, the distance to move away from each in screen coordinates
   };
+
+  makingTens.register( 'MakingTensSharedConstants', MakingTensSharedConstants );
+
+  return MakingTensSharedConstants;
 } );

@@ -8,6 +8,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var image1 = require( 'image!MAKING_TENS/1.png' );
   var image2 = require( 'image!MAKING_TENS/2.png' );
@@ -64,6 +65,8 @@ define( function( require ) {
   function PaperImageCollection() {
 
   }
+
+  makingTens.register( 'PaperImageCollection', PaperImageCollection );
 
   return inherit( Object, PaperImageCollection, {},
     //statics

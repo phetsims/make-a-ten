@@ -12,6 +12,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Bounds2 = require( 'DOT/Bounds2' );
@@ -242,6 +243,8 @@ define( function( require ) {
     };
 
   }
+
+  makingTens.register( 'PaperNumberNode', PaperNumberNode );
 
   return inherit( Node, PaperNumberNode, {
 

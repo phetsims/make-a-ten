@@ -8,6 +8,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Vector2 = require( 'DOT/Vector2' );
   var GameState = require( 'MAKING_TENS/making-tens/game/model/GameState' );
@@ -56,8 +57,9 @@ define( function( require ) {
         thisModel.gameState = GameState.CORRECT_ANSWER;
       }
     } );
-
   }
+
+  makingTens.register( 'MakingTensGameModel', MakingTensGameModel );
 
   return inherit( MakingTensCommonModel, MakingTensGameModel, {
 

@@ -9,9 +9,12 @@
 define( function( require ) {
   'use strict';
 
+  // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Image = require( 'SCENERY/nodes/Image' );
+
   // constants
   var SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
 
@@ -58,6 +61,8 @@ define( function( require ) {
     }
 
   };
+
+  makingTens.register( 'MakingTensUtil', MakingTensUtil );
 
   return MakingTensUtil;
 

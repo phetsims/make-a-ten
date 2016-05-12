@@ -8,6 +8,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Vector2 = require( 'DOT/Vector2' );
   var MakingTensCommonModel = require( 'MAKING_TENS/making-tens/common/model/MakingTensCommonModel' );
@@ -32,6 +33,8 @@ define( function( require ) {
       rightTermBackgroundStyle: this.normalNumberDisplayStyle
     } );
   }
+
+  makingTens.register( 'MakingTensAddingModel', MakingTensAddingModel );
 
   return inherit( MakingTensCommonModel, MakingTensAddingModel, {
 

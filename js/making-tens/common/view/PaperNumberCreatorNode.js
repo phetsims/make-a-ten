@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ScreenView = require( 'JOIST/ScreenView' );
@@ -126,6 +127,8 @@ define( function( require ) {
 
 
   }
+
+  makingTens.register( 'PaperNumberCreatorNode', PaperNumberCreatorNode );
 
   return inherit( Node, PaperNumberCreatorNode, {
 

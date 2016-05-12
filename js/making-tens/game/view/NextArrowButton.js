@@ -11,6 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var makingTens = require( 'MAKING_TENS/makingTens' );
   var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -60,6 +61,8 @@ define( function( require ) {
       content: labelArrowBox
     }, options ) );
   }
+
+  makingTens.register( 'NextArrowButton', NextArrowButton );
 
   return inherit( RectangularPushButton, NextArrowButton );
 } );
