@@ -27,7 +27,7 @@ define( function( require ) {
     this.viewPortBounds = null; // filled by the view during resize
 
     // Observable array of the numbers that have been placed
-    this.residentNumberModels = new ObservableArray();
+    this.paperNumbers = new ObservableArray();
 
   }
 
@@ -40,8 +40,8 @@ define( function( require ) {
      * @param {number} dt
      */
     step: function( dt ) {
-      for ( var i = 0; i < this.residentNumberModels.length; i++ ) {
-        this.residentNumberModels.get( i ).step( dt );
+      for ( var i = 0; i < this.paperNumbers.length; i++ ) {
+        this.paperNumbers.get( i ).step( dt );
       }
     },
 
@@ -64,7 +64,7 @@ define( function( require ) {
         modelToRemove = draggedPaperNumberModel;
         modelToChange = dropTargetNumberModel;
       }
-      this.residentNumberModels.remove( modelToRemove );
+      this.paperNumbers.remove( modelToRemove );
       var newValue = dropTargetNumberValue + draggedNumberValue;
       modelToChange.changeNumber( newValue );
     },
@@ -76,7 +76,7 @@ define( function( require ) {
      * @param paperNumberModel
      */
     addPaperNumber: function( paperNumberModel ) {
-      this.residentNumberModels.push( paperNumberModel );
+      this.paperNumbers.push( paperNumberModel );
     },
 
     /**

@@ -51,7 +51,7 @@ define( function( require ) {
      */
     createTerms: function() {
       var self = this;
-      this.residentNumberModels.clear();
+      this.paperNumbers.clear();
       var valuesToCreate = [ self.leftTerm, self.rightTerm ];
 
       var xOffSet = 200;
@@ -72,7 +72,7 @@ define( function( require ) {
      */
     reset: function() {
       MakingTensCommonModel.prototype.reset.call( this );
-      this.residentNumberModels.clear();
+      this.paperNumbers.clear();
       this.leftTerm = '';
       this.rightTerm = '';
       this.activeTerm = 'none';

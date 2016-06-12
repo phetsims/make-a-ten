@@ -52,7 +52,7 @@ define( function( require ) {
 
     this.numberChallengeFactory = new NumberChallengeFactory();
 
-    thisModel.residentNumberModels.lengthProperty.link( function( modelLength, prevModelLength ) {
+    thisModel.paperNumbers.lengthProperty.link( function( modelLength, prevModelLength ) {
       if ( modelLength === 1 && prevModelLength === 2 && thisModel.gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
         thisModel.gameState = GameState.CORRECT_ANSWER;
       }
@@ -142,7 +142,7 @@ define( function( require ) {
 
     setChoosingLevelState: function() {
       this.gameState = GameState.CHOOSING_LEVEL;
-      this.residentNumberModels.clear();
+      this.paperNumbers.clear();
     },
 
     // @private
@@ -168,7 +168,7 @@ define( function( require ) {
      */
     createTerms: function( numberChallenge ) {
       var self = this;
-      this.residentNumberModels.clear();
+      this.paperNumbers.clear();
       this.leftTerm = numberChallenge.leftTerm;
       this.rightTerm = numberChallenge.rightTerm;
 
@@ -186,7 +186,7 @@ define( function( require ) {
 
     reset: function() {
       var thisModel = this;
-      thisModel.residentNumberModels.clear();
+      thisModel.paperNumbers.clear();
       for ( var i = 0; i < thisModel.numberOfLevels; i++ ) {
         thisModel.bestTimes[ i ] = 0;
         thisModel.scores[ i ].set( 0 );

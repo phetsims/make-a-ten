@@ -28,7 +28,7 @@ define( function( require ) {
 
     this.arrowCueModel = new ArrowCueModel();
 
-    self.residentNumberModels.lengthProperty.link( function() {
+    self.paperNumbers.lengthProperty.link( function() {
       self.calculateTotal();
     } );
   }
@@ -49,7 +49,7 @@ define( function( require ) {
     calculateTotal: function() {
       var self = this;
       var total = 0;
-      self.residentNumberModels.forEach( function( model ) {
+      self.paperNumbers.forEach( function( model ) {
         total += model.numberValue;
       } );
       self.sum = total;
@@ -70,13 +70,13 @@ define( function( require ) {
       paperNumberModel.on( 'returnedToOrigin', function() {
         if ( !paperNumberModel.userControlled ) {
           // The shape has been returned to the panel.
-          self.residentNumberModels.remove( paperNumberModel );
+          self.paperNumbers.remove( paperNumberModel );
         }
       } );
     },
 
     reset: function() {
-      this.residentNumberModels.clear();
+      this.paperNumbers.clear();
       this.sum = 0;
     }
 

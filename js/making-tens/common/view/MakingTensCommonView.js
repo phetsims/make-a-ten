@@ -50,7 +50,8 @@ define( function( require ) {
 
     function handlePaperNumberAdded( addedNumberModel ) {
       // Add a representation of the number.
-      var paperNumberNode = new PaperNumberNode( addedNumberModel, self, self.addPaperNumber, self.combineNumbersIfApplicableCallback );
+      var paperNumberNode = new PaperNumberNode( addedNumberModel, self, self.addPaperNumber,
+        self.combineNumbersIfApplicableCallback );
       self.paperNumberLayerNode.addChild( paperNumberNode );
 
       // Move the shape to the front of this layer when grabbed by the user.
@@ -61,18 +62,21 @@ define( function( require ) {
       } );
 
       self.paperNumberNodeMap[ addedNumberModel.id ] = paperNumberNode;
+      self.paperNumberNodes.push( paperNumberNode );
     }
 
-    makingTensModel.residentNumberModels.addItemRemovedListener( function removalListener( removedNumberModel ) {
-      self.paperNumberLayerNode.removeChild( self.findPaperNumberNode( removedNumberModel ) );
+    makingTensModel.paperNumbers.addItemRemovedListener( function removalListener( removedNumberModel ) {
+      var removedPaperNumberNode = self.findPaperNumberNode( removedNumberModel );
+      self.paperNumberLayerNode.removeChild( removedPaperNumberNode );
+      self.paperNumberNodes = _.without( self.paperNumberNodes, removedPaperNumberNode );
       delete self.paperNumberNodeMap[ removedNumberModel.id ];
     } );
 
     //Initial Number Node creation
-    makingTensModel.residentNumberModels.forEach( handlePaperNumberAdded );
+    makingTensModel.paperNumbers.forEach( handlePaperNumberAdded );
 
     // Observe new items
-    makingTensModel.residentNumberModels.addItemAddedListener( handlePaperNumberAdded );
+    makingTensModel.paperNumbers.addItemAddedListener( handlePaperNumberAdded );
 
     // used to prevent numbers from moving outside the visible model bounds when dragged
     this.availableViewBoundsProperty = new Property( null );// filled by layout method
@@ -84,7 +88,7 @@ define( function( require ) {
     }
 
     this.availableViewBoundsProperty.lazyLink( function( newBounds ) {
-      makingTensModel.residentNumberModels.forEach( function( numberModel ) {
+      makingTensModel.paperNumbers.forEach( function( numberModel ) {
         numberModel.constrainPosition( newBounds, numberModel.position );
       } );
     } );
@@ -104,7 +108,7 @@ define( function( require ) {
 
       // if objects overlap  each other, both should'nt be a full solid,
       // the object hovering over should have some transparency -> issue #69
-      var allPaperNumberNodes = this.paperNumberLayerNode.children;
+      var allPaperNumberNodes = this.paperNumberNodes;
 
       //reset the default opacity
       for ( var i = 0; i < allPaperNumberNodes.length; i++ ) {
@@ -139,7 +143,12 @@ define( function( require ) {
     },
 
     findPaperNumberNode: function( paperNumberModel ) {
-     return this.paperNumberNodeMap[ paperNumberModel.id ];
+      var self = this;
+      var allPaperNumberNodes = self.paperNumberLayerNode.children;
+      var node = _.find( allPaperNumberNodes, function( node ) {
+        return node.paperNumberModel === paperNumberModel;
+      } );
+      return node;
     },
 
     /**
