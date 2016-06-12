@@ -46,25 +46,26 @@ define( function( require ) {
     },
 
     /**
-     * When collapsing, we remove either the dropped object and change the number value of the dragged objects
-     * but if the droppedNumber is larger than the dragged number , reverse the objects to remove and change.
+     *
+     * When collapsing, we remove either the dropTarget object and change the number value of the dragged objects
+     * but if the dropTarget is larger than the dragged number , reverse the objects to remove and change.
      *
      * @param {PaperNumberModel} draggedPaperNumberModel
-     * @param {PaperNumberModel} droppedPaperNumberModel
+     * @param {PaperNumberModel} dropTargetNumberModel
      */
-    collapseNumberModels: function( draggedPaperNumberModel, droppedPaperNumberModel ) {
-      var droppedNumberValue = droppedPaperNumberModel.numberValue;
+    collapseNumberModels: function( draggedPaperNumberModel, dropTargetNumberModel ) {
+      var dropTargetNumberValue = dropTargetNumberModel.numberValue;
       var draggedNumberValue = draggedPaperNumberModel.numberValue;
 
-      var modelToRemove = droppedPaperNumberModel;
+      var modelToRemove = dropTargetNumberModel;
       var modelToChange = draggedPaperNumberModel;
 
-      if ( droppedNumberValue > draggedNumberValue ) {
+      if ( dropTargetNumberValue > draggedNumberValue ) {
         modelToRemove = draggedPaperNumberModel;
-        modelToChange = droppedPaperNumberModel;
+        modelToChange = dropTargetNumberModel;
       }
       this.residentNumberModels.remove( modelToRemove );
-      var newValue = droppedNumberValue + draggedNumberValue;
+      var newValue = dropTargetNumberValue + draggedNumberValue;
       modelToChange.changeNumber( newValue );
     },
 
