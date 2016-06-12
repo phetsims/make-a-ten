@@ -42,12 +42,13 @@ define( function( require ) {
 
     var scaledIcon = MakingTensUtil.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE );
 
-    // mouse down on background is used for dismissing the active keyboard
-    var backGroundRectangle = new Rectangle( this.layoutBounds.minX,
-      this.layoutBounds.minY, this.layoutBounds.width, this.layoutBounds.height, 0, 0, {
-        lineWidth: 0,
-        fill: MakingTensSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR
-      } );
+    // dismiss any open keyboard if a click/touch hits the background directly
+    var background = Rectangle.bounds( this.layoutBounds );
+    background.addInputListener( {
+      down: function( event ) {
+        makingTensAddingModel.activeTerm = 'none'; // this will close the keyboard button
+      }
+    } );
 
 
     // type is either "lt" or "rt" - (left or right)
@@ -62,7 +63,7 @@ define( function( require ) {
       return editNumberButton;
     }
 
-    this.addChild( backGroundRectangle );
+    this.addChild( background );
     this.addChild( paperNumberLayerNode );
 
     var leftEditNumberButton = createEditNumberButton( makingTensAddingModel.activeTermProperty, 'lt' );
@@ -123,15 +124,6 @@ define( function( require ) {
       }
     } );
 
-    //handle the interaction when keyboard is in opened state
-    backGroundRectangle.addInputListener( new DownUpListener( {
-        down: function( event, trail ) {
-          if ( event.target === backGroundRectangle ) {
-            makingTensAddingModel.activeTerm = 'none'; // this will close the keyboard button
-          }
-        }
-      }
-    ) );
 
     // Create and add the Reset All Button in the bottom right, which resets the model
     var resetAllButton = new ResetAllButton( {
