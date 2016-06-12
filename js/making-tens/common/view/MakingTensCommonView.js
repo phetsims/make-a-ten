@@ -29,10 +29,10 @@ define( function( require ) {
    * @param {MakingTensModel} makingTensModel
    * @param {Bounds2} screenBounds
    * @param {Node} paperNumberNodeLayer
-   * @param {Function} addUserCreatedNumberModel - callback
+   * @param {Function} addPaperNumber - callback
    * @constructor
    */
-  function MakingTensCommonView( makingTensModel, screenBounds, paperNumberNodeLayer, addUserCreatedNumberModel ) {
+  function MakingTensCommonView( makingTensModel, screenBounds, paperNumberNodeLayer, addPaperNumber ) {
     var self = this;
     ScreenView.call( this, { layoutBounds: screenBounds } );
     self.makingTensModel = makingTensModel;
@@ -40,14 +40,14 @@ define( function( require ) {
     self.paperNumberLayerNode = new Node();
     paperNumberNodeLayer.addChild( self.paperNumberLayerNode );
 
-    self.addUserCreatedNumberModel = addUserCreatedNumberModel || makingTensModel.addUserCreatedNumberModel.bind( makingTensModel );
+    self.addPaperNumber = addPaperNumber || makingTensModel.addPaperNumber.bind( makingTensModel );
     self.combineNumbersIfApplicableCallback = this.combineNumbersIfApplicable.bind( this );
 
     self.paperNumberNodes = [];
 
     function handlePaperNumberAdded( addedNumberModel ) {
       // Add a representation of the number.
-      var paperNumberNode = new PaperNumberNode( addedNumberModel, self, self.addUserCreatedNumberModel, self.combineNumbersIfApplicableCallback );
+      var paperNumberNode = new PaperNumberNode( addedNumberModel, self, self.addPaperNumber, self.combineNumbersIfApplicableCallback );
       self.paperNumberLayerNode.addChild( paperNumberNode );
 
       // Move the shape to the front of this layer when grabbed by the user.

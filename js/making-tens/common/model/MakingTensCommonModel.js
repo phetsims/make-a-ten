@@ -75,7 +75,7 @@ define( function( require ) {
      * @public
      * @param paperNumberModel
      */
-    addUserCreatedNumberModel: function( paperNumberModel ) {
+    addPaperNumber: function( paperNumberModel ) {
       this.residentNumberModels.push( paperNumberModel );
     },
 

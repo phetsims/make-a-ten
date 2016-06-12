@@ -55,8 +55,8 @@ define( function( require ) {
       self.sum = total;
     },
 
-    addUserCreatedNumberModel: function( paperNumberModel ) {
-      MakingTensCommonModel.prototype.addUserCreatedNumberModel.call( this, paperNumberModel );
+    addPaperNumber: function( paperNumberModel ) {
+      MakingTensCommonModel.prototype.addPaperNumber.call( this, paperNumberModel );
       var self = this;
       paperNumberModel.on( 'changeValue', function() {
         if ( !paperNumberModel.userControlled ) {

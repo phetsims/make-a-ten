@@ -44,7 +44,7 @@ define( function( require ) {
     var self = this;
     var paperNumberNodeLayer = new Node();
     MakingTensCommonView.call( this, makingTensExploreModel, MakingTensSharedConstants.LAYOUT_BOUNDS, paperNumberNodeLayer,
-      self.addUserCreatedNumberModelToExplorerView.bind( self ) );
+      self.addPaperNumber.bind( self ) );
 
     var sumEquationNode = new SumEquationNode( makingTensExploreModel.sumProperty, MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR );
     self.addChild( sumEquationNode );
@@ -56,14 +56,14 @@ define( function( require ) {
 
     var explorerNodes = [];
     // Create the composite nodes that contain the number collections
-    var exploreHundredsNode = new MakingTensExplorerNode( 100, self.addUserCreatedNumberModelToExplorerView.bind( self ),
+    var exploreHundredsNode = new MakingTensExplorerNode( 100, self.addPaperNumber.bind( self ),
       self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ), self );
     explorerNodes.push( exploreHundredsNode );
-    var exploreTensNode = new MakingTensExplorerNode( 10, self.addUserCreatedNumberModelToExplorerView.bind( self ),
+    var exploreTensNode = new MakingTensExplorerNode( 10, self.addPaperNumber.bind( self ),
       self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ), self );
     explorerNodes.push( exploreTensNode );
     var exploreOnesNode = new MakingTensExplorerNode( 1,
-      self.addUserCreatedNumberModelToExplorerView.bind( self ),
+      self.addPaperNumber.bind( self ),
       self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ), self );
     explorerNodes.push( exploreOnesNode );
 
@@ -180,15 +180,15 @@ define( function( require ) {
     },
 
     /**
-     * Intercept the addUserCreatedNumber function and delegate it to the MakingTensCommonModel
+     * Intercept the addPaperNumber function and delegate it to the MakingTensCommonModel
      * This interception allows to hook functionality to see if the user leaves the Paper over the explorer carousel
      * in order to return them to the origin
      * @public
      * @param paperNumberModel
      */
-    addUserCreatedNumberModelToExplorerView: function( paperNumberModel ) {
+    addPaperNumber: function( paperNumberModel ) {
       var thisNode = this;
-      this.makingTensModel.addUserCreatedNumberModel( paperNumberModel );
+      this.makingTensModel.addPaperNumber( paperNumberModel );
 
       // see if the user has dropped the paperNumber on Explorer panel, if yes return it to origin
       paperNumberModel.on( 'endDrag', function() {
@@ -209,7 +209,7 @@ define( function( require ) {
             // position based on the digit length
             var initialPos = thisNode.explorePanelPositions[ digits ];
             var paperNumberPart = new PaperNumberModel( baseNumbers[ i ].numberValue, initialPos );
-            thisNode.makingTensModel.addUserCreatedNumberModel( paperNumberPart );
+            thisNode.makingTensModel.addPaperNumber( paperNumberPart );
 
             //Each part's position needs to offset from the currentPosition, so the split begins at the
             // right place

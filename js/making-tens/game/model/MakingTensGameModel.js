@@ -179,7 +179,7 @@ define( function( require ) {
           return;
         }
         var initialPosition = new Vector2( xOffSet, MakingTensSharedConstants.PAPER_NUMBER_PLACEMENT_BOUNDS.height / 4 );
-        self.addUserCreatedNumberModel( new PaperNumberModel( numberValue, initialPosition ) );
+        self.addPaperNumber( new PaperNumberModel( numberValue, initialPosition ) );
         xOffSet += 350;
       } );
     },
