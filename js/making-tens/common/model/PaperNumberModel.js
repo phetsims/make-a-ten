@@ -50,6 +50,10 @@ define( function( require ) {
     3: FOUR_DIGIT_OFFSET_DIMENSIONS
   };
 
+  //Used for tracking paperNumber Models
+  // https://github.com/phetsims/making-tens/issues/199
+  var PAPER_NUMBER_ID_GENERATOR = 1;
+
   /**
    *
    * @param {number} numberValue
@@ -60,6 +64,8 @@ define( function( require ) {
   function PaperNumberModel( numberValue, initialPosition, options ) {
     var thisModel = this;
     options = _.extend( { opacity: 1 }, options );
+
+    this.id = PAPER_NUMBER_ID_GENERATOR++;
 
     PropertySet.call( this, {
 

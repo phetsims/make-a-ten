@@ -44,6 +44,9 @@ define( function( require ) {
     self.combineNumbersIfApplicableCallback = this.combineNumbersIfApplicable.bind( this );
 
     self.paperNumberNodes = [];
+    // Associate Model Id with its corresponding Node
+    // https://github.com/phetsims/making-tens/issues/199
+    self.paperNumberNodeMap = {};
 
     function handlePaperNumberAdded( addedNumberModel ) {
       // Add a representation of the number.
@@ -57,10 +60,12 @@ define( function( require ) {
         }
       } );
 
+      self.paperNumberNodeMap[ addedNumberModel.id ] = paperNumberNode;
     }
 
     makingTensModel.residentNumberModels.addItemRemovedListener( function removalListener( removedNumberModel ) {
       self.paperNumberLayerNode.removeChild( self.findPaperNumberNode( removedNumberModel ) );
+      delete self.paperNumberNodeMap[ removedNumberModel.id ];
     } );
 
     //Initial Number Node creation
@@ -134,12 +139,7 @@ define( function( require ) {
     },
 
     findPaperNumberNode: function( paperNumberModel ) {
-      var self = this;
-      var allPaperNumberNodes = self.paperNumberLayerNode.children;
-      var node = _.find( allPaperNumberNodes, function( node ) {
-        return node.paperNumberModel === paperNumberModel;
-      } );
-      return node;
+     return this.paperNumberNodeMap[ paperNumberModel.id ];
     },
 
     /**
