@@ -57,13 +57,11 @@ define( function( require ) {
         }
       } );
 
-      makingTensModel.residentNumberModels.addItemRemovedListener( function removalListener( removedNumberModel ) {
-        if ( removedNumberModel === addedNumberModel ) {
-          self.paperNumberLayerNode.removeChild( paperNumberNode );
-          makingTensModel.residentNumberModels.removeItemRemovedListener( removalListener );
-        }
-      } );
     }
+
+    makingTensModel.residentNumberModels.addItemRemovedListener( function removalListener( removedNumberModel ) {
+      self.paperNumberLayerNode.removeChild( self.findPaperNumberNode( removedNumberModel ) );
+    } );
 
     //Initial Number Node creation
     makingTensModel.residentNumberModels.forEach( handlePaperNumberAdded );
