@@ -23,9 +23,9 @@ define( function( require ) {
    */
   function ExpressionTerms( leftTerm, rightTerm, activeTerm, highlightBorders ) {
     PropertySet.call( this, {
-      leftTerm:       leftTerm || '',
-      rightTerm:      rightTerm || '',
-      activeTerm:     activeTerm || 'none',
+      leftTerm:         leftTerm || '',
+      rightTerm:        rightTerm || '',
+      activeTerm:       activeTerm || 'none',
       highlightBorders: highlightBorders || false
     } );
 
@@ -41,7 +41,7 @@ define( function( require ) {
      * @returns {boolean}
      */
     hasBothTerms: function() {
-      return this.activeTerm === 'none' && !_.isEmpty( this.leftTerm ) && !_.isEmpty( this.rightTerm );
+      return this.activeTerm === 'none' && this.leftTerm && this.rightTerm;
     },
 
     reset: function() {
