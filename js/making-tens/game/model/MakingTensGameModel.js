@@ -14,6 +14,7 @@ define( function( require ) {
   var GameState = require( 'MAKING_TENS/making-tens/game/model/GameState' );
   var NumberChallengeFactory = require( 'MAKING_TENS/making-tens/game/model/NumberChallengeFactory' );
   var MakingTensCommonModel = require( 'MAKING_TENS/making-tens/common/model/MakingTensCommonModel' );
+  var ExpressionTerms = require( 'MAKING_TENS/making-tens/common/model/ExpressionTerms' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var Property = require( 'AXON/Property' );
@@ -35,12 +36,11 @@ define( function( require ) {
       challengeIndex: 0,
       currentChallenge: null,
       elapsedTime: 0,
-      leftTerm: 0,
-      rightTerm: 0,
-
       // Current state of the game, see GameState for valid values.
       gameState: GameState.CHOOSING_LEVEL
     } );
+
+    this.expressionTerms =  new ExpressionTerms();
 
     // Best times and scores.
     thisModel.bestTimes = []; // @public
@@ -169,8 +169,8 @@ define( function( require ) {
     createTerms: function( numberChallenge ) {
       var self = this;
       this.paperNumbers.clear();
-      this.leftTerm = numberChallenge.leftTerm;
-      this.rightTerm = numberChallenge.rightTerm;
+      this.expressionTerms.leftTerm = numberChallenge.leftTerm;
+      this.expressionTerms.rightTerm = numberChallenge.rightTerm;
 
       var valuesToCreate = [ numberChallenge.leftTerm, numberChallenge.rightTerm ];
       var xOffSet = 200;

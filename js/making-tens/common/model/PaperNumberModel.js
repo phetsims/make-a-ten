@@ -5,6 +5,7 @@
  * drags,splits and combines based on certain arithmetic rules.
  *
  * All these numbers are built from a set of few base numbers
+ *
  * @author Sharfudeen Ashraf
  */
 define( function( require ) {

@@ -24,17 +24,15 @@ define( function( require ) {
 
   /**
    *
-   * @param {Property<number>} leftTermProperty
-   * @param {Property<number>} rightTermProperty
-   * @param {Object}options
+   *
    * @constructor
    */
-  function ExpressionTermsNode( leftTermProperty, rightTermProperty, options ) {
+  function ExpressionTermsNode( expressionTerms ) {
     Node.call( this );
-
-    options = _.extend( {
-      showTermBackground: true
-    }, options );
+    //background style for active Term. When a term is highlighted (ie keyboard is active, indicate
+    //to the user using a different background)
+    var activeNumberDisplayStyle = { fill: null, stroke: '#000', lineDash: [ 5, 5 ] };
+    var normalNumberDisplayStyle = { fill: null, stroke: null, lineDash: [ 0, 0 ] };
 
     var leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, {
       fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
@@ -71,26 +69,30 @@ define( function( require ) {
       equalsSignNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 1.9;
     }
 
-    leftTermProperty.link( function( leftTerm ) {
+    expressionTerms.leftTermProperty.link( function( leftTerm ) {
       leftTermTextNode.text = leftTerm;
       updateEqualSpacing();
     } );
 
-    rightTermProperty.link( function( rightTerm ) {
+    expressionTerms.rightTermProperty.link( function( rightTerm ) {
       rightTermTextNode.text = rightTerm;
       updateEqualSpacing();
     } );
 
 
-    if ( options.activeTermProperty ) {
-      options.activeTermProperty.link( function( term ) {
-        if ( term === 'none' && !_.isEmpty( leftTermProperty.get() ) && !_.isEmpty( rightTermProperty.get() ) ) {
-          equalsSignNode.visible = true;
+    if ( expressionTerms.highlightBorders ) {
+      expressionTerms.activeTermProperty.link( function( term ) {
+        leftNumberDisplayBackground.mutate( normalNumberDisplayStyle );
+        rightNumberDisplayBackGround.mutate( normalNumberDisplayStyle );
+        equalsSignNode.visible = expressionTerms.hasBothTerms();
+        if ( term === 'lt' ) {
+          leftNumberDisplayBackground.mutate( activeNumberDisplayStyle );
         }
-        else {
-          equalsSignNode.visible = false;
+        if ( term === 'rt' ) {
+          rightNumberDisplayBackGround.mutate( activeNumberDisplayStyle );
         }
       } );
+
     }
 
 
@@ -100,21 +102,9 @@ define( function( require ) {
     rightTermTextNode.left = numberDisplayBox.left + rightNumberDisplayBackGround.left + rightNumberDisplayBackGround.width / 8;
     rightTermTextNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 2;
 
-    if ( !options.showTermBackground ) {
+    if ( !expressionTerms.highlightBorders ) {
       leftNumberDisplayBackground.visible = false;
       rightNumberDisplayBackGround.visible = false;
-    }
-
-    if ( options.leftTermBackgroundStyleProperty ) {
-      options.leftTermBackgroundStyleProperty.link( function( backgroundStyle ) {
-        leftNumberDisplayBackground.mutate( backgroundStyle );
-      } );
-    }
-
-    if ( options.rightTermBackgroundStyleProperty ) {
-      options.rightTermBackgroundStyleProperty.link( function( backgroundStyle ) {
-        rightNumberDisplayBackGround.mutate( backgroundStyle );
-      } );
     }
 
 

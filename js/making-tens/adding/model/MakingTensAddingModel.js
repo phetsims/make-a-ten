@@ -12,26 +12,18 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Vector2 = require( 'DOT/Vector2' );
   var MakingTensCommonModel = require( 'MAKING_TENS/making-tens/common/model/MakingTensCommonModel' );
+  var ExpressionTerms = require( 'MAKING_TENS/making-tens/common/model/ExpressionTerms' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
 
-    /**
+  /**
    *
    * @constructor
    */
   function MakingTensAddingModel() {
-
-    //background style for active Term. When a term is highlighted (ie keyboard is active, indicate to the user using a different background)
-    this.activeNumberDisplayStyle = { fill: null, stroke: '#000', lineDash: [ 5, 5 ] };
-    this.normalNumberDisplayStyle = { fill: null, stroke: null, lineDash: [ 0, 0 ] };
-
-    MakingTensCommonModel.call( this, {
-      leftTerm: '',
-      rightTerm: '',
-      activeTerm: 'none',
-      leftTermBackgroundStyle: this.normalNumberDisplayStyle,
-      rightTermBackgroundStyle: this.normalNumberDisplayStyle
-    } );
+    // leftTerm,rightTerm,activeTerm and showBackground
+    this.expressionTerms = new ExpressionTerms( '', '', 'none', true );
+    MakingTensCommonModel.call( this, {} );
   }
 
   makingTens.register( 'MakingTensAddingModel', MakingTensAddingModel );
@@ -52,7 +44,7 @@ define( function( require ) {
     createTerms: function() {
       var self = this;
       this.paperNumbers.clear();
-      var valuesToCreate = [ self.leftTerm, self.rightTerm ];
+      var valuesToCreate = [ self.expressionTerms.leftTerm, self.expressionTerms.rightTerm ];
 
       var xOffSet = 200;
       _.each( valuesToCreate, function( numberValue ) {
@@ -73,9 +65,7 @@ define( function( require ) {
     reset: function() {
       MakingTensCommonModel.prototype.reset.call( this );
       this.paperNumbers.clear();
-      this.leftTerm = '';
-      this.rightTerm = '';
-      this.activeTerm = 'none';
+      this.expressionTerms.reset();
     }
 
   } );

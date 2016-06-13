@@ -62,9 +62,7 @@ define( function( require ) {
     this.challengeLayer.addChild( this.paperNumberNodeLayer );
 
     // The node that display "12 + 100 = "
-    var expressionTermsNode = new ExpressionTermsNode( gameModel.leftTermProperty, gameModel.rightTermProperty, {
-      showTermBackground: false
-    } );
+    var expressionTermsNode = new ExpressionTermsNode( gameModel.expressionTerms );
     expressionTermsNode.left = this.layoutBounds.minX + 38;
     expressionTermsNode.top = this.layoutBounds.minY + 25;
     this.challengeLayer.addChild( expressionTermsNode );

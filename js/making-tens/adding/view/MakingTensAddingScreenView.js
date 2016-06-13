@@ -65,8 +65,8 @@ define( function( require ) {
     this.addChild( background );
     this.addChild( paperNumberLayerNode );
 
-    var leftEditNumberButton = createEditNumberButton( makingTensAddingModel.activeTermProperty, 'lt' );
-    var rightEditNumberButton = createEditNumberButton( makingTensAddingModel.activeTermProperty, 'rt' );
+    var leftEditNumberButton = createEditNumberButton( makingTensAddingModel.expressionTerms.activeTermProperty, 'lt' );
+    var rightEditNumberButton = createEditNumberButton( makingTensAddingModel.expressionTerms.activeTermProperty, 'rt' );
 
     var editButtonBox = new HBox( { children: [ leftEditNumberButton, rightEditNumberButton ], spacing: 45 } );
     this.addChild( editButtonBox );
@@ -74,8 +74,8 @@ define( function( require ) {
     editButtonBox.top = this.layoutBounds.minY + 32;
 
     // The node that display "12 + 100 = "
-    var expressionTermsNode = new ExpressionTermsNode( makingTensAddingModel.leftTermProperty,
-      makingTensAddingModel.rightTermProperty, makingTensAddingModel );
+
+    var expressionTermsNode = new ExpressionTermsNode( makingTensAddingModel.expressionTerms  );
     this.addChild( expressionTermsNode );
 
     expressionTermsNode.left = this.layoutBounds.minX + 38;
@@ -85,15 +85,15 @@ define( function( require ) {
       if ( value === '0' ) { // dont display Zero
         value = '';
       }
-      if ( makingTensAddingModel.activeTerm === 'lt' ) {
-        makingTensAddingModel.leftTerm = value;
+      if ( makingTensAddingModel.expressionTerms.activeTerm === 'lt' ) {
+        makingTensAddingModel.expressionTerms.leftTerm = value;
       }
-      if ( makingTensAddingModel.activeTerm === 'rt' ) {
-        makingTensAddingModel.rightTerm = value;
+      if ( makingTensAddingModel.expressionTerms.activeTerm === 'rt' ) {
+        makingTensAddingModel.expressionTerms.rightTerm = value;
       }
 
       makingTensAddingModel.createTerms();
-      makingTensAddingModel.activeTerm = 'none';
+      makingTensAddingModel.expressionTerms.activeTerm = 'none';
 
     }
 
@@ -103,9 +103,7 @@ define( function( require ) {
     keyBoardPanel.centerX = expressionTermsNode.centerX - 25;
     keyBoardPanel.top = expressionTermsNode.top + 120;
 
-    makingTensAddingModel.activeTermProperty.link( function( term ) {
-      makingTensAddingModel.leftTermBackgroundStyle = makingTensAddingModel.normalNumberDisplayStyle;
-      makingTensAddingModel.rightTermBackgroundStyle = makingTensAddingModel.normalNumberDisplayStyle;
+    makingTensAddingModel.expressionTerms.activeTermProperty.link( function( term ) {
 
       if ( term === 'none' ) {
         keyBoardPanel.visible = false;
@@ -114,12 +112,10 @@ define( function( require ) {
 
       keyBoardPanel.visible = true;
       if ( term === 'lt' ) {
-        makingTensAddingModel.leftTermBackgroundStyle = makingTensAddingModel.activeNumberDisplayStyle;
-        keyBoardPanel.setValue( makingTensAddingModel.leftTerm );
+        keyBoardPanel.setValue( makingTensAddingModel.expressionTerms.leftTerm );
       }
       if ( term === 'rt' ) {
-        makingTensAddingModel.rightTermBackgroundStyle = makingTensAddingModel.activeNumberDisplayStyle;
-        keyBoardPanel.setValue( makingTensAddingModel.rightTerm );
+        keyBoardPanel.setValue( makingTensAddingModel.expressionTerms.rightTerm );
       }
     } );
 
