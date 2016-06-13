@@ -32,7 +32,7 @@ define( function( require ) {
     //background style for active Term. When a term is highlighted (ie keyboard is active, indicate
     //to the user using a different background)
     var activeNumberDisplayStyle = { fill: null, stroke: '#000', lineDash: [ 5, 5 ] };
-    var normalNumberDisplayStyle = { fill: null, stroke: null, lineDash: [ 0, 0 ] };
+    var normalNumberDisplayStyle = { fill: null, stroke: null, lineDash: [ ] };
 
     var leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, {
       fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
