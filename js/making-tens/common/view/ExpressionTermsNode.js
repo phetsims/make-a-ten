@@ -50,12 +50,11 @@ define( function( require ) {
 
     var pluTextNode = new Text( '+', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
     var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
-    var emptyNode = new Text( '', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
 
     var spacing = 5;
     var numberDisplayBox = new HBox( {
       children: [ leftNumberDisplayBackground, pluTextNode,
-        rightNumberDisplayBackGround, emptyNode ],
+        rightNumberDisplayBackGround ],
       spacing: spacing,
       resize: false
     } );
