@@ -15,7 +15,6 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var Node = require( 'SCENERY/nodes/Node' );
   var MakingTensCommonView = require( 'MAKING_TENS/making-tens/common/view/MakingTensCommonView' );
-  var SumEquationNode = require( 'MAKING_TENS/making-tens/common/view/SumEquationNode' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
   var MakingTensExplorerNode = require( 'MAKING_TENS/making-tens/explore/view/MakingTensExplorerNode' );
   var ArrowCueNode = require( 'MAKING_TENS/making-tens/explore/view/ArrowCueNode' );
@@ -35,6 +34,8 @@ define( function( require ) {
   var sumNodeOffSetY = 30;
   var TOUCH_AREA_X_DILATION = 10;
   var TOUCH_AREA_Y_DILATION = 4;
+  var EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
+  var EQUATION_COLOR = 'rgb(63,63,183)';
 
   /**
    * @param {MakingTensExploreModel} makingTensExploreModel
@@ -46,8 +47,22 @@ define( function( require ) {
     MakingTensCommonView.call( this, makingTensExploreModel, MakingTensSharedConstants.LAYOUT_BOUNDS, paperNumberNodeLayer,
       self.addPaperNumber.bind( self ) );
 
-    var sumEquationNode = new SumEquationNode( makingTensExploreModel.sumProperty, MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR );
-    self.addChild( sumEquationNode );
+    var sumTextNode = new Text( '0', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
+    var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
+
+    var spaceBetweenSumAndEquals = 15; // spacing between equation elements
+    // Perform the layout by placing everything in an HBox.
+    var equationHBox = new HBox( {
+      children: [
+        sumTextNode,
+        equalsSignNode
+      ], spacing: spaceBetweenSumAndEquals
+    } );
+
+    makingTensExploreModel.sumProperty.link( function( newSum ) {
+      sumTextNode.text = newSum;
+    } );
+    self.addChild( equationHBox );
 
     // shape carousel
     this.shapeContainerCarousel = new Node();
@@ -99,7 +114,7 @@ define( function( require ) {
       1: shapeCreatorSinglesContainer
     };
 
-    var sumTextNode = new Text( makingTensHideTotalString, {
+    var showSumTextNode = new Text( makingTensHideTotalString, {
       font: new PhetFont(
         {
           size: 25,
@@ -108,7 +123,7 @@ define( function( require ) {
       fill: 'black'
     } );
 
-    var showSumCheckBox = new CheckBox( sumTextNode, makingTensExploreModel.hideTotalProperty, {
+    var showSumCheckBox = new CheckBox( showSumTextNode, makingTensExploreModel.hideTotalProperty, {
       spacing: 10,
       boxWidth: 30
     } );
@@ -121,8 +136,9 @@ define( function( require ) {
       localBounds.dilatedXY( TOUCH_AREA_X_DILATION, TOUCH_AREA_Y_DILATION );
 
     makingTensExploreModel.hideTotalProperty.link( function( hideTotal ) {
-      sumEquationNode.visible = !hideTotal;
+      equationHBox.visible = !hideTotal;
     } );
+
 
     // Create and add the Reset All Button in the bottom right, which resets the model
     var resetAllButton = new ResetAllButton( {
@@ -135,8 +151,8 @@ define( function( require ) {
     this.addChild( resetAllButton );
 
     this.availableViewBoundsProperty.lazyLink( function( newBounds ) {
-      sumEquationNode.left = newBounds.minX + sumNodeOffSetX;
-      sumEquationNode.top = newBounds.minY + sumNodeOffSetY;
+      equationHBox.left = newBounds.minX + sumNodeOffSetX;
+      equationHBox.top = newBounds.minY + sumNodeOffSetY;
     } );
 
     var shareContainerBounds = this.shapeContainerCarousel.bounds;
