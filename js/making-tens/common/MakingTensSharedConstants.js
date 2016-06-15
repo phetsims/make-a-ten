@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var makingTens = require( 'MAKING_TENS/makingTens' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Dimension2 = require( 'DOT/Dimension2' );
 
   var MakingTensSharedConstants = {
     // layout bounds used throughout the simulation for laying out the screens
@@ -22,10 +23,10 @@ define( function( require ) {
     GAME_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
     ADDING_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
     PAPER_NUMBER_DIMENSIONS: {
-      1: new Bounds2( 0, 0, 67, 128 ), // key is digitLength
-      2: new Bounds2( 0, 0, 156, 141 ),
-      3: new Bounds2( 0, 0, 215, 177 ),
-      4: new Bounds2( 0, 0, 272, 189 )
+      1: new Dimension2( 67, 128 ), // key is digitLength
+      2: new Dimension2( 156, 141 ),
+      3: new Dimension2( 215, 177 ),
+      4: new Dimension2( 272, 189 )
     },
 
     HOVER_OPACITY: 0.95,

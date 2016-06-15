@@ -183,10 +183,10 @@ define( function( require ) {
     },
 
     /**
-     * returns the Bounds of the Model (based on Image Size)
+     * returns the Dimensions of the Model (based on Image Size)
      * @returns {*}
      */
-    getBounds: function() {
+    getDimension: function() {
       return MakingTensSharedConstants.PAPER_NUMBER_DIMENSIONS[ this.digitLength ];
     },
 
@@ -301,9 +301,9 @@ define( function( require ) {
      * @param {boolean} animate // (optional) indicates if the new constrained position should be directly set or animated
      */
     constrainPosition: function( viewBounds, newPosition, animate ) {
-      var paperBounds = this.getBounds();
-      var paperWidth = paperBounds.width;
-      var paperHeight = paperBounds.height;
+      var paperDimension = this.getDimension();
+      var paperWidth = paperDimension.width;
+      var paperHeight = paperDimension.height;
       var overAllBounds = Bounds2.rect( viewBounds.x - paperWidth / 2, viewBounds.y - paperHeight / 2,
         viewBounds.width, viewBounds.height - paperHeight / 2 );
       var newPos = overAllBounds.closestPointTo( newPosition );

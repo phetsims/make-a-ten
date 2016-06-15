@@ -186,9 +186,9 @@ define( function( require ) {
      * @param {Vector2} droppedPosition
      */
     canPlaceShape: function( paperNumberModel, droppedPosition ) {
-      var paperNumberBounds = paperNumberModel.getBounds();
-      var widthPart = paperNumberBounds.width * 0.3;
-      var heightPart = paperNumberBounds.height * 0.3;
+      var paperNumberDimension = paperNumberModel.getDimension();
+      var widthPart = paperNumberDimension.width * 0.3;
+      var heightPart = paperNumberDimension.height * 0.3;
       var maxY = Math.min( droppedPosition.y, this.layoutBounds.maxY );
       var bounds2 = Bounds2.rect( droppedPosition.x, maxY, widthPart, heightPart );
       var intersects = this.returnZoneBounds.intersectsBounds( bounds2 );
@@ -210,9 +210,9 @@ define( function( require ) {
       paperNumberModel.on( 'endDrag', function() {
 
         var panelBounds = thisNode.returnZoneBounds;
-        var paperNumberBounds = paperNumberModel.getBounds(); // local
-        var paperCenter = new Vector2( paperNumberModel.position.x + paperNumberBounds.width * 0.5,
-          paperNumberModel.position.y + paperNumberBounds.height * 0.5 );
+        var paperNumberDimension = paperNumberModel.getDimension(); // local
+        var paperCenter = new Vector2( paperNumberModel.position.x + paperNumberDimension.width * 0.5,
+          paperNumberModel.position.y + paperNumberDimension.height * 0.5 );
 
         if ( panelBounds.containsPoint( paperCenter ) ) {
           var baseNumbers = paperNumberModel.baseNumbers;

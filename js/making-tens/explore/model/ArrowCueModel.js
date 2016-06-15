@@ -66,13 +66,13 @@ define( function( require ) {
      * @param {PaperNumberModel} paperNumberModel
      */
     positionAt: function( paperNumberModel ) {
-      var paperNumberBounds = paperNumberModel.getBounds();
+      var paperNumberDimension = paperNumberModel.getDimension();
 
-      var rightTop = new Vector2( paperNumberModel.position.x + paperNumberBounds.width - CUE_IMAGE_DIMENSION.width / 2,
-        paperNumberModel.position.y + paperNumberBounds.height * 0.15 - CUE_IMAGE_DIMENSION.height / 2 );
+      var rightTop = new Vector2( paperNumberModel.position.x + paperNumberDimension.width - CUE_IMAGE_DIMENSION.width / 2,
+        paperNumberModel.position.y + paperNumberDimension.height * 0.15 - CUE_IMAGE_DIMENSION.height / 2 );
 
-      var bottomCenter = new Vector2( paperNumberModel.position.x + paperNumberBounds.width * 0.5 - CUE_IMAGE_DIMENSION.width / 2,
-        paperNumberModel.position.y + paperNumberBounds.height * 0.8 - CUE_IMAGE_DIMENSION.height / 2 );
+      var bottomCenter = new Vector2( paperNumberModel.position.x + paperNumberDimension.width * 0.5 - CUE_IMAGE_DIMENSION.width / 2,
+        paperNumberModel.position.y + paperNumberDimension.height * 0.8 - CUE_IMAGE_DIMENSION.height / 2 );
 
       this.moveArrowCuePosition = bottomCenter;
       this.splitArrowCuePosition = rightTop;
