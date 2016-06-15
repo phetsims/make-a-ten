@@ -65,8 +65,8 @@ define( function( require ) {
     self.addChild( equationHBox );
 
     // shape carousel
-    this.shapeContainerCarousel = new Node();
-    self.addChild( this.shapeContainerCarousel );
+    this.paperNumberRepositoryPanel = new Node();
+    self.addChild( this.paperNumberRepositoryPanel );
     self.addChild( paperNumberNodeLayer );
 
     var explorerNodes = [];
@@ -85,8 +85,8 @@ define( function( require ) {
 
     // Add a non-scrolling panel
     var creatorNodeHBox = new HBox( { children: explorerNodes, spacing: 30 } );
-    this.shapeContainerCarousel.addChild( new Panel( creatorNodeHBox, {
-      fill: MakingTensSharedConstants.SHAPE_CAROUSEL_BACKGROUND_COLOR,
+    this.paperNumberRepositoryPanel.addChild( new Panel( creatorNodeHBox, {
+      fill: MakingTensSharedConstants.PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR,
       stroke: 'black',
       lineWidth: 1.5,
       bottom:  self.layoutBounds.maxY - 15,
@@ -97,8 +97,8 @@ define( function( require ) {
 
     } ) );
 
-    var carouselContainerStartPos = this.shapeContainerCarousel.leftTop.plus(
-      new Vector2( this.shapeContainerCarousel.xMargin, this.shapeContainerCarousel.yMargin ) );
+    var carouselContainerStartPos = this.paperNumberRepositoryPanel.leftTop.plus(
+      new Vector2( this.paperNumberRepositoryPanel.xMargin, this.paperNumberRepositoryPanel.yMargin ) );
 
     var shapeCreatorHundredsContainerPos = carouselContainerStartPos.plus(
       creatorNodeHBox.children[ 0 ].leftTop );
@@ -155,7 +155,7 @@ define( function( require ) {
       equationHBox.top = newBounds.minY + sumNodeOffSetY;
     } );
 
-    var shareContainerBounds = this.shapeContainerCarousel.bounds;
+    var shareContainerBounds = this.paperNumberRepositoryPanel.bounds;
     this.returnZoneBounds = new Bounds2( shareContainerBounds.minX, shareContainerBounds.minY,
       shareContainerBounds.maxX, this.layoutBounds.maxY );
 
