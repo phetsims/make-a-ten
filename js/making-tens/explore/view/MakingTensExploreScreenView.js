@@ -155,9 +155,9 @@ define( function( require ) {
       equationHBox.top = newBounds.minY + sumNodeOffSetY;
     } );
 
-    var shareContainerBounds = this.paperNumberRepositoryPanel.bounds;
-    this.returnZoneBounds = new Bounds2( shareContainerBounds.minX, shareContainerBounds.minY,
-      shareContainerBounds.maxX, this.layoutBounds.maxY );
+    var repositoryPanelBounds = this.paperNumberRepositoryPanel.bounds;
+    this.returnZoneBounds = new Bounds2( repositoryPanelBounds.minX, repositoryPanelBounds.minY,
+      repositoryPanelBounds.maxX, this.layoutBounds.maxY );
 
     var arrowCueNode = new ArrowCueNode( makingTensExploreModel.arrowCueModel );
     this.addChild( arrowCueNode );
