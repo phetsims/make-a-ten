@@ -32,7 +32,7 @@ define( function( require ) {
     //background style for active Term. When a term is highlighted (ie keyboard is active, indicate
     //to the user using a different background)
     var activeNumberDisplayStyle = { fill: null, stroke: '#000', lineDash: [ 5, 5 ] };
-    var normalNumberDisplayStyle = { fill: null, stroke: null, lineDash: [ ] };
+    var normalNumberDisplayStyle = { fill: null, stroke: null, lineDash: [] };
 
     var leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, {
       fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
@@ -65,12 +65,10 @@ define( function( require ) {
     function updateEqualSpacing() {
       var termSpacing = 60;
       equalsSignNode.left = numberDisplayBox.right + rightTermTextNode.bounds.width - termSpacing;
-      equalsSignNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 1.9;
     }
 
     expressionTerms.leftTermProperty.link( function( leftTerm ) {
       leftTermTextNode.text = leftTerm;
-      updateEqualSpacing();
     } );
 
     expressionTerms.rightTermProperty.link( function( rightTerm ) {
@@ -94,12 +92,13 @@ define( function( require ) {
 
     }
 
-
     leftTermTextNode.left = numberDisplayBox.left + leftNumberDisplayBackground.width / 1.2;
-    leftTermTextNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 2;
+    leftTermTextNode.centerY = numberDisplayBox.centerY;
 
     rightTermTextNode.left = numberDisplayBox.left + rightNumberDisplayBackGround.left + rightNumberDisplayBackGround.width / 8;
-    rightTermTextNode.centerY = numberDisplayBox.top + numberDisplayBox.height / 2;
+    rightTermTextNode.centerY = numberDisplayBox.centerY;
+
+    equalsSignNode.centerY = rightTermTextNode.centerY = numberDisplayBox.centerY;
 
     if ( !expressionTerms.highlightBorders ) {
       leftNumberDisplayBackground.visible = false;
