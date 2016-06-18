@@ -34,17 +34,17 @@ define( function( require ) {
    *
    * @param {PaperNumberModel} paperNumberModel
    * @param {MakingTensCommonView} makingTensView
-   * @param {Function<paperNumberModel>} addNumberModelCallBack A callback to invoke when a  Number is  split
+   * @param {Function<paperNumberModel>} addNumberModelCallback A callback to invoke when a  Number is  split
    * @param {Function<paperNumberModel,droppedPoint>} combineNumbersIfApplicableCallback A callback to invoke when a Number is  combined
    * @constructor
    */
-  function PaperNumberNode( paperNumberModel, makingTensView, addNumberModelCallBack, combineNumbersIfApplicableCallback ) {
+  function PaperNumberNode( paperNumberModel, makingTensView, addNumberModelCallback, combineNumbersIfApplicableCallback ) {
     var thisNode = this;
     thisNode.paperNumberModel = paperNumberModel;
     thisNode.makingTensView = makingTensView;
     Node.call( thisNode );
 
-    thisNode.addNumberModelCallBack = addNumberModelCallBack || _.noop();
+    thisNode.addNumberModelCallback = addNumberModelCallback || _.noop();
     combineNumbersIfApplicableCallback = combineNumbersIfApplicableCallback || _.noop();
 
     var imageNumberNode = new Node();
@@ -164,7 +164,7 @@ define( function( require ) {
 
         //if it is splitMode
         if ( splitObjectContext && transDistance > MIN_SPLIT_DISTANCE ) {
-          thisNode.addNumberModelCallBack( splitObjectContext.pulledApartPaperNumberModel );
+          thisNode.addNumberModelCallback( splitObjectContext.pulledApartPaperNumberModel );
           paperNumberModel.changeNumber( splitObjectContext.amountRemaining );
           startMoving( splitObjectContext.pulledApartPaperNumberModel );
 

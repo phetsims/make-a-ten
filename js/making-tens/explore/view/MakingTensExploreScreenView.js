@@ -66,19 +66,19 @@ define( function( require ) {
 
 
     var explorerNodes = [];
-    var addPaperNumberCallBack = self.addPaperNumber.bind( self );
-    var canPlaceNumberCallBack = self.canPlaceNumberAt.bind( self );
+    var addPaperNumberCallback = self.addPaperNumber.bind( self );
+    var canPlaceNumberCallback = self.canPlaceNumberAt.bind( self );
 
     // Create the composite nodes that contain the number collections
-    var exploreHundredsNode = new MakingTensExplorerNode( 100, addPaperNumberCallBack,
-      self.combineNumbersIfApplicableCallback, canPlaceNumberCallBack, self );
+    var exploreHundredsNode = new MakingTensExplorerNode( 100, addPaperNumberCallback,
+      self.combineNumbersIfApplicableCallback, canPlaceNumberCallback, self );
     explorerNodes.push( exploreHundredsNode );
-    var exploreTensNode = new MakingTensExplorerNode( 10, addPaperNumberCallBack,
-      self.combineNumbersIfApplicableCallback, canPlaceNumberCallBack, self );
+    var exploreTensNode = new MakingTensExplorerNode( 10, addPaperNumberCallback,
+      self.combineNumbersIfApplicableCallback, canPlaceNumberCallback, self );
     explorerNodes.push( exploreTensNode );
     var exploreOnesNode = new MakingTensExplorerNode( 1,
-      addPaperNumberCallBack,
-      self.combineNumbersIfApplicableCallback, canPlaceNumberCallBack, self );
+      addPaperNumberCallback,
+      self.combineNumbersIfApplicableCallback, canPlaceNumberCallback, self );
     explorerNodes.push( exploreOnesNode );
 
     // Add a non-scrolling panel
