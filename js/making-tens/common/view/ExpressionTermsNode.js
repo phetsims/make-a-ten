@@ -38,7 +38,7 @@ define( function( require ) {
       fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
     } );
 
-    var rightNumberDisplayBackGround = new Rectangle( 0, 0, 100, 78, 10, 10, {
+    var rightNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, {
       fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
     } );
 
@@ -54,7 +54,7 @@ define( function( require ) {
     var spacing = 5;
     var numberDisplayBox = new HBox( {
       children: [ leftNumberDisplayBackground, pluTextNode,
-        rightNumberDisplayBackGround ],
+        rightNumberDisplayBackground ],
       spacing: spacing,
       resize: false
     } );
@@ -80,13 +80,13 @@ define( function( require ) {
     if ( expressionTerms.highlightBorders ) {
       expressionTerms.activeTermProperty.link( function( term ) {
         leftNumberDisplayBackground.mutate( normalNumberDisplayStyle );
-        rightNumberDisplayBackGround.mutate( normalNumberDisplayStyle );
+        rightNumberDisplayBackground.mutate( normalNumberDisplayStyle );
         equalsSignNode.visible = expressionTerms.hasBothTerms();
         if ( term === 'lt' ) {
           leftNumberDisplayBackground.mutate( activeNumberDisplayStyle );
         }
         if ( term === 'rt' ) {
-          rightNumberDisplayBackGround.mutate( activeNumberDisplayStyle );
+          rightNumberDisplayBackground.mutate( activeNumberDisplayStyle );
         }
       } );
 
@@ -95,14 +95,14 @@ define( function( require ) {
     leftTermTextNode.left = numberDisplayBox.left + leftNumberDisplayBackground.width / 1.2;
     leftTermTextNode.centerY = numberDisplayBox.centerY;
 
-    rightTermTextNode.left = numberDisplayBox.left + rightNumberDisplayBackGround.left + rightNumberDisplayBackGround.width / 8;
+    rightTermTextNode.left = numberDisplayBox.left + rightNumberDisplayBackground.left + rightNumberDisplayBackground.width / 8;
     rightTermTextNode.centerY = numberDisplayBox.centerY;
 
     equalsSignNode.centerY = rightTermTextNode.centerY = numberDisplayBox.centerY;
 
     if ( !expressionTerms.highlightBorders ) {
       leftNumberDisplayBackground.visible = false;
-      rightNumberDisplayBackGround.visible = false;
+      rightNumberDisplayBackground.visible = false;
     }
 
 
