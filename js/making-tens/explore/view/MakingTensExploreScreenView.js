@@ -64,10 +64,7 @@ define( function( require ) {
     } );
     self.addChild( equationHBox );
 
-    // shape carousel
-    this.paperNumberRepositoryPanel = new Node();
-    self.addChild( this.paperNumberRepositoryPanel );
-    self.addChild( paperNumberNodeLayer );
+
 
     var explorerNodes = [];
     // Create the composite nodes that contain the number collections
@@ -82,10 +79,11 @@ define( function( require ) {
       self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ), self );
     explorerNodes.push( exploreOnesNode );
 
-
     // Add a non-scrolling panel
     var creatorNodeHBox = new HBox( { children: explorerNodes, spacing: 30 } );
-    this.paperNumberRepositoryPanel.addChild( new Panel( creatorNodeHBox, {
+
+    // PaperNumber ContainerPanel
+    this.paperNumbersContainerPanel = new Panel( creatorNodeHBox, {
       fill: MakingTensSharedConstants.PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR,
       stroke: 'black',
       lineWidth: 1.5,
@@ -95,10 +93,14 @@ define( function( require ) {
       yMargin: 5,
       resize: false
 
-    } ) );
+    } );
 
-    var carouselContainerStartPos = this.paperNumberRepositoryPanel.leftTop.plus(
-      new Vector2( this.paperNumberRepositoryPanel.xMargin, this.paperNumberRepositoryPanel.yMargin ) );
+    self.addChild( this.paperNumbersContainerPanel );
+    self.addChild( paperNumberNodeLayer );
+
+
+    var carouselContainerStartPos = this.paperNumbersContainerPanel.leftTop.plus(
+      new Vector2( this.paperNumbersContainerPanel.xMargin, this.paperNumbersContainerPanel.yMargin ) );
 
     var shapeCreatorHundredsContainerPos = carouselContainerStartPos.plus(
       creatorNodeHBox.children[ 0 ].leftTop );
@@ -155,7 +157,7 @@ define( function( require ) {
       equationHBox.top = newBounds.minY + sumNodeOffSetY;
     } );
 
-    var repositoryPanelBounds = this.paperNumberRepositoryPanel.bounds;
+    var repositoryPanelBounds = this.paperNumbersContainerPanel.bounds;
     this.returnZoneBounds = new Bounds2( repositoryPanelBounds.minX, repositoryPanelBounds.minY,
       repositoryPanelBounds.maxX, this.layoutBounds.maxY );
 
