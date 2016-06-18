@@ -26,13 +26,13 @@ define( function( require ) {
    * @constructor
    */
   function MakingTensExploreScreen() {
-    var homeScreenIcon = MakingTensUtil.createIconWithBackgroundColor( exploreHomeScreenImage, MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR );
-    var navigationBarIcon = MakingTensUtil.createIconWithBackgroundColor( exploreNavBarImage, MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR );
+    var homeScreenIcon = MakingTensUtil.createIconWithBackgroundColor( exploreHomeScreenImage, MakingTensSharedConstants.EXPLORE_SCREEN_BACKGROUND_COLOR );
+    var navigationBarIcon = MakingTensUtil.createIconWithBackgroundColor( exploreNavBarImage, MakingTensSharedConstants.EXPLORE_SCREEN_BACKGROUND_COLOR );
 
     Screen.call( this, screenExploreString, homeScreenIcon,
       function() { return new MakingTensExploreModel(); },
       function( model ) { return new MakingTensExploreScreenView( model ); }, {
-        backgroundColor: MakingTensSharedConstants.EXPLORER_SCREEN_BACKGROUND_COLOR,
+        backgroundColor: MakingTensSharedConstants.EXPLORE_SCREEN_BACKGROUND_COLOR,
         navigationBarIcon: navigationBarIcon
       }
     );
