@@ -24,10 +24,10 @@ define( function( require ) {
   /**
    * @param {number} numberValue
    * @param {Function} addShapeToModel - A function for adding the created number  to the model
-   * @param {Function} canPlaceShape - A function to determine if the PaperNumber can be placed on the board
+   * @param {Function} canPlaceNumber - A function to determine if the PaperNumber can be placed on the board
    * @constructor
    */
-  function PaperNumberCreatorNode( numberValue, addShapeToModel, combineNumbersIfApplicableCallback, canPlaceShape,
+  function PaperNumberCreatorNode( numberValue, addShapeToModel, combineNumbersIfApplicableCallback, canPlaceNumber,
                                    makingTensView ) {
     Node.call( this );
     var thisNode = this;
@@ -98,7 +98,7 @@ define( function( require ) {
         var droppedViewPoint = parentScreenView.globalToLocalPoint( event.pointer.point );
 
         //check if the user has dropped the number within the panel, if "yes" return to origin
-        if ( !canPlaceShape( paperNumberModel, droppedViewPoint ) ) {
+        if ( !canPlaceNumber( paperNumberModel, droppedViewPoint ) ) {
           paperNumberModel.returnToOrigin( true );
           paperNumberModel = null;
           return;

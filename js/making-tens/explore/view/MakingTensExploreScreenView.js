@@ -69,14 +69,14 @@ define( function( require ) {
     var explorerNodes = [];
     // Create the composite nodes that contain the number collections
     var exploreHundredsNode = new MakingTensExplorerNode( 100, self.addPaperNumber.bind( self ),
-      self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ), self );
+      self.combineNumbersIfApplicableCallback, self.canPlaceNumberAt.bind( self ), self );
     explorerNodes.push( exploreHundredsNode );
     var exploreTensNode = new MakingTensExplorerNode( 10, self.addPaperNumber.bind( self ),
-      self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ), self );
+      self.combineNumbersIfApplicableCallback, self.canPlaceNumberAt.bind( self ), self );
     explorerNodes.push( exploreTensNode );
     var exploreOnesNode = new MakingTensExplorerNode( 1,
       self.addPaperNumber.bind( self ),
-      self.combineNumbersIfApplicableCallback, self.canPlaceShape.bind( self ), self );
+      self.combineNumbersIfApplicableCallback, self.canPlaceNumberAt.bind( self ), self );
     explorerNodes.push( exploreOnesNode );
 
     // Add a non-scrolling panel
@@ -183,12 +183,17 @@ define( function( require ) {
   return inherit( MakingTensCommonView, MakingTensExploreScreenView, {
 
     /**
+     * Used to determine if the user has placed the picked number sufficiently away from
+     * the container panel. if not return the number back to the container itself
      *
      * @param {PaperNumberModel} paperNumberModel
      * @param {Vector2} droppedPosition
      */
-    canPlaceShape: function( paperNumberModel, droppedPosition ) {
+    canPlaceNumberAt: function( paperNumberModel, droppedPosition ) {
       var paperNumberDimension = paperNumberModel.getDimension();
+
+      //  create a bounds using the dropped position and dimension of the paperNumber
+      //  How far away the user has to drop the number varies with the size of the paper number
       var widthPart = paperNumberDimension.width * 0.3;
       var heightPart = paperNumberDimension.height * 0.3;
       var maxY = Math.min( droppedPosition.y, this.layoutBounds.maxY );
