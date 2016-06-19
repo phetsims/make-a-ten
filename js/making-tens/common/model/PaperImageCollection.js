@@ -9,7 +9,7 @@ define( function( require ) {
 
   // modules
   var makingTens = require( 'MAKING_TENS/makingTens' );
-  var inherit = require( 'PHET_CORE/inherit' );
+
   var image1 = require( 'image!MAKING_TENS/1.png' );
   var image2 = require( 'image!MAKING_TENS/2.png' );
   var image3 = require( 'image!MAKING_TENS/3.png' );
@@ -62,23 +62,20 @@ define( function( require ) {
     7000: image7000, 8000: image8000, 9000: image9000
   };
 
-  function PaperImageCollection() {
-
-  }
+  var PaperImageCollection = {
+    /**
+     *
+     * @param {number} number
+     * @returns {ImageNode}
+     */
+    getNumberImage: function( number ) {
+      return allImages[ number ];
+    }
+  };
 
   makingTens.register( 'PaperImageCollection', PaperImageCollection );
 
-  return inherit( Object, PaperImageCollection, {},
-    //statics
-    {
-      /**
-       *
-       * @param {number} number
-       * @returns {ImageNode}
-       */
-      getNumberImage: function( number ) {
-        return allImages[ number ];
-      }
-    } );
+  return PaperImageCollection;
+
 } );
 
