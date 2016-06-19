@@ -144,10 +144,11 @@ define( function( require ) {
           var pulledApartPaperNumberModel = new PaperNumberModel( amountToRemove, pulledOutPosition, {
             opacity: 0.95
           } );
-          splitObjectContext = {};
-          splitObjectContext.pulledApartPaperNumberModel = pulledApartPaperNumberModel;
-          splitObjectContext.amountRemaining = amountRemaining;
-          splitObjectContext.amountRemovingOffsetPosition = amountRemovingOffsetPosition;
+          splitObjectContext = {
+            pulledApartPaperNumberModel: pulledApartPaperNumberModel,
+            amountRemaining: amountRemaining,
+            amountRemovingOffsetPosition: amountRemovingOffsetPosition
+          };
           return;
         }
 
