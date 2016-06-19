@@ -28,17 +28,15 @@ define( function( require ) {
    *
    * @param {MakingTensModel} makingTensModel
    * @param {Bounds2} screenBounds
-   * @param {Node} paperNumberNodeLayer
    * @param {Function} addPaperNumber - callback
    * @constructor
    */
-  function MakingTensCommonView( makingTensModel, screenBounds, paperNumberNodeLayer, addPaperNumber ) {
+  function MakingTensCommonView( makingTensModel, screenBounds, addPaperNumber ) {
     var self = this;
     ScreenView.call( this, { layoutBounds: screenBounds } );
     self.makingTensModel = makingTensModel;
 
     self.paperNumberLayerNode = new Node();
-    paperNumberNodeLayer.addChild( self.paperNumberLayerNode );
 
     self.addPaperNumber = addPaperNumber || makingTensModel.addPaperNumber.bind( makingTensModel );
     self.combineNumbersIfApplicableCallback = this.combineNumbersIfApplicable.bind( this );

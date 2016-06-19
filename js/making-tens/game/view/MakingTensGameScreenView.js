@@ -47,8 +47,8 @@ define( function( require ) {
    */
   function MakingTensGameScreenView( gameModel ) {
     var self = this;
-    this.paperNumberNodeLayer = new Node();
-    MakingTensCommonView.call( this, gameModel, MakingTensSharedConstants.LAYOUT_BOUNDS, this.paperNumberNodeLayer );
+
+    MakingTensCommonView.call( this, gameModel, MakingTensSharedConstants.LAYOUT_BOUNDS );
 
     this.rootNode = new Node();
     this.addChild( this.rootNode );
@@ -59,7 +59,7 @@ define( function( require ) {
 
     this.challengeLayer = new Node();
     this.rootNode.addChild( this.challengeLayer );
-    this.challengeLayer.addChild( this.paperNumberNodeLayer );
+    this.challengeLayer.addChild( this.paperNumberLayerNode );
 
     // The node that display "12 + 100 = "
     var expressionTermsNode = new ExpressionTermsNode( gameModel.expressionTerms );
@@ -72,7 +72,7 @@ define( function( require ) {
       listener: function() {
         gameModel.reset();
       },
-      right: this.layoutBounds.maxX - 10,
+      right:  this.layoutBounds.maxX - 10,
       bottom: this.layoutBounds.maxY - 10
     } );
     this.addChild( this.resetAllButton );
@@ -95,7 +95,7 @@ define( function( require ) {
     //go to Level Selection Mode
     var backButton = new BackButton( {
         listener: function() {gameModel.setChoosingLevelState();},
-        top: this.layoutBounds.bottom - 100,
+        top:  this.layoutBounds.bottom - 100,
         left: this.layoutBounds.left + 20
       }
     );
@@ -105,7 +105,7 @@ define( function( require ) {
       listener: function() {
         gameModel.nextChallenge();
       },
-      top: this.layoutBounds.centerY - 100,
+      top:  this.layoutBounds.centerY - 100,
       left: this.layoutBounds.right - 100
     } );
 

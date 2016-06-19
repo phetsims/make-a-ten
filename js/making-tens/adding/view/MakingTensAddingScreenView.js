@@ -11,7 +11,6 @@ define( function( require ) {
   var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var Image = require( 'SCENERY/nodes/Image' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -35,9 +34,9 @@ define( function( require ) {
    * @constructor
    */
   function MakingTensAddingScreenView( makingTensAddingModel ) {
-    var paperNumberLayerNode = new Node();
+
     var thisView = this;
-    MakingTensCommonView.call( thisView, makingTensAddingModel, MakingTensSharedConstants.LAYOUT_BOUNDS, paperNumberLayerNode );
+    MakingTensCommonView.call( thisView, makingTensAddingModel, MakingTensSharedConstants.LAYOUT_BOUNDS );
 
     var scaledIcon = MakingTensUtil.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE );
 
@@ -63,7 +62,7 @@ define( function( require ) {
     }
 
     this.addChild( background );
-    this.addChild( paperNumberLayerNode );
+    this.addChild( this.paperNumberLayerNode );
 
     var leftEditNumberButton = createEditNumberButton( makingTensAddingModel.expressionTerms.activeTermProperty, 'lt' );
     var rightEditNumberButton = createEditNumberButton( makingTensAddingModel.expressionTerms.activeTermProperty, 'rt' );

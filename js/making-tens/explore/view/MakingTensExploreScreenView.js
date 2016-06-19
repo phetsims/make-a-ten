@@ -13,7 +13,6 @@ define( function( require ) {
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Panel = require( 'SUN/Panel' );
   var Vector2 = require( 'DOT/Vector2' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var MakingTensCommonView = require( 'MAKING_TENS/making-tens/common/view/MakingTensCommonView' );
   var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
   var MakingTensExplorerNode = require( 'MAKING_TENS/making-tens/explore/view/MakingTensExplorerNode' );
@@ -43,8 +42,8 @@ define( function( require ) {
    */
   function MakingTensExploreScreenView( makingTensExploreModel ) {
     var self = this;
-    var paperNumberNodeLayer = new Node();
-    MakingTensCommonView.call( this, makingTensExploreModel, MakingTensSharedConstants.LAYOUT_BOUNDS, paperNumberNodeLayer,
+
+    MakingTensCommonView.call( this, makingTensExploreModel, MakingTensSharedConstants.LAYOUT_BOUNDS,
       self.addPaperNumber.bind( self ) );
 
     var sumTextNode = new Text( '0', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
@@ -98,7 +97,7 @@ define( function( require ) {
     } );
 
     self.addChild( this.paperNumbersContainerPanel );
-    self.addChild( paperNumberNodeLayer );
+    self.addChild( self.paperNumberLayerNode );
 
 
     var carouselContainerStartPos = this.paperNumbersContainerPanel.leftTop.plus(
