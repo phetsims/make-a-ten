@@ -38,7 +38,6 @@ define( function( require ) {
     var thisView = this;
     MakingTensCommonView.call( thisView, makingTensAddingModel, MakingTensSharedConstants.LAYOUT_BOUNDS );
 
-    var scaledIcon = MakingTensUtil.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE );
 
     // dismiss any open keyboard if a click/touch hits the background directly
     var background = Rectangle.bounds( this.layoutBounds );
@@ -52,7 +51,7 @@ define( function( require ) {
     // type is either "lt" or "rt" - (left or right)
     function createEditNumberButton( termProperty, type ) {
       var editNumberButton = new RectangularPushButton( {
-        content: scaledIcon,
+        content: MakingTensUtil.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE ),
         listener: function() {
           termProperty.set( type );
         },
@@ -74,7 +73,7 @@ define( function( require ) {
 
     // The node that display "12 + 100 = "
 
-    var expressionTermsNode = new ExpressionTermsNode( makingTensAddingModel.expressionTerms  );
+    var expressionTermsNode = new ExpressionTermsNode( makingTensAddingModel.expressionTerms );
     this.addChild( expressionTermsNode );
 
     expressionTermsNode.left = this.layoutBounds.minX + 38;
