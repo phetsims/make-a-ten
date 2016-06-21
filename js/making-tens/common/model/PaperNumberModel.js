@@ -100,7 +100,7 @@ define( function( require ) {
     // The baseNumber object represents the "parts"
     thisModel.baseNumbers = [];
 
-    thisModel.velocity = MakingTensSharedConstants.ANIMATION_VELOCITY;
+    thisModel.animationVelocity = MakingTensSharedConstants.ANIMATION_VELOCITY;
 
     thisModel.decomposeIntoBaseNumbers( this.numberValue );
 
@@ -131,10 +131,10 @@ define( function( require ) {
 
         // perform any animation
         var distanceToDestination = this.position.distance( this.destination );
-        if ( distanceToDestination > dt * thisModel.velocity ) {
+        if ( distanceToDestination > dt * thisModel.animationVelocity ) {
           // Move a step toward the destination.
           var stepAngle = Math.atan2( this.destination.y - this.position.y, this.destination.x - this.position.x );
-          var stepVector = Vector2.createPolar( thisModel.velocity * dt, stepAngle );
+          var stepVector = Vector2.createPolar( thisModel.animationVelocity * dt, stepAngle );
           this.position = this.position.plus( stepVector );
 
         }
@@ -279,11 +279,11 @@ define( function( require ) {
     /**
      * @param {Vector2} destination
      * @param {boolean} animate
-     * @param {number} velocity
+     * @param {number} animationVelocity
      */
-    setDestination: function( destination, animate, velocity ) {
+    setDestination: function( destination, animate, animationVelocity ) {
       this.destination = destination;
-      this.velocity = velocity || MakingTensSharedConstants.ANIMATION_VELOCITY;
+      this.animationVelocity = animationVelocity || MakingTensSharedConstants.ANIMATION_VELOCITY;
 
       if ( animate ) {
         this.animating = true;
@@ -313,10 +313,10 @@ define( function( require ) {
     /**
      * Return the shape to the place where it was originally created.
      * @param {boolean} animate
-     * @param {number} velocity
+     * @param {number} animationVelocity
      */
-    returnToOrigin: function( animate, velocity ) {
-      this.setDestination( this.positionProperty.initialValue, animate, velocity );
+    returnToOrigin: function( animate, animationVelocity ) {
+      this.setDestination( this.positionProperty.initialValue, animate, animationVelocity );
     },
 
     /**
