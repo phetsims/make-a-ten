@@ -41,7 +41,7 @@ define( function( require ) {
      * @returns {boolean}
      */
     hasBothTerms: function() {
-      return this.activeTerm === 'none' && this.leftTerm && this.rightTerm;
+      return (this.activeTerm === 'none') && (!_.isEmpty(this.leftTerm) && !_.isEmpty(this.rightTerm));
     },
 
     reset: function() {
