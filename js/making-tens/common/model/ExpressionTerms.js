@@ -15,18 +15,16 @@ define( function( require ) {
 
   /**
    *
-   * @param leftTerm
-   * @param rightTerm
-   * @param activeTerm
-   * @param highlightBorders
+   * @param [{number|null}leftTerm,{number|null}rightTerm,{string|null}activeTerm,{boolean|null}highlightBorders} options]
    * @constructor
    */
-  function ExpressionTerms( leftTerm, rightTerm, activeTerm, highlightBorders ) {
+  function ExpressionTerms( options ) {
+    options = options || {};
     PropertySet.call( this, {
-      leftTerm:         leftTerm || '',
-      rightTerm:        rightTerm || '',
-      activeTerm:       activeTerm || 'none',
-      highlightBorders: highlightBorders || false
+      leftTerm: options.leftTerm,
+      rightTerm: options.rightTerm,
+      activeTerm:       options.activeTerm || 'none',
+      highlightBorders: options.highlightBorders || false
     } );
 
   }
@@ -41,12 +39,12 @@ define( function( require ) {
      * @returns {boolean}
      */
     hasBothTerms: function() {
-      return (this.activeTerm === 'none') && (!_.isEmpty(this.leftTerm) && !_.isEmpty(this.rightTerm));
+      return (this.activeTerm === 'none') && (!!this.leftTerm && !!this.rightTerm);
     },
 
     reset: function() {
-      this.leftTerm = '';
-      this.rightTerm = '';
+      this.leftTerm = null;
+      this.rightTerm = null;
       this.activeTerm = 'none';
     }
 

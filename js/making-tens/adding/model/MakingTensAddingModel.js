@@ -22,7 +22,9 @@ define( function( require ) {
    */
   function MakingTensAddingModel() {
     // leftTerm,rightTerm,activeTerm and showBackground
-    this.expressionTerms = new ExpressionTerms( '', '', 'none', true );
+    this.expressionTerms = new ExpressionTerms( {
+      highlightBorders: true
+    } );
     MakingTensCommonModel.call( this, {} );
   }
 
@@ -48,8 +50,7 @@ define( function( require ) {
 
       var xOffSet = 200;
       _.each( valuesToCreate, function( numberValue ) {
-        numberValue = +numberValue;
-        if ( numberValue > 0 ) {
+        if ( numberValue ) {
           var initialPosition = new Vector2( xOffSet, MakingTensSharedConstants.PAPER_NUMBER_PLACEMENT_BOUNDS.height / 3.5 );
           //Keyboard Terms returns as String, so cast it to number
           self.addPaperNumber( new PaperNumberModel( numberValue, initialPosition ) );

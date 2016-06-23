@@ -55,11 +55,11 @@ define( function( require ) {
     // Add the digits.
     var digits = new Text( '', { font: READOUT_FONT } );
     this.addChild( digits );
-    this.value = '0'; // @private
-    this.keypad.digitStringProperty.link( function( digitString ) {
-      digits.text = digitString;
+    this.value = '';
+    this.keypad.digitStringProperty.link( function( digitValue ) {
+      digits.text = digitValue;
       digits.center = readoutBackground.center;
-      self.value = digitString;
+      self.value = digitValue;
     } );
 
     // Layout
@@ -77,7 +77,7 @@ define( function( require ) {
     },
 
     setValue: function( value ) {
-      this.keypad.digitStringProperty.set( value );
+      this.keypad.digitStringProperty.set( value + '' );
     },
 
     clear: function() {

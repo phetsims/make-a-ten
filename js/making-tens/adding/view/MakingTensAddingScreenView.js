@@ -72,7 +72,6 @@ define( function( require ) {
     editButtonBox.top = this.layoutBounds.minY + 32;
 
     // The node that display "12 + 100 = "
-
     var expressionTermsNode = new ExpressionTermsNode( makingTensAddingModel.expressionTerms );
     this.addChild( expressionTermsNode );
 
@@ -80,9 +79,6 @@ define( function( require ) {
     expressionTermsNode.top = this.layoutBounds.minY + 85;
 
     function onNumberSubmit( value ) {
-      if ( value === '0' ) { // dont display Zero
-        value = '';
-      }
       if ( makingTensAddingModel.expressionTerms.activeTerm === 'lt' ) {
         makingTensAddingModel.expressionTerms.leftTerm = value;
       }

@@ -40,7 +40,8 @@ define( function( require ) {
 
     var submitNumberButton = new TextPushButton( makingTensKeypadSubmitString, _.extend( {
       listener: function() {
-        onSubmit( self.numberEntryControl.getValue() );
+        //The number entry panel uses string to show digits, cast it to number
+        onSubmit( +self.numberEntryControl.getValue() );
       }
     }, buttonOptions ) );
 
@@ -70,6 +71,7 @@ define( function( require ) {
      * @param value
      */
     setValue: function( value ) {
+      value = value || '';
       this.numberEntryControl.setValue( value );
     }
 

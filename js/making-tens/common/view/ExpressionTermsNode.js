@@ -67,13 +67,28 @@ define( function( require ) {
       equalsSignNode.left = numberDisplayBox.right + rightTermTextNode.bounds.width - termSpacing;
     }
 
+    // The number entry panel uses string to display digits.
+    function termToDisplay( termValue ) {
+      //make it a string
+      if ( termValue ) {
+        termValue = termValue + '';
+      }
+
+      // we don't want to show either empty string or zero
+      if ( termValue === '0' || _.isEmpty( termValue ) ) {
+        termValue = '';
+      }
+      return termValue;
+    }
+
     expressionTerms.leftTermProperty.link( function( leftTerm ) {
-      leftTermTextNode.text = leftTerm;
+      leftTermTextNode.text = termToDisplay( leftTerm );
     } );
 
     expressionTerms.rightTermProperty.link( function( rightTerm ) {
-      rightTermTextNode.text = rightTerm;
+      rightTermTextNode.text = termToDisplay( rightTerm );
       updateEqualSpacing();
+
     } );
 
 
