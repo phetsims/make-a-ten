@@ -156,17 +156,18 @@ define( function( require ) {
       self.baseNumbers = [];
       var numberOfSetDimensions = this.getOffsetArrayByDigits( value );
       var valueStr = value + '';
-      var digits = valueStr.length;
+      var noOfDigits = valueStr.length;
       var opacityValue = 1;
       var numberPositionIndex = 0;
 
-      for ( var i = 0; i < digits; i++ ) {
-        var charPos = valueStr.charAt( i );
-        var baseNumberValue = (+charPos) * Math.pow( 10, digits - i - 1 );
-
-        if ( (baseNumberValue + '').indexOf( '0' ) === 0 ) { // startswith
+      for ( var i = 0; i < noOfDigits; i++ ) {
+        var place = noOfDigits - i - 1;
+        var digit = Math.floor( value / Math.pow( 10, place ) ) % 10;
+        var baseNumberValue = digit * Math.pow( 10, place );
+        if ( baseNumberValue === 0 ) {
           continue;
         }
+
         var offset = numberOfSetDimensions[ numberPositionIndex ];
         var baseNumber = new BaseNumber( baseNumberValue, offset.copy(), opacityValue );
         this.baseNumbers.push( baseNumber );
