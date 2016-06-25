@@ -39,7 +39,7 @@ define( function( require ) {
     self.paperNumberLayerNode = new Node();
 
     self.addPaperNumber = addPaperNumber || makingTensModel.addPaperNumber.bind( makingTensModel );
-    self.combineNumbersIfApplicableCallback = this.combineNumbersIfApplicable.bind( this );
+    self.tryToCombineNumbers = this.tryToCombineNumbers.bind( this );
 
     self.paperNumberNodes = [];
     // Associate Model Id with its corresponding Node
@@ -49,7 +49,7 @@ define( function( require ) {
     function handlePaperNumberAdded( addedNumberModel ) {
       // Add a representation of the number.
       var paperNumberNode = new PaperNumberNode( addedNumberModel, self, self.addPaperNumber,
-        self.combineNumbersIfApplicableCallback );
+        self.tryToCombineNumbers  );
       self.paperNumberLayerNode.addChild( paperNumberNode );
 
       // Move the shape to the front of this layer when grabbed by the user.
@@ -154,7 +154,7 @@ define( function( require ) {
      * @param {PaperNumberNode} draggedPaperNumberModel
      * @param {Vector} droppedPoint (on screen coordinates)
      */
-    combineNumbersIfApplicable: function( draggedPaperNumberModel, droppedPoint ) {
+    tryToCombineNumbers: function( draggedPaperNumberModel, droppedPoint ) {
       var self = this;
       var draggedNode = self.findPaperNumberNode( draggedPaperNumberModel );
       var allPaperNumberNodes = self.paperNumberLayerNode.children;

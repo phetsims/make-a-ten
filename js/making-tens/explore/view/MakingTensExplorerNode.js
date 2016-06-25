@@ -22,13 +22,13 @@ define( function( require ) {
   /**
    *
    * @param {number} numberValue
-   * @param {Function} addShapeToModel
-   * @param {Function} combineNumbersIfApplicableCallback
+   * @param {Function} addNumberToModel
+   * @param {Function} tryToCombineNumbers
    * @param {Function} canPlaceNumber
    * @param {MakingTensCommonView} makingTensView
    * @constructor
    */
-  function MakingTensExplorerNode( numberValue, addShapeToModel, combineNumbersIfApplicableCallback, canPlaceNumber, makingTensView ) {
+  function MakingTensExplorerNode( numberValue, addNumberToModel, tryToCombineNumbers , canPlaceNumber, makingTensView ) {
     var thisNode = this;
     Node.call( thisNode );
 
@@ -37,7 +37,7 @@ define( function( require ) {
 
     NUMBER_CREATOR_OFFSET_POSITIONS.forEach( function( offset ) {
       var paperNumberCreatorNode = new PaperNumberCreatorNode( numberValue,
-        addShapeToModel, combineNumbersIfApplicableCallback, canPlaceNumber, makingTensView );
+        addNumberToModel, tryToCombineNumbers , canPlaceNumber, makingTensView );
       numberCollectionLayer.addChild( paperNumberCreatorNode );
       paperNumberCreatorNode.left = offset.x;
       paperNumberCreatorNode.top = offset.y;

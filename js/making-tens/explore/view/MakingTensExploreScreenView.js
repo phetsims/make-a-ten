@@ -70,14 +70,14 @@ define( function( require ) {
 
     // Create the composite nodes that contain the number collections
     var exploreHundredsNode = new MakingTensExplorerNode( 100, addPaperNumberCallback,
-      self.combineNumbersIfApplicableCallback, canPlaceNumberCallback, self );
+      self.tryToCombineNumbers, canPlaceNumberCallback, self );
     explorerNodes.push( exploreHundredsNode );
     var exploreTensNode = new MakingTensExplorerNode( 10, addPaperNumberCallback,
-      self.combineNumbersIfApplicableCallback, canPlaceNumberCallback, self );
+      self.tryToCombineNumbers, canPlaceNumberCallback, self );
     explorerNodes.push( exploreTensNode );
     var exploreOnesNode = new MakingTensExplorerNode( 1,
       addPaperNumberCallback,
-      self.combineNumbersIfApplicableCallback, canPlaceNumberCallback, self );
+      self.tryToCombineNumbers, canPlaceNumberCallback, self );
     explorerNodes.push( exploreOnesNode );
 
     // Add a non-scrolling panel

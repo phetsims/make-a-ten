@@ -23,11 +23,12 @@ define( function( require ) {
 
   /**
    * @param {number} numberValue
-   * @param {Function} addShapeToModel - A function for adding the created number  to the model
+   * @param {Function} addNumberToModel  - A function for adding the created number  to the model
+   * @param {Function} tryToCombineNumbers
    * @param {Function} canPlaceNumber - A function to determine if the PaperNumber can be placed on the board
    * @constructor
    */
-  function PaperNumberCreatorNode( numberValue, addShapeToModel, combineNumbersIfApplicableCallback, canPlaceNumber,
+  function PaperNumberCreatorNode( numberValue, addNumberToModel, tryToCombineNumbers, canPlaceNumber,
                                    makingTensView ) {
     Node.call( this );
     var thisNode = this;
@@ -77,7 +78,7 @@ define( function( require ) {
 
         paperNumberModel.setDestination( selectedPosition );
         paperNumberModel.userControlled = true;
-        addShapeToModel( paperNumberModel );
+        addNumberToModel( paperNumberModel );
 
       },
 
@@ -103,7 +104,7 @@ define( function( require ) {
           paperNumberModel = null;
           return;
         }
-        combineNumbersIfApplicableCallback( paperNumberModel, droppedPoint );
+        tryToCombineNumbers( paperNumberModel, droppedPoint );
         paperNumberModel = null;
       }
     } );

@@ -35,17 +35,17 @@ define( function( require ) {
    * @param {PaperNumberModel} paperNumberModel
    * @param {MakingTensCommonView} makingTensView
    * @param {Function<paperNumberModel>} addNumberModelCallback A callback to invoke when a  Number is  split
-   * @param {Function<paperNumberModel,droppedPoint>} combineNumbersIfApplicableCallback A callback to invoke when a Number is  combined
+   * @param {Function<paperNumberModel,droppedPoint>} tryToCombineNumbers A callback to invoke when a Number is  combined
    * @constructor
    */
-  function PaperNumberNode( paperNumberModel, makingTensView, addNumberModelCallback, combineNumbersIfApplicableCallback ) {
+  function PaperNumberNode( paperNumberModel, makingTensView, addNumberModelCallback, tryToCombineNumbers ) {
     var thisNode = this;
     thisNode.paperNumberModel = paperNumberModel;
     thisNode.makingTensView = makingTensView;
     Node.call( thisNode );
 
-    thisNode.addNumberModelCallback = addNumberModelCallback || _.noop();
-    combineNumbersIfApplicableCallback = combineNumbersIfApplicableCallback || _.noop();
+    thisNode.addNumberModelCallback = addNumberModelCallback || _.noop;
+    tryToCombineNumbers = tryToCombineNumbers || _.noop;
 
     var imageNumberNode = new Node();
     thisNode.addChild( imageNumberNode );
@@ -206,7 +206,7 @@ define( function( require ) {
         if ( movableObject ) {
           movableObject.userControlled = false;
           var droppedPoint = event.pointer.point;
-          combineNumbersIfApplicableCallback( movableObject, droppedPoint );
+          tryToCombineNumbers( movableObject, droppedPoint );
           movableObject.trigger( 'endDrag' );
         }
 
