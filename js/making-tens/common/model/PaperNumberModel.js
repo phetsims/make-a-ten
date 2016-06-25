@@ -133,8 +133,7 @@ define( function( require ) {
         var distanceToDestination = this.position.distance( this.destination );
         if ( distanceToDestination > dt * thisModel.animationVelocity ) {
           // Move a step toward the destination.
-          var stepAngle = Math.atan2( this.destination.y - this.position.y, this.destination.x - this.position.x );
-          var stepVector = Vector2.createPolar( thisModel.animationVelocity * dt, stepAngle );
+          var stepVector = this.destination.minus( this.position ).setMagnitude( thisModel.animationVelocity * dt );
           this.position = this.position.plus( stepVector );
 
         }
