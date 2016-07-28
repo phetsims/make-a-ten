@@ -16,9 +16,9 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
   var NumberEntryControl = require( 'MAKING_TENS/making-tens/adding/view/NumberEntryControl' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
-  var Node = require( 'SCENERY/nodes/Node' );
 
   // strings
   var makingTensKeypadSubmitString = require( 'string!MAKING_TENS/making-tens.keypad.submit' );
@@ -45,12 +45,11 @@ define( function( require ) {
       }
     }, buttonOptions ) );
 
-    submitNumberButton.top = self.numberEntryControl.bottom + 10;
-    submitNumberButton.left = (self.numberEntryControl.bounds.width - submitNumberButton.bounds.width) / 2;
 
-    var numberControlGroup = new Node( {
-      children: [ self.numberEntryControl, submitNumberButton ]
-    } );
+    var numberControlGroup = new VBox( {
+      children: [ self.numberEntryControl, submitNumberButton ],
+      spacing: 12
+    });
 
     Panel.call( this, numberControlGroup, {
       xMargin: 30,
