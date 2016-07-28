@@ -274,7 +274,6 @@ define( function( require ) {
         this.setDestination( this.position.plus( new Vector2( -offsets[ 1 ].x, -offsets[ 1 ].y ) ) );
       }
 
-      this.trigger( 'changeValue' );
     },
 
     /**

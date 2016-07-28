@@ -17,7 +17,7 @@ define( function( require ) {
    *
    * @constructor
    */
-  function MakingTensExploreModel(  ) {
+  function MakingTensExploreModel() {
     var self = this;
     MakingTensCommonModel.call( this, {
       sum: 0,
@@ -58,12 +58,13 @@ define( function( require ) {
     addPaperNumber: function( paperNumberModel ) {
       MakingTensCommonModel.prototype.addPaperNumber.call( this, paperNumberModel );
       var self = this;
-      paperNumberModel.on( 'changeValue', function() {
+      paperNumberModel.numberValueProperty.link( function( newValue ) {
         if ( !paperNumberModel.userControlled ) {
           self.calculateTotal();
           self.interactionSucceeded = true;
         }
       } );
+
 
       // The shape will be removed from the model if and when it returns to its origination point.  This is how a shape
       // can be 'put back' into the panel.
