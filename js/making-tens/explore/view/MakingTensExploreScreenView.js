@@ -159,8 +159,7 @@ define( function( require ) {
     } );
 
     var repositoryPanelBounds = this.paperNumbersContainerPanel.bounds;
-    this.returnZoneBounds = new Bounds2( repositoryPanelBounds.minX, repositoryPanelBounds.minY,
-      repositoryPanelBounds.maxX, this.layoutBounds.maxY );
+    this.returnZoneBounds = repositoryPanelBounds.withMaxY( this.layoutBounds.maxY ); 
 
     this.addChild( new ArrowCueNode( makingTensExploreModel.arrowCueModel ) );
 
