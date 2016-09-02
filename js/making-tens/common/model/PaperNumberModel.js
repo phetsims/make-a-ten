@@ -201,7 +201,7 @@ define( function( require ) {
     getDigitOffsetPosition: function( newPulledNumber ) {
       var thisModel = this;
       var newPulledNumberLength = (newPulledNumber + '').length;
-      var numberOfSetDimensions = _.clone( NUMBER_IMAGE_OFFSET_DIMENSIONS[ thisModel.digitLength - 1 ] ); // digits-1 zero based index
+      var numberOfSetDimensions =  NUMBER_IMAGE_OFFSET_DIMENSIONS[ thisModel.digitLength - 1 ]; // digits-1 zero based index
       var digitDifference = thisModel.digitLength - newPulledNumberLength;
       return numberOfSetDimensions[ digitDifference ];
     },
