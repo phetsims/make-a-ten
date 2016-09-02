@@ -162,8 +162,7 @@ define( function( require ) {
     this.returnZoneBounds = new Bounds2( repositoryPanelBounds.minX, repositoryPanelBounds.minY,
       repositoryPanelBounds.maxX, this.layoutBounds.maxY );
 
-    var arrowCueNode = new ArrowCueNode( makingTensExploreModel.arrowCueModel );
-    this.addChild( arrowCueNode );
+    this.addChild( new ArrowCueNode( makingTensExploreModel.arrowCueModel ) );
 
     makingTensExploreModel.interactionAttemptedProperty.link( function( interactionAttempted ) {
       if ( interactionAttempted ) {
