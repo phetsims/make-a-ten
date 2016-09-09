@@ -26,16 +26,21 @@ define( function( require ) {
    * @constructor
    */
   function MakingTensAddingScreen() {
+
     var homeScreenIcon = MakingTensUtil.createIconWithBackgroundColor( addingHomeScreenImage, MakingTensSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR );
     var navigationBarIcon = MakingTensUtil.createIconWithBackgroundColor( addingNavBarImage, MakingTensSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR );
 
-    Screen.call( this, screenAddingString, homeScreenIcon,
+    var options = {
+      name: screenAddingString,
+      backgroundColor: MakingTensSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR,
+      homeScreenIcon: homeScreenIcon,
+      navigationBarIcon: navigationBarIcon
+    };
+
+    Screen.call( this,
       function() { return new MakingTensAddingModel(); },
-      function( model ) { return new MakingTensAddingScreenView( model ); }, {
-        backgroundColor: MakingTensSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR,
-        navigationBarIcon: navigationBarIcon
-      }
-    );
+      function( model ) { return new MakingTensAddingScreenView( model ); },
+      options );
   }
 
   makingTens.register( 'MakingTensAddingScreen', MakingTensAddingScreen );
