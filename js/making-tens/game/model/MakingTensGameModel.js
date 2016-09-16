@@ -134,6 +134,8 @@ define( function( require ) {
         case 9:
           numberChallenge = this.numberChallengeFactory.triplesChallenge();
           break;
+        default:
+          throw new Error( 'invalid level: ' + level );
       }
 
       return numberChallenge;
