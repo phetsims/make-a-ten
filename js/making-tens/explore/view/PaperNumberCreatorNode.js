@@ -31,7 +31,7 @@ define( function( require ) {
   function PaperNumberCreatorNode( numberValue, addNumberToModel, tryToCombineNumbers, canPlaceNumber,
                                    makingTensView ) {
     Node.call( this );
-    var thisNode = this;
+    var self = this;
 
     // Create the node that the user will click upon to add a model element to the view.
     var representation = new Image( PaperImageCollection.getNumberImage( numberValue ) );
@@ -51,7 +51,7 @@ define( function( require ) {
 
         // find the parent screen if not already found by moving up the scene graph
         if ( !parentScreenView ) {
-          var testNode = thisNode;
+          var testNode = self;
           while ( testNode !== null ) {
             if ( testNode instanceof ScreenView ) {
               parentScreenView = testNode;
@@ -63,7 +63,7 @@ define( function( require ) {
         }
 
         // Determine the initial position of the new element as a function of the event position and this node's bounds.
-        var upperLeftCornerGlobal = thisNode.parentToGlobalPoint( thisNode.leftTop );
+        var upperLeftCornerGlobal = self.parentToGlobalPoint( self.leftTop );
         var initialPosition = parentScreenView.globalToLocalPoint( upperLeftCornerGlobal );
 
         // Create and add the new model element.
@@ -72,7 +72,7 @@ define( function( require ) {
         //offset based on clicked position
         var selectedPositionOffset = upperLeftCornerGlobal.minus( event.pointer.point );
         // check if the touched point is within the bottom portion of the node else move appropriate distance - issue #41
-        var allowedGlobalCreationBounds = thisNode.getGlobalObjectCreationBounds();
+        var allowedGlobalCreationBounds = self.getGlobalObjectCreationBounds();
         var offsetY = -allowedGlobalCreationBounds.height - selectedPositionOffset.y;
         var selectedPosition = initialPosition.plus( new Vector2( 0, offsetY ) );
 
@@ -109,21 +109,21 @@ define( function( require ) {
       }
     } );
 
-    thisNode.addInputListener( paperNumberNodeCreatorDragHandler );
+    self.addInputListener( paperNumberNodeCreatorDragHandler );
 
     // show proper cursor to indicate the paperNumber can be dragged out
     paperNumberNodeCreatorDragHandler.move = function( event ) {
-      var allowedGlobalCreationBounds = thisNode.getGlobalObjectCreationBounds();
+      var allowedGlobalCreationBounds = self.getGlobalObjectCreationBounds();
       if ( allowedGlobalCreationBounds.containsPoint( event.pointer.point ) ) {
-        thisNode.cursor = 'pointer';
+        self.cursor = 'pointer';
       }
       else {
-        thisNode.cursor = 'default';
+        self.cursor = 'default';
       }
     };
 
     paperNumberNodeCreatorDragHandler.out = function() {
-      thisNode.cursor = 'default';
+      self.cursor = 'default';
     };
 
 
@@ -137,11 +137,11 @@ define( function( require ) {
      * returns {Bound2}  the bounds only within which a new PaperNumberModel can be pulled out and created
      */
     getGlobalObjectCreationBounds: function() {
-      var thisNode = this;
-      var localNodeBounds = thisNode.localBounds;
+      var self = this;
+      var localNodeBounds = self.localBounds;
       var pullBounds = Bounds2.rect( localNodeBounds.x, localNodeBounds.height * MakingTensSharedConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION,
         localNodeBounds.width, localNodeBounds.height );
-      var globalCreationBounds = thisNode.localToGlobalBounds( pullBounds );
+      var globalCreationBounds = self.localToGlobalBounds( pullBounds );
       return globalCreationBounds;
     }
 

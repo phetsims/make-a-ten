@@ -209,13 +209,13 @@ define( function( require ) {
      * @param paperNumberModel
      */
     addPaperNumber: function( paperNumberModel ) {
-      var thisNode = this;
+      var self = this;
       this.makingTensModel.addPaperNumber( paperNumberModel );
 
       // see if the user has dropped the paperNumber on Explorer panel, if yes return it to origin
       paperNumberModel.on( 'endDrag', function() {
 
-        var panelBounds = thisNode.returnZoneBounds;
+        var panelBounds = self.returnZoneBounds;
         var paperNumberDimension = paperNumberModel.getDimension(); // local
         var paperCenter = new Vector2( paperNumberModel.position.x + paperNumberDimension.width * 0.5,
           paperNumberModel.position.y + paperNumberDimension.height * 0.5 );
@@ -229,9 +229,9 @@ define( function( require ) {
 
             // We have reference to the explorer's digit collection, give that value as the initial
             // position based on the digit length
-            var initialPos = thisNode.explorePanelPositions[ digits ];
+            var initialPos = self.explorePanelPositions[ digits ];
             var paperNumberPart = new PaperNumberModel( baseNumbers[ i ].numberValue, initialPos );
-            thisNode.makingTensModel.addPaperNumber( paperNumberPart );
+            self.makingTensModel.addPaperNumber( paperNumberPart );
 
             //Each part's position needs to offset from the currentPosition, so the split begins at the
             // right place

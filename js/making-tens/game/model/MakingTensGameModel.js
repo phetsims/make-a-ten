@@ -24,7 +24,7 @@ define( function( require ) {
    * @constructor
    */
   function MakingTensGameModel(  ) {
-    var thisModel = this;
+    var self = this;
 
     // Making Tens Commmon Model is a propertySet
     MakingTensCommonModel.call( this, {
@@ -43,18 +43,18 @@ define( function( require ) {
     this.expressionTerms =  new ExpressionTerms();
 
     // Best times and scores.
-    thisModel.bestTimes = []; // @public
-    thisModel.scores = []; // @public
-    _.times( thisModel.numberOfLevels, function() {
-      thisModel.bestTimes.push( 0 );
-      thisModel.scores.push( new Property( 0 ) );
+    self.bestTimes = []; // @public
+    self.scores = []; // @public
+    _.times( self.numberOfLevels, function() {
+      self.bestTimes.push( 0 );
+      self.scores.push( new Property( 0 ) );
     } );
 
     this.numberChallengeFactory = new NumberChallengeFactory();
 
-    thisModel.paperNumbers.lengthProperty.link( function( modelLength, prevModelLength ) {
-      if ( modelLength === 1 && prevModelLength === 2 && thisModel.gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
-        thisModel.gameState = GameState.CORRECT_ANSWER;
+    self.paperNumbers.lengthProperty.link( function( modelLength, prevModelLength ) {
+      if ( modelLength === 1 && prevModelLength === 2 && self.gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
+        self.gameState = GameState.CORRECT_ANSWER;
       }
     } );
   }
@@ -153,8 +153,8 @@ define( function( require ) {
         window.clearInterval( this.gameTimerId );
       }
       this.elapsedTime = 0;
-      var thisModel = this;
-      this.gameTimerId = window.setInterval( function() { thisModel.elapsedTime += 1; }, 1000 );
+      var self = this;
+      this.gameTimerId = window.setInterval( function() { self.elapsedTime += 1; }, 1000 );
     },
 
     // @private
@@ -187,11 +187,11 @@ define( function( require ) {
     },
 
     reset: function() {
-      var thisModel = this;
-      thisModel.paperNumbers.clear();
-      for ( var i = 0; i < thisModel.numberOfLevels; i++ ) {
-        thisModel.bestTimes[ i ] = 0;
-        thisModel.scores[ i ].set( 0 );
+      var self = this;
+      self.paperNumbers.clear();
+      for ( var i = 0; i < self.numberOfLevels; i++ ) {
+        self.bestTimes[ i ] = 0;
+        self.scores[ i ].set( 0 );
       }
 
     }

@@ -39,16 +39,16 @@ define( function( require ) {
    * @constructor
    */
   function PaperNumberNode( paperNumberModel, makingTensView, addNumberModelCallback, tryToCombineNumbers ) {
-    var thisNode = this;
-    thisNode.paperNumberModel = paperNumberModel;
-    thisNode.makingTensView = makingTensView;
-    Node.call( thisNode );
+    var self = this;
+    self.paperNumberModel = paperNumberModel;
+    self.makingTensView = makingTensView;
+    Node.call( self );
 
-    thisNode.addNumberModelCallback = addNumberModelCallback || _.noop;
+    self.addNumberModelCallback = addNumberModelCallback || _.noop;
     tryToCombineNumbers = tryToCombineNumbers || _.noop;
 
     var imageNumberNode = new Node();
-    thisNode.addChild( imageNumberNode );
+    self.addChild( imageNumberNode );
 
     paperNumberModel.numberValueProperty.link( function( newNumber ) {
       imageNumberNode.removeAllChildren();
@@ -68,18 +68,18 @@ define( function( require ) {
     function changeMouseAndTouchAreas() {
       // Set up the mouse and touch areas for this node so that we can pass
       // the query parameter ?showPointerAreas to visualize the areas
-      var paperNumberBounds = thisNode.getBounds();
+      var paperNumberBounds = self.getBounds();
 
       var mouseArea = Shape.rectangle( 0, 0,
         paperNumberBounds.width,
         paperNumberBounds.height );
 
-      thisNode.touchArea = mouseArea;
-      thisNode.mouseArea = mouseArea;
+      self.touchArea = mouseArea;
+      self.mouseArea = mouseArea;
     }
 
     paperNumberModel.positionProperty.link( function( newPos ) {
-      thisNode.leftTop = newPos;
+      self.leftTop = newPos;
     } );
 
 
@@ -113,7 +113,7 @@ define( function( require ) {
 
       start: function( event, trail ) {
         resetDrag();
-        startOffset = thisNode.globalToParentPoint( event.pointer.point );
+        startOffset = self.globalToParentPoint( event.pointer.point );
         currentPoint = startOffset.copy();
 
         if ( paperNumberModel.numberValue === 1 ) {
@@ -121,7 +121,7 @@ define( function( require ) {
           return;
         }
 
-        var pulledOutIndex = thisNode.determineDigitIndex( startOffset );
+        var pulledOutIndex = self.determineDigitIndex( startOffset );
         var amountToRemove = ArithmeticRules.pullApartNumbers( paperNumberModel.numberValue, pulledOutIndex );
         var amountRemaining = paperNumberModel.numberValue - amountToRemove;
 
@@ -133,14 +133,14 @@ define( function( require ) {
 
         // When splitting a single digit from a two, make sure the mouse is near that second digit (or third digit)
         // In the case of splitting equal digits (ex 30 splitting in to 20 and 10) we don't need to check this condition
-        var amountRemovingOffsetPosition = thisNode.paperNumberModel.getDigitOffsetPosition( amountRemaining );
-        var totalBounds = thisNode.bounds;
+        var amountRemovingOffsetPosition = self.paperNumberModel.getDigitOffsetPosition( amountRemaining );
+        var totalBounds = self.bounds;
         var splitRect = Bounds2.rect( totalBounds.x, totalBounds.y,
           totalBounds.width, totalBounds.height * MakingTensSharedConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION );
 
         //if the below condition is true, start splitting
         if ( splitRect.containsPoint( startOffset ) ) {
-          var pulledOutPosition = thisNode.determinePulledOutNumberPosition( amountToRemove );
+          var pulledOutPosition = self.determinePulledOutNumberPosition( amountToRemove );
           var pulledApartPaperNumberModel = new PaperNumberModel( amountToRemove, pulledOutPosition, {
             opacity: 0.95
           } );
@@ -165,7 +165,7 @@ define( function( require ) {
 
         //if it is splitMode
         if ( splitObjectContext && transDistance > MIN_SPLIT_DISTANCE ) {
-          thisNode.addNumberModelCallback( splitObjectContext.pulledApartPaperNumberModel );
+          self.addNumberModelCallback( splitObjectContext.pulledApartPaperNumberModel );
           paperNumberModel.changeNumber( splitObjectContext.amountRemaining );
           startMoving( splitObjectContext.pulledApartPaperNumberModel );
 
@@ -180,7 +180,7 @@ define( function( require ) {
           }
           if ( splitObjectContext.pulledApartPaperNumberModel.digitLength >
                (splitObjectContext.amountRemaining + '').length ) {
-            thisNode.moveToFront();
+            self.moveToFront();
           }
 
           splitObjectContext = null;
@@ -215,32 +215,32 @@ define( function( require ) {
 
     } );
 
-    thisNode.addInputListener( paperNodeDragHandler );
+    self.addInputListener( paperNodeDragHandler );
 
     // show proper cursor to differentiate move and split
     paperNodeDragHandler.move = function( event ) {
 
       // if it is 1, we can only move
       if ( paperNumberModel.numberValue === 1 ) {
-        thisNode.cursor = 'move';
+        self.cursor = 'move';
         return;
       }
 
-      var localNodeBounds = thisNode.localBounds;
+      var localNodeBounds = self.localBounds;
       var pullBounds = Bounds2.rect( localNodeBounds.x, localNodeBounds.y,
         localNodeBounds.width, localNodeBounds.height * MakingTensSharedConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION );
 
-      var globalBounds = thisNode.localToGlobalBounds( pullBounds );
+      var globalBounds = self.localToGlobalBounds( pullBounds );
       if ( globalBounds.containsPoint( event.pointer.point ) ) {
-        thisNode.cursor = 'pointer';
+        self.cursor = 'pointer';
       }
       else {
-        thisNode.cursor = 'move';
+        self.cursor = 'move';
       }
     };
 
     paperNodeDragHandler.out = function( args ) {
-      thisNode.cursor = 'default';
+      self.cursor = 'default';
     };
 
   }
@@ -255,8 +255,8 @@ define( function( require ) {
      * @param newPulledNumber
      */
     determinePulledOutNumberPosition: function( newPulledNumber ) {
-      var thisNode = this;
-      return thisNode.leftTop.plus( thisNode.paperNumberModel.getDigitOffsetPosition( newPulledNumber ) );
+      var self = this;
+      return self.leftTop.plus( self.paperNumberModel.getDigitOffsetPosition( newPulledNumber ) );
     },
 
     /**
@@ -266,9 +266,9 @@ define( function( require ) {
      * @param {number} return value is either 0,1 or 2
      */
     determineDigitIndex: function( parentPos ) {
-      var thisNode = this;
-      var localPos = thisNode.parentToLocalPoint( parentPos );
-      return thisNode.paperNumberModel.determineDigitIndex( localPos );
+      var self = this;
+      var localPos = self.parentToLocalPoint( parentPos );
+      return self.paperNumberModel.determineDigitIndex( localPos );
     },
 
     /**
@@ -277,9 +277,9 @@ define( function( require ) {
      * @returns {Array}
      */
     findAttachableNodes: function( allPaperNumberNodes ) {
-      var draggedNode = this;
+      var self = this;
       _.remove( allPaperNumberNodes, function( node ) {
-        return node === draggedNode;
+        return node === self;
       } );
 
       var attachableNodeCandidates = allPaperNumberNodes;
@@ -288,16 +288,16 @@ define( function( require ) {
       for ( var i = 0; i < attachableNodeCandidates.length; i++ ) {
         var droppedNode = attachableNodeCandidates[ i ];
         var widerNode = droppedNode;
-        var smallerNode = draggedNode;
+        var smallerNode = self;
         if ( smallerNode.paperNumberModel.numberValue > widerNode.paperNumberModel.numberValue ) {
-          widerNode = draggedNode;
+          widerNode = self;
           smallerNode = droppedNode;
         }
 
         var smallerDigitLength = smallerNode.paperNumberModel.digitLength;
         var widerDigitLength = widerNode.paperNumberModel.digitLength;
 
-        var yDiff = Math.abs( droppedNode.top - draggedNode.top );
+        var yDiff = Math.abs( droppedNode.top - self.top );
         var dropPositionHeightTolerance = smallerNode.bounds.height * DROP_BOUNDS_HEIGHT_PROPORTION;
         var yInRange = Math.abs( yDiff ) < dropPositionHeightTolerance;
 

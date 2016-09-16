@@ -35,8 +35,8 @@ define( function( require ) {
    */
   function MakingTensAddingScreenView( makingTensAddingModel ) {
 
-    var thisView = this;
-    MakingTensCommonView.call( thisView, makingTensAddingModel, MakingTensSharedConstants.LAYOUT_BOUNDS );
+    var self = this;
+    MakingTensCommonView.call( self, makingTensAddingModel, MakingTensSharedConstants.LAYOUT_BOUNDS );
 
 
     // dismiss any open keyboard if a click/touch hits the background directly

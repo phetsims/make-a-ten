@@ -37,7 +37,7 @@ define( function( require ) {
     }, options );
 
     HBox.call( this, { spacing: 8, children: [] } );
-    var progressIndicator = this;
+    var self = this;
 
     // Update visibility of filled and half-filled stars based on score.
     // TODO: Could be rewritten to use deltas if it needs to animate
@@ -66,7 +66,7 @@ define( function( require ) {
         var scoreLabel = new Text( score, { font: LABEL_FONT, fill: 'black' } );
         children.push( scoreLabel );
       }
-      progressIndicator.children = children;
+      self.children = children;
     } );
 
     this.mutate( options );
