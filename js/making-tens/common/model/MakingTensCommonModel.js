@@ -50,18 +50,18 @@ define( function( require ) {
      * When collapsing, we remove either the dropTarget object and change the number value of the dragged objects
      * but if the dropTarget is larger than the dragged number , reverse the objects to remove and change.
      *
-     * @param {PaperNumberModel} draggedPaperNumberModel
-     * @param {PaperNumberModel} dropTargetNumberModel
+     * @param {PaperNumber} draggedPaperNumber
+     * @param {PaperNumber} dropTargetNumberModel
      */
-    collapseNumberModels: function( draggedPaperNumberModel, dropTargetNumberModel ) {
+    collapseNumberModels: function( draggedPaperNumber, dropTargetNumberModel ) {
       var dropTargetNumberValue = dropTargetNumberModel.numberValue;
-      var draggedNumberValue = draggedPaperNumberModel.numberValue;
+      var draggedNumberValue = draggedPaperNumber.numberValue;
 
       var modelToRemove = dropTargetNumberModel;
-      var modelToChange = draggedPaperNumberModel;
+      var modelToChange = draggedPaperNumber;
 
       if ( dropTargetNumberValue > draggedNumberValue ) {
-        modelToRemove = draggedPaperNumberModel;
+        modelToRemove = draggedPaperNumber;
         modelToChange = dropTargetNumberModel;
       }
       this.paperNumbers.remove( modelToRemove );
@@ -81,8 +81,8 @@ define( function( require ) {
 
     /**
      *
-     * @param {PaperNumberModel} paperNumberModel1
-     * @param {PaperNumberModel} paperNumberModel2
+     * @param {PaperNumber} paperNumberModel1
+     * @param {PaperNumber} paperNumberModel2
      */
     repelAway: function( paperNumberModel1, paperNumberModel2 ) {
       var repelRightDistance = MakingTensSharedConstants.MOVE_AWAY_DISTANCE[ paperNumberModel1.digitLength ];

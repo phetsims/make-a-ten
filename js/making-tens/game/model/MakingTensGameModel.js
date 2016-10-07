@@ -15,7 +15,7 @@ define( function( require ) {
   var NumberChallengeFactory = require( 'MAKING_TENS/making-tens/game/model/NumberChallengeFactory' );
   var MakingTensCommonModel = require( 'MAKING_TENS/making-tens/common/model/MakingTensCommonModel' );
   var ExpressionTerms = require( 'MAKING_TENS/making-tens/common/model/ExpressionTerms' );
-  var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
+  var PaperNumber = require( 'MAKING_TENS/making-tens/common/model/PaperNumber' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var Property = require( 'AXON/Property' );
 
@@ -181,7 +181,7 @@ define( function( require ) {
           return;
         }
         var initialPosition = new Vector2( xOffSet, MakingTensSharedConstants.PAPER_NUMBER_PLACEMENT_BOUNDS.height / 4 );
-        self.addPaperNumber( new PaperNumberModel( numberValue, initialPosition ) );
+        self.addPaperNumber( new PaperNumber( numberValue, initialPosition ) );
         xOffSet += 350;
       } );
     },

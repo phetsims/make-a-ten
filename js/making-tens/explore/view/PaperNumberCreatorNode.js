@@ -16,7 +16,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var Vector2 = require( 'DOT/Vector2' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
+  var PaperNumber = require( 'MAKING_TENS/making-tens/common/model/PaperNumber' );
   var PaperImageCollection = require( 'MAKING_TENS/making-tens/common/model/PaperImageCollection' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
@@ -67,7 +67,7 @@ define( function( require ) {
         var initialPosition = parentScreenView.globalToLocalPoint( upperLeftCornerGlobal );
 
         // Create and add the new model element.
-        paperNumberModel = new PaperNumberModel( numberValue, initialPosition );
+        paperNumberModel = new PaperNumber( numberValue, initialPosition );
 
         //offset based on clicked position
         var selectedPositionOffset = upperLeftCornerGlobal.minus( event.pointer.point );
@@ -134,7 +134,7 @@ define( function( require ) {
   return inherit( Node, PaperNumberCreatorNode, {
 
     /**
-     * returns {Bound2}  the bounds only within which a new PaperNumberModel can be pulled out and created
+     * returns {Bound2}  the bounds only within which a new PaperNumber can be pulled out and created
      */
     getGlobalObjectCreationBounds: function() {
       var self = this;

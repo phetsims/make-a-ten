@@ -2,7 +2,7 @@
 
 /**
  *
- * Represents the view of the PaperNumberModel.
+ * Represents the view of the PaperNumber.
  * It uses one or more number images based on the "Tens" in a given number.
  * These collections of images are positioned in a way to give "stacked" appearance
  *
@@ -18,7 +18,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
+  var PaperNumber = require( 'MAKING_TENS/making-tens/common/model/PaperNumber' );
   var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var PaperImageCollection = require( 'MAKING_TENS/making-tens/common/model/PaperImageCollection' );
@@ -32,7 +32,7 @@ define( function( require ) {
 
   /**
    *
-   * @param {PaperNumberModel} paperNumberModel
+   * @param {PaperNumber} paperNumberModel
    * @param {MakingTensCommonView} makingTensView
    * @param {Function<paperNumberModel>} addNumberModelCallback A callback to invoke when a  Number is  split
    * @param {Function<paperNumberModel,droppedPoint>} tryToCombineNumbers A callback to invoke when a Number is  combined
@@ -141,11 +141,11 @@ define( function( require ) {
         //if the below condition is true, start splitting
         if ( splitRect.containsPoint( startOffset ) ) {
           var pulledOutPosition = self.determinePulledOutNumberPosition( amountToRemove );
-          var pulledApartPaperNumberModel = new PaperNumberModel( amountToRemove, pulledOutPosition, {
+          var pulledApartPaperNumber = new PaperNumber( amountToRemove, pulledOutPosition, {
             opacity: 0.95
           } );
           splitObjectContext = {
-            pulledApartPaperNumberModel: pulledApartPaperNumberModel,
+            pulledApartPaperNumber: pulledApartPaperNumber,
             amountRemaining: amountRemaining,
             amountRemovingOffsetPosition: amountRemovingOffsetPosition
           };
@@ -165,20 +165,20 @@ define( function( require ) {
 
         //if it is splitMode
         if ( splitObjectContext && transDistance > MIN_SPLIT_DISTANCE ) {
-          self.addNumberModelCallback( splitObjectContext.pulledApartPaperNumberModel );
+          self.addNumberModelCallback( splitObjectContext.pulledApartPaperNumber );
           paperNumberModel.changeNumber( splitObjectContext.amountRemaining );
-          startMoving( splitObjectContext.pulledApartPaperNumberModel );
+          startMoving( splitObjectContext.pulledApartPaperNumber );
 
           // After a Number is pulled the  remaining digits must stay in the same place.We use the amountRemovingOffsetPosition
           // to adjust the new paperModel's position
           // see issue #7
 
-          if ( splitObjectContext.pulledApartPaperNumberModel.digitLength >=
+          if ( splitObjectContext.pulledApartPaperNumber.digitLength >=
                (splitObjectContext.amountRemaining + '').length ) {
             paperNumberModel.setDestination( paperNumberModel.position.plus(
               splitObjectContext.amountRemovingOffsetPosition ) );
           }
-          if ( splitObjectContext.pulledApartPaperNumberModel.digitLength >
+          if ( splitObjectContext.pulledApartPaperNumber.digitLength >
                (splitObjectContext.amountRemaining + '').length ) {
             self.moveToFront();
           }

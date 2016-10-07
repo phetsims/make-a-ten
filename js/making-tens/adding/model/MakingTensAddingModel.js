@@ -13,7 +13,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var MakingTensCommonModel = require( 'MAKING_TENS/making-tens/common/model/MakingTensCommonModel' );
   var ExpressionTerms = require( 'MAKING_TENS/making-tens/common/model/ExpressionTerms' );
-  var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
+  var PaperNumber = require( 'MAKING_TENS/making-tens/common/model/PaperNumber' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
 
   /**
@@ -45,7 +45,7 @@ define( function( require ) {
         if ( numberValue ) {
           var initialPosition = new Vector2( xOffSet, MakingTensSharedConstants.PAPER_NUMBER_PLACEMENT_BOUNDS.height / 3.5 );
           //Keyboard Terms returns as String, so cast it to number
-          self.addPaperNumber( new PaperNumberModel( numberValue, initialPosition ) );
+          self.addPaperNumber( new PaperNumber( numberValue, initialPosition ) );
           xOffSet += 350;
         }
 

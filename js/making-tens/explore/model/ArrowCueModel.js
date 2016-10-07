@@ -63,7 +63,7 @@ define( function( require ) {
 
     /**
      *
-     * @param {PaperNumberModel} paperNumberModel
+     * @param {PaperNumber} paperNumberModel
      */
     positionAt: function( paperNumberModel ) {
       var paperNumberDimension = paperNumberModel.getDimension();

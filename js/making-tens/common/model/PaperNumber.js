@@ -62,7 +62,7 @@ define( function( require ) {
    * @param {Object} options
    * @constructor
    */
-  function PaperNumberModel( numberValue, initialPosition, options ) {
+  function PaperNumber( numberValue, initialPosition, options ) {
     var self = this;
     options = _.extend( { opacity: 1 }, options );
 
@@ -118,9 +118,9 @@ define( function( require ) {
 
   }
 
-  makingTens.register( 'PaperNumberModel', PaperNumberModel );
+  makingTens.register( 'PaperNumber', PaperNumber );
 
-  return inherit( PropertySet, PaperNumberModel, {
+  return inherit( PropertySet, PaperNumber, {
 
     /**
      *

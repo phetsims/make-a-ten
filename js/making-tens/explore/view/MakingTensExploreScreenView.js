@@ -14,7 +14,7 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var Vector2 = require( 'DOT/Vector2' );
   var MakingTensCommonView = require( 'MAKING_TENS/making-tens/common/view/MakingTensCommonView' );
-  var PaperNumberModel = require( 'MAKING_TENS/making-tens/common/model/PaperNumberModel' );
+  var PaperNumber = require( 'MAKING_TENS/making-tens/common/model/PaperNumber' );
   var MakingTensExplorerNode = require( 'MAKING_TENS/making-tens/explore/view/MakingTensExplorerNode' );
   var ArrowCueNode = require( 'MAKING_TENS/making-tens/explore/view/ArrowCueNode' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
@@ -159,7 +159,7 @@ define( function( require ) {
     } );
 
     var repositoryPanelBounds = this.paperNumbersContainerPanel.bounds;
-    this.returnZoneBounds = repositoryPanelBounds.withMaxY( this.layoutBounds.maxY ); 
+    this.returnZoneBounds = repositoryPanelBounds.withMaxY( this.layoutBounds.maxY );
 
     this.addChild( new ArrowCueNode( makingTensExploreModel.arrowCueModel ) );
 
@@ -185,7 +185,7 @@ define( function( require ) {
      * Used to determine if the user has placed the picked number sufficiently away from
      * the container panel. if not return the number back to the container itself
      *
-     * @param {PaperNumberModel} paperNumberModel
+     * @param {PaperNumber} paperNumberModel
      * @param {Vector2} droppedPosition
      */
     canPlaceNumberAt: function( paperNumberModel, droppedPosition ) {
@@ -230,7 +230,7 @@ define( function( require ) {
             // We have reference to the explorer's digit collection, give that value as the initial
             // position based on the digit length
             var initialPos = self.explorePanelPositions[ digits ];
-            var paperNumberPart = new PaperNumberModel( baseNumbers[ i ].numberValue, initialPos );
+            var paperNumberPart = new PaperNumber( baseNumbers[ i ].numberValue, initialPos );
             self.makingTensModel.addPaperNumber( paperNumberPart );
 
             //Each part's position needs to offset from the currentPosition, so the split begins at the

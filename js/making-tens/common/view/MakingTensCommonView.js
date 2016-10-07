@@ -151,12 +151,12 @@ define( function( require ) {
 
     /**
      * When user drops a node on another node , add if the arthimetic rules match
-     * @param {PaperNumberNode} draggedPaperNumberModel
+     * @param {PaperNumberNode} draggedPaperNumber
      * @param {Vector} droppedPoint (on screen coordinates)
      */
-    tryToCombineNumbers: function( draggedPaperNumberModel, droppedPoint ) {
+    tryToCombineNumbers: function( draggedPaperNumber, droppedPoint ) {
       var self = this;
-      var draggedNode = self.findPaperNumberNode( draggedPaperNumberModel );
+      var draggedNode = self.findPaperNumberNode( draggedPaperNumber );
       var allPaperNumberNodes = self.paperNumberLayerNode.children;
       var droppedNodes = draggedNode.findAttachableNodes( allPaperNumberNodes );
 
@@ -165,16 +165,16 @@ define( function( require ) {
 
       //Show Arrow cue if user hasn't succeeded in combining or splitting a number
       if ( !self.makingTensModel.interactionSucceeded && self.makingTensModel.arrowCueModel ) {
-        self.makingTensModel.arrowCueModel.positionAt( draggedPaperNumberModel );
+        self.makingTensModel.arrowCueModel.positionAt( draggedPaperNumber );
         self.makingTensModel.interactionAttempted = true;
       }
 
       for ( var i = 0; i < droppedNodes.length; i++ ) {
-        var numberA = draggedPaperNumberModel.numberValue;
+        var numberA = draggedPaperNumber.numberValue;
         var numberB = droppedNodes[ i ].paperNumberModel.numberValue;
         if ( ArithmeticRules.canAddNumbers( numberA, numberB ) ) {
-          var droppedPaperNumberModel = droppedNodes[ i ].paperNumberModel;
-          self.makingTensModel.collapseNumberModels( draggedPaperNumberModel, droppedPaperNumberModel );
+          var droppedPaperNumber = droppedNodes[ i ].paperNumberModel;
+          self.makingTensModel.collapseNumberModels( draggedPaperNumber, droppedPaperNumber );
           return;
         }
         else {
