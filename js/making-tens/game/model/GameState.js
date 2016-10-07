@@ -13,8 +13,7 @@ define( function( require ) {
     CHOOSING_LEVEL: 'choosingLevel',
     PRESENTING_INTERACTIVE_CHALLENGE: 'presentingInteractiveChallenge',
     MOVE_TO_NEXT_CHALLENGE: 'MoveToNextChallenge',
-    CORRECT_ANSWER: 'CORRECT_ANSWER',
-    SHOWING_LEVEL_RESULTS: 'showingLevelResults'
+    CORRECT_ANSWER: 'CORRECT_ANSWER'
   } );
 
   makingTens.register( 'GameState', GameState );
