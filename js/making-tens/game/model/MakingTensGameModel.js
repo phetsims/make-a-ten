@@ -31,7 +31,6 @@ define( function( require ) {
       sum: '',
       soundEnabled: true,
       timerEnabled: false,
-      numberOfLevels: 10,
       currentLevel: 0,
       challengeIndex: 0,
       currentChallenge: null,
@@ -44,7 +43,7 @@ define( function( require ) {
     // Best times and scores.
     this.bestTimes = []; // @public
     this.scores = []; // @public
-    _.times( this.numberOfLevels, function() {
+    _.times( MakingTensGameModel.NUMBER_OF_LEVELS, function() {
       self.bestTimes.push( 0 );
       self.scores.push( new Property( 0 ) );
     } );
@@ -170,12 +169,12 @@ define( function( require ) {
 
     reset: function() {
       this.paperNumbers.clear();
-      for ( var i = 0; i < this.numberOfLevels; i++ ) {
+      for ( var i = 0; i < MakingTensGameModel.NUMBER_OF_LEVELS; i++ ) {
         this.bestTimes[ i ] = 0;
         this.scores[ i ].set( 0 );
       }
-
     }
-
+  }, {
+    NUMBER_OF_LEVELS: 10
   } );
 } );

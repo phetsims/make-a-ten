@@ -20,6 +20,7 @@ define( function( require ) {
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var GameState = require( 'MAKING_TENS/making-tens/game/model/GameState' );
   var GameIconNode = require( 'MAKING_TENS/making-tens/game/view/GameIconNode' );
+  var MakingTensGameModel = require( 'MAKING_TENS/making-tens/game/model/MakingTensGameModel' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
@@ -82,7 +83,7 @@ define( function( require ) {
       gameModel.scores,
       {
         numStarsOnButtons: 1,
-        numLevels: gameModel.numberOfLevels,
+        numLevels: MakingTensGameModel.NUMBER_OF_LEVELS,
         numButtonRows: 3,
         controlsInset: 20
       }

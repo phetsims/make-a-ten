@@ -16,6 +16,7 @@ define( function( require ) {
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelSelectionButton = require( 'MAKING_TENS/making-tens/game/view/LevelSelectionButton' );
+  var MakingTensGameModel = require( 'MAKING_TENS/making-tens/game/model/MakingTensGameModel' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -37,7 +38,7 @@ define( function( require ) {
     Node.call( this );
     options = _.extend( {
       // Defaults
-      numLevels: 10,
+      numLevels: MakingTensGameModel.NUMBER_OF_LEVELS,
       titleString: chooseYourLevelString,
       numStarsOnButtons: 1,
       numButtonRows: 1, // For layout
