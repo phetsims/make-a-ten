@@ -180,7 +180,7 @@ define( function( require ) {
         if ( numberValue === '' || numberValue === 0 ) {
           return;
         }
-        var initialPosition = new Vector2( xOffSet, MakingTensSharedConstants.PAPER_NUMBER_PLACEMENT_BOUNDS.height / 4 );
+        var initialPosition = new Vector2( xOffSet, MakingTensSharedConstants.LAYOUT_BOUNDS.height / 4 );
         self.addPaperNumber( new PaperNumber( numberValue, initialPosition ) );
         xOffSet += 350;
       } );

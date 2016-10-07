@@ -17,8 +17,6 @@ define( function( require ) {
     // layout bounds used throughout the simulation for laying out the screens
     LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
     PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR: 'rgb( 208, 222, 239 )',
-    //Bounds within which we can randomly place the PaperNumber objects
-    PAPER_NUMBER_PLACEMENT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
     EXPLORE_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
     GAME_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
     ADDING_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',

@@ -43,7 +43,7 @@ define( function( require ) {
       var xOffSet = 200;
       _.each( valuesToCreate, function( numberValue ) {
         if ( numberValue ) {
-          var initialPosition = new Vector2( xOffSet, MakingTensSharedConstants.PAPER_NUMBER_PLACEMENT_BOUNDS.height / 3.5 );
+          var initialPosition = new Vector2( xOffSet, MakingTensSharedConstants.LAYOUT_BOUNDS.height / 3.5 );
           //Keyboard Terms returns as String, so cast it to number
           self.addPaperNumber( new PaperNumber( numberValue, initialPosition ) );
           xOffSet += 350;
