@@ -279,11 +279,11 @@ define( function( require ) {
     /**
      * @param {Vector2} destination
      * @param {boolean} animate
-     * @param {number} animationVelocity
+     * @param {number} [animationVelocity]
      */
     setDestination: function( destination, animate, animationVelocity ) {
       this.destination = destination;
-      this.animationVelocity = animationVelocity || MakingTensSharedConstants.ANIMATION_VELOCITY;
+      this.animationVelocity = ( animationVelocity !== undefined ) ? animationVelocity : MakingTensSharedConstants.ANIMATION_VELOCITY;
 
       if ( animate ) {
         this.animating = true;
@@ -313,7 +313,7 @@ define( function( require ) {
     /**
      * Return the shape to the place where it was originally created.
      * @param {boolean} animate
-     * @param {number} animationVelocity
+     * @param {number} [animationVelocity]
      */
     returnToOrigin: function( animate, animationVelocity ) {
       this.setDestination( this.positionProperty.initialValue, animate, animationVelocity );

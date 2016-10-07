@@ -239,7 +239,7 @@ define( function( require ) {
             paperNumberPart.returnToOrigin( true, MakingTensSharedConstants.ANIMATION_VELOCITY / 1.5 );// true is for animate and return
           }
 
-          paperNumber.returnToOrigin();
+          paperNumber.returnToOrigin( false );
         }
 
       } );
