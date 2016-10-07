@@ -44,12 +44,11 @@ define( function( require ) {
      * Every time the user creates a new paperModel call this to update the sum
      */
     calculateTotal: function() {
-      var self = this;
       var total = 0;
-      self.paperNumbers.forEach( function( model ) {
+      this.paperNumbers.forEach( function( model ) {
         total += model.numberValue;
       } );
-      self.sum = total;
+      this.sum = total;
     },
 
     addPaperNumber: function( paperNumber ) {
