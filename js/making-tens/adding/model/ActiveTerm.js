@@ -12,9 +12,9 @@ define( function( require ) {
   var makingTens = require( 'MAKING_TENS/makingTens' );
 
   var ActiveTerm = Object.freeze( {
-    LEFT: 'left',
-    RIGHT: 'right',
-    NONE: 'none'
+    LEFT: 'LEFT',
+    RIGHT: 'RIGHT',
+    NONE: 'NONE'
   } );
 
   makingTens.register( 'ActiveTerm', ActiveTerm );

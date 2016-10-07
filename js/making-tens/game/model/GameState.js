@@ -10,9 +10,9 @@ define( function( require ) {
   var makingTens = require( 'MAKING_TENS/makingTens' );
 
   var GameState = Object.freeze( {
-    CHOOSING_LEVEL: 'choosingLevel',
-    PRESENTING_INTERACTIVE_CHALLENGE: 'presentingInteractiveChallenge',
-    MOVE_TO_NEXT_CHALLENGE: 'MoveToNextChallenge',
+    CHOOSING_LEVEL: 'CHOOSING_LEVEL',
+    PRESENTING_INTERACTIVE_CHALLENGE: 'PRESENTING_INTERACTIVE_CHALLENGE',
+    MOVE_TO_NEXT_CHALLENGE: 'MOVE_TO_NEXT_CHALLENGE',
     CORRECT_ANSWER: 'CORRECT_ANSWER'
   } );
 
