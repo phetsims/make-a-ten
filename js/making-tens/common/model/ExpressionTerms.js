@@ -46,14 +46,7 @@ define( function( require ) {
      */
     hasBothTerms: function() {
       return (this.activeTerm === 'none') && (!!this.leftTerm && !!this.rightTerm);
-    },
-
-    reset: function() {
-      this.leftTerm = null;
-      this.rightTerm = null;
-      this.activeTerm = 'none';
     }
-
   } );
 
 } );
