@@ -18,13 +18,11 @@ define( function( require ) {
    *
    * @param {number} leftTerm
    * @param {number} rightTerm
-   * @param {Object} options
    * @constructor
    */
-  function NumberChallenge( leftTerm, rightTerm, options ) {
+  function NumberChallenge( leftTerm, rightTerm ) {
     this.leftTerm = leftTerm;
     this.rightTerm = rightTerm;
-    this.options = options;
   }
 
   makingTens.register( 'NumberChallenge', NumberChallenge );

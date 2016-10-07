@@ -183,7 +183,7 @@ define( function( require ) {
     tenAndUnderChallenge: function() {
       var leftTerm = _.random( 1, 9 );
       var rightTerm = _.random( 1, 10 - leftTerm );
-      return new NumberChallenge( leftTerm, rightTerm, {} );
+      return new NumberChallenge( leftTerm, rightTerm );
     },
 
     /**
@@ -201,7 +201,7 @@ define( function( require ) {
       this.addWithNineChallengeTermAlternator *= -1;
 
       var termIndex = _.random( 0, addWithNineChallengeTerms.length - 1 );
-      return new NumberChallenge( addWithNineChallengeTerms[ termIndex ][ 0 ], addWithNineChallengeTerms[ termIndex ][ 1 ], {} );
+      return new NumberChallenge( addWithNineChallengeTerms[ termIndex ][ 0 ], addWithNineChallengeTerms[ termIndex ][ 1 ] );
     },
 
     /**
@@ -210,7 +210,7 @@ define( function( require ) {
      */
     addWithTensChallenge: function() {
       var termIndex = _.random( 0, this.addWithTensChallengeTerms.length - 1 );
-      return new NumberChallenge( this.addWithTensChallengeTerms[ termIndex ][ 0 ], this.addWithTensChallengeTerms[ termIndex ][ 1 ], {} );
+      return new NumberChallenge( this.addWithTensChallengeTerms[ termIndex ][ 0 ], this.addWithTensChallengeTerms[ termIndex ][ 1 ] );
     },
 
     /**
@@ -219,12 +219,12 @@ define( function( require ) {
      */
     underTwentyChallenge: function() {
       var termIndex = _.random( 0, this.underTwentyChallengeTerms.length - 1 );
-      return new NumberChallenge( this.underTwentyChallengeTerms[ termIndex ][ 0 ], this.underTwentyChallengeTerms[ termIndex ][ 1 ], {} );
+      return new NumberChallenge( this.underTwentyChallengeTerms[ termIndex ][ 0 ], this.underTwentyChallengeTerms[ termIndex ][ 1 ] );
     },
 
     addWithSinglesChallenge: function() {
       var termIndex = _.random( 0, this.addWithSinglesChallengeTerms.length - 1 );
-      return new NumberChallenge( this.addWithSinglesChallengeTerms[ termIndex ][ 0 ], this.addWithSinglesChallengeTerms[ termIndex ][ 1 ], {} );
+      return new NumberChallenge( this.addWithSinglesChallengeTerms[ termIndex ][ 0 ], this.addWithSinglesChallengeTerms[ termIndex ][ 1 ] );
     },
 
     /**
@@ -232,7 +232,7 @@ define( function( require ) {
      */
     underHundredsChallenge: function() {
       var termIndex = _.random( 0, this.underHundredsChallengeTerms.length - 1 );
-      return new NumberChallenge( this.underHundredsChallengeTerms[ termIndex ][ 0 ], this.underHundredsChallengeTerms[ termIndex ][ 1 ], {} );
+      return new NumberChallenge( this.underHundredsChallengeTerms[ termIndex ][ 0 ], this.underHundredsChallengeTerms[ termIndex ][ 1 ] );
     },
 
     /**
@@ -241,7 +241,7 @@ define( function( require ) {
      */
     overHundredChallenge: function() {
       var termIndex = _.random( 0, this.overHundredsChallengeTerms.length - 1 );
-      return new NumberChallenge( this.overHundredsChallengeTerms[ termIndex ][ 0 ], this.overHundredsChallengeTerms[ termIndex ][ 1 ], {} );
+      return new NumberChallenge( this.overHundredsChallengeTerms[ termIndex ][ 0 ], this.overHundredsChallengeTerms[ termIndex ][ 1 ] );
     },
 
     /**
@@ -257,7 +257,7 @@ define( function( require ) {
         terms.reverse();
       }
       this.addWithSinglesThreeDigitsAlternator *= -1;
-      return new NumberChallenge( terms[ 0 ], terms[ 1 ], {} );
+      return new NumberChallenge( terms[ 0 ], terms[ 1 ] );
     },
 
     /**
@@ -268,7 +268,7 @@ define( function( require ) {
     addWithTensThreeDigit: function() {
       var leftTerm = _.random( 10, 100 ) * 10;
       var rightTerm = _.random( 10, 100 ) * 10;
-      return new NumberChallenge( leftTerm, rightTerm, {} );
+      return new NumberChallenge( leftTerm, rightTerm );
     },
 
     /**
@@ -279,7 +279,7 @@ define( function( require ) {
     triplesChallenge: function() {
       var leftTerm = _.random( 101, 998 );
       var rightTerm = _.random( 101, 998 );
-      return new NumberChallenge( leftTerm, rightTerm, {} );
+      return new NumberChallenge( leftTerm, rightTerm );
     }
 
   } );
