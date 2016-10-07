@@ -23,25 +23,25 @@ define( function( require ) {
   var TERM_FONT = new PhetFont( { size: 45, weight: 'bold' } );
   var EQUATION_FONT = new PhetFont( { size: 45, weight: 'bold' } );
   var EQUATION_COLOR = 'rgb(63,63,183)';
+  var STROKE_COLOR = '#000';
+  var LINE_DASH = [ 5, 5 ];
 
   /**
-   *
-   *
    * @constructor
    */
   function ExpressionTermsNode( expressionTerms ) {
     Node.call( this );
-    //background style for active Term. When a term is highlighted (ie keyboard is active, indicate
-    //to the user using a different background)
-    var activeNumberDisplayStyle = { fill: null, stroke: '#000', lineDash: [ 5, 5 ] };
-    var normalNumberDisplayStyle = { fill: null, stroke: null, lineDash: [] };
 
     var leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, {
-      fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
+      stroke: STROKE_COLOR,
+      lineDash: LINE_DASH,
+      lineWidth: 2
     } );
 
     var rightNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, {
-      fill: '#fff', stroke: '#000', lineDash: [ 5, 5 ], lineWidth: 2
+      stroke: STROKE_COLOR,
+      lineDash: LINE_DASH,
+      lineWidth: 2
     } );
 
     var leftTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
@@ -96,15 +96,9 @@ define( function( require ) {
 
     if ( expressionTerms.highlightBorders ) {
       expressionTerms.activeTermProperty.link( function( term ) {
-        leftNumberDisplayBackground.mutate( normalNumberDisplayStyle );
-        rightNumberDisplayBackground.mutate( normalNumberDisplayStyle );
+        leftNumberDisplayBackground.stroke = ( term === 'lt' ) ? STROKE_COLOR : null;
+        rightNumberDisplayBackground.stroke = ( term === 'rt' ) ? STROKE_COLOR : null;
         equalsSignNode.visible = expressionTerms.hasBothTerms();
-        if ( term === 'lt' ) {
-          leftNumberDisplayBackground.mutate( activeNumberDisplayStyle );
-        }
-        if ( term === 'rt' ) {
-          rightNumberDisplayBackground.mutate( activeNumberDisplayStyle );
-        }
       } );
 
     }
