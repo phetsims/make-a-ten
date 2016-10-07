@@ -35,7 +35,6 @@ define( function( require ) {
       currentLevel: 0,
       challengeIndex: 0,
       currentChallenge: null,
-      elapsedTime: 0,
       // Current state of the game, see GameState for valid values.
       gameState: GameState.CHOOSING_LEVEL
     } );
@@ -74,7 +73,6 @@ define( function( require ) {
     // starts new level
     startLevel: function( level ) {
       this.currentLevel = level;
-      this.restartGameTimer();
 
       // Set up the model for the next challenge
       this.currentChallenge = this.generateChallenge( level );
@@ -145,23 +143,6 @@ define( function( require ) {
     setChoosingLevelState: function() {
       this.gameState = GameState.CHOOSING_LEVEL;
       this.paperNumbers.clear();
-    },
-
-    // @private
-    restartGameTimer: function() {
-      if ( this.gameTimerId !== null ) {
-        window.clearInterval( this.gameTimerId );
-      }
-      this.elapsedTime = 0;
-      var self = this;
-      // TODO: setInterval usage deprecated!
-      this.gameTimerId = window.setInterval( function() { self.elapsedTime += 1; }, 1000 );
-    },
-
-    // @private
-    stopGameTimer: function() {
-      window.clearInterval( this.gameTimerId );
-      this.gameTimerId = null;
     },
 
     /**
