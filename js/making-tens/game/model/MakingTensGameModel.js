@@ -30,7 +30,6 @@ define( function( require ) {
     MakingTensCommonModel.call( this, {
       sum: '',
       soundEnabled: true,
-      timerEnabled: false,
       currentLevel: 0,
       currentChallenge: null,
       // Current state of the game, see GameState for valid values.
