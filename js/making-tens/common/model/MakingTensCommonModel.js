@@ -73,27 +73,27 @@ define( function( require ) {
      * Function for adding new movable shapes to this model when the user creates them, generally by clicking on some
      * some sort of creator node.
      * @public
-     * @param paperNumberModel
+     * @param paperNumber
      */
-    addPaperNumber: function( paperNumberModel ) {
-      this.paperNumbers.push( paperNumberModel );
+    addPaperNumber: function( paperNumber ) {
+      this.paperNumbers.push( paperNumber );
     },
 
     /**
      *
-     * @param {PaperNumber} paperNumberModel1
-     * @param {PaperNumber} paperNumberModel2
+     * @param {PaperNumber} paperNumber1
+     * @param {PaperNumber} paperNumber2
      */
-    repelAway: function( paperNumberModel1, paperNumberModel2 ) {
-      var repelRightDistance = MakingTensSharedConstants.MOVE_AWAY_DISTANCE[ paperNumberModel1.digitLength ];
-      var repelLeftDistance = MakingTensSharedConstants.MOVE_AWAY_DISTANCE[ paperNumberModel2.digitLength ] * -1;
+    repelAway: function( paperNumber1, paperNumber2 ) {
+      var repelRightDistance = MakingTensSharedConstants.MOVE_AWAY_DISTANCE[ paperNumber1.digitLength ];
+      var repelLeftDistance = MakingTensSharedConstants.MOVE_AWAY_DISTANCE[ paperNumber2.digitLength ] * -1;
 
-      var rightPaperModel = paperNumberModel1;
-      var leftPaperModel = paperNumberModel2;
+      var rightPaperModel = paperNumber1;
+      var leftPaperModel = paperNumber2;
 
       if ( rightPaperModel.position.x < leftPaperModel.position.x ) {
-        rightPaperModel = paperNumberModel2;
-        leftPaperModel = paperNumberModel1;
+        rightPaperModel = paperNumber2;
+        leftPaperModel = paperNumber1;
       }
 
       var animateToDestination = true;

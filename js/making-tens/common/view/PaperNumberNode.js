@@ -32,15 +32,15 @@ define( function( require ) {
 
   /**
    *
-   * @param {PaperNumber} paperNumberModel
+   * @param {PaperNumber} paperNumber
    * @param {MakingTensCommonView} makingTensView
-   * @param {Function<paperNumberModel>} addNumberModelCallback A callback to invoke when a  Number is  split
-   * @param {Function<paperNumberModel,droppedPoint>} tryToCombineNumbers A callback to invoke when a Number is  combined
+   * @param {Function<paperNumber>} addNumberModelCallback A callback to invoke when a  Number is  split
+   * @param {Function<paperNumber,droppedPoint>} tryToCombineNumbers A callback to invoke when a Number is  combined
    * @constructor
    */
-  function PaperNumberNode( paperNumberModel, makingTensView, addNumberModelCallback, tryToCombineNumbers ) {
+  function PaperNumberNode( paperNumber, makingTensView, addNumberModelCallback, tryToCombineNumbers ) {
     var self = this;
-    self.paperNumberModel = paperNumberModel;
+    self.paperNumber = paperNumber;
     self.makingTensView = makingTensView;
     Node.call( self );
 
@@ -50,10 +50,10 @@ define( function( require ) {
     var imageNumberNode = new Node();
     self.addChild( imageNumberNode );
 
-    paperNumberModel.numberValueProperty.link( function( newNumber ) {
+    paperNumber.numberValueProperty.link( function( newNumber ) {
       imageNumberNode.removeAllChildren();
 
-      _.each( paperNumberModel.baseNumbers, function( baseNumberObj ) {
+      _.each( paperNumber.baseNumbers, function( baseNumberObj ) {
         var baseNumberImage = PaperImageCollection.getNumberImage( baseNumberObj.numberValue );
         var baseNumberImageNode = new Image( baseNumberImage );
         baseNumberImageNode.leftTop = baseNumberObj.position;
@@ -78,12 +78,12 @@ define( function( require ) {
       self.mouseArea = mouseArea;
     }
 
-    paperNumberModel.positionProperty.link( function( newPos ) {
+    paperNumber.positionProperty.link( function( newPos ) {
       self.leftTop = newPos;
     } );
 
 
-    paperNumberModel.opacityProperty.link( function( opacity ) {
+    paperNumber.opacityProperty.link( function( opacity ) {
       imageNumberNode.opacity = opacity;
     } );
 
@@ -99,8 +99,8 @@ define( function( require ) {
       movableObject = null;
     }
 
-    function startMoving( paperNumberModel ) {
-      movableObject = paperNumberModel;
+    function startMoving( paperNumber ) {
+      movableObject = paperNumber;
       movableObject.userControlled = true;
     }
 
@@ -116,24 +116,24 @@ define( function( require ) {
         startOffset = self.globalToParentPoint( event.pointer.point );
         currentPoint = startOffset.copy();
 
-        if ( paperNumberModel.numberValue === 1 ) {
-          startMoving( paperNumberModel );
+        if ( paperNumber.numberValue === 1 ) {
+          startMoving( paperNumber );
           return;
         }
 
         var pulledOutIndex = self.determineDigitIndex( startOffset );
-        var amountToRemove = ArithmeticRules.pullApartNumbers( paperNumberModel.numberValue, pulledOutIndex );
-        var amountRemaining = paperNumberModel.numberValue - amountToRemove;
+        var amountToRemove = ArithmeticRules.pullApartNumbers( paperNumber.numberValue, pulledOutIndex );
+        var amountRemaining = paperNumber.numberValue - amountToRemove;
 
         // it cannot be split - so start moving
         if ( !amountToRemove ) {
-          startMoving( paperNumberModel );
+          startMoving( paperNumber );
           return;
         }
 
         // When splitting a single digit from a two, make sure the mouse is near that second digit (or third digit)
         // In the case of splitting equal digits (ex 30 splitting in to 20 and 10) we don't need to check this condition
-        var amountRemovingOffsetPosition = self.paperNumberModel.getDigitOffsetPosition( amountRemaining );
+        var amountRemovingOffsetPosition = self.paperNumber.getDigitOffsetPosition( amountRemaining );
         var totalBounds = self.bounds;
         var splitRect = Bounds2.rect( totalBounds.x, totalBounds.y,
           totalBounds.width, totalBounds.height * MakingTensSharedConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION );
@@ -153,7 +153,7 @@ define( function( require ) {
         }
 
         // none matched, start moving
-        startMoving( paperNumberModel );
+        startMoving( paperNumber );
       },
 
       // Handler that moves the shape in model space.
@@ -166,7 +166,7 @@ define( function( require ) {
         //if it is splitMode
         if ( splitObjectContext && transDistance > MIN_SPLIT_DISTANCE ) {
           self.addNumberModelCallback( splitObjectContext.pulledApartPaperNumber );
-          paperNumberModel.changeNumber( splitObjectContext.amountRemaining );
+          paperNumber.changeNumber( splitObjectContext.amountRemaining );
           startMoving( splitObjectContext.pulledApartPaperNumber );
 
           // After a Number is pulled the  remaining digits must stay in the same place.We use the amountRemovingOffsetPosition
@@ -175,7 +175,7 @@ define( function( require ) {
 
           if ( splitObjectContext.pulledApartPaperNumber.digitLength >=
                (splitObjectContext.amountRemaining + '').length ) {
-            paperNumberModel.setDestination( paperNumberModel.position.plus(
+            paperNumber.setDestination( paperNumber.position.plus(
               splitObjectContext.amountRemovingOffsetPosition ) );
           }
           if ( splitObjectContext.pulledApartPaperNumber.digitLength >
@@ -193,7 +193,7 @@ define( function( require ) {
           movableObject.constrainPosition( makingTensView.availableViewBoundsProperty.get(), newPosition );
 
           // if it is a new created object, change the opacity
-          if ( movableObject !== paperNumberModel ) {
+          if ( movableObject !== paperNumber ) {
             // gradually increase the opacity from 0.8 to 1 as we move away from the number, otherwise the change looks sudden
             movableObject.opacity = 0.9 + (0.005 * Math.min( 20, transDistance / SPLIT_OPACITY_FACTOR ));
           }
@@ -221,7 +221,7 @@ define( function( require ) {
     paperNodeDragHandler.move = function( event ) {
 
       // if it is 1, we can only move
-      if ( paperNumberModel.numberValue === 1 ) {
+      if ( paperNumber.numberValue === 1 ) {
         self.cursor = 'move';
         return;
       }
@@ -256,7 +256,7 @@ define( function( require ) {
      */
     determinePulledOutNumberPosition: function( newPulledNumber ) {
       var self = this;
-      return self.leftTop.plus( self.paperNumberModel.getDigitOffsetPosition( newPulledNumber ) );
+      return self.leftTop.plus( self.paperNumber.getDigitOffsetPosition( newPulledNumber ) );
     },
 
     /**
@@ -268,7 +268,7 @@ define( function( require ) {
     determineDigitIndex: function( parentPos ) {
       var self = this;
       var localPos = self.parentToLocalPoint( parentPos );
-      return self.paperNumberModel.determineDigitIndex( localPos );
+      return self.paperNumber.determineDigitIndex( localPos );
     },
 
     /**
@@ -289,13 +289,13 @@ define( function( require ) {
         var droppedNode = attachableNodeCandidates[ i ];
         var widerNode = droppedNode;
         var smallerNode = self;
-        if ( smallerNode.paperNumberModel.numberValue > widerNode.paperNumberModel.numberValue ) {
+        if ( smallerNode.paperNumber.numberValue > widerNode.paperNumber.numberValue ) {
           widerNode = self;
           smallerNode = droppedNode;
         }
 
-        var smallerDigitLength = smallerNode.paperNumberModel.digitLength;
-        var widerDigitLength = widerNode.paperNumberModel.digitLength;
+        var smallerDigitLength = smallerNode.paperNumber.digitLength;
+        var widerDigitLength = widerNode.paperNumber.digitLength;
 
         var yDiff = Math.abs( droppedNode.top - self.top );
         var dropPositionHeightTolerance = smallerNode.bounds.height * DROP_BOUNDS_HEIGHT_PROPORTION;

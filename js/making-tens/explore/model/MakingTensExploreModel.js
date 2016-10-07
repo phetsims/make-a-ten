@@ -55,11 +55,11 @@ define( function( require ) {
       self.sum = total;
     },
 
-    addPaperNumber: function( paperNumberModel ) {
-      MakingTensCommonModel.prototype.addPaperNumber.call( this, paperNumberModel );
+    addPaperNumber: function( paperNumber ) {
+      MakingTensCommonModel.prototype.addPaperNumber.call( this, paperNumber );
       var self = this;
-      paperNumberModel.numberValueProperty.link( function( newValue ) {
-        if ( !paperNumberModel.userControlled ) {
+      paperNumber.numberValueProperty.link( function( newValue ) {
+        if ( !paperNumber.userControlled ) {
           self.calculateTotal();
           self.interactionSucceeded = true;
         }
@@ -68,10 +68,10 @@ define( function( require ) {
 
       // The shape will be removed from the model if and when it returns to its origination point.  This is how a shape
       // can be 'put back' into the panel.
-      paperNumberModel.on( 'returnedToOrigin', function() {
-        if ( !paperNumberModel.userControlled ) {
+      paperNumber.on( 'returnedToOrigin', function() {
+        if ( !paperNumber.userControlled ) {
           // The shape has been returned to the panel.
-          self.paperNumbers.remove( paperNumberModel );
+          self.paperNumbers.remove( paperNumber );
         }
       } );
     },

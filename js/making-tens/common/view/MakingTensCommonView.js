@@ -110,7 +110,7 @@ define( function( require ) {
 
       //reset the default opacity
       for ( var i = 0; i < allPaperNumberNodes.length; i++ ) {
-        allPaperNumberNodes[ i ].paperNumberModel.resetOpacity();
+        allPaperNumberNodes[ i ].paperNumber.resetOpacity();
       }
 
       for ( i = 0; i < allPaperNumberNodes.length; i++ ) {
@@ -130,21 +130,21 @@ define( function( require ) {
 
             //the node, that hovers over other, should have minimum opacity
             if ( displayOrder1 > displayOrder2 ) {
-              paperNumberNode1.paperNumberModel.opacity = MakingTensSharedConstants.HOVER_OPACITY;
+              paperNumberNode1.paperNumber.opacity = MakingTensSharedConstants.HOVER_OPACITY;
             }
             else {
-              paperNumberNode2.paperNumberModel.opacity = MakingTensSharedConstants.HOVER_OPACITY;
+              paperNumberNode2.paperNumber.opacity = MakingTensSharedConstants.HOVER_OPACITY;
             }
           }
         }
       }
     },
 
-    findPaperNumberNode: function( paperNumberModel ) {
+    findPaperNumberNode: function( paperNumber ) {
       var self = this;
       var allPaperNumberNodes = self.paperNumberLayerNode.children;
       var node = _.find( allPaperNumberNodes, function( node ) {
-        return node.paperNumberModel === paperNumberModel;
+        return node.paperNumber === paperNumber;
       } );
       return node;
     },
@@ -171,18 +171,18 @@ define( function( require ) {
 
       for ( var i = 0; i < droppedNodes.length; i++ ) {
         var numberA = draggedPaperNumber.numberValue;
-        var numberB = droppedNodes[ i ].paperNumberModel.numberValue;
+        var numberB = droppedNodes[ i ].paperNumber.numberValue;
         if ( ArithmeticRules.canAddNumbers( numberA, numberB ) ) {
-          var droppedPaperNumber = droppedNodes[ i ].paperNumberModel;
+          var droppedPaperNumber = droppedNodes[ i ].paperNumber;
           self.makingTensModel.collapseNumberModels( draggedPaperNumber, droppedPaperNumber );
           return;
         }
         else {
 
           // repel numbers - show rejection
-          var paperNumberModel1 = draggedNode.paperNumberModel;
-          var paperNumberModel2 = droppedNodes[ i ].paperNumberModel;
-          self.makingTensModel.repelAway( paperNumberModel1, paperNumberModel2 );
+          var paperNumber1 = draggedNode.paperNumber;
+          var paperNumber2 = droppedNodes[ i ].paperNumber;
+          self.makingTensModel.repelAway( paperNumber1, paperNumber2 );
           return;
         }
       }

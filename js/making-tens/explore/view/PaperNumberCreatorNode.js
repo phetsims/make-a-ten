@@ -38,7 +38,7 @@ define( function( require ) {
     representation.scale( 0.64, 0.55 );
     this.addChild( representation );
 
-    var paperNumberModel;
+    var paperNumber;
     var parentScreenView = null; // needed for coordinate transforms
 
     // Add the listener that will allow the user to click on this and create a new shape, then position it in the model.
@@ -67,7 +67,7 @@ define( function( require ) {
         var initialPosition = parentScreenView.globalToLocalPoint( upperLeftCornerGlobal );
 
         // Create and add the new model element.
-        paperNumberModel = new PaperNumber( numberValue, initialPosition );
+        paperNumber = new PaperNumber( numberValue, initialPosition );
 
         //offset based on clicked position
         var selectedPositionOffset = upperLeftCornerGlobal.minus( event.pointer.point );
@@ -76,36 +76,36 @@ define( function( require ) {
         var offsetY = -allowedGlobalCreationBounds.height - selectedPositionOffset.y;
         var selectedPosition = initialPosition.plus( new Vector2( 0, offsetY ) );
 
-        paperNumberModel.setDestination( selectedPosition );
-        paperNumberModel.userControlled = true;
-        addNumberToModel( paperNumberModel );
+        paperNumber.setDestination( selectedPosition );
+        paperNumber.userControlled = true;
+        addNumberToModel( paperNumber );
 
       },
 
       translate: function( translationParams ) {
-        if ( !paperNumberModel ) {
+        if ( !paperNumber ) {
           return;
         }
-        var newPos = paperNumberModel.position.plus( translationParams.delta );
-        paperNumberModel.constrainPosition( makingTensView.availableViewBoundsProperty.get(), newPos );
+        var newPos = paperNumber.position.plus( translationParams.delta );
+        paperNumber.constrainPosition( makingTensView.availableViewBoundsProperty.get(), newPos );
       },
 
       end: function( event, trail ) {
-        if ( !paperNumberModel ) {
+        if ( !paperNumber ) {
           return;
         }
-        paperNumberModel.userControlled = false;
+        paperNumber.userControlled = false;
         var droppedPoint = event.pointer.point;
         var droppedViewPoint = parentScreenView.globalToLocalPoint( event.pointer.point );
 
         //check if the user has dropped the number within the panel, if "yes" return to origin
-        if ( !canPlaceNumber( paperNumberModel, droppedViewPoint ) ) {
-          paperNumberModel.returnToOrigin( true );
-          paperNumberModel = null;
+        if ( !canPlaceNumber( paperNumber, droppedViewPoint ) ) {
+          paperNumber.returnToOrigin( true );
+          paperNumber = null;
           return;
         }
-        tryToCombineNumbers( paperNumberModel, droppedPoint );
-        paperNumberModel = null;
+        tryToCombineNumbers( paperNumber, droppedPoint );
+        paperNumber = null;
       }
     } );
 

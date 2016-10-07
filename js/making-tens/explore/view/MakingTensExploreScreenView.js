@@ -185,11 +185,11 @@ define( function( require ) {
      * Used to determine if the user has placed the picked number sufficiently away from
      * the container panel. if not return the number back to the container itself
      *
-     * @param {PaperNumber} paperNumberModel
+     * @param {PaperNumber} paperNumber
      * @param {Vector2} droppedPosition
      */
-    canPlaceNumberAt: function( paperNumberModel, droppedPosition ) {
-      var paperNumberDimension = paperNumberModel.getDimension();
+    canPlaceNumberAt: function( paperNumber, droppedPosition ) {
+      var paperNumberDimension = paperNumber.getDimension();
 
       //  create a bounds using the dropped position and dimension of the paperNumber
       //  How far away the user has to drop the number varies with the size of the paper number
@@ -206,22 +206,22 @@ define( function( require ) {
      * This interception allows to hook functionality to see if the user leaves the Paper over the explorer carousel
      * in order to return them to the origin
      * @public
-     * @param paperNumberModel
+     * @param paperNumber
      */
-    addPaperNumber: function( paperNumberModel ) {
+    addPaperNumber: function( paperNumber ) {
       var self = this;
-      this.makingTensModel.addPaperNumber( paperNumberModel );
+      this.makingTensModel.addPaperNumber( paperNumber );
 
       // see if the user has dropped the paperNumber on Explorer panel, if yes return it to origin
-      paperNumberModel.on( 'endDrag', function() {
+      paperNumber.on( 'endDrag', function() {
 
         var panelBounds = self.returnZoneBounds;
-        var paperNumberDimension = paperNumberModel.getDimension(); // local
-        var paperCenter = new Vector2( paperNumberModel.position.x + paperNumberDimension.width * 0.5,
-          paperNumberModel.position.y + paperNumberDimension.height * 0.5 );
+        var paperNumberDimension = paperNumber.getDimension(); // local
+        var paperCenter = new Vector2( paperNumber.position.x + paperNumberDimension.width * 0.5,
+          paperNumber.position.y + paperNumberDimension.height * 0.5 );
 
         if ( panelBounds.containsPoint( paperCenter ) ) {
-          var baseNumbers = paperNumberModel.baseNumbers;
+          var baseNumbers = paperNumber.baseNumbers;
 
           //create as many number of papernumber nodes as the base numbers and animate each of them
           for ( var i = 0; i < baseNumbers.length; i++ ) {
@@ -235,11 +235,11 @@ define( function( require ) {
 
             //Each part's position needs to offset from the currentPosition, so the split begins at the
             // right place
-            paperNumberPart.position = paperNumberModel.position.plus( baseNumbers[ i ].position );
+            paperNumberPart.position = paperNumber.position.plus( baseNumbers[ i ].position );
             paperNumberPart.returnToOrigin( true, MakingTensSharedConstants.ANIMATION_VELOCITY / 1.5 );// true is for animate and return
           }
 
-          paperNumberModel.returnToOrigin();
+          paperNumber.returnToOrigin();
         }
 
       } );
