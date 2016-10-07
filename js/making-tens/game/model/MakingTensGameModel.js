@@ -32,7 +32,6 @@ define( function( require ) {
       soundEnabled: true,
       timerEnabled: false,
       currentLevel: 0,
-      challengeIndex: 0,
       currentChallenge: null,
       // Current state of the game, see GameState for valid values.
       gameState: GameState.CHOOSING_LEVEL
