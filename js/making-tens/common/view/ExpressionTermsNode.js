@@ -3,6 +3,7 @@
 /**
  * The node that displays the sum of all paper numbers placed on the explorer screen
  * TODO: Also used on the game screen, in a different context, and with an additional term? Doc?
+ * TODO: Not even used on the Explore screen?!?
  *
  * @author Sharfudeen Ashraf
  */
