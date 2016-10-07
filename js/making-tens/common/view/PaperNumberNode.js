@@ -40,15 +40,15 @@ define( function( require ) {
    */
   function PaperNumberNode( paperNumber, makingTensView, addNumberModelCallback, tryToCombineNumbers ) {
     var self = this;
-    self.paperNumber = paperNumber;
-    self.makingTensView = makingTensView;
-    Node.call( self );
+    this.paperNumber = paperNumber;
+    this.makingTensView = makingTensView;
+    Node.call( this );
 
-    self.addNumberModelCallback = addNumberModelCallback || _.noop;
+    this.addNumberModelCallback = addNumberModelCallback || _.noop;
     tryToCombineNumbers = tryToCombineNumbers || _.noop;
 
     var imageNumberNode = new Node();
-    self.addChild( imageNumberNode );
+    this.addChild( imageNumberNode );
 
     paperNumber.numberValueProperty.link( function( newNumber ) {
       imageNumberNode.removeAllChildren();
@@ -243,11 +243,38 @@ define( function( require ) {
       self.cursor = 'default';
     };
 
+    // @private {function} - Listener reference that gets attached/detached. Handles moving the Node to the front.
+    this.userControlledListener = this.onUserControlledChange.bind( this );
   }
 
   makingTens.register( 'PaperNumberNode', PaperNumberNode );
 
   return inherit( Node, PaperNumberNode, {
+    /**
+     * When our model becomes user-controlled, move our node to the front.
+     * @private
+     */
+    onUserControlledChange: function() {
+      if ( this.paperNumber.userControlled ) {
+        this.moveToFront();
+      }
+    },
+
+    /**
+     * Attaches listeners to the model. Should be called when added to the scene graph.
+     * @public
+     */
+    attachListeners: function() {
+      this.paperNumber.userControlledProperty.link( this.userControlledListener );
+    },
+
+    /**
+     * Removes listeners from the model. Should be called when removed from the scene graph.
+     * @public
+     */
+    detachListeners: function() {
+      this.paperNumber.userControlledProperty.unlink( this.userControlledListener );
+    },
 
     /**
      * Each number is made up of base numbers. This method tells at what position the pulled out number ly

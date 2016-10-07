@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
   var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var arrayRemove = require( 'PHET_CORE/arrayRemove' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var DotRectangle = require( 'DOT/Rectangle' ); // eslint-disable-line require-statement-match
   var Property = require( 'AXON/Property' );
@@ -35,33 +36,16 @@ define( function( require ) {
     this.addPaperNumber = addPaperNumber || makingTensModel.addPaperNumber.bind( makingTensModel );
     this.tryToCombineNumbers = this.tryToCombineNumbers.bind( this );
 
-    this.paperNumberNodes = [];
-    // Associate Model Id with its corresponding Node
-    // https://github.com/phetsims/making-tens/issues/199
-    this.paperNumberNodeMap = {};
+    this.paperNumberNodes = []; // @private {Array.<PaperNumberNode>} - All PaperNumberNodes available
+    this.paperNumberNodeMap = {}; // @private {number} PaperNumber.id => {PaperNumberNode} - lookup map for efficiency
 
     function handlePaperNumberAdded( addedNumberModel ) {
-      // Add a representation of the number.
-      var paperNumberNode = new PaperNumberNode( addedNumberModel, self, self.addPaperNumber,
-        self.tryToCombineNumbers  );
-      self.paperNumberLayerNode.addChild( paperNumberNode );
-
-      // Move the shape to the front of this layer when grabbed by the user.
-      addedNumberModel.userControlledProperty.link( function( userControlled ) {
-        if ( userControlled ) {
-          paperNumberNode.moveToFront();
-        }
-      } );
-
-      self.paperNumberNodeMap[ addedNumberModel.id ] = paperNumberNode;
-      self.paperNumberNodes.push( paperNumberNode );
+      var paperNumberNode = new PaperNumberNode( addedNumberModel, self, self.addPaperNumber, self.tryToCombineNumbers  );
+      self.addPaperNumberNode( paperNumberNode );
     }
 
     makingTensModel.paperNumbers.addItemRemovedListener( function removalListener( removedNumberModel ) {
-      var removedPaperNumberNode = self.findPaperNumberNode( removedNumberModel );
-      self.paperNumberLayerNode.removeChild( removedPaperNumberNode );
-      self.paperNumberNodes = _.without( self.paperNumberNodes, removedPaperNumberNode );
-      delete self.paperNumberNodeMap[ removedNumberModel.id ];
+      self.removePaperNumberNode( self.findPaperNumberNode( removedNumberModel ) );
     } );
 
     //Initial Number Node creation
@@ -126,6 +110,36 @@ define( function( require ) {
           }
         }
       }
+    },
+
+    /**
+     * Adds a {PaperNumberNode} to the relevant layers, sets up listeners, and internally tracks it.
+     * @public
+     *
+     * @param {PaperNumberNode} paperNumberNode
+     */
+    addPaperNumberNode: function( paperNumberNode ) {
+      this.paperNumberNodeMap[ paperNumberNode.paperNumber.id ] = paperNumberNode;
+      this.paperNumberNodes.push( paperNumberNode );
+
+      this.paperNumberLayerNode.addChild( paperNumberNode );
+
+      paperNumberNode.attachListeners();
+    },
+
+    /**
+     * Removes a {PaperNumberNode} from the relevant layers, removes listeners, and removes internal tracking.
+     * @public
+     *
+     * @param {PaperNumberNode} paperNumberNode
+     */
+    removePaperNumberNode: function( paperNumberNode ) {
+      arrayRemove( this.paperNumberNodes, paperNumberNode );
+      delete this.paperNumberNodeMap[ paperNumberNode.paperNumber.id ];
+
+      this.paperNumberLayerNode.removeChild( paperNumberNode );
+
+      paperNumberNode.detachListeners();
     },
 
     findPaperNumberNode: function( paperNumber ) {
