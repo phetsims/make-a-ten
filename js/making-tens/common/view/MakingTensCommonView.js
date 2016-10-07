@@ -28,17 +28,17 @@ define( function( require ) {
   function MakingTensCommonView( makingTensModel, screenBounds, addPaperNumber ) {
     var self = this;
     ScreenView.call( this, { layoutBounds: screenBounds } );
-    self.makingTensModel = makingTensModel;
+    this.makingTensModel = makingTensModel;
 
-    self.paperNumberLayerNode = new Node();
+    this.paperNumberLayerNode = new Node();
 
-    self.addPaperNumber = addPaperNumber || makingTensModel.addPaperNumber.bind( makingTensModel );
-    self.tryToCombineNumbers = this.tryToCombineNumbers.bind( this );
+    this.addPaperNumber = addPaperNumber || makingTensModel.addPaperNumber.bind( makingTensModel );
+    this.tryToCombineNumbers = this.tryToCombineNumbers.bind( this );
 
-    self.paperNumberNodes = [];
+    this.paperNumberNodes = [];
     // Associate Model Id with its corresponding Node
     // https://github.com/phetsims/making-tens/issues/199
-    self.paperNumberNodeMap = {};
+    this.paperNumberNodeMap = {};
 
     function handlePaperNumberAdded( addedNumberModel ) {
       // Add a representation of the number.
