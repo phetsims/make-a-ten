@@ -91,8 +91,6 @@ define( function( require ) {
 
     } );
 
-    this.initialOpacity = options.opacity;
-
     // Destination is used for animation, and should be set through accessor methods only.
     this.destination = initialPosition.copy(); // @private
 
@@ -342,7 +340,7 @@ define( function( require ) {
     },
 
     resetOpacity: function() {
-      this.opacity = this.initialOpacity;
+      this.opacityProperty.reset();
     }
 
   } );
