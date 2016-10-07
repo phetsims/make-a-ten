@@ -33,14 +33,6 @@ define( function( require ) {
   return inherit( MakingTensCommonModel, MakingTensAddingModel, {
 
     /**
-     *
-     * @param {number} dt
-     */
-    step: function( dt ) {
-      MakingTensCommonModel.prototype.step.call( this, dt );
-    },
-
-    /**
      * creates PaperNumbers based on the values entered through keyboard
      */
     createTerms: function() {
