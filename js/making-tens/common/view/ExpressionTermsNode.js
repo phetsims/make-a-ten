@@ -25,13 +25,12 @@ define( function( require ) {
   var EQUATION_COLOR = 'rgb(63,63,183)';
   var STROKE_COLOR = '#000';
   var LINE_DASH = [ 5, 5 ];
+  var LAYOUT_MULTIPLIER = 1 / 8; // Fraction offset of the text from the background's border
 
   /**
    * @constructor
    */
   function ExpressionTermsNode( expressionTerms, options ) {
-    var self = this;
-
     options = options || {
       highlightBorders: false
     };
@@ -41,85 +40,81 @@ define( function( require ) {
     var leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, {
       stroke: STROKE_COLOR,
       lineDash: LINE_DASH,
-      lineWidth: 2
+      lineWidth: 2,
+      visible: options.highlightBorders
     } );
 
     var rightNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, {
       stroke: STROKE_COLOR,
       lineDash: LINE_DASH,
-      lineWidth: 2
+      lineWidth: 2,
+      visible: options.highlightBorders
     } );
 
-    this.plusNode = new Text( '+', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
-    this.equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
+    var plusNode = new Text( '+', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
+    var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
 
-    this.numberDisplayBox = new HBox( {
-      children: [ leftNumberDisplayBackground, this.plusNode,
+    var numberDisplayBox = new HBox( {
+      children: [ leftNumberDisplayBackground, plusNode,
         rightNumberDisplayBackground ],
       spacing: 5,
       resize: false // since we toggle the stroke
     } );
 
-    this.leftTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
-    this.rightTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
-    this.leftTermTextNode.setDirection( 'rtl' );
+    var leftTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
+    var rightTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
 
-    this.addChild( this.leftTermTextNode );
-    this.addChild( this.rightTermTextNode );
-    this.addChild( this.numberDisplayBox );
-    this.addChild( this.equalsSignNode );
+    this.addChild( leftTermTextNode );
+    this.addChild( rightTermTextNode );
+    this.addChild( numberDisplayBox );
+    this.addChild( equalsSignNode );
 
-    // The number entry panel uses string to display digits.
-    function termToDisplay( termValue ) {
-      assert && assert( typeof termValue === 'number' );
-
-      if ( termValue === 0 ) {
-        return '';
+    function layout() {
+      if ( !rightTermTextNode.bounds.isEmpty() ) {
+        equalsSignNode.left = rightTermTextNode.right + 20;
       }
-      else {
-        return '' + termValue; // cast to string
+      if ( !leftTermTextNode.bounds.isEmpty() ) {
+        leftTermTextNode.right = leftNumberDisplayBackground.right - leftNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
       }
     }
 
+    function termToString( termValue ) {
+      assert && assert( typeof termValue === 'number', 'Sanity, due to the previous implementation' );
+      return termValue ? ( '' + termValue ) : '';
+    }
+
     expressionTerms.leftTermProperty.link( function( leftTerm ) {
-      self.leftTermTextNode.text = termToDisplay( leftTerm );
+      leftTermTextNode.text = termToString( leftTerm );
+      layout();
     } );
 
     expressionTerms.rightTermProperty.link( function( rightTerm ) {
-      self.rightTermTextNode.text = termToDisplay( rightTerm );
-      self.layout();
+      rightTermTextNode.text = termToString( rightTerm );
+      layout();
     } );
 
     // TODO: separate highlightBorders into a separate parameter (presumably)
     if ( options.highlightBorders ) {
       expressionTerms.activeTermProperty.link( function( term ) {
+        // TODO: improve term enumeration
         leftNumberDisplayBackground.stroke = ( term === 'lt' ) ? STROKE_COLOR : null;
         rightNumberDisplayBackground.stroke = ( term === 'rt' ) ? STROKE_COLOR : null;
-        self.equalsSignNode.visible = expressionTerms.hasBothTerms();
+        equalsSignNode.visible = expressionTerms.hasBothTerms();
       } );
-
     }
 
-    this.leftTermTextNode.left = this.numberDisplayBox.left + leftNumberDisplayBackground.width / 1.2;
-    this.leftTermTextNode.centerY = this.numberDisplayBox.centerY;
+    // Vertical layout
+    var centerY = numberDisplayBox.centerY;
+    leftTermTextNode.centerY = centerY;
+    rightTermTextNode.centerY = centerY;
+    equalsSignNode.centerY = centerY;
 
-    this.rightTermTextNode.left = this.numberDisplayBox.left + rightNumberDisplayBackground.left + rightNumberDisplayBackground.width / 8;
-    this.rightTermTextNode.centerY = this.numberDisplayBox.centerY;
-
-    this.equalsSignNode.centerY = this.rightTermTextNode.centerY = this.numberDisplayBox.centerY;
-
-    if ( !options.highlightBorders ) {
-      leftNumberDisplayBackground.visible = false;
-      rightNumberDisplayBackground.visible = false;
-    }
+    // Unchanging layout position of the right text node
+    rightTermTextNode.left = rightNumberDisplayBackground.left + rightNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
   }
 
   makingTens.register( 'ExpressionTermsNode', ExpressionTermsNode );
 
-  return inherit( Node, ExpressionTermsNode, {
-    layout: function() {
-      this.equalsSignNode.left = this.numberDisplayBox.right + this.rightTermTextNode.bounds.width - 60;
-    }
-  } );
+  return inherit( Node, ExpressionTermsNode );
 
 } );
