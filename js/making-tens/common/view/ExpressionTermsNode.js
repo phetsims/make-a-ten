@@ -67,16 +67,14 @@ define( function( require ) {
 
     // The number entry panel uses string to display digits.
     function termToDisplay( termValue ) {
-      //make it a string
-      if ( termValue ) {
-        termValue = termValue + '';
-      }
+      assert && assert( typeof termValue === 'number' );
 
-      // we don't want to show either empty string or zero
-      if ( termValue === '0' || _.isEmpty( termValue ) ) {
-        termValue = '';
+      if ( termValue === 0 ) {
+        return '';
       }
-      return termValue;
+      else {
+        return '' + termValue; // cast to string
+      }
     }
 
     expressionTerms.leftTermProperty.link( function( leftTerm ) {
