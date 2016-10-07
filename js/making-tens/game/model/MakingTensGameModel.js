@@ -61,14 +61,6 @@ define( function( require ) {
 
   return inherit( MakingTensCommonModel, MakingTensGameModel, {
 
-    /**
-     *
-     * @param {number} dt
-     */
-    step: function( dt ) {
-      MakingTensCommonModel.prototype.step.call( this, dt );
-    },
-
     // starts new level
     startLevel: function( level ) {
       this.currentLevel = level;
