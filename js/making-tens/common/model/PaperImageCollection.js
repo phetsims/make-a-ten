@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
   var makingTens = require( 'MAKING_TENS/makingTens' );
 
+  // TODO: Move to view
   var image1 = require( 'image!MAKING_TENS/1.png' );
   var image2 = require( 'image!MAKING_TENS/2.png' );
   var image3 = require( 'image!MAKING_TENS/3.png' );
