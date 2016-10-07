@@ -72,7 +72,9 @@ define( function( require ) {
     editButtonBox.top = this.layoutBounds.minY + 32;
 
     // The node that display "12 + 100 = "
-    var expressionTermsNode = new ExpressionTermsNode( makingTensAddingModel.expressionTerms );
+    var expressionTermsNode = new ExpressionTermsNode( makingTensAddingModel.expressionTerms, {
+      highlightBorders: true
+    } );
     this.addChild( expressionTermsNode );
 
     expressionTermsNode.left = this.layoutBounds.minX + 38;

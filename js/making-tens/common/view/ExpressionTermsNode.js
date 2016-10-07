@@ -29,10 +29,14 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function ExpressionTermsNode( expressionTerms ) {
+  function ExpressionTermsNode( expressionTerms, options ) {
     var self = this;
 
-    Node.call( this );
+    options = options || {
+      highlightBorders: false
+    };
+
+    Node.call( this, options );
 
     var leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, {
       stroke: STROKE_COLOR,
@@ -53,7 +57,7 @@ define( function( require ) {
       children: [ leftNumberDisplayBackground, this.plusNode,
         rightNumberDisplayBackground ],
       spacing: 5,
-      resize: false
+      resize: false // since we toggle the stroke
     } );
 
     this.leftTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
@@ -87,7 +91,7 @@ define( function( require ) {
     } );
 
     // TODO: separate highlightBorders into a separate parameter (presumably)
-    if ( expressionTerms.highlightBorders ) {
+    if ( options.highlightBorders ) {
       expressionTerms.activeTermProperty.link( function( term ) {
         leftNumberDisplayBackground.stroke = ( term === 'lt' ) ? STROKE_COLOR : null;
         rightNumberDisplayBackground.stroke = ( term === 'rt' ) ? STROKE_COLOR : null;
@@ -104,7 +108,7 @@ define( function( require ) {
 
     this.equalsSignNode.centerY = this.rightTermTextNode.centerY = this.numberDisplayBox.centerY;
 
-    if ( !expressionTerms.highlightBorders ) {
+    if ( !options.highlightBorders ) {
       leftNumberDisplayBackground.visible = false;
       rightNumberDisplayBackground.visible = false;
     }

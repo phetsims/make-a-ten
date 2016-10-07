@@ -22,9 +22,7 @@ define( function( require ) {
    */
   function MakingTensAddingModel() {
     // leftTerm,rightTerm,activeTerm and showBackground
-    this.expressionTerms = new ExpressionTerms( {
-      highlightBorders: true
-    } );
+    this.expressionTerms = new ExpressionTerms();
     MakingTensCommonModel.call( this, {} );
   }
 

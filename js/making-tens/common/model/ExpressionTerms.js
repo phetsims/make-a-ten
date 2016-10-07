@@ -15,7 +15,7 @@ define( function( require ) {
 
   /**
    * TODO: fix documentation here
-   * @param [{number|null}leftTerm,{number|null}rightTerm,{string|null}activeTerm,{boolean|null}highlightBorders} options]
+   * @param [{number|null}leftTerm,{number|null}rightTerm,{string|null}activeTerm} options]
    * @constructor
    */
   function ExpressionTerms( options ) {
@@ -25,14 +25,12 @@ define( function( require ) {
     assert && assert( options.leftTerm === undefined || typeof options.leftTerm === 'number', 'Types' );
     assert && assert( options.rightTerm === undefined || typeof options.rightTerm === 'number', 'Types' );
     assert && assert( options.activeTerm === undefined || typeof options.activeTerm === 'string', 'Types' );
-    assert && assert( options.highlightBorders === undefined || typeof options.highlightBorders === 'boolean', 'Types' );
 
     options = options || {};
     PropertySet.call( this, {
       leftTerm: options.leftTerm !== undefined ? options.leftTerm : 0,
       rightTerm: options.rightTerm !== undefined ? options.rightTerm : 0,
-      activeTerm: options.activeTerm !== undefined ? options.activeTerm : 'none', // TODO: enumeration?
-      highlightBorders: options.highlightBorders !== undefined ? options.highlightBorders : false // looks like a cast to false?
+      activeTerm: options.activeTerm !== undefined ? options.activeTerm : 'none' // TODO: enumeration?
     } );
 
   }
