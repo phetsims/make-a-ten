@@ -28,9 +28,14 @@ define( function( require ) {
 
     options = options || {};
     PropertySet.call( this, {
+      // @public {number} - The left term number, or 0 if there is no current term
       leftTerm: options.leftTerm !== undefined ? options.leftTerm : 0,
+
+      // @public {number} - The left term number, or 0 if there is no current term
       rightTerm: options.rightTerm !== undefined ? options.rightTerm : 0,
-      activeTerm: options.activeTerm !== undefined ? options.activeTerm : 'none' // TODO: enumeration?
+
+      // @public {string} - The active term. TODO: make an enumeration?
+      activeTerm: options.activeTerm !== undefined ? options.activeTerm : 'none'
     } );
 
   }
