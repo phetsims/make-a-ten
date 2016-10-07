@@ -74,7 +74,7 @@ define( function( require ) {
 
     reset: function() {
       this.paperNumbers.clear();
-      this.sum = 0;
+      this.sumProperty.reset();
     }
 
   } );
