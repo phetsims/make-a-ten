@@ -22,6 +22,7 @@ define( function( require ) {
    */
   function MakingTensAddingModel() {
     // leftTerm,rightTerm,activeTerm and showBackground
+    // TODO: what is the comment above?
     this.expressionTerms = new ExpressionTerms();
     MakingTensCommonModel.call( this, {} );
   }

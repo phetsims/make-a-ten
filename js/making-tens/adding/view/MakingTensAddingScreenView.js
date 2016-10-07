@@ -21,6 +21,7 @@ define( function( require ) {
   var MakingTensCommonView = require( 'MAKING_TENS/making-tens/common/view/MakingTensCommonView' );
   var ExpressionTermsNode = require( 'MAKING_TENS/making-tens/common/view/ExpressionTermsNode' );
   var MakingTensUtil = require( 'MAKING_TENS/making-tens/common/MakingTensUtil' );
+  var ActiveTerm = require( 'MAKING_TENS/making-tens/adding/model/ActiveTerm' );
 
   //images
   var editIcon = require( 'image!MAKING_TENS/edit.png' );
@@ -41,7 +42,7 @@ define( function( require ) {
     var background = Rectangle.bounds( this.layoutBounds );
     background.addInputListener( {
       down: function( event ) {
-        makingTensAddingModel.activeTerm = 'none'; // this will close the keyboard button
+        makingTensAddingModel.activeTerm = ActiveTerm.NONE; // this will close the keyboard button
       }
     } );
 
@@ -61,8 +62,8 @@ define( function( require ) {
     this.addChild( background );
     this.addChild( this.paperNumberLayerNode );
 
-    var leftEditNumberButton = createEditNumberButton( makingTensAddingModel.expressionTerms.activeTermProperty, 'lt' );
-    var rightEditNumberButton = createEditNumberButton( makingTensAddingModel.expressionTerms.activeTermProperty, 'rt' );
+    var leftEditNumberButton = createEditNumberButton( makingTensAddingModel.expressionTerms.activeTermProperty, ActiveTerm.LEFT );
+    var rightEditNumberButton = createEditNumberButton( makingTensAddingModel.expressionTerms.activeTermProperty, ActiveTerm.RIGHT );
 
     var editButtonBox = new HBox( { children: [ leftEditNumberButton, rightEditNumberButton ], spacing: 45 } );
     this.addChild( editButtonBox );
@@ -79,15 +80,15 @@ define( function( require ) {
     expressionTermsNode.top = this.layoutBounds.minY + 85;
 
     function onNumberSubmit( value ) {
-      if ( makingTensAddingModel.expressionTerms.activeTerm === 'lt' ) {
+      if ( makingTensAddingModel.expressionTerms.activeTerm === ActiveTerm.LEFT ) {
         makingTensAddingModel.expressionTerms.leftTerm = value;
       }
-      if ( makingTensAddingModel.expressionTerms.activeTerm === 'rt' ) {
+      if ( makingTensAddingModel.expressionTerms.activeTerm === ActiveTerm.RIGHT ) {
         makingTensAddingModel.expressionTerms.rightTerm = value;
       }
 
       makingTensAddingModel.createTerms();
-      makingTensAddingModel.expressionTerms.activeTerm = 'none';
+      makingTensAddingModel.expressionTerms.activeTerm = ActiveTerm.NONE;
 
     }
 
@@ -99,16 +100,17 @@ define( function( require ) {
 
     makingTensAddingModel.expressionTerms.activeTermProperty.link( function( term ) {
 
-      if ( term === 'none' ) {
+      // TODO: seems like this could be cleaned up a bit?
+      if ( term === ActiveTerm.NONE ) {
         keyBoardPanel.visible = false;
         return;
       }
 
       keyBoardPanel.visible = true;
-      if ( term === 'lt' ) {
+      if ( term === ActiveTerm.LEFT ) {
         keyBoardPanel.setValue( makingTensAddingModel.expressionTerms.leftTerm );
       }
-      if ( term === 'rt' ) {
+      if ( term === ActiveTerm.RIGHT ) {
         keyBoardPanel.setValue( makingTensAddingModel.expressionTerms.rightTerm );
       }
     } );

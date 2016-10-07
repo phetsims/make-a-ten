@@ -10,12 +10,12 @@ define( function( require ) {
 
   // modules
   var makingTens = require( 'MAKING_TENS/makingTens' );
+  var ActiveTerm = require( 'MAKING_TENS/making-tens/adding/model/ActiveTerm' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
 
   /**
-   * TODO: fix documentation here
-   * @param [{number|null}leftTerm,{number|null}rightTerm,{string|null}activeTerm} options]
+   * @param {Object} [options]
    * @constructor
    */
   function ExpressionTerms( options ) {
@@ -24,7 +24,6 @@ define( function( require ) {
     }
     assert && assert( options.leftTerm === undefined || typeof options.leftTerm === 'number', 'Types' );
     assert && assert( options.rightTerm === undefined || typeof options.rightTerm === 'number', 'Types' );
-    assert && assert( options.activeTerm === undefined || typeof options.activeTerm === 'string', 'Types' );
 
     options = options || {};
     PropertySet.call( this, {
@@ -34,8 +33,8 @@ define( function( require ) {
       // @public {number} - The left term number, or 0 if there is no current term
       rightTerm: options.rightTerm !== undefined ? options.rightTerm : 0,
 
-      // @public {string} - The active term. TODO: make an enumeration?
-      activeTerm: options.activeTerm !== undefined ? options.activeTerm : 'none'
+      // @public {ActiveTerm} - The active term.
+      activeTerm: ActiveTerm.NONE
     } );
 
   }
@@ -50,7 +49,7 @@ define( function( require ) {
      * @returns {boolean}
      */
     hasBothTerms: function() {
-      return (this.activeTerm === 'none') && (!!this.leftTerm && !!this.rightTerm);
+      return this.activeTerm === ActiveTerm.NONE && this.leftTerm > 0 && this.rightTerm > 0;
     }
   } );
 

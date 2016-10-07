@@ -18,6 +18,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var ActiveTerm = require( 'MAKING_TENS/making-tens/adding/model/ActiveTerm' );
 
   // constants
   var TERM_FONT = new PhetFont( { size: 45, weight: 'bold' } );
@@ -97,8 +98,8 @@ define( function( require ) {
     if ( options.highlightBorders ) {
       expressionTerms.activeTermProperty.link( function( term ) {
         // TODO: improve term enumeration
-        leftNumberDisplayBackground.stroke = ( term === 'lt' ) ? STROKE_COLOR : null;
-        rightNumberDisplayBackground.stroke = ( term === 'rt' ) ? STROKE_COLOR : null;
+        leftNumberDisplayBackground.stroke = ( term === ActiveTerm.LEFT ) ? STROKE_COLOR : null;
+        rightNumberDisplayBackground.stroke = ( term === ActiveTerm.RIGHT ) ? STROKE_COLOR : null;
         equalsSignNode.visible = expressionTerms.hasBothTerms();
       } );
     }
