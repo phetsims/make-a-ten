@@ -46,8 +46,6 @@ define( function( require ) {
    * @constructor
    */
   function MakingTensGameScreenView( gameModel ) {
-    var self = this;
-
     MakingTensCommonView.call( this, gameModel, MakingTensSharedConstants.LAYOUT_BOUNDS );
 
     this.rootNode = new Node();
@@ -127,7 +125,7 @@ define( function( require ) {
     this.gameAudioPlayer = new GameAudioPlayer( gameModel.soundEnabledProperty );
 
     // Hook up the update function for handling changes to game state.
-    gameModel.gameStateProperty.link( self.handleGameStateChange.bind( self ) );
+    gameModel.gameStateProperty.link( this.handleGameStateChange.bind( this ) );
 
   }
 

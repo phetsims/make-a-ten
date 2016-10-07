@@ -36,7 +36,7 @@ define( function( require ) {
     createTerms: function() {
       var self = this;
       this.paperNumbers.clear();
-      var valuesToCreate = [ self.expressionTerms.leftTerm, self.expressionTerms.rightTerm ];
+      var valuesToCreate = [ this.expressionTerms.leftTerm, this.expressionTerms.rightTerm ];
 
       var xOffSet = 200;
       _.each( valuesToCreate, function( numberValue ) {

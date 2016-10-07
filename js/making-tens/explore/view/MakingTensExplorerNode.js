@@ -29,11 +29,10 @@ define( function( require ) {
    * @constructor
    */
   function MakingTensExplorerNode( numberValue, addNumberToModel, tryToCombineNumbers , canPlaceNumber, makingTensView ) {
-    var self = this;
-    Node.call( self );
+    Node.call( this );
 
     var numberCollectionLayer = new Node();
-    self.addChild( numberCollectionLayer );
+    this.addChild( numberCollectionLayer );
 
     NUMBER_CREATOR_OFFSET_POSITIONS.forEach( function( offset ) {
       var paperNumberCreatorNode = new PaperNumberCreatorNode( numberValue,

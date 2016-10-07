@@ -18,7 +18,6 @@ define( function( require ) {
    * @constructor
    */
   function MakingTensExploreModel() {
-    var self = this;
     MakingTensCommonModel.call( this, {
       sum: 0,
       hideTotal: false,
@@ -28,9 +27,7 @@ define( function( require ) {
 
     this.arrowCue = new ArrowCue();
 
-    self.paperNumbers.lengthProperty.link( function() {
-      self.calculateTotal();
-    } );
+    this.paperNumbers.lengthProperty.link( this.calculateTotal.bind( this ) );
   }
 
   makingTens.register( 'MakingTensExploreModel', MakingTensExploreModel );

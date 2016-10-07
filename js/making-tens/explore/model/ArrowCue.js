@@ -21,8 +21,7 @@ define( function( require ) {
    * @constructor
    */
   function ArrowCue() {
-    var self = this;
-    PropertySet.call( self, {
+    PropertySet.call( this, {
       moveArrowCuePosition: new Vector2(),
       splitArrowCuePosition: new Vector2(),
       opacity: 1,

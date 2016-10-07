@@ -215,7 +215,7 @@ define( function( require ) {
 
     } );
 
-    self.addInputListener( paperNodeDragHandler );
+    this.addInputListener( paperNodeDragHandler );
 
     // show proper cursor to differentiate move and split
     paperNodeDragHandler.move = function( event ) {
@@ -282,8 +282,7 @@ define( function( require ) {
      * @param newPulledNumber
      */
     determinePulledOutNumberPosition: function( newPulledNumber ) {
-      var self = this;
-      return self.leftTop.plus( self.paperNumber.getDigitOffsetPosition( newPulledNumber ) );
+      return this.leftTop.plus( this.paperNumber.getDigitOffsetPosition( newPulledNumber ) );
     },
 
     /**
@@ -293,9 +292,8 @@ define( function( require ) {
      * @param {number} return value is either 0,1 or 2
      */
     determineDigitIndex: function( parentPos ) {
-      var self = this;
-      var localPos = self.parentToLocalPoint( parentPos );
-      return self.paperNumber.determineDigitIndex( localPos );
+      var localPos = this.parentToLocalPoint( parentPos );
+      return this.paperNumber.determineDigitIndex( localPos );
     },
 
     /**
@@ -305,6 +303,7 @@ define( function( require ) {
      */
     findAttachableNodes: function( allPaperNumberNodes ) {
       var self = this;
+      // TODO: this looks like it could be cleaned up
       _.remove( allPaperNumberNodes, function( node ) {
         return node === self;
       } );
@@ -314,17 +313,14 @@ define( function( require ) {
 
       for ( var i = 0; i < attachableNodeCandidates.length; i++ ) {
         var droppedNode = attachableNodeCandidates[ i ];
-        var widerNode = droppedNode;
-        var smallerNode = self;
-        if ( smallerNode.paperNumber.numberValue > widerNode.paperNumber.numberValue ) {
-          widerNode = self;
-          smallerNode = droppedNode;
-        }
+        var isOpposite = this.paperNumber.numberValue > droppedNode.paperNumber.numberValue;
+        var widerNode = isOpposite ? this : droppedNode;
+        var smallerNode = isOpposite ? droppedNode : this;
 
         var smallerDigitLength = smallerNode.paperNumber.digitLength;
         var widerDigitLength = widerNode.paperNumber.digitLength;
 
-        var yDiff = Math.abs( droppedNode.top - self.top );
+        var yDiff = Math.abs( droppedNode.top - this.top );
         var dropPositionHeightTolerance = smallerNode.bounds.height * DROP_BOUNDS_HEIGHT_PROPORTION;
         var yInRange = Math.abs( yDiff ) < dropPositionHeightTolerance;
 

@@ -43,16 +43,16 @@ define( function( require ) {
     this.expressionTerms =  new ExpressionTerms();
 
     // Best times and scores.
-    self.bestTimes = []; // @public
-    self.scores = []; // @public
-    _.times( self.numberOfLevels, function() {
+    this.bestTimes = []; // @public
+    this.scores = []; // @public
+    _.times( this.numberOfLevels, function() {
       self.bestTimes.push( 0 );
       self.scores.push( new Property( 0 ) );
     } );
 
     this.numberChallengeFactory = new NumberChallengeFactory();
 
-    self.paperNumbers.lengthProperty.link( function( modelLength, prevModelLength ) {
+    this.paperNumbers.lengthProperty.link( function( modelLength, prevModelLength ) {
       if ( modelLength === 1 && prevModelLength === 2 && self.gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
         self.gameState = GameState.CORRECT_ANSWER;
       }
@@ -154,6 +154,7 @@ define( function( require ) {
       }
       this.elapsedTime = 0;
       var self = this;
+      // TODO: setInterval usage deprecated!
       this.gameTimerId = window.setInterval( function() { self.elapsedTime += 1; }, 1000 );
     },
 
@@ -187,11 +188,10 @@ define( function( require ) {
     },
 
     reset: function() {
-      var self = this;
-      self.paperNumbers.clear();
-      for ( var i = 0; i < self.numberOfLevels; i++ ) {
-        self.bestTimes[ i ] = 0;
-        self.scores[ i ].set( 0 );
+      this.paperNumbers.clear();
+      for ( var i = 0; i < this.numberOfLevels; i++ ) {
+        this.bestTimes[ i ] = 0;
+        this.scores[ i ].set( 0 );
       }
 
     }

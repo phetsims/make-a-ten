@@ -39,10 +39,8 @@ define( function( require ) {
    * @constructor
    */
   function MakingTensExploreScreenView( makingTensExploreModel ) {
-    var self = this;
-
     MakingTensCommonView.call( this, makingTensExploreModel, MakingTensSharedConstants.LAYOUT_BOUNDS,
-      self.addPaperNumber.bind( self ) );
+      this.addPaperNumber.bind( this ) );
 
     var sumTextNode = new Text( '0', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
     var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
@@ -59,23 +57,23 @@ define( function( require ) {
     makingTensExploreModel.sumProperty.link( function( newSum ) {
       sumTextNode.text = newSum;
     } );
-    self.addChild( equationHBox );
+    this.addChild( equationHBox );
 
 
     var explorerNodes = [];
-    var addPaperNumberCallback = self.addPaperNumber.bind( self );
-    var canPlaceNumberCallback = self.canPlaceNumberAt.bind( self );
+    var addPaperNumberCallback = this.addPaperNumber.bind( this );
+    var canPlaceNumberCallback = this.canPlaceNumberAt.bind( this );
 
     // Create the composite nodes that contain the number collections
     var exploreHundredsNode = new MakingTensExplorerNode( 100, addPaperNumberCallback,
-      self.tryToCombineNumbers, canPlaceNumberCallback, self );
+      this.tryToCombineNumbers, canPlaceNumberCallback, this );
     explorerNodes.push( exploreHundredsNode );
     var exploreTensNode = new MakingTensExplorerNode( 10, addPaperNumberCallback,
-      self.tryToCombineNumbers, canPlaceNumberCallback, self );
+      this.tryToCombineNumbers, canPlaceNumberCallback, this );
     explorerNodes.push( exploreTensNode );
     var exploreOnesNode = new MakingTensExplorerNode( 1,
       addPaperNumberCallback,
-      self.tryToCombineNumbers, canPlaceNumberCallback, self );
+      this.tryToCombineNumbers, canPlaceNumberCallback, this );
     explorerNodes.push( exploreOnesNode );
 
     // Add a non-scrolling panel
@@ -86,16 +84,16 @@ define( function( require ) {
       fill: MakingTensSharedConstants.PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR,
       stroke: 'black',
       lineWidth: 1.5,
-      bottom:  self.layoutBounds.maxY - 15,
-      centerX: (self.layoutBounds.width / 2) - 12,
+      bottom:  this.layoutBounds.maxY - 15,
+      centerX: (this.layoutBounds.width / 2) - 12,
       xMargin: 30,
       yMargin: 5,
       resize: false
 
     } );
 
-    self.addChild( this.paperNumbersContainerPanel );
-    self.addChild( self.paperNumberLayerNode );
+    this.addChild( this.paperNumbersContainerPanel );
+    this.addChild( this.paperNumberLayerNode );
 
 
     var carouselContainerStartPos = this.paperNumbersContainerPanel.leftTop.plus(

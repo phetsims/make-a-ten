@@ -94,16 +94,16 @@ define( function( require ) {
     this.initialOpacity = options.opacity;
 
     // Destination is used for animation, and should be set through accessor methods only.
-    self.destination = initialPosition.copy(); // @private
+    this.destination = initialPosition.copy(); // @private
 
 
     // A number like 120 is composed of  to 2 number images in this simulation.
     // The baseNumber object represents the "parts"
-    self.baseNumbers = [];
+    this.baseNumbers = [];
 
-    self.animationVelocity = MakingTensSharedConstants.ANIMATION_VELOCITY;
+    this.animationVelocity = MakingTensSharedConstants.ANIMATION_VELOCITY;
 
-    self.decomposeIntoBaseNumbers( this.numberValue );
+    this.decomposeIntoBaseNumbers( this.numberValue );
 
     // Trigger an event whenever this shape returns to its original position.
     this.positionProperty.lazyLink( function( position ) {
@@ -127,14 +127,13 @@ define( function( require ) {
      * @param {number} dt
      */
     step: function( dt ) {
-      var self = this;
       if ( !this.userControlled ) {
 
         // perform any animation
         var distanceToDestination = this.position.distance( this.destination );
-        if ( distanceToDestination > dt * self.animationVelocity ) {
+        if ( distanceToDestination > dt * this.animationVelocity ) {
           // Move a step toward the destination.
-          var stepVector = this.destination.minus( this.position ).setMagnitude( self.animationVelocity * dt );
+          var stepVector = this.destination.minus( this.position ).setMagnitude( this.animationVelocity * dt );
           this.position = this.position.plus( stepVector );
 
         }
@@ -153,8 +152,7 @@ define( function( require ) {
      * @param {number} value
      */
     decomposeIntoBaseNumbers: function( value ) {
-      var self = this;
-      self.baseNumbers = [];
+      this.baseNumbers = [];
       var numberOfSetDimensions = this.getOffsetArrayByDigits( value );
       var valueStr = value + '';
       var noOfDigits = valueStr.length;
@@ -199,10 +197,9 @@ define( function( require ) {
      * @returns {Vector2}
      */
     getDigitOffsetPosition: function( newPulledNumber ) {
-      var self = this;
       var newPulledNumberLength = (newPulledNumber + '').length;
-      var numberOfSetDimensions = NUMBER_IMAGE_OFFSET_DIMENSIONS[ self.digitLength - 1 ]; // digits-1 zero based index
-      var digitDifference = self.digitLength - newPulledNumberLength;
+      var numberOfSetDimensions = NUMBER_IMAGE_OFFSET_DIMENSIONS[ this.digitLength - 1 ]; // digits-1 zero based index
+      var digitDifference = this.digitLength - newPulledNumberLength;
       return numberOfSetDimensions[ digitDifference ];
     },
 

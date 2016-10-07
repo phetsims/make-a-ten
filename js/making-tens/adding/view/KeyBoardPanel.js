@@ -47,7 +47,7 @@ define( function( require ) {
 
 
     var numberControlGroup = new VBox( {
-      children: [ self.numberEntryControl, submitNumberButton ],
+      children: [ this.numberEntryControl, submitNumberButton ],
       spacing: 12
     });
 

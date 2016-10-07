@@ -24,22 +24,16 @@ define( function( require ) {
    * @constructor
    */
   function ArrowCueNode( arrowCue ) {
-    var self = this;
-    Node.call( self );
+    Node.call( this );
 
-    arrowCue.visibleProperty.link( function( visible ) {
-      self.visible = visible;
-    } );
-
-    arrowCue.opacityProperty.link( function( opacity ) {
-      self.opacity = opacity;
-    } );
+    arrowCue.visibleProperty.linkAttribute( this, 'visible' );
+    arrowCue.opacityProperty.linkAttribute( this, 'opacity' );
 
     var moveCueImageNode = new Image( moveCueImage );
     var splitCueImageNode = new Image( splitCueImage );
 
-    self.addChild( moveCueImageNode );
-    self.addChild( splitCueImageNode );
+    this.addChild( moveCueImageNode );
+    this.addChild( splitCueImageNode );
 
     arrowCue.moveArrowCuePositionProperty.link( function( movePosition ) {
       moveCueImageNode.leftTop = movePosition;

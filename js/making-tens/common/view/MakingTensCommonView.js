@@ -161,18 +161,17 @@ define( function( require ) {
      * @param {Vector} droppedPoint (on screen coordinates)
      */
     tryToCombineNumbers: function( draggedPaperNumber, droppedPoint ) {
-      var self = this;
-      var draggedNode = self.findPaperNumberNode( draggedPaperNumber );
-      var allPaperNumberNodes = self.paperNumberLayerNode.children;
+      var draggedNode = this.findPaperNumberNode( draggedPaperNumber );
+      var allPaperNumberNodes = this.paperNumberLayerNode.children;
       var droppedNodes = draggedNode.findAttachableNodes( allPaperNumberNodes );
 
       //check them in reverse order (the one on the top should get more priority)
       droppedNodes.reverse();
 
       //Show Arrow cue if user hasn't succeeded in combining or splitting a number
-      if ( !self.makingTensModel.interactionSucceeded && self.makingTensModel.arrowCue ) {
-        self.makingTensModel.arrowCue.positionAt( draggedPaperNumber );
-        self.makingTensModel.interactionAttempted = true;
+      if ( !this.makingTensModel.interactionSucceeded && this.makingTensModel.arrowCue ) {
+        this.makingTensModel.arrowCue.positionAt( draggedPaperNumber );
+        this.makingTensModel.interactionAttempted = true;
       }
 
       for ( var i = 0; i < droppedNodes.length; i++ ) {
@@ -180,7 +179,7 @@ define( function( require ) {
         var numberB = droppedNodes[ i ].paperNumber.numberValue;
         if ( ArithmeticRules.canAddNumbers( numberA, numberB ) ) {
           var droppedPaperNumber = droppedNodes[ i ].paperNumber;
-          self.makingTensModel.collapseNumberModels( draggedPaperNumber, droppedPaperNumber );
+          this.makingTensModel.collapseNumberModels( draggedPaperNumber, droppedPaperNumber );
           return;
         }
         else {
@@ -188,7 +187,7 @@ define( function( require ) {
           // repel numbers - show rejection
           var paperNumber1 = draggedNode.paperNumber;
           var paperNumber2 = droppedNodes[ i ].paperNumber;
-          self.makingTensModel.repelAway( paperNumber1, paperNumber2 );
+          this.makingTensModel.repelAway( paperNumber1, paperNumber2 );
           return;
         }
       }

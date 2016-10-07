@@ -109,7 +109,7 @@ define( function( require ) {
       }
     } );
 
-    self.addInputListener( paperNumberNodeCreatorDragHandler );
+    this.addInputListener( paperNumberNodeCreatorDragHandler );
 
     // show proper cursor to indicate the paperNumber can be dragged out
     paperNumberNodeCreatorDragHandler.move = function( event ) {
@@ -137,11 +137,10 @@ define( function( require ) {
      * returns {Bound2}  the bounds only within which a new PaperNumber can be pulled out and created
      */
     getGlobalObjectCreationBounds: function() {
-      var self = this;
-      var localNodeBounds = self.localBounds;
+      var localNodeBounds = this.localBounds;
       var pullBounds = Bounds2.rect( localNodeBounds.x, localNodeBounds.height * MakingTensSharedConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION,
         localNodeBounds.width, localNodeBounds.height );
-      var globalCreationBounds = self.localToGlobalBounds( pullBounds );
+      var globalCreationBounds = this.localToGlobalBounds( pullBounds );
       return globalCreationBounds;
     }
 
