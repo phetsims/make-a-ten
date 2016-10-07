@@ -336,13 +336,8 @@ define( function( require ) {
 
       var basePositions = NUMBER_IMAGE_OFFSET_DIMENSIONS[ this.digitLength - 1 ];
 
-      //Each digit is offset at a certain position, get an array of x offsets of the current number
-      var positionBuckets = _.map( basePositions, function( pos ) {
-        return pos.x;
-      } );
-
-      for ( var i = 0; i < positionBuckets.length - 1; i++ ) {
-        if ( position.x >= positionBuckets[ i ] && position.x <= positionBuckets[ i + 1 ] ) {
+      for ( var i = 0; i < basePositions.length - 1; i++ ) {
+        if ( position.x >= basePositions[ i ].x && position.x <= basePositions[ i + 1 ].x ) {
           return i;
         }
       }
