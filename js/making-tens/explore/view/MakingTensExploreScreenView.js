@@ -39,8 +39,10 @@ define( function( require ) {
    * @constructor
    */
   function MakingTensExploreScreenView( makingTensExploreModel ) {
-    MakingTensCommonView.call( this, makingTensExploreModel, MakingTensSharedConstants.LAYOUT_BOUNDS,
-      this.addPaperNumber.bind( this ) );
+    var addPaperNumberCallback = this.addPaperNumber.bind( this );
+    var canPlaceNumberCallback = this.canPlaceNumberAt.bind( this );
+
+    MakingTensCommonView.call( this, makingTensExploreModel, MakingTensSharedConstants.LAYOUT_BOUNDS, addPaperNumberCallback );
 
     var sumTextNode = new Text( '0', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
     var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
@@ -61,9 +63,6 @@ define( function( require ) {
 
 
     var explorerNodes = [];
-    var addPaperNumberCallback = this.addPaperNumber.bind( this );
-    var canPlaceNumberCallback = this.canPlaceNumberAt.bind( this );
-
     // Create the composite nodes that contain the number collections
     var exploreHundredsNode = new MakingTensExplorerNode( 100, addPaperNumberCallback,
       this.tryToCombineNumbers, canPlaceNumberCallback, this );
