@@ -31,8 +31,6 @@ define( function( require ) {
   // this is done to make sure the sumEquationNode is always at top left even after window resize and scale
   var sumNodeOffSetX = 30;
   var sumNodeOffSetY = 30;
-  var TOUCH_AREA_X_DILATION = 10;
-  var TOUCH_AREA_Y_DILATION = 4;
   var EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
   var EQUATION_COLOR = 'rgb(63,63,183)';
 
@@ -136,7 +134,7 @@ define( function( require ) {
     showSumCheckBox.bottom = this.layoutBounds.maxY - 20;
 
     showSumCheckBox.touchArea = showSumCheckBox.
-      localBounds.dilatedXY( TOUCH_AREA_X_DILATION, TOUCH_AREA_Y_DILATION );
+      localBounds.dilatedXY( 10, 4 );
 
     makingTensExploreModel.hideTotalProperty.link( function( hideTotal ) {
       equationHBox.visible = !hideTotal;
