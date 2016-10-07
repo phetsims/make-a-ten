@@ -14,15 +14,9 @@ define( function( require ) {
   var DotRectangle = require( 'DOT/Rectangle' ); // eslint-disable-line require-statement-match
   var Property = require( 'AXON/Property' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var Shape = require( 'KITE/Shape' );
   var PaperNumberNode = require( 'MAKING_TENS/making-tens/common/view/PaperNumberNode' );
   var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
-
-  // constants
-  // Debug flag to show the view bounds, the region within which the user can move the numbers
-  var showAvailableBounds = false;
 
   /**
    *
@@ -78,12 +72,6 @@ define( function( require ) {
 
     // used to prevent numbers from moving outside the visible model bounds when dragged
     this.availableViewBoundsProperty = new Property( null );// filled by layout method
-
-    // For debugging the visible bounds
-    if ( showAvailableBounds ) {
-      this.viewBoundsPath = new Path( null, { pickable: false, stroke: 'red', lineWidth: 10 } );
-      this.addChild( this.viewBoundsPath );
-    }
 
     this.availableViewBoundsProperty.lazyLink( function( newBounds ) {
       makingTensModel.paperNumbers.forEach( function( numberModel ) {
@@ -224,11 +212,6 @@ define( function( require ) {
       this.translate( offsetX, offsetY );
 
       this.availableViewBoundsProperty.value = new DotRectangle( -offsetX, -offsetY, width / scale, height / scale );
-      // Show it for debugging
-      if ( showAvailableBounds ) {
-        this.viewBoundsPath.shape = Shape.bounds( this.availableViewBoundsProperty.get() );
-      }
-
     }
   } );
 } );
