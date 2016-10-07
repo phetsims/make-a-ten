@@ -28,7 +28,6 @@ define( function( require ) {
 
     // Making Tens Commmon Model is a propertySet
     MakingTensCommonModel.call( this, {
-      sum: '',
       soundEnabled: true,
       currentLevel: 0,
       currentChallenge: null,
