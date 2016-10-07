@@ -30,6 +30,8 @@ define( function( require ) {
    * @constructor
    */
   function ExpressionTermsNode( expressionTerms ) {
+    var self = this;
+
     Node.call( this );
 
     var leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, {
@@ -44,30 +46,24 @@ define( function( require ) {
       lineWidth: 2
     } );
 
-    var leftTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
-    var rightTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
-    leftTermTextNode.setDirection( 'rtl' );
-    this.addChild( leftTermTextNode );
-    this.addChild( rightTermTextNode );
+    this.plusNode = new Text( '+', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
+    this.equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
 
-    var pluTextNode = new Text( '+', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
-    var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
-
-    var spacing = 5;
-    var numberDisplayBox = new HBox( {
-      children: [ leftNumberDisplayBackground, pluTextNode,
+    this.numberDisplayBox = new HBox( {
+      children: [ leftNumberDisplayBackground, this.plusNode,
         rightNumberDisplayBackground ],
-      spacing: spacing,
+      spacing: 5,
       resize: false
     } );
 
-    this.addChild( numberDisplayBox );
-    this.addChild( equalsSignNode );
+    this.leftTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
+    this.rightTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
+    this.leftTermTextNode.setDirection( 'rtl' );
 
-    function updateEqualSpacing() {
-      var termSpacing = 60;
-      equalsSignNode.left = numberDisplayBox.right + rightTermTextNode.bounds.width - termSpacing;
-    }
+    this.addChild( this.leftTermTextNode );
+    this.addChild( this.rightTermTextNode );
+    this.addChild( this.numberDisplayBox );
+    this.addChild( this.equalsSignNode );
 
     // The number entry panel uses string to display digits.
     function termToDisplay( termValue ) {
@@ -84,43 +80,44 @@ define( function( require ) {
     }
 
     expressionTerms.leftTermProperty.link( function( leftTerm ) {
-      leftTermTextNode.text = termToDisplay( leftTerm );
+      self.leftTermTextNode.text = termToDisplay( leftTerm );
     } );
 
     expressionTerms.rightTermProperty.link( function( rightTerm ) {
-      rightTermTextNode.text = termToDisplay( rightTerm );
-      updateEqualSpacing();
-
+      self.rightTermTextNode.text = termToDisplay( rightTerm );
+      self.layout();
     } );
 
-
+    // TODO: separate highlightBorders into a separate parameter (presumably)
     if ( expressionTerms.highlightBorders ) {
       expressionTerms.activeTermProperty.link( function( term ) {
         leftNumberDisplayBackground.stroke = ( term === 'lt' ) ? STROKE_COLOR : null;
         rightNumberDisplayBackground.stroke = ( term === 'rt' ) ? STROKE_COLOR : null;
-        equalsSignNode.visible = expressionTerms.hasBothTerms();
+        self.equalsSignNode.visible = expressionTerms.hasBothTerms();
       } );
 
     }
 
-    leftTermTextNode.left = numberDisplayBox.left + leftNumberDisplayBackground.width / 1.2;
-    leftTermTextNode.centerY = numberDisplayBox.centerY;
+    this.leftTermTextNode.left = this.numberDisplayBox.left + leftNumberDisplayBackground.width / 1.2;
+    this.leftTermTextNode.centerY = this.numberDisplayBox.centerY;
 
-    rightTermTextNode.left = numberDisplayBox.left + rightNumberDisplayBackground.left + rightNumberDisplayBackground.width / 8;
-    rightTermTextNode.centerY = numberDisplayBox.centerY;
+    this.rightTermTextNode.left = this.numberDisplayBox.left + rightNumberDisplayBackground.left + rightNumberDisplayBackground.width / 8;
+    this.rightTermTextNode.centerY = this.numberDisplayBox.centerY;
 
-    equalsSignNode.centerY = rightTermTextNode.centerY = numberDisplayBox.centerY;
+    this.equalsSignNode.centerY = this.rightTermTextNode.centerY = this.numberDisplayBox.centerY;
 
     if ( !expressionTerms.highlightBorders ) {
       leftNumberDisplayBackground.visible = false;
       rightNumberDisplayBackground.visible = false;
     }
-
-
   }
 
   makingTens.register( 'ExpressionTermsNode', ExpressionTermsNode );
 
-  return inherit( Node, ExpressionTermsNode );
+  return inherit( Node, ExpressionTermsNode, {
+    layout: function() {
+      this.equalsSignNode.left = this.numberDisplayBox.right + this.rightTermTextNode.bounds.width - 60;
+    }
+  } );
 
 } );
