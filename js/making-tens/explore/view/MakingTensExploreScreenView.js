@@ -161,17 +161,17 @@ define( function( require ) {
     var repositoryPanelBounds = this.paperNumbersContainerPanel.bounds;
     this.returnZoneBounds = repositoryPanelBounds.withMaxY( this.layoutBounds.maxY );
 
-    this.addChild( new ArrowCueNode( makingTensExploreModel.arrowCueModel ) );
+    this.addChild( new ArrowCueNode( makingTensExploreModel.arrowCue ) );
 
     makingTensExploreModel.interactionAttemptedProperty.link( function( interactionAttempted ) {
       if ( interactionAttempted ) {
-        makingTensExploreModel.arrowCueModel.visible = true;
+        makingTensExploreModel.arrowCue.visible = true;
       }
     } );
 
     makingTensExploreModel.interactionSucceededProperty.link( function( interactionSucceeded ) {
       if ( interactionSucceeded ) {
-        makingTensExploreModel.arrowCueModel.fadeAway();
+        makingTensExploreModel.arrowCue.fadeAway();
       }
     } );
 

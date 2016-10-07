@@ -20,7 +20,7 @@ define( function( require ) {
    *
    * @constructor
    */
-  function ArrowCueModel() {
+  function ArrowCue() {
     var self = this;
     PropertySet.call( self, {
       moveArrowCuePosition: new Vector2(),
@@ -31,9 +31,9 @@ define( function( require ) {
     } );
   }
 
-  makingTens.register( 'ArrowCueModel', ArrowCueModel );
+  makingTens.register( 'ArrowCue', ArrowCue );
 
-  return inherit( PropertySet, ArrowCueModel, {
+  return inherit( PropertySet, ArrowCue, {
 
     /**
      *

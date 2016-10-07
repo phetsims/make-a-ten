@@ -20,18 +20,18 @@ define( function( require ) {
 
   /**
    *
-   * @param {ArrowCueModel} arrowCueModel
+   * @param {ArrowCue} arrowCue
    * @constructor
    */
-  function ArrowCueNode( arrowCueModel ) {
+  function ArrowCueNode( arrowCue ) {
     var self = this;
     Node.call( self );
 
-    arrowCueModel.visibleProperty.link( function( visible ) {
+    arrowCue.visibleProperty.link( function( visible ) {
       self.visible = visible;
     } );
 
-    arrowCueModel.opacityProperty.link( function( opacity ) {
+    arrowCue.opacityProperty.link( function( opacity ) {
       self.opacity = opacity;
     } );
 
@@ -41,11 +41,11 @@ define( function( require ) {
     self.addChild( moveCueImageNode );
     self.addChild( splitCueImageNode );
 
-    arrowCueModel.moveArrowCuePositionProperty.link( function( movePosition ) {
+    arrowCue.moveArrowCuePositionProperty.link( function( movePosition ) {
       moveCueImageNode.leftTop = movePosition;
     } );
 
-    arrowCueModel.splitArrowCuePositionProperty.link( function( splitArrowPosition ) {
+    arrowCue.splitArrowCuePositionProperty.link( function( splitArrowPosition ) {
       splitCueImageNode.leftTop = splitArrowPosition;
     } );
 
