@@ -67,9 +67,6 @@ define( function( require ) {
 
       // Change to new game state.
       this.gameState = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
-
-      // Flag set to indicate new best time, cleared each time a level is started.
-      this.newBestTime = false;
     },
 
     /**
