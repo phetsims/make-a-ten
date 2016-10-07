@@ -23,7 +23,7 @@ define( function( require ) {
    *
    * @constructor
    */
-  function MakingTensGameModel(  ) {
+  function MakingTensGameModel() {
     var self = this;
 
     // Making Tens Commmon Model is a propertySet
