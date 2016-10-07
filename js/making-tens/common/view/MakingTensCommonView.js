@@ -142,13 +142,17 @@ define( function( require ) {
       paperNumberNode.detachListeners();
     },
 
+    /**
+     * Given a {PaperNumber}, find our current display ({PaperNumberNode}) of it.
+     * @public
+     *
+     * @param {PaperNumber} paperNumber
+     * @returns {PaperNumberNode}
+     */
     findPaperNumberNode: function( paperNumber ) {
-      var self = this;
-      var allPaperNumberNodes = self.paperNumberLayerNode.children;
-      var node = _.find( allPaperNumberNodes, function( node ) {
-        return node.paperNumber === paperNumber;
-      } );
-      return node;
+      var result = this.paperNumberNodeMap[ paperNumber.id ];
+      assert && assert( result, 'Did not find matching Node' );
+      return result;
     },
 
     /**
