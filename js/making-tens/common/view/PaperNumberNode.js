@@ -57,7 +57,7 @@ define( function( require ) {
         var baseNumberImage = PaperImageCollection.getNumberImage( baseNumberObj.numberValue );
         var baseNumberImageNode = new Image( baseNumberImage );
         baseNumberImageNode.leftTop = baseNumberObj.position;
-        baseNumberImageNode.opacity = baseNumberObj.opacity;
+        baseNumberImageNode.imageOpacity = baseNumberObj.opacity;
         imageNumberNode.addChild( baseNumberImageNode );
       } );
 
@@ -84,7 +84,7 @@ define( function( require ) {
 
 
     paperNumber.opacityProperty.link( function( opacity ) {
-      imageNumberNode.opacity = opacity;
+      imageNumberNode.imageOpacity = opacity;
     } );
 
     var movableObject = null;
