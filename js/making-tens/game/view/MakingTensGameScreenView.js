@@ -12,17 +12,19 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var StartGameLevelNode = require( 'MAKING_TENS/making-tens/game/view/StartGameLevelNode' );
   var MakingTensCommonView = require( 'MAKING_TENS/making-tens/common/view/MakingTensCommonView' );
   var ExpressionTermsNode = require( 'MAKING_TENS/making-tens/common/view/ExpressionTermsNode' );
   var NextArrowButton = require( 'MAKING_TENS/making-tens/game/view/NextArrowButton' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
   var GameState = require( 'MAKING_TENS/making-tens/game/model/GameState' );
-  var GameIconNode = require( 'MAKING_TENS/making-tens/game/view/GameIconNode' );
   var MakingTensGameModel = require( 'MAKING_TENS/making-tens/game/model/MakingTensGameModel' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
+  var MakingTensUtil = require( 'MAKING_TENS/making-tens/common/MakingTensUtil' );
+  var Dimension2 = require( 'DOT/Dimension2' );
 
   // images
   var levelIcon1 = require( 'image!MAKING_TENS/level-1.png' );
@@ -40,6 +42,7 @@ define( function( require ) {
   var nextString = require( 'string!MAKING_TENS/next' );
 
   var LEVEL_ICONS = [ levelIcon1, levelIcon2, levelIcon3, levelIcon4, levelIcon5, levelIcon6, levelIcon7, levelIcon8, levelIcon9, levelIcon10 ];
+  var ICON_SIZE = new Dimension2( 729 / 2, 420 / 2 );
 
   /**
    * @param {MakingTensGameModel} gameModel
@@ -68,7 +71,9 @@ define( function( require ) {
     // Add the node that allows the user to choose a game level to play.
     this.startGameLevelNode = new StartGameLevelNode(
       function( level ) { gameModel.startLevel( level ); },
-      LEVEL_ICONS.map( function( icon ) { return new GameIconNode( icon ); } ),
+      LEVEL_ICONS.map( function( levelIconImage ) {
+        return MakingTensUtil.createSizedImageNode( new Image( levelIconImage ), ICON_SIZE );
+      } ),
       gameModel.scores,
       {
         numStarsOnButtons: 1,
