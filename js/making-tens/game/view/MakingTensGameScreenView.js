@@ -10,7 +10,6 @@ define( function( require ) {
   // modules
   var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
   var Node = require( 'SCENERY/nodes/Node' );
   var StartGameLevelNode = require( 'MAKING_TENS/making-tens/game/view/StartGameLevelNode' );
@@ -66,16 +65,6 @@ define( function( require ) {
     expressionTermsNode.top = this.layoutBounds.minY + 25;
     this.challengeLayer.addChild( expressionTermsNode );
 
-    // Create and add the Reset All Button in the bottom right, which resets the model
-    this.resetAllButton = new ResetAllButton( {
-      listener: function() {
-        gameModel.reset();
-      },
-      right:  this.layoutBounds.maxX - 10,
-      bottom: this.layoutBounds.maxY - 10
-    } );
-    this.addChild( this.resetAllButton );
-
     // Add the node that allows the user to choose a game level to play.
     this.startGameLevelNode = new StartGameLevelNode(
       function( level ) { gameModel.startLevel( level ); },
@@ -127,7 +116,6 @@ define( function( require ) {
 
     // Hook up the update function for handling changes to game state.
     gameModel.gameStateProperty.link( this.handleGameStateChange.bind( this ) );
-
   }
 
   makingTens.register( 'MakingTensGameScreenView', MakingTensGameScreenView );

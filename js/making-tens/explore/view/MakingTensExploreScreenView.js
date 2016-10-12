@@ -10,7 +10,6 @@ define( function( require ) {
   // modules
   var makingTens = require( 'MAKING_TENS/makingTens' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Panel = require( 'SUN/Panel' );
   var Vector2 = require( 'DOT/Vector2' );
   var MakingTensCommonView = require( 'MAKING_TENS/making-tens/common/view/MakingTensCommonView' );
@@ -136,17 +135,6 @@ define( function( require ) {
     makingTensExploreModel.hideTotalProperty.link( function( hideTotal ) {
       equationHBox.visible = !hideTotal;
     } );
-
-
-    // Create and add the Reset All Button in the bottom right, which resets the model
-    var resetAllButton = new ResetAllButton( {
-      listener: function() {
-        makingTensExploreModel.reset();
-      },
-      right:  this.layoutBounds.maxX - 10,
-      bottom: this.layoutBounds.maxY - 10
-    } );
-    this.addChild( resetAllButton );
 
     this.availableViewBoundsProperty.lazyLink( function( newBounds ) {
       equationHBox.left = newBounds.minX + sumNodeOffSetX;

@@ -13,7 +13,6 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var KeyBoardPanel = require( 'MAKING_TENS/making-tens/adding/view/KeyBoardPanel' );
@@ -114,17 +113,6 @@ define( function( require ) {
         keyBoardPanel.setValue( makingTensAddingModel.expressionTerms.rightTerm );
       }
     } );
-
-
-    // Create and add the Reset All Button in the bottom right, which resets the model
-    var resetAllButton = new ResetAllButton( {
-      listener: function() {
-        makingTensAddingModel.reset();
-      },
-      right:  this.layoutBounds.maxX - 10,
-      bottom: this.layoutBounds.maxY - 10
-    } );
-    this.addChild( resetAllButton );
   }
 
   makingTens.register( 'MakingTensAddingScreenView', MakingTensAddingScreenView );

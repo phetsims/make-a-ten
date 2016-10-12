@@ -18,6 +18,7 @@ define( function( require ) {
   var PaperNumberNode = require( 'MAKING_TENS/making-tens/common/view/PaperNumberNode' );
   var ArithmeticRules = require( 'MAKING_TENS/making-tens/common/model/ArithmeticRules' );
   var MakingTensSharedConstants = require( 'MAKING_TENS/making-tens/common/MakingTensSharedConstants' );
+  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
 
   /**
    *
@@ -64,6 +65,16 @@ define( function( require ) {
     } );
 
     this.availableViewBoundsProperty.linkAttribute( makingTensModel, 'viewPortBounds' );
+
+    // Create and add the Reset All Button in the bottom right, which resets the model
+    this.resetAllButton = new ResetAllButton( {
+      listener: function() {
+        makingTensModel.reset();
+      },
+      right: this.layoutBounds.maxX - 10,
+      bottom: this.layoutBounds.maxY - 10
+    } );
+    this.addChild( this.resetAllButton );
   }
 
   makingTens.register( 'MakingTensCommonView', MakingTensCommonView );
