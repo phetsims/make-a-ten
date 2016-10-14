@@ -17,20 +17,20 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var VBox = require( 'SCENERY/nodes/VBox' );
-  var NumberEntryControl = require( 'MAKING_TENS/making-tens/adding/view/NumberEntryControl' );
+  var NumberEntryControl = require( 'SCENERY_PHET/NumberEntryControl' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   // strings
   var makingTensKeypadSubmitString = require( 'string!MAKING_TENS/making-tens.keypad.submit' );
 
   /**
-   * @param {Function} onSubmit
+   * @param {Function} onSubmit -- TODO: docs?!?
    * @constructor
    */
   function KeyBoardPanel( onSubmit, maxDigits ) {
 
     var self = this;
-    this.numberEntryControl = new NumberEntryControl( { maxDigits: maxDigits } );
+    this.numberEntryControl = new NumberEntryControl( { maxDigits: maxDigits, readoutFont: new PhetFont( 25 ) } );
 
     var buttonOptions = {
       font: new PhetFont( 18 ),
@@ -41,7 +41,7 @@ define( function( require ) {
     var submitNumberButton = new TextPushButton( makingTensKeypadSubmitString, _.extend( {
       listener: function() {
         //The number entry panel uses string to show digits, cast it to number
-        onSubmit( +self.numberEntryControl.getValue() );
+        onSubmit( self.numberEntryControl.getValue() );
       }
     }, buttonOptions ) );
 
@@ -67,10 +67,13 @@ define( function( require ) {
   return inherit( Panel, KeyBoardPanel, {
     /**
      * Sets the readout value of the keypad
-     * @param value
+     * @public
+     *
+     * @param {number} value
      */
     setValue: function( value ) {
-      value = value || '';
+      assert && assert( typeof value === 'number' );
+
       this.numberEntryControl.setValue( value );
     }
 
