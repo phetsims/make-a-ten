@@ -148,7 +148,7 @@ define( function( require ) {
       }
       var rTerms = [];
       for ( i = 0; i < 39; i++ ) {
-        rTerms.push( lTerms[ this.random.nextIntBetween( 0, lTerms.length - 1 ) ] );
+        rTerms.push( this.random.sample( lTerms ) );
       }
 
       for ( i = 0; i < 39; i++ ) {
@@ -167,7 +167,7 @@ define( function( require ) {
       }
       var rTerms = [];
       for ( i = 0; i < 49; i++ ) {
-        rTerms.push( lTerms[ this.random.nextIntBetween( 0, lTerms.length - 1 ) ] );
+        rTerms.push( this.random.sample( lTerms ) );
       }
 
       for ( i = 0; i < 49; i++ ) {
@@ -202,8 +202,8 @@ define( function( require ) {
       }
       this.addWithNineChallengeTermAlternator *= -1;
 
-      var termIndex = this.random.nextIntBetween( 0, addWithNineChallengeTerms.length - 1 );
-      return new NumberChallenge( addWithNineChallengeTerms[ termIndex ][ 0 ], addWithNineChallengeTerms[ termIndex ][ 1 ] );
+      var term = this.random.sample( addWithNineChallengeTerms );
+      return new NumberChallenge( term[ 0 ], term[ 1 ] );
     },
 
     /**
@@ -211,8 +211,8 @@ define( function( require ) {
      * @returns {NumberChallenge}
      */
     addWithTensChallenge: function() {
-      var termIndex = this.random.nextIntBetween( 0, this.addWithTensChallengeTerms.length - 1 );
-      return new NumberChallenge( this.addWithTensChallengeTerms[ termIndex ][ 0 ], this.addWithTensChallengeTerms[ termIndex ][ 1 ] );
+      var term = this.random.sample( this.addWithTensChallengeTerms );
+      return new NumberChallenge( term[ 0 ], term[ 1 ] );
     },
 
     /**
@@ -220,21 +220,21 @@ define( function( require ) {
      * @returns {NumberChallenge}
      */
     underTwentyChallenge: function() {
-      var termIndex = this.random.nextIntBetween( 0, this.underTwentyChallengeTerms.length - 1 );
-      return new NumberChallenge( this.underTwentyChallengeTerms[ termIndex ][ 0 ], this.underTwentyChallengeTerms[ termIndex ][ 1 ] );
+      var term = this.random.sample( this.underTwentyChallengeTerms );
+      return new NumberChallenge( term[ 0 ], term[ 1 ] );
     },
 
     addWithSinglesChallenge: function() {
-      var termIndex = this.random.nextIntBetween( 0, this.addWithSinglesChallengeTerms.length - 1 );
-      return new NumberChallenge( this.addWithSinglesChallengeTerms[ termIndex ][ 0 ], this.addWithSinglesChallengeTerms[ termIndex ][ 1 ] );
+      var term = this.random.sample( this.addWithSinglesChallengeTerms );
+      return new NumberChallenge( term[ 0 ], term[ 1 ] );
     },
 
     /**
      * @returns {NumberChallenge}
      */
     underHundredsChallenge: function() {
-      var termIndex = this.random.nextIntBetween( 0, this.underHundredsChallengeTerms.length - 1 );
-      return new NumberChallenge( this.underHundredsChallengeTerms[ termIndex ][ 0 ], this.underHundredsChallengeTerms[ termIndex ][ 1 ] );
+      var term = this.random.sample( this.underHundredsChallengeTerms );
+      return new NumberChallenge( term[ 0 ], term[ 1 ] );
     },
 
     /**
@@ -242,8 +242,8 @@ define( function( require ) {
      * @returns {NumberChallenge}
      */
     overHundredChallenge: function() {
-      var termIndex = this.random.nextIntBetween( 0, this.overHundredsChallengeTerms.length - 1 );
-      return new NumberChallenge( this.overHundredsChallengeTerms[ termIndex ][ 0 ], this.overHundredsChallengeTerms[ termIndex ][ 1 ] );
+      var term = this.random.sample( this.overHundredsChallengeTerms );
+      return new NumberChallenge( term[ 0 ], term[ 1 ] );
     },
 
     /**
