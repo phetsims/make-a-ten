@@ -36,7 +36,8 @@ define( function( require ) {
     this.generateUnderHundredsChallengeTerms();
     this.generateOverHundredsChallengeTerms();
 
-    this.addWithSinglesThreeDigitsAlternator = 1;
+    // @private {boolean}
+    this.addWithSinglesThreeDigitsAlternator = false;
 
   }
 
@@ -254,10 +255,10 @@ define( function( require ) {
       var leftTerm = this.random.nextIntBetween( 1, 9 ) * 100;
       var rightTerm = this.random.nextIntBetween( 1, 9 );
       var terms = [ leftTerm, rightTerm ];
-      if ( this.addWithSinglesThreeDigitsAlternator < 0 ) {
+      if ( this.addWithSinglesThreeDigitsAlternator ) {
         terms.reverse();
       }
-      this.addWithSinglesThreeDigitsAlternator *= -1;
+      this.addWithSinglesThreeDigitsAlternator = !this.addWithSinglesThreeDigitsAlternator;
       return new NumberChallenge( terms[ 0 ], terms[ 1 ] );
     },
 
