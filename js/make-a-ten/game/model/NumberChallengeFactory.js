@@ -66,7 +66,7 @@ define( function( require ) {
 
     // Level 7. Double digit numbers with sum >= 100
     // @private {Array.<NumberChallenge>} - All possible challenges for the "Over Hundreds" challenge.
-    this.overHundredsChallenges = this.sumsDownTo( 10, 99, 100 );
+    this.overHundredsChallenges = this.sumsDownTo( 11, 99, 100 );
 
     // Level 8. Single digit numbers added to multiples of 100.
     // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is even, randomly selected.
