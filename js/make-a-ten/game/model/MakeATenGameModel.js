@@ -74,7 +74,7 @@ define( function( require ) {
      * combines the numbers b making Tens his score for that level will be incremented
      */
     handleCorrectAnswer: function() {
-      this.scores[ this.currentLevel ].set( this.scores[ this.currentLevel ].get() + 1 );
+      this.scores[ this.currentLevel ].value++;
       this.gameState = GameState.MOVE_TO_NEXT_CHALLENGE;
     },
 
