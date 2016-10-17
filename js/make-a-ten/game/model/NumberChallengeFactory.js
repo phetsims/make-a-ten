@@ -62,7 +62,7 @@ define( function( require ) {
 
     // Level 6. Double digit numbers with sum < 100.
     // @private {Array.<NumberChallenge>} - All possible challenges for the "Under Hundreds" challenge.
-    this.underHundredsChallenges = this.sumsUpTo( 10, 99 );
+    this.underHundredsChallenges = this.sumsUpTo( 11, 99 );
 
     // Level 7. Double digit numbers with sum >= 100
     // @private {Array.<NumberChallenge>} - All possible challenges for the "Over Hundreds" challenge.
