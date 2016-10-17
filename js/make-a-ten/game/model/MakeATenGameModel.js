@@ -63,7 +63,7 @@ define( function( require ) {
       this.currentLevel = level;
 
       // Set up the model for the next challenge
-      this.currentChallenge = this.generateChallenge( level );
+      this.currentChallenge = this.numberChallengeFactory.generateChallenge( level );
 
       // Change to new game state.
       this.gameState = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
@@ -79,51 +79,9 @@ define( function( require ) {
     },
 
     nextChallenge: function() {
-      this.currentChallenge = this.generateChallenge( this.currentLevel );
+      this.currentChallenge = this.numberChallengeFactory.generateChallenge( this.currentLevel );
       this.gameState = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
     },
-
-
-    generateChallenge: function( level ) {
-      var numberChallenge = null;
-      switch( level ) {
-        case 0:
-          numberChallenge = this.numberChallengeFactory.tenAndUnderChallenge();
-          break;
-        case 1:
-          numberChallenge = this.numberChallengeFactory.addWithNineChallenge();
-          break;
-        case 2:
-          numberChallenge = this.numberChallengeFactory.underTwentyChallenge();
-          break;
-        case 3:
-          numberChallenge = this.numberChallengeFactory.addWithTensChallenge();
-          break;
-        case 4:
-          numberChallenge = this.numberChallengeFactory.addWithSinglesChallenge();
-          break;
-        case 5:
-          numberChallenge = this.numberChallengeFactory.underHundredsChallenge();
-          break;
-        case 6:
-          numberChallenge = this.numberChallengeFactory.overHundredChallenge();
-          break;
-        case 7:
-          numberChallenge = this.numberChallengeFactory.addWithSinglesThreeDigit();
-          break;
-        case 8:
-          numberChallenge = this.numberChallengeFactory.addWithTensThreeDigit();
-          break;
-        case 9:
-          numberChallenge = this.numberChallengeFactory.triplesChallenge();
-          break;
-        default:
-          throw new Error( 'invalid level: ' + level );
-      }
-
-      return numberChallenge;
-    },
-
 
     setChoosingLevelState: function() {
       this.gameState = GameState.CHOOSING_LEVEL;

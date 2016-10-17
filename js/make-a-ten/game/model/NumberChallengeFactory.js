@@ -1,9 +1,10 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- * Generates a number set based on the Game Level
+ * Generates a pair of numbers that will need to be added together as a challenge.
  *
- *  @author Sharfudeen Ashraf
+ * @author Sharfudeen Ashraf
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {
   'use strict';
@@ -14,275 +15,192 @@ define( function( require ) {
   var NumberChallenge = require( 'MAKE_A_TEN/make-a-ten/game/model/NumberChallenge' );
 
   function NumberChallengeFactory() {
+    var self = this;
 
-    this.random = phet.joist.random; // Can't be initialized until after the sim has launched
+    // @private {Random} - Stored here because we can't grab a reference until after the sim has launched (and after we
+    //                     have defined the NumberChallengeFactory type).
+    this.random = phet.joist.random;
 
-    this.addWithNineChallengeTermsLeft9 = [];
-    this.addWithNineChallengeTermsRight9 = [];
-    this.addWithNineChallengeTermAlternator = 1;
+    // Level 1. Single digits that add up to <= 10.
+    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities, randomly selected.
+    this.tenAndUnderChallenges = this.sumsUpTo( 1, 10 );
 
-    this.underTwentyChallengeTerms = [];
-    this.addWithTensChallengeTerms = [];
-    this.addWithSinglesChallengeTerms = [];
-    this.underHundredsChallengeTerms = [];
-    this.overHundredsChallengeTerms = [];
+    // Level 2. Single digits that add up to >= 11, where one of them is 9
+    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is even, randomly selected.
+    this.withNineLeftChallenges = this.sumsOverTenChallenges( 9, true, false );
+    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is odd, randomly selected.
+    this.withNineRightChallenges = this.sumsOverTenChallenges( 9, false, true );
+    // @private {number} - Used for alternation between the 'left' and 'right' varieties.
+    this.withNineCount = 0;
 
+    // Level 3. Single digits such that 10 < sum < 20.
+    // @private {Array.<NumberChallenge>} - All possible challenges for the "Under Twenty" challenge, and also used for
+    //                                      generating many of the other terms lists.
+    this.underTwentyChallenges = [].concat(
+      this.sumsOverTenChallenges( 9, true, true ),
+      this.sumsOverTenChallenges( 8, true, true ),
+      this.sumsOverTenChallenges( 7, true, true ),
+      this.sumsOverTenChallenges( 6, true, true )
+    );
 
-    //generate random terms
-    this.generateAddWithNineChallengeTerms();
-    this.generateUnderTwentyChallengeTerms();
-    this.generateAddWithTensChallengeTerms();
-    this.generateAddWithSinglesChallengeTerms();
-    this.generateUnderHundredsChallengeTerms();
-    this.generateOverHundredsChallengeTerms();
+    // Level 4. Like level 3 with each number multiplied by 10.
+    // @private {Array.<NumberChallenge>} - All possible challenges for the "Add with Tens" challenge.
+    this.addWithTensChallenges = this.underTwentyChallenges.map( function( challenge ) {
+      return new NumberChallenge( challenge.leftTerm * 10, challenge.rightTerm * 10 );
+    } );
 
-    // @private {boolean}
-    this.addWithSinglesThreeDigitsAlternator = false;
+    // Level 5. Like level 3, but one number has a random "decade" added to it.
+    // @private {Array.<NumberChallenge>} - All possible challenges for the "Add with Singles" challenge.
+    this.addWithSinglesChallenges = [];
+    this.underTwentyChallenges.forEach( function( challenge ) {
+      for ( var decade = 10; decade <= 80; decade += 10 ) {
+        // Only add to the left, since underTwentyChallenges includes both [a,b] and [b,a].
+        self.addWithSinglesChallenges.push( new NumberChallenge( challenge.leftTerm + decade, challenge.rightTerm ) );
+        self.addWithSinglesChallenges.push( new NumberChallenge( challenge.rightTerm, challenge.leftTerm + decade ) );
+      }
+    } );
 
+    // Level 6. Double digit numbers with sum < 100.
+    // @private {Array.<NumberChallenge>} - All possible challenges for the "Under Hundreds" challenge.
+    this.underHundredsChallenges = this.sumsUpTo( 10, 99 );
+
+    // Level 7. Double digit numbers with sum >= 100
+    // @private {Array.<NumberChallenge>} - All possible challenges for the "Over Hundreds" challenge.
+    this.overHundredsChallenges = this.sumsDownTo( 10, 99, 100 );
+
+    // Level 8. Single digit numbers added to multiples of 100.
+    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is even, randomly selected.
+    this.singlesToHundredsLeftChallenges = this.addWithSinglesThreeDigitChallenges( true );
+    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is odd, randomly selected.
+    this.singlesToHundredsRightChallenges = this.addWithSinglesThreeDigitChallenges( false );
+    // @private {number} - Used for alternation between the 'left' and 'right' varieties.
+    this.singlesToHundredsCount = 0;
   }
 
   makeATen.register( 'NumberChallengeFactory', NumberChallengeFactory );
 
   return inherit( Object, NumberChallengeFactory, {
-
     /**
-     * Single digit sums, one digit is always 9 (randomly placed as the first or second digit).
-     * Total is always GREATER THAN ten and less than 20
-     *
-     * Example combinations
-     * 9 +2, 9 +3, 9 +4, 9 +5, 9 +6, 9 +7, 9 +8, 9 +9, 2 +9, 3 + 9, 4 + 9, 5 + 9, 6 + 9, 7 + 9, 8 + 9
-     */
-    generateAddWithNineChallengeTerms: function() {
-      for ( var i = 0; i < 8; i++ ) {
-        this.addWithNineChallengeTermsLeft9.push( [ 9, i + 2 ] );
-      }
-      for ( i = 0; i < 7; i++ ) {
-        this.addWithNineChallengeTermsRight9.push( [ this.addWithNineChallengeTermsLeft9[ i ][ 1 ], this.addWithNineChallengeTermsLeft9[ i ][ 0 ] ] );
-      }
-    },
-
-
-    /**
-     * Random single digits whose sum is less than 20, but GREATER THAN 10.  Pick from:
-     *
-     * 9 +2, 9 +3, 9 +4, 9 +5, 9 +6, 9 +7, 9 +8, 9 +9, 2 +9, 3 + 9, 4 + 9, 5 + 9, 6 + 9, 7 + 9, 8 + 9,
-     * 8 +3, 8 +4,8 +5, 8 +6, 8 +7, 8 +8, 3 + 8, 4 + 8, 5 + 8, 6 + 8 , 7 + 8,
-     * 7 +4, 7 +5, 7 +6, 7 +7, 4 + 7, 5 + 7, 6 +7,
-     * 6 + 5, 6 + 6, 5 +6
-
-     * @returns {NumberChallenge}
-     */
-    generateUnderTwentyChallengeTerms: function() {
-      var _8basedTerms = [];
-
-      for ( var i = 0; i < 6; i++ ) {
-        _8basedTerms.push( [ 8, i + 3 ] );
-
-      }
-      for ( i = 0; i < 5; i++ ) {
-        _8basedTerms.push( [ _8basedTerms[ i ][ 1 ], _8basedTerms[ i ][ 0 ] ] );
-      }
-
-
-      var _7basedTerms = [];
-
-      for ( i = 0; i < 4; i++ ) {
-        _7basedTerms.push( [ 7, i + 4 ] );
-      }
-
-      for ( i = 0; i < 3; i++ ) {
-        _7basedTerms.push( [ _7basedTerms[ i ][ 1 ], _7basedTerms[ i ][ 0 ] ] );
-      }
-
-
-      var _6basedTerms = [];
-
-      for ( i = 0; i < 2; i++ ) {
-        _6basedTerms.push( [ 6, i + 5 ] );
-      }
-
-      for ( i = 0; i < 1; i++ ) {
-        _6basedTerms.push( [ _6basedTerms[ i ][ 1 ], _6basedTerms[ i ][ 0 ] ] );
-      }
-
-      this.underTwentyChallengeTerms = [].concat( this.addWithNineChallengeTermsLeft9, this.addWithNineChallengeTermsRight9, _8basedTerms, _7basedTerms, _6basedTerms );
-    },
-
-    /**
-     * Add with 10’s.  Identical to Level three, but each number is multiplied by 10.
-     * Pick from 90 + 20, 90 + 30 etc
-     */
-    generateAddWithTensChallengeTerms: function() {
-      this.addWithTensChallengeTerms = this.underTwentyChallengeTerms.map( function( term ) {
-        var tensTerm = [ term[ 0 ] * 10, term[ 1 ] * 10 ];
-        return tensTerm;
-      } );
-    },
-
-
-    /**
-     * Add double digit numbers to singles.  Again, use number pairs from Level 3, but pick one digit and add it by a random “decade number.”
-     * For example, if you have 5 + 8, add the 5 by 30 to get 35 + 8.  This way you will always cross a decade number
-     */
-    generateAddWithSinglesChallengeTerms: function() {
-
-      for ( var i = 0; i < this.underTwentyChallengeTerms.length; i++ ) {
-        var term = this.underTwentyChallengeTerms[ i ];
-        var randomDecade = this.random.nextIntBetween( 1, 8 ) * 10;
-        var tensTerm = [ term[ 0 ] + randomDecade, term[ 1 ] ];
-        this.addWithSinglesChallengeTerms.push( tensTerm );
-        tensTerm = [ term[ 1 ], term[ 0 ] + randomDecade ];
-        this.addWithSinglesChallengeTerms.push( tensTerm );
-      }
-
-    },
-
-
-    /**
-     * Add double digit numbers whose sum is less than 100. Pick random double digit pairs whose sum is less than 100
-     */
-    generateUnderHundredsChallengeTerms: function() {
-      var lTerms = [];
-      for ( var i = 10; i < 50; i++ ) {
-        lTerms.push( i );
-      }
-      var rTerms = [];
-      for ( i = 0; i < 39; i++ ) {
-        rTerms.push( this.random.sample( lTerms ) );
-      }
-
-      for ( i = 0; i < 39; i++ ) {
-        this.underHundredsChallengeTerms.push( [ lTerms[ i ], rTerms[ i ] ] );
-        this.underHundredsChallengeTerms.push( [ rTerms[ i ], lTerms[ i ] ] );
-      }
-    },
-
-    /**
-     * Add double digit sums whose sums are greater than or equal to 100.
-     */
-    generateOverHundredsChallengeTerms: function() {
-      var lTerms = [];
-      for ( var i = 50; i < 100; i++ ) {
-        lTerms.push( i );
-      }
-      var rTerms = [];
-      for ( i = 0; i < 49; i++ ) {
-        rTerms.push( this.random.sample( lTerms ) );
-      }
-
-      for ( i = 0; i < 49; i++ ) {
-        this.overHundredsChallengeTerms.push( [ lTerms[ i ], rTerms[ i ] ] );
-        this.overHundredsChallengeTerms.push( [ rTerms[ i ], lTerms[ i ] ] );
-      }
-    },
-
-
-    /**
-     * Level 1 should include challenges that sum to 10 and under
+     * Creates a random challenge for a specific level.
+     * @public
      *
      * @returns {NumberChallenge}
      */
-    tenAndUnderChallenge: function() {
-      var leftTerm = this.random.nextIntBetween( 1, 9 );
-      var rightTerm = this.random.nextIntBetween( 1, 10 - leftTerm );
-      return new NumberChallenge( leftTerm, rightTerm );
-    },
-
-    /**
-     * This is Level 2
-     *
-     * Alternates between n,9 and 9,n
-     * @returns {NumberChallenge}
-     */
-    addWithNineChallenge: function() {
-
-      var addWithNineChallengeTerms = this.addWithNineChallengeTermsLeft9;
-      if ( this.addWithNineChallengeTermAlternator < 0 ) {
-        addWithNineChallengeTerms = this.addWithNineChallengeTermsRight9;
+    generateChallenge: function( level ) {
+      switch( level ) {
+        case 0:
+          return this.random.sample( this.tenAndUnderChallenges );
+        case 1:
+          // Alternates between the 'left' and 'right' varieties
+          return this.random.sample( ( this.withNineCount++ % 2 === 0 ) ? this.withNineLeftChallenges : this.withNineRightChallenges );
+        case 2:
+          return this.random.sample( this.underTwentyChallenges );
+        case 3:
+          return this.random.sample( this.addWithTensChallenges );
+        case 4:
+          return this.random.sample( this.addWithSinglesChallenges );
+        case 5:
+          return this.random.sample( this.underHundredsChallenges );
+        case 6:
+          return this.random.sample( this.overHundredsChallenges );
+        case 7:
+          // Alternates between the 'left' and 'right' varieties
+          return this.random.sample( ( this.singlesToHundredsCount++ % 2 === 0 ) ? this.singlesToHundredsLeftChallenges : this.singlesToHundredsRightChallenges );
+        case 8:
+          return new NumberChallenge( this.random.nextIntBetween( 10, 100 ) * 10, this.random.nextIntBetween( 10, 100 ) * 10 );
+        case 9:
+          return new NumberChallenge( this.random.nextIntBetween( 101, 998 ), this.random.nextIntBetween( 101, 998 ) );
+        default:
+          throw new Error( 'Invalid level: ' + level );
       }
-      this.addWithNineChallengeTermAlternator *= -1;
-
-      var term = this.random.sample( addWithNineChallengeTerms );
-      return new NumberChallenge( term[ 0 ], term[ 1 ] );
     },
 
     /**
+     * Generates an array of challenges whose sum >= 11, where one of the numbers is the bigNumber, and the other is
+     * less than or equal to bigNumber.
+     * @private
      *
-     * @returns {NumberChallenge}
-     */
-    addWithTensChallenge: function() {
-      var term = this.random.sample( this.addWithTensChallengeTerms );
-      return new NumberChallenge( term[ 0 ], term[ 1 ] );
-    },
-
-    /**
-     * Level 3
-     * @returns {NumberChallenge}
-     */
-    underTwentyChallenge: function() {
-      var term = this.random.sample( this.underTwentyChallengeTerms );
-      return new NumberChallenge( term[ 0 ], term[ 1 ] );
-    },
-
-    addWithSinglesChallenge: function() {
-      var term = this.random.sample( this.addWithSinglesChallengeTerms );
-      return new NumberChallenge( term[ 0 ], term[ 1 ] );
-    },
-
-    /**
-     * @returns {NumberChallenge}
-     */
-    underHundredsChallenge: function() {
-      var term = this.random.sample( this.underHundredsChallengeTerms );
-      return new NumberChallenge( term[ 0 ], term[ 1 ] );
-    },
-
-    /**
+     * For example, if the bigNumber is 8, the result will include:
+     * - (8,8) always
+     * - (8,7), (8,6), (8,5), (8,4), (8,3) if includeLeftBiggest is true
+     * - (7,8), (6,8), (5,8), (4,8), (3,8) if includeRightBiggest is true
      *
-     * @returns {NumberChallenge}
+     * @param {number} bigNumber - The largest number to be included in the challenges. Guaranteed to be at least one
+     *                             term for every challenge.
+     * @returns {Array.<NumberChallenge>}
      */
-    overHundredChallenge: function() {
-      var term = this.random.sample( this.overHundredsChallengeTerms );
-      return new NumberChallenge( term[ 0 ], term[ 1 ] );
-    },
+    sumsOverTenChallenges: function( bigNumber, includeLeftBiggest, includeRightBiggest ) {
+      var challenges = [];
 
-    /**
-     * Add single digit numbers to triple digit multiples of 100
-     *
-     * @returns {NumberChallenge}
-     */
-    addWithSinglesThreeDigit: function() {
-      var leftTerm = this.random.nextIntBetween( 1, 9 ) * 100;
-      var rightTerm = this.random.nextIntBetween( 1, 9 );
-      var terms = [ leftTerm, rightTerm ];
-      if ( this.addWithSinglesThreeDigitsAlternator ) {
-        terms.reverse();
+      for ( var i = 11 - bigNumber; i < bigNumber; i++ ) {
+        if ( includeLeftBiggest ) {
+          challenges.push( new NumberChallenge( bigNumber, i ) );
+        }
+        if ( includeRightBiggest ) {
+          challenges.push( new NumberChallenge( i, bigNumber ) );
+        }
       }
-      this.addWithSinglesThreeDigitsAlternator = !this.addWithSinglesThreeDigitsAlternator;
-      return new NumberChallenge( terms[ 0 ], terms[ 1 ] );
+
+      // Only include one where both are the big number, so we only have unique challenges
+      challenges.push( new NumberChallenge( bigNumber, bigNumber ) );
+
+      return challenges;
     },
 
     /**
-     * Add triple digits which always have a “0” in the tens place. Sums as high as 1980.
+     * Generates an array of challenges where terms are at least minimumNumber, with a combined maximum sum.
+     * @private
      *
-     * @returns {NumberChallenge}
+     * @returns {Array.<NumberChallenge>}
      */
-    addWithTensThreeDigit: function() {
-      var leftTerm = this.random.nextIntBetween( 10, 100 ) * 10;
-      var rightTerm = this.random.nextIntBetween( 10, 100 ) * 10;
-      return new NumberChallenge( leftTerm, rightTerm );
+    sumsUpTo: function( minimumNumber, maximumSum ) {
+      var challenges = [];
+
+      for ( var left = minimumNumber; left < maximumSum; left++ ) {
+        for ( var right = minimumNumber; left + right <= maximumSum; right++ ) {
+          challenges.push( new NumberChallenge( left, right ) );
+        }
+      }
+
+      return challenges;
     },
 
     /**
-     * Add random triple digits. Sums up to 1998
+     * Generates an array of challenges where terms satisfy minimumNumber <= term <= maximumNumber, and the sum is
+     * sum >= minimumSum.
+     * @private
      *
-     * @returns {NumberChallenge}
+     * @returns {Array.<NumberChallenge>}
      */
-    triplesChallenge: function() {
-      var leftTerm = this.random.nextIntBetween( 101, 998 );
-      var rightTerm = this.random.nextIntBetween( 101, 998 );
-      return new NumberChallenge( leftTerm, rightTerm );
+    sumsDownTo: function( minimumNumber, maximumNumber, minimumSum ) {
+      var challenges = [];
+
+      for ( var left = minimumNumber; left <= maximumNumber; left++ ) {
+        // Start with minimumNumber, OR if that would result in an invalid sum, the number that would add up to the sum
+        for ( var right = Math.max( minimumNumber, minimumSum - left ); right <= maximumNumber; right++ ) {
+          challenges.push( new NumberChallenge( left, right ) );
+        }
+      }
+
+      return challenges;
+    },
+
+    /**
+     * For level 8, adding single digit numbers to multiples of 100.
+     * @private
+     *
+     * @returns {Array.<NumberChallenge>}
+     */
+    addWithSinglesThreeDigitChallenges: function( isLeftBiggest ) {
+      var challenges = [];
+
+      for ( var left = 100; left <= 900; left += 100 ) {
+        for ( var right = 1; right <= 9; right++ ) {
+          challenges.push( isLeftBiggest ? new NumberChallenge( left, right ) : new NumberChallenge( right, left ) );
+        }
+      }
+
+      return challenges;
     }
-
   } );
 } );
