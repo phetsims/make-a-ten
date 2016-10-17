@@ -32,9 +32,9 @@ define( function( require ) {
    * @constructor
    */
   function ExpressionTermsNode( expressionTerms, options ) {
-    options = options || {
+    options = _.extend( {
       highlightBorders: false
-    };
+    }, options );
 
     Node.call( this, options );
 

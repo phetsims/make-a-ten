@@ -35,7 +35,7 @@ define( function( require ) {
       gameState: GameState.CHOOSING_LEVEL
     } );
 
-    this.expressionTerms =  new ExpressionTerms();
+    this.expressionTerms = new ExpressionTerms();
 
     // Best times and scores.
     this.bestTimes = []; // @public

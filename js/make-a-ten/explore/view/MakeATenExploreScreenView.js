@@ -82,7 +82,7 @@ define( function( require ) {
       fill: MakeATenSharedConstants.PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR,
       stroke: 'black',
       lineWidth: 1.5,
-      bottom:  this.layoutBounds.maxY - 15,
+      bottom: this.layoutBounds.maxY - 15,
       centerX: (this.layoutBounds.width / 2) - 12,
       xMargin: 30,
       yMargin: 5,
@@ -129,8 +129,7 @@ define( function( require ) {
     showSumCheckBox.right = this.layoutBounds.maxX - 110;
     showSumCheckBox.bottom = this.layoutBounds.maxY - 20;
 
-    showSumCheckBox.touchArea = showSumCheckBox.
-      localBounds.dilatedXY( 10, 4 );
+    showSumCheckBox.touchArea = showSumCheckBox.localBounds.dilatedXY( 10, 4 );
 
     makeATenExploreModel.hideTotalProperty.link( function( hideTotal ) {
       equationHBox.visible = !hideTotal;

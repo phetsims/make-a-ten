@@ -49,7 +49,7 @@ define( function( require ) {
     var numberControlGroup = new VBox( {
       children: [ this.numberEntryControl, submitNumberButton ],
       spacing: 12
-    });
+    } );
 
     Panel.call( this, numberControlGroup, {
       xMargin: 15,

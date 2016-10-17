@@ -88,7 +88,7 @@ define( function( require ) {
     //go to Level Selection Mode
     var backButton = new BackButton( {
         listener: function() {gameModel.setChoosingLevelState();},
-        top:  this.layoutBounds.bottom - 100,
+        top: this.layoutBounds.bottom - 100,
         left: this.layoutBounds.left + 20
       }
     );
@@ -98,7 +98,7 @@ define( function( require ) {
       listener: function() {
         gameModel.nextChallenge();
       },
-      top:  this.layoutBounds.centerY - 100,
+      top: this.layoutBounds.centerY - 100,
       right: this.layoutBounds.right - 20
     } );
 
