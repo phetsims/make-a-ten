@@ -41,7 +41,7 @@ define( function( require ) {
 
     }, options );
 
-    var arrowShape = new ArrowShape( 0, 0, -28.5, 0, {
+    var arrowShape = new ArrowShape( 0, 0, 28.5, 0, {
       tailWidth: 2,
       headWidth: 8,
       headHeight: 8
@@ -49,7 +49,6 @@ define( function( require ) {
 
     var labelNode = new Text( buttonText, { font: LABEL_FONT, fill: 'black' } );
     var arrowPath = new Path( arrowShape, { fill: 'black' } );
-    arrowPath.rotate( Math.PI );
 
     var labelArrowBox = new HBox( {
       children: [ labelNode, arrowPath ],
