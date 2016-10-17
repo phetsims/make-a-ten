@@ -22,7 +22,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
 
   // constants
-  var LABEL_FONT = new PhetFont( { size: 12, weight: 'bold' } );
+  var LABEL_FONT = new PhetFont( { size: 20, weight: 'bold' } );
 
   /**
    * @param {string} buttonText
@@ -33,8 +33,8 @@ define( function( require ) {
 
     options = _.extend( {
 
-      xMargin: 8,
-      yMargin: 10.9,
+      xMargin: 12,
+      yMargin: 10,
 
       // Default base code matches the yellow in the PhET logo (the one with the paper airplane).
       baseColor: new Color( 242, 233, 22 )
@@ -42,19 +42,18 @@ define( function( require ) {
     }, options );
 
     var arrowShape = new ArrowShape( 0, 0, -28.5, 0, {
-      tailWidth: 3,
+      tailWidth: 2,
       headWidth: 8,
-      headHeight: 7
+      headHeight: 8
     } );
 
     var labelNode = new Text( buttonText, { font: LABEL_FONT, fill: 'black' } );
     var arrowPath = new Path( arrowShape, { fill: 'black' } );
     arrowPath.rotate( Math.PI );
 
-    var spacing = 5;
     var labelArrowBox = new HBox( {
       children: [ labelNode, arrowPath ],
-      spacing: spacing
+      spacing: 15
     } );
 
     RectangularPushButton.call( this, _.extend( {

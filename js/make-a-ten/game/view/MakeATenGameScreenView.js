@@ -99,7 +99,7 @@ define( function( require ) {
         gameModel.nextChallenge();
       },
       top:  this.layoutBounds.centerY - 100,
-      left: this.layoutBounds.right - 100
+      right: this.layoutBounds.right - 20
     } );
 
     this.rootNode.addChild( this.nextChallengeButton );
