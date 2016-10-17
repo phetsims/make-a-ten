@@ -27,12 +27,12 @@ define( function( require ) {
    */
   function MakeATenAddingScreen() {
 
-    var homeScreenIcon = MakeATenUtil.createIconWithBackgroundColor( addingHomeScreenImage, MakeATenSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR );
-    var navigationBarIcon = MakeATenUtil.createIconWithBackgroundColor( addingNavBarImage, MakeATenSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR );
+    var homeScreenIcon = MakeATenUtil.createIconWithBackgroundColor( addingHomeScreenImage, MakeATenSharedConstants.SCREEN_BACKGROUND_COLOR );
+    var navigationBarIcon = MakeATenUtil.createIconWithBackgroundColor( addingNavBarImage, MakeATenSharedConstants.SCREEN_BACKGROUND_COLOR );
 
     var options = {
       name: screenAddingString,
-      backgroundColor: MakeATenSharedConstants.ADDING_SCREEN_BACKGROUND_COLOR,
+      backgroundColor: MakeATenSharedConstants.SCREEN_BACKGROUND_COLOR,
       homeScreenIcon: homeScreenIcon,
       navigationBarIcon: navigationBarIcon
     };

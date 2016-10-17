@@ -17,9 +17,7 @@ define( function( require ) {
     // layout bounds used throughout the simulation for laying out the screens
     LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
     PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR: 'rgb( 208, 222, 239 )',
-    EXPLORE_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
-    GAME_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
-    ADDING_SCREEN_BACKGROUND_COLOR: 'rgb( 217, 252, 146 )',
+    SCREEN_BACKGROUND_COLOR: '#E8FFB0',
     PAPER_NUMBER_DIMENSIONS: {
       1: new Dimension2( 67, 128 ), // key is digitLength
       2: new Dimension2( 156, 141 ),

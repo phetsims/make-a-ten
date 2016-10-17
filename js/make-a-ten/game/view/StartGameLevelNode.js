@@ -56,7 +56,7 @@ define( function( require ) {
       return function() { startLevelFunction( level ); };
     }
 
-    var buttonColors = [ '#F7ED41', '#A6E4EC', '#D4C5E4' ];
+    var buttonColors = [ '#FC4280', '#06A5AD', '#8653BF' ];
     var buttonRows = [ 3, 4, 3 ]; // 3 on the first row,4 on the second amd 3 on the next one
     var levelSelectionButtons = new Array( options.numLevels );
     var level = 0;

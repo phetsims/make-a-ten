@@ -27,12 +27,12 @@ define( function( require ) {
    */
   function MakeATenExploreScreen() {
 
-    var homeScreenIcon = MakeATenUtil.createIconWithBackgroundColor( exploreHomeScreenImage, MakeATenSharedConstants.EXPLORE_SCREEN_BACKGROUND_COLOR );
-    var navigationBarIcon = MakeATenUtil.createIconWithBackgroundColor( exploreNavBarImage, MakeATenSharedConstants.EXPLORE_SCREEN_BACKGROUND_COLOR );
+    var homeScreenIcon = MakeATenUtil.createIconWithBackgroundColor( exploreHomeScreenImage, MakeATenSharedConstants.SCREEN_BACKGROUND_COLOR );
+    var navigationBarIcon = MakeATenUtil.createIconWithBackgroundColor( exploreNavBarImage, MakeATenSharedConstants.SCREEN_BACKGROUND_COLOR );
 
     var options = {
       name: screenExploreString,
-      backgroundColor: MakeATenSharedConstants.EXPLORE_SCREEN_BACKGROUND_COLOR,
+      backgroundColor: MakeATenSharedConstants.SCREEN_BACKGROUND_COLOR,
       homeScreenIcon: homeScreenIcon,
       navigationBarIcon: navigationBarIcon
     };
