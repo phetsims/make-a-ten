@@ -1,0 +1,28 @@
+{
+  "make-a-ten.title": {
+    "value": "Make a Ten"
+  },
+  "screen.adding":{
+    "value":"Adding"
+  },
+  "screen.explore":{
+    "value":"Explore"
+  },
+  "screen.game":{
+    "value":"Game"
+  },
+  "make-a-ten.hide.total":{
+    "value":"Hide Total"
+  },
+  "make-a-ten.keypad.submit":{
+    "value":"Submit"
+  },
+
+  "chooseYourLevel":{
+    "value": "Choose Your Level!"
+  },
+
+  "next":{
+    "value":"Next"
+  }
+}

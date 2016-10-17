@@ -1,5 +1,5 @@
 {
-  "comment": "# making-tens 1.0.0-dev.5 Thu Dec 03 2015 14:01:36 GMT-0700 (MST)",
+  "comment": "# make-a-ten 1.0.0-dev.5 Thu Dec 03 2015 14:01:36 GMT-0700 (MST)",
   "assert": {
     "sha": "3921bc3784dc67e9cbfa31cdec52b582fcfc68e7",
     "branch": "master"
@@ -28,7 +28,7 @@
     "sha": "a4907ccc07cc80d6d3c9c1e240ba7664e32db56b",
     "branch": "master"
   },
-  "making-tens": {
+  "make-a-ten": {
     "sha": "672eb8e2bbe905272524f195950c1e047494cf4c",
     "branch": "master"
   },

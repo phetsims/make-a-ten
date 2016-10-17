@@ -1,10 +1,10 @@
 {
-  "name": "making-tens",
+  "name": "make-a-ten",
   "version": "1.0.0-dev.7",
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/phetsims/making-tens.git"
+    "url": "https://github.com/phetsims/make-a-ten.git"
   },
   "devDependencies": {
     "grunt": "~1.0.0",
@@ -13,7 +13,7 @@
     "requirejs": "~2.1.8"
   },
   "phet": {
-    "requirejsNamespace": "MAKING_TENS",
+    "requirejsNamespace": "MAKE_A_TEN",
     "phetLibs": [
       "vegas",
       "vibe"
