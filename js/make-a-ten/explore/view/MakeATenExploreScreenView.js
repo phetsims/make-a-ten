@@ -43,20 +43,20 @@ define( function( require ) {
 
     MakeATenCommonView.call( this, makeATenExploreModel, MakeATenSharedConstants.LAYOUT_BOUNDS, addPaperNumberCallback );
 
-    var sumTextNode = new Text( '0', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
+    var sumText = new Text( '0', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
     var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
 
     var spaceBetweenSumAndEquals = 15; // spacing between equation elements
     // Perform the layout by placing everything in an HBox.
     var equationHBox = new HBox( {
       children: [
-        sumTextNode,
+        sumText,
         equalsSignNode
       ], spacing: spaceBetweenSumAndEquals
     } );
 
     makeATenExploreModel.sumProperty.link( function( newSum ) {
-      sumTextNode.text = newSum;
+      sumText.text = newSum;
     } );
     this.addChild( equationHBox );
 
@@ -111,25 +111,24 @@ define( function( require ) {
       1: shapeCreatorSinglesContainer
     };
 
-    var showSumTextNode = new Text( makeATenHideTotalString, {
-      font: new PhetFont(
-        {
-          size: 25,
-          weight: 'bold'
-        } ),
+    var hideTotalText = new Text( makeATenHideTotalString, {
+      font: new PhetFont( {
+        size: 25,
+        weight: 'bold'
+      } ),
       fill: 'black'
     } );
 
-    var showSumCheckBox = new CheckBox( showSumTextNode, makeATenExploreModel.hideTotalProperty, {
+    var hideTotalCheckBox = new CheckBox( hideTotalText, makeATenExploreModel.hideTotalProperty, {
       spacing: 10,
       boxWidth: 30
     } );
-    this.addChild( showSumCheckBox );
+    this.addChild( hideTotalCheckBox );
 
-    showSumCheckBox.right = this.layoutBounds.maxX - 110;
-    showSumCheckBox.bottom = this.layoutBounds.maxY - 20;
+    hideTotalCheckBox.right = this.layoutBounds.maxX - 110;
+    hideTotalCheckBox.bottom = this.layoutBounds.maxY - 20;
 
-    showSumCheckBox.touchArea = showSumCheckBox.localBounds.dilatedXY( 10, 4 );
+    hideTotalCheckBox.touchArea = hideTotalCheckBox.localBounds.dilatedXY( 10, 4 );
 
     makeATenExploreModel.hideTotalProperty.link( function( hideTotal ) {
       equationHBox.visible = !hideTotal;

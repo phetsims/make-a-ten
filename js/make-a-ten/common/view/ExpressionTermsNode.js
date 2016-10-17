@@ -52,30 +52,30 @@ define( function( require ) {
       visible: options.highlightBorders
     } );
 
-    var plusNode = new Text( '+', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
-    var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
+    var plusText = new Text( '+', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
+    var equalsSignText = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
 
     var numberDisplayBox = new HBox( {
-      children: [ leftNumberDisplayBackground, plusNode,
+      children: [ leftNumberDisplayBackground, plusText,
         rightNumberDisplayBackground ],
       spacing: 5,
       resize: false // since we toggle the stroke
     } );
 
-    var leftTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
-    var rightTermTextNode = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
+    var leftTermText = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
+    var rightTermText = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
 
-    this.addChild( leftTermTextNode );
-    this.addChild( rightTermTextNode );
+    this.addChild( leftTermText );
+    this.addChild( rightTermText );
     this.addChild( numberDisplayBox );
-    this.addChild( equalsSignNode );
+    this.addChild( equalsSignText );
 
     function layout() {
-      if ( !rightTermTextNode.bounds.isEmpty() ) {
-        equalsSignNode.left = rightTermTextNode.right + 20;
+      if ( !rightTermText.bounds.isEmpty() ) {
+        equalsSignText.left = rightTermText.right + 20;
       }
-      if ( !leftTermTextNode.bounds.isEmpty() ) {
-        leftTermTextNode.right = leftNumberDisplayBackground.right - leftNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
+      if ( !leftTermText.bounds.isEmpty() ) {
+        leftTermText.right = leftNumberDisplayBackground.right - leftNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
       }
     }
 
@@ -85,12 +85,12 @@ define( function( require ) {
     }
 
     expressionTerms.leftTermProperty.link( function( leftTerm ) {
-      leftTermTextNode.text = termToString( leftTerm );
+      leftTermText.text = termToString( leftTerm );
       layout();
     } );
 
     expressionTerms.rightTermProperty.link( function( rightTerm ) {
-      rightTermTextNode.text = termToString( rightTerm );
+      rightTermText.text = termToString( rightTerm );
       layout();
     } );
 
@@ -100,18 +100,18 @@ define( function( require ) {
         // TODO: improve term enumeration
         leftNumberDisplayBackground.stroke = ( term === ActiveTerm.LEFT ) ? STROKE_COLOR : null;
         rightNumberDisplayBackground.stroke = ( term === ActiveTerm.RIGHT ) ? STROKE_COLOR : null;
-        equalsSignNode.visible = expressionTerms.hasBothTerms();
+        equalsSignText.visible = expressionTerms.hasBothTerms();
       } );
     }
 
     // Vertical layout
     var centerY = numberDisplayBox.centerY;
-    leftTermTextNode.centerY = centerY;
-    rightTermTextNode.centerY = centerY;
-    equalsSignNode.centerY = centerY;
+    leftTermText.centerY = centerY;
+    rightTermText.centerY = centerY;
+    equalsSignText.centerY = centerY;
 
     // Unchanging layout position of the right text node
-    rightTermTextNode.left = rightNumberDisplayBackground.left + rightNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
+    rightTermText.left = rightNumberDisplayBackground.left + rightNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
   }
 
   makeATen.register( 'ExpressionTermsNode', ExpressionTermsNode );
