@@ -185,9 +185,7 @@ define( function( require ) {
     // @private
     handlePresentingInteractiveChallengeState: function( challenge ) {
       this.makeATenModel.createTerms( challenge );
-      // Make a list of the nodes to be shown in this state.
-      var nodesToShow = [ this.challengeLayer, this.controlLayer ];
-      this.show( nodesToShow );
+      this.show( [ this.challengeLayer, this.controlLayer ] );
     },
 
     // @private
@@ -196,9 +194,7 @@ define( function( require ) {
       // Give the user the appropriate audio and visual feedback
       this.gameAudioPlayer.correctAnswer();
 
-      var nodesToShow = [ this.challengeLayer, this.controlLayer ];
-      this.show( nodesToShow );
-
+      this.show( [ this.challengeLayer, this.controlLayer ] );
     },
 
     // @private
