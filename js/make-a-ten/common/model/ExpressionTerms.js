@@ -19,19 +19,20 @@ define( function( require ) {
    * @constructor
    */
   function ExpressionTerms( options ) {
-    if ( !options ) {
-      options = {};
-    }
+    options = _.extend( {
+      leftTerm: 0,
+      rightTerm: 0
+    }, options );
+
     assert && assert( options.leftTerm === undefined || typeof options.leftTerm === 'number', 'Types' );
     assert && assert( options.rightTerm === undefined || typeof options.rightTerm === 'number', 'Types' );
 
-    options = options || {};
     PropertySet.call( this, {
       // @public {number} - The left term number, or 0 if there is no current term
-      leftTerm: options.leftTerm !== undefined ? options.leftTerm : 0,
+      leftTerm: options.leftTerm,
 
       // @public {number} - The left term number, or 0 if there is no current term
-      rightTerm: options.rightTerm !== undefined ? options.rightTerm : 0,
+      rightTerm: options.rightTerm,
 
       // @public {ActiveTerm} - The active term.
       activeTerm: ActiveTerm.NONE

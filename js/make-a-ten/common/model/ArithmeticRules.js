@@ -24,7 +24,6 @@ define( function( require ) {
   makeATen.register( 'ArithmeticRules', ArithmeticRules );
 
   return inherit( Object, ArithmeticRules, {},
-
     {
       /**
        * @param a
