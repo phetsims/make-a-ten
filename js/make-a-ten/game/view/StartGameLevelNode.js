@@ -52,10 +52,6 @@ define( function( require ) {
     }
 
     // Add the buttons
-    function createLevelStartFunction( level ) {
-      return function() { startLevelFunction( level ); };
-    }
-
     var buttonColors = [ '#FC4280', '#06A5AD', '#8653BF' ];
     var buttonRows = [ 3, 4, 3 ]; // 3 on the first row,4 on the second amd 3 on the next one
     var levelSelectionButtons = new Array( options.numLevels );
@@ -68,7 +64,7 @@ define( function( require ) {
         levelSelectionButtons[ level ] = new LevelSelectionButton(
           iconNodes[ level ],
           options.numStarsOnButtons,
-          createLevelStartFunction( level ),
+          startLevelFunction.bind( undefined, level ),
           scores[ level ], {
             baseColor: buttonColors[ row ]
           }
