@@ -78,14 +78,8 @@ define( function( require ) {
       self.mouseArea = mouseArea;
     }
 
-    paperNumber.positionProperty.link( function( newPos ) {
-      self.leftTop = newPos;
-    } );
-
-
-    paperNumber.opacityProperty.link( function( opacity ) {
-      imageNumberNode.imageOpacity = opacity;
-    } );
+    paperNumber.positionProperty.linkAttribute( this, 'leftTop' );
+    paperNumber.opacityProperty.linkAttribute( imageNumberNode, 'imageOpacity' );
 
     var movableObject = null;
     var startOffset = null;

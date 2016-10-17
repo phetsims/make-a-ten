@@ -55,11 +55,8 @@ define( function( require ) {
       ], spacing: spaceBetweenSumAndEquals
     } );
 
-    makeATenExploreModel.sumProperty.link( function( newSum ) {
-      sumText.text = newSum;
-    } );
+    makeATenExploreModel.sumProperty.linkAttribute( sumText, 'text' );
     this.addChild( equationHBox );
-
 
     var explorerNodes = [];
     // Create the composite nodes that contain the number collections

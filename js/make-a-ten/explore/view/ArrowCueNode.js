@@ -35,14 +35,8 @@ define( function( require ) {
     this.addChild( moveCueImageNode );
     this.addChild( splitCueImageNode );
 
-    arrowCue.moveArrowCuePositionProperty.link( function( movePosition ) {
-      moveCueImageNode.leftTop = movePosition;
-    } );
-
-    arrowCue.splitArrowCuePositionProperty.link( function( splitArrowPosition ) {
-      splitCueImageNode.leftTop = splitArrowPosition;
-    } );
-
+    arrowCue.moveArrowCuePositionProperty.linkAttribute( moveCueImageNode, 'leftTop' );
+    arrowCue.splitArrowCuePositionProperty.linkAttribute( splitCueImageNode, 'leftTop' );
   }
 
   makeATen.register( 'ArrowCueNode', ArrowCueNode );
