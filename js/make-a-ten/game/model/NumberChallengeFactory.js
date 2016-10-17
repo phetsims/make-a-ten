@@ -107,9 +107,9 @@ define( function( require ) {
           // Alternates between the 'left' and 'right' varieties
           return this.random.sample( ( this.singlesToHundredsCount++ % 2 === 0 ) ? this.singlesToHundredsLeftChallenges : this.singlesToHundredsRightChallenges );
         case 8:
-          return new NumberChallenge( this.random.nextIntBetween( 10, 100 ) * 10, this.random.nextIntBetween( 10, 100 ) * 10 );
+          return new NumberChallenge( this.random.nextIntBetween( 10, 99 ) * 10, this.random.nextIntBetween( 10, 99 ) * 10 );
         case 9:
-          return new NumberChallenge( this.random.nextIntBetween( 101, 998 ), this.random.nextIntBetween( 101, 998 ) );
+          return new NumberChallenge( this.random.nextIntBetween( 101, 999 ), this.random.nextIntBetween( 101, 999 ) );
         default:
           throw new Error( 'Invalid level: ' + level );
       }
