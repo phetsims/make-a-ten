@@ -52,11 +52,12 @@ define( function( require ) {
     });
 
     Panel.call( this, numberControlGroup, {
-      xMargin: 30,
-      yMargin: 15,
+      xMargin: 15,
+      yMargin: 10,
       fill: 'lightgray',
       stroke: 'black',
       lineWidth: 1,
+      scale: 1.3,
       resize: false,
       backgroundPickable: true
     } );
