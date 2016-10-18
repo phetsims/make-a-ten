@@ -79,7 +79,7 @@ define( function( require ) {
       fill: MakeATenSharedConstants.PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR,
       stroke: 'black',
       lineWidth: 1.5,
-      bottom: this.layoutBounds.maxY - 15,
+      bottom: this.layoutBounds.bottom - 15,
       centerX: (this.layoutBounds.width / 2) - 12,
       xMargin: 30,
       yMargin: 5,
@@ -122,8 +122,8 @@ define( function( require ) {
     } );
     this.addChild( hideTotalCheckBox );
 
-    hideTotalCheckBox.right = this.layoutBounds.maxX - 110;
-    hideTotalCheckBox.bottom = this.layoutBounds.maxY - 20;
+    hideTotalCheckBox.right = this.layoutBounds.right - 110;
+    hideTotalCheckBox.bottom = this.layoutBounds.bottom - 20;
 
     hideTotalCheckBox.touchArea = hideTotalCheckBox.localBounds.dilatedXY( 10, 4 );
 
@@ -132,12 +132,12 @@ define( function( require ) {
     } );
 
     this.availableViewBoundsProperty.lazyLink( function( newBounds ) {
-      equationHBox.left = newBounds.minX + sumNodeOffSetX;
-      equationHBox.top = newBounds.minY + sumNodeOffSetY;
+      equationHBox.left = newBounds.left + sumNodeOffSetX;
+      equationHBox.top = newBounds.top + sumNodeOffSetY;
     } );
 
     var repositoryPanelBounds = this.paperNumbersContainerPanel.bounds;
-    this.returnZoneBounds = repositoryPanelBounds.withMaxY( this.layoutBounds.maxY );
+    this.returnZoneBounds = repositoryPanelBounds.withMaxY( this.layoutBounds.bottom );
 
     this.addChild( new ArrowCueNode( makeATenExploreModel.arrowCue ) );
 

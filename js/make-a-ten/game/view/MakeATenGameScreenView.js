@@ -68,8 +68,8 @@ define( function( require ) {
 
     // The node that display "12 + 100 = "
     var expressionTermsNode = new ExpressionTermsNode( gameModel.expressionTerms );
-    expressionTermsNode.left = this.layoutBounds.minX + 38;
-    expressionTermsNode.top = this.layoutBounds.minY + 25;
+    expressionTermsNode.left = this.layoutBounds.left + 38;
+    expressionTermsNode.top = this.layoutBounds.top + 25;
     this.challengeLayer.addChild( expressionTermsNode );
 
     // Add the node that allows the user to choose a game level to play.

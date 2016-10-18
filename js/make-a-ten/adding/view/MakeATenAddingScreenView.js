@@ -66,8 +66,8 @@ define( function( require ) {
 
     var editButtonBox = new HBox( { children: [ leftEditNumberButton, rightEditNumberButton ], spacing: 45 } );
     this.addChild( editButtonBox );
-    editButtonBox.left = this.layoutBounds.minX + 75;
-    editButtonBox.top = this.layoutBounds.minY + 32;
+    editButtonBox.left = this.layoutBounds.left + 75;
+    editButtonBox.top = this.layoutBounds.top + 32;
 
     // The node that display "12 + 100 = "
     var expressionTermsNode = new ExpressionTermsNode( makeATenAddingModel.expressionTerms, {
@@ -75,8 +75,8 @@ define( function( require ) {
     } );
     this.addChild( expressionTermsNode );
 
-    expressionTermsNode.left = this.layoutBounds.minX + 38;
-    expressionTermsNode.top = this.layoutBounds.minY + 85;
+    expressionTermsNode.left = this.layoutBounds.left + 38;
+    expressionTermsNode.top = this.layoutBounds.top + 85;
 
     function onNumberSubmit( value ) {
       if ( makeATenAddingModel.expressionTerms.activeTerm === ActiveTerm.LEFT ) {

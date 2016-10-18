@@ -71,8 +71,8 @@ define( function( require ) {
       listener: function() {
         makeATenModel.reset();
       },
-      right: this.layoutBounds.maxX - 10,
-      bottom: this.layoutBounds.maxY - 10
+      right: this.layoutBounds.right - 10,
+      bottom: this.layoutBounds.bottom - 10
     } );
     this.addChild( this.resetAllButton );
   }
