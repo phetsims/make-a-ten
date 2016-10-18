@@ -13,7 +13,11 @@ define( function( require ) {
   var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Image = require( 'SCENERY/nodes/Image' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var StartGameLevelNode = require( 'MAKE_A_TEN/make-a-ten/game/view/StartGameLevelNode' );
+  var InfoDialog = require( 'MAKE_A_TEN/make-a-ten/game/view/InfoDialog' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var ExpressionTermsNode = require( 'MAKE_A_TEN/make-a-ten/common/view/ExpressionTermsNode' );
   var NextArrowButton = require( 'MAKE_A_TEN/make-a-ten/game/view/NextArrowButton' );
@@ -21,10 +25,10 @@ define( function( require ) {
   var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
   var MakeATenGameModel = require( 'MAKE_A_TEN/make-a-ten/game/model/MakeATenGameModel' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
   var Dimension2 = require( 'DOT/Dimension2' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
 
   // images
   var levelIcon1 = require( 'image!MAKE_A_TEN/level-1.png' );
@@ -84,6 +88,25 @@ define( function( require ) {
     );
 
     this.rootNode.addChild( this.startGameLevelNode );
+
+    // created lazily
+    var infoDialog = null;
+
+    this.infoButton = new RectangularPushButton( {
+      content: new Text( '?', {
+        font: new PhetFont( { size: 20, weight: 'bold' } )
+      } ),
+      baseColor: '#eeeeee',
+      listener: function() {
+        if ( !infoDialog ) {
+          infoDialog = new InfoDialog();
+        }
+        infoDialog.show();
+      },
+      top: this.layoutBounds.top + 20,
+      right: this.layoutBounds.right - 20
+    } );
+    this.rootNode.addChild( this.infoButton );
 
     //go to Level Selection Mode
     var backButton = new BackButton( {
@@ -163,7 +186,7 @@ define( function( require ) {
 
     // @private
     handleChoosingLevelState: function() {
-      this.show( [ this.startGameLevelNode, this.resetAllButton, this.audioAndSoundControlBox ] );
+      this.show( [ this.startGameLevelNode, this.resetAllButton, this.audioAndSoundControlBox, this.infoButton ] );
       this.hideChallenge();
     },
 
@@ -178,7 +201,7 @@ define( function( require ) {
 
     // @private, Utility method for hiding all of the game nodes whose visibility changes during the course of a challenge.
     hideAllGameNodes: function() {
-      var gameNodes = [ this.startGameLevelNode, this.resetAllButton, this.challengeLayer, this.controlLayer, this.audioAndSoundControlBox, this.nextChallengeButton ];
+      var gameNodes = [ this.startGameLevelNode, this.resetAllButton, this.challengeLayer, this.controlLayer, this.audioAndSoundControlBox, this.nextChallengeButton, this.infoButton ];
       gameNodes.forEach( function( node ) { node.visible = false; } );
     },
 
