@@ -41,7 +41,7 @@ define( function( require ) {
     var addPaperNumberCallback = this.addPaperNumber.bind( this );
     var canPlaceNumberCallback = this.canPlaceNumberAt.bind( this );
 
-    MakeATenCommonView.call( this, makeATenExploreModel, MakeATenSharedConstants.LAYOUT_BOUNDS, addPaperNumberCallback );
+    MakeATenCommonView.call( this, makeATenExploreModel, addPaperNumberCallback );
 
     var sumText = new Text( '0', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
     var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );

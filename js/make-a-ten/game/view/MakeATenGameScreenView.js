@@ -21,7 +21,6 @@ define( function( require ) {
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var ExpressionTermsNode = require( 'MAKE_A_TEN/make-a-ten/common/view/ExpressionTermsNode' );
   var NextArrowButton = require( 'MAKE_A_TEN/make-a-ten/game/view/NextArrowButton' );
-  var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
   var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
   var MakeATenGameModel = require( 'MAKE_A_TEN/make-a-ten/game/model/MakeATenGameModel' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
@@ -53,7 +52,7 @@ define( function( require ) {
    * @constructor
    */
   function MakeATenGameScreenView( gameModel ) {
-    MakeATenCommonView.call( this, gameModel, MakeATenSharedConstants.LAYOUT_BOUNDS );
+    MakeATenCommonView.call( this, gameModel );
 
     this.rootNode = new Node();
     this.addChild( this.rootNode );

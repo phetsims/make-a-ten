@@ -16,7 +16,6 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var KeyBoardPanel = require( 'MAKE_A_TEN/make-a-ten/adding/view/KeyBoardPanel' );
-  var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var ExpressionTermsNode = require( 'MAKE_A_TEN/make-a-ten/common/view/ExpressionTermsNode' );
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
@@ -35,7 +34,7 @@ define( function( require ) {
    */
   function MakeATenAddingScreenView( makeATenAddingModel ) {
 
-    MakeATenCommonView.call( this, makeATenAddingModel, MakeATenSharedConstants.LAYOUT_BOUNDS );
+    MakeATenCommonView.call( this, makeATenAddingModel );
 
     // dismiss any open keyboard if a click/touch hits the background directly
     var background = Rectangle.bounds( this.layoutBounds );

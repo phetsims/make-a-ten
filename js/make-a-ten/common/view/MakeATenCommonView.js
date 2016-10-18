@@ -21,15 +21,14 @@ define( function( require ) {
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
 
   /**
+   * @constructor
    *
    * @param {MakeATenModel} makeATenModel
-   * @param {Bounds2} screenBounds
-   * @param {Function} addPaperNumber - callback
-   * @constructor
+   * @param {Function} [addPaperNumber] - callback
    */
-  function MakeATenCommonView( makeATenModel, screenBounds, addPaperNumber ) {
+  function MakeATenCommonView( makeATenModel, addPaperNumber ) {
     var self = this;
-    ScreenView.call( this, { layoutBounds: screenBounds } );
+    ScreenView.call( this, { layoutBounds: MakeATenSharedConstants.LAYOUT_BOUNDS } );
     this.makeATenModel = makeATenModel;
 
     this.paperNumberLayerNode = new Node();
