@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Util = require( 'DOT/Util' );
 
   //constants
   var MULTIPLES_OF_TEN = [ 20, 30, 40, 50, 60, 70, 80, 90, 100 ];
@@ -50,91 +51,40 @@ define( function( require ) {
        * @returns {number} // zero means no value is pulled out
        */
       pullApartNumbers: function( numberValue, pulledIndex ) {
-
-        var amountToRemove = 0;
-
-        var numberPulledPartModel = null;
-        if ( numberValue === 1 ) {
-          return numberPulledPartModel;
+        if ( numberValue <= 1 ) {
+          return null;
         }
 
-        // single digit
-        if ( numberValue <= 10 && numberValue > 1 ) {
-          amountToRemove = 1;
-        }
-
-        // 2 digits
-        if ( numberValue > 10 && numberValue < 100 ) {
-          if ( pulledIndex === 0 ) { // from left
-            amountToRemove = 10; // pull off 10 when left most digit is pulled out
-          }
-          else {
-            amountToRemove = numberValue % 10;
+        // Find the minimum place (0: singles, 1: doubles, etc.) where we can pull off from
+        var minimumPlace = 0;
+        for ( var i = 1; i < 3; i++ ) {
+          var power = Math.pow( 10, i );
+          if ( numberValue % power === 0 && numberValue > power ) {
+            minimumPlace = i;
           }
         }
 
-        // 3 digits
-        if ( numberValue >= 100 && numberValue < 1000 ) {
-          if ( pulledIndex === 0 ) {
-            amountToRemove = 100;
-          }
-          if ( pulledIndex === 1 ) {
-            amountToRemove = numberValue % 100;
-          }
-          if ( pulledIndex === 2 ) {
-            amountToRemove = numberValue % 10;
+        // How many places are on the number?
+        var maximumPlace = Math.floor( Util.log10( numberValue ) );
 
-            // issue #38
-            if ( amountToRemove === 0 ) {
-              amountToRemove = numberValue % 100;
-            }
-          }
+        // Grab the place we'll try to remove from.
+        var place = Math.max( minimumPlace, maximumPlace - pulledIndex );
+
+        var amountToRemove;
+        if ( place === maximumPlace ) {
+          amountToRemove = Math.pow( 10, place );
         }
-
-        // 4 digits
-        if ( numberValue >= 1000 && numberValue < 9999 ) {
-          if ( pulledIndex === 0 ) {
-            amountToRemove = 1000;
-          }
-          if ( pulledIndex === 1 ) {
-            amountToRemove = numberValue % 1000;
-          }
-          if ( pulledIndex === 2 ) {
-            amountToRemove = numberValue % 100;
-            // issue #38
-            if ( amountToRemove === 0 ) {
-              amountToRemove = numberValue % 1000;
-            }
-          }
-          if ( pulledIndex === 3 ) {
-            amountToRemove = numberValue % 10;
-            // issue #38
-            if ( amountToRemove === 0 ) {
-              amountToRemove = numberValue % 100;
-            }
-
-            if ( amountToRemove === 0 ) {
-              amountToRemove = numberValue % 1000;
-            }
-          }
+        else {
+          amountToRemove = numberValue % Math.pow( 10, place + 1 );
         }
-
-        if ( amountToRemove < 1 ) {
-          amountToRemove = 1;
+        if ( amountToRemove === 0 ) {
+          amountToRemove = Math.pow( 10, place );
         }
-
-        if ( _.contains( MULTIPLES_OF_TEN, numberValue ) ) {
-          amountToRemove = 10;
+        if ( amountToRemove === numberValue ) {
+          amountToRemove = Math.pow( 10, place - 1 );
         }
-
-        if ( _.contains( MULTIPLES_OF_HUNDRED, numberValue ) ) {
-          amountToRemove = 100;
-        }
-
 
         return amountToRemove;
       }
-
-
     } );
 } );
