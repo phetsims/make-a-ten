@@ -14,6 +14,7 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var arrayRemove = require( 'PHET_CORE/arrayRemove' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Shape = require( 'KITE/Shape' );
@@ -341,18 +342,16 @@ define( function( require ) {
     },
 
     /**
-     * Find all nodes which are attachable to the dragged node. This method is called once th user ends the dragging
-     * @param allPaperNumberNodes
+     * Find all nodes which are attachable to the dragged node. This method is called once the user ends the dragging.
+     * @public
+     *
+     * @param {Array.<PaperNumberNode>} allPaperNumberNodes
      * @returns {Array}
      */
     findAttachableNodes: function( allPaperNumberNodes ) {
-      var self = this;
-      // TODO: this looks like it could be cleaned up
-      _.remove( allPaperNumberNodes, function( node ) {
-        return node === self;
-      } );
+      var attachableNodeCandidates = allPaperNumberNodes.slice();
+      arrayRemove( attachableNodeCandidates, this );
 
-      var attachableNodeCandidates = allPaperNumberNodes;
       var attachableNodes = [];
 
       for ( var i = 0; i < attachableNodeCandidates.length; i++ ) {
