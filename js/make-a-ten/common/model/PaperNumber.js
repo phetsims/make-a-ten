@@ -20,28 +20,41 @@ define( function( require ) {
   var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
   var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
 
+  // 1-digit numbers have image dimensions of 67x128
+  // 2-digit numbers have image dimensions of (155,156)x(140,141)
+  // 3-digit numbers have image dimensions of 215x177
+  // 4-digit numbers have image dimensions of (271,272)x189
+
+  var NUMBER_OFFSETS = [
+    new Vector2( 0, 0 ),
+    new Vector2( 70, 4 ),
+    new Vector2( 55, 18 ),
+    new Vector2( 65, 6 )
+  ];
+
+  // TODO: reordering of indices, https://github.com/phetsims/make-a-ten/issues/155
   // constants
   var TWO_DIGIT_OFFSET_DIMENSIONS = {
-    0: new Vector2( 0, 0 ),
-    1: new Vector2( 70, 4 )// how much a single digit image has to offset
+    0: NUMBER_OFFSETS[ 0 ],
+    1: NUMBER_OFFSETS[ 1 ]
   };
 
   // how much 2 digit and single digit must offset from parent
   var THREE_DIGIT_OFFSET_DIMENSIONS = {
-    0: new Vector2( 0, 0 ),
-    1: new Vector2( 55, 18 ),
-    2: new Vector2( 125, 22 ) // the diff between 2 and 3 is same as diff between first and second in TWO_DIGIT
+    0: NUMBER_OFFSETS[ 0 ],
+    1: NUMBER_OFFSETS[ 2 ],
+    2: NUMBER_OFFSETS[ 2 ].plus( NUMBER_OFFSETS[ 1 ] ) // the diff between 2 and 3 is same as diff between first and second in TWO_DIGIT
   };
 
   var FOUR_DIGIT_OFFSET_DIMENSIONS = {
-    0: new Vector2( 0, 0 ),
-    1: new Vector2( 65, 6 ),
-    2: new Vector2( 120, 28 ),
-    3: new Vector2( 190, 32 )
+    0: NUMBER_OFFSETS[ 0 ],
+    1: NUMBER_OFFSETS[ 3 ],
+    2: NUMBER_OFFSETS[ 3 ].plus( NUMBER_OFFSETS[ 2 ] ),
+    3: NUMBER_OFFSETS[ 3 ].plus( NUMBER_OFFSETS[ 2 ] ).plus( NUMBER_OFFSETS[ 1 ] )
   };
 
   var SINGLE_DIGIT_OFFSET_DIMENSIONS = {
-    0: new Vector2( 0, 0 )
+    0: NUMBER_OFFSETS[ 0 ]
   };
 
   var NUMBER_IMAGE_OFFSET_DIMENSIONS = {

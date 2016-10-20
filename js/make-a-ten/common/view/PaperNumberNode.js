@@ -1,10 +1,7 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- *
- * Represents the view of the PaperNumber.
- * It uses one or more number images based on the "Tens" in a given number.
- * These collections of images are positioned in a way to give "stacked" appearance
+ * Visual view of paper numbers (PaperNumber), with stacked images based on the digits of the number.
  *
  * @author Sharfudeen Ashraf
  */
@@ -24,6 +21,7 @@ define( function( require ) {
   var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
 
+  // images
   var image1 = require( 'image!MAKE_A_TEN/1.png' );
   var image2 = require( 'image!MAKE_A_TEN/2.png' );
   var image3 = require( 'image!MAKE_A_TEN/3.png' );
@@ -84,15 +82,15 @@ define( function( require ) {
   /**
    *
    * @param {PaperNumber} paperNumber
-   * @param {MakeATenCommonView} makeATenView
+   * @param {Property<Bounds2>} availableViewBoundsProperty
    * @param {Function<paperNumber>} addNumberModelCallback A callback to invoke when a  Number is  split
    * @param {Function<paperNumber,droppedPoint>} tryToCombineNumbers A callback to invoke when a Number is  combined
    * @constructor
    */
-  function PaperNumberNode( paperNumber, makeATenView, addNumberModelCallback, tryToCombineNumbers ) {
+  function PaperNumberNode( paperNumber, availableViewBoundsProperty, addNumberModelCallback, tryToCombineNumbers ) {
     var self = this;
     this.paperNumber = paperNumber;
-    this.makeATenView = makeATenView;
+    this.availableViewBoundsProperty = availableViewBoundsProperty;
     Node.call( this );
 
     this.addNumberModelCallback = addNumberModelCallback || _.noop;
@@ -235,7 +233,7 @@ define( function( require ) {
         if ( movableObject ) {
           var newPosition = movableObject.position.plus( delta );
           //constrain
-          movableObject.constrainPosition( makeATenView.availableViewBoundsProperty.get(), newPosition );
+          movableObject.constrainPosition( availableViewBoundsProperty.value, newPosition );
 
           // if it is a new created object, change the opacity
           if ( movableObject !== paperNumber ) {

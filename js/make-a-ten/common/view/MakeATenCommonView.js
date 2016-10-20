@@ -40,7 +40,7 @@ define( function( require ) {
     this.paperNumberNodeMap = {}; // @private {number} PaperNumber.id => {PaperNumberNode} - lookup map for efficiency
 
     function handlePaperNumberAdded( addedNumberModel ) {
-      var paperNumberNode = new PaperNumberNode( addedNumberModel, self, self.addPaperNumber, self.tryToCombineNumbers );
+      var paperNumberNode = new PaperNumberNode( addedNumberModel, self.availableViewBoundsProperty, self.addPaperNumber, self.tryToCombineNumbers );
       self.addPaperNumberNode( paperNumberNode );
     }
 
