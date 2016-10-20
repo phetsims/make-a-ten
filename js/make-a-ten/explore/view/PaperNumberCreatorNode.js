@@ -17,7 +17,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
-  var PaperImageCollection = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperImageCollection' );
+  var PaperNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperNumberNode' );
   var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
 
@@ -34,7 +34,7 @@ define( function( require ) {
     var self = this;
 
     // Create the node that the user will click upon to add a model element to the view.
-    var representation = new Image( PaperImageCollection.getNumberImage( numberValue ) );
+    var representation = new Image( PaperNumberNode.getNumberImage( numberValue ) );
     representation.scale( 0.64, 0.55 );
     this.addChild( representation );
 
