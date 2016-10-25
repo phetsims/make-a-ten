@@ -13,6 +13,7 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Emitter = require( 'AXON/Emitter' );
   var StarNode = require( 'SCENERY_PHET/StarNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -33,11 +34,15 @@ define( function( require ) {
       starOuterRadius: 10,
       starInnerRadius: 5,
       starFilledLineWidth: 1.5,
-      starEmptyLineWidth: 1.5
+      starEmptyLineWidth: 1.5,
+      labelColor: 'black',
+      align: 'center'
     }, options );
 
     HBox.call( this, { spacing: 8, children: [] } );
     var self = this;
+
+    this.scoreChangedEmitter = new Emitter();
 
     // Update visibility of filled and half-filled stars based on score.
     // TODO: Could be rewritten to use deltas if it needs to animate
@@ -55,6 +60,11 @@ define( function( require ) {
         emptyLineWidth: options.starEmptyLineWidth
       };
 
+      if ( score > 0 ) {
+        var scoreLabel = new Text( score, { font: LABEL_FONT, fill: options.labelColor } );
+        children.push( scoreLabel );
+      }
+
       for ( var i = 0; i < numFilledStars; i++ ) {
         children.push( new StarNode( _.extend( { value: 1 }, starOptions ) ) );
       }
@@ -62,11 +72,9 @@ define( function( require ) {
         children.push( new StarNode( _.extend( { value: 0 }, starOptions ) ) );
       }
 
-      if ( score > 0 ) {
-        var scoreLabel = new Text( score, { font: LABEL_FONT, fill: 'black' } );
-        children.push( scoreLabel );
-      }
       self.children = children;
+
+      self.scoreChangedEmitter.emit();
     } );
 
     this.mutate( options );

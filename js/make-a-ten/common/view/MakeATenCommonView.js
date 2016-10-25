@@ -216,11 +216,19 @@ define( function( require ) {
       }
     },
 
+    /**
+     * Meant for subtypes to override to do additional component layout. Can't override layout(), as it takes additional
+     * parameters that we may not have access to.
+     * @protected
+     */
     layoutControls: function() {
       this.resetAllButton.right = this.visibleBoundsProperty.value.right - 10;
       this.resetAllButton.bottom = this.visibleBoundsProperty.value.bottom - 10;
     },
 
+    /**
+     * @override
+     */
     layout: function( width, height ) {
       ScreenView.prototype.layout.call( this, width, height );
 

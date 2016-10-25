@@ -21,33 +21,23 @@ define( function( require ) {
   // Template for inserting the level number
   var gameInfoLevelXString = require( 'string!MAKE_A_TEN/game.info.levelX' );
 
-  // Level descriptions
-  var gameInfoLevel1String = require( 'string!MAKE_A_TEN/game.info.level1' );
-  var gameInfoLevel2String = require( 'string!MAKE_A_TEN/game.info.level2' );
-  var gameInfoLevel3String = require( 'string!MAKE_A_TEN/game.info.level3' );
-  var gameInfoLevel4String = require( 'string!MAKE_A_TEN/game.info.level4' );
-  var gameInfoLevel5String = require( 'string!MAKE_A_TEN/game.info.level5' );
-  var gameInfoLevel6String = require( 'string!MAKE_A_TEN/game.info.level6' );
-  var gameInfoLevel7String = require( 'string!MAKE_A_TEN/game.info.level7' );
-  var gameInfoLevel8String = require( 'string!MAKE_A_TEN/game.info.level8' );
-  var gameInfoLevel9String = require( 'string!MAKE_A_TEN/game.info.level9' );
-  var gameInfoLevel10String = require( 'string!MAKE_A_TEN/game.info.level10' );
-
   var LEVEL_NUMBER_FONT = new PhetFont( { size: 14, weight: 'bold' } );
   var LEVEL_DESCRIPTION_FONT = new PhetFont( 14 );
 
   /**
    * @constructor
+   *
+   * @param {Array.<Level>} levels - All game levels
    */
-  function InfoDialog() {
+  function InfoDialog( levels ) {
     var padWidth = new Text( StringUtils.format( gameInfoLevelXString, '10' ), { font: LEVEL_NUMBER_FONT } ).width + 20;
-    function createLevelNode( levelInfo ) {
+    function createLevelNode( level ) {
       return new Node( {
         children: [
-          new Text( StringUtils.format( gameInfoLevelXString, '' + levelInfo.number ), {
+          new Text( StringUtils.format( gameInfoLevelXString, '' + level.number ), {
             font: LEVEL_NUMBER_FONT
           } ),
-          new Text( levelInfo.description, {
+          new Text( level.description, {
             font: LEVEL_DESCRIPTION_FONT,
             x: padWidth
           } )
@@ -57,18 +47,7 @@ define( function( require ) {
     var contentNode = new VBox( {
       align: 'left',
       spacing: 14,
-      children: [
-        { number: 1, description: gameInfoLevel1String },
-        { number: 2, description: gameInfoLevel2String },
-        { number: 3, description: gameInfoLevel3String },
-        { number: 4, description: gameInfoLevel4String },
-        { number: 5, description: gameInfoLevel5String },
-        { number: 6, description: gameInfoLevel6String },
-        { number: 7, description: gameInfoLevel7String },
-        { number: 8, description: gameInfoLevel8String },
-        { number: 9, description: gameInfoLevel9String },
-        { number: 10, description: gameInfoLevel10String }
-      ].map( createLevelNode )
+      children: levels.map( createLevelNode )
     } );
 
     Dialog.call( this, contentNode, {
