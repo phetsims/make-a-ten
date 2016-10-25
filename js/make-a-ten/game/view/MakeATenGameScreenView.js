@@ -143,6 +143,8 @@ define( function( require ) {
 
     // Hook up the update function for handling changes to game state.
     gameModel.gameStateProperty.link( this.handleGameStateChange.bind( this ) );
+
+    this.layoutControls();
   }
 
   makeATen.register( 'MakeATenGameScreenView', MakeATenGameScreenView );

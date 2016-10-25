@@ -116,16 +116,16 @@ define( function( require ) {
       fill: 'black'
     } );
 
-    var hideTotalCheckBox = new CheckBox( hideTotalText, makeATenExploreModel.hideTotalProperty, {
+    this.hideTotalCheckBox = new CheckBox( hideTotalText, makeATenExploreModel.hideTotalProperty, {
       spacing: 10,
       boxWidth: 30
     } );
-    this.addChild( hideTotalCheckBox );
+    this.addChild( this.hideTotalCheckBox );
 
-    hideTotalCheckBox.right = this.layoutBounds.right - 110;
-    hideTotalCheckBox.bottom = this.layoutBounds.bottom - 20;
+    this.hideTotalCheckBox.right = this.layoutBounds.right - 110;
+    this.hideTotalCheckBox.bottom = this.layoutBounds.bottom - 20;
 
-    hideTotalCheckBox.touchArea = hideTotalCheckBox.localBounds.dilatedXY( 10, 4 );
+    this.hideTotalCheckBox.touchArea = this.hideTotalCheckBox.localBounds.dilatedXY( 10, 4 );
 
     makeATenExploreModel.hideTotalProperty.link( function( hideTotal ) {
       equationHBox.visible = !hideTotal;
@@ -153,11 +153,26 @@ define( function( require ) {
       }
     } );
 
+    this.layoutControls();
   }
 
   makeATen.register( 'MakeATenExploreScreenView', MakeATenExploreScreenView );
 
   return inherit( MakeATenCommonView, MakeATenExploreScreenView, {
+    /**
+     * @override
+     */
+    layoutControls: function() {
+      MakeATenCommonView.prototype.layoutControls.call( this );
+
+      var visibleBounds = this.visibleBoundsProperty.value;
+
+      this.paperNumbersContainerPanel.centerX = visibleBounds.centerX;
+      this.paperNumbersContainerPanel.bottom = visibleBounds.bottom - 10;
+
+      this.hideTotalCheckBox.left = this.paperNumbersContainerPanel.right + 20;
+      this.hideTotalCheckBox.bottom = visibleBounds.bottom - 10;
+    },
 
     /**
      * Used to determine if the user has placed the picked number sufficiently away from

@@ -12,7 +12,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var arrayRemove = require( 'PHET_CORE/arrayRemove' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var DotRectangle = require( 'DOT/Rectangle' ); // eslint-disable-line require-statement-match
   var Property = require( 'AXON/Property' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PaperNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperNumberNode' );
@@ -55,6 +54,7 @@ define( function( require ) {
     makeATenModel.paperNumbers.addItemAddedListener( handlePaperNumberAdded );
 
     // used to prevent numbers from moving outside the visible model bounds when dragged
+    // TODO: don't initialize as null?
     this.availableViewBoundsProperty = new Property( null );// filled by layout method
 
     this.availableViewBoundsProperty.lazyLink( function( newBounds ) {
@@ -69,9 +69,7 @@ define( function( require ) {
     this.resetAllButton = new ResetAllButton( {
       listener: function() {
         makeATenModel.reset();
-      },
-      right: this.layoutBounds.right - 10,
-      bottom: this.layoutBounds.bottom - 10
+      }
     } );
     this.addChild( this.resetAllButton );
   }
@@ -218,27 +216,17 @@ define( function( require ) {
       }
     },
 
+    layoutControls: function() {
+      this.resetAllButton.right = this.visibleBoundsProperty.value.right - 10;
+      this.resetAllButton.bottom = this.visibleBoundsProperty.value.bottom - 10;
+    },
+
     layout: function( width, height ) {
-      this.resetTransform();
+      ScreenView.prototype.layout.call( this, width, height );
 
-      var scale = this.getLayoutScale( width, height );
-      this.setScaleMagnitude( scale );
+      this.availableViewBoundsProperty.value = this.visibleBoundsProperty.value;
 
-      var offsetX = 0;
-      var offsetY = 0;
-
-      // Move to bottom vertically
-      if ( scale === width / this.layoutBounds.width ) {
-        offsetY = (height / scale - this.layoutBounds.height);
-      }
-
-      // center horizontally
-      else if ( scale === height / this.layoutBounds.height ) {
-        offsetX = (width - this.layoutBounds.width * scale) / 2 / scale;
-      }
-      this.translate( offsetX, offsetY );
-
-      this.availableViewBoundsProperty.value = new DotRectangle( -offsetX, -offsetY, width / scale, height / scale );
+      this.layoutControls();
     }
   } );
 } );

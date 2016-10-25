@@ -112,6 +112,8 @@ define( function( require ) {
         keyBoardPanel.setValue( makeATenAddingModel.expressionTerms.rightTerm );
       }
     } );
+
+    this.layoutControls();
   }
 
   makeATen.register( 'MakeATenAddingScreenView', MakeATenAddingScreenView );
