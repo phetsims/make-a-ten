@@ -66,7 +66,6 @@ define( function( require ) {
      * @returns {NumberChallenge}
      */
     generateChallenge: function() {
-      // TODO: can we inline this?
       return this.numberChallengeFactory.generateChallenge( this.number - 1 );
     }
   } );
