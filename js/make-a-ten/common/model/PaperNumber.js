@@ -114,6 +114,7 @@ define( function( require ) {
 
     // Trigger an event whenever this shape returns to its original position.
     this.positionProperty.lazyLink( function( position ) {
+      assert && assert( isFinite( position.y ) );
       if ( position.equals( initialPosition ) ) {
         self.trigger( 'returnedToOrigin' );
       }

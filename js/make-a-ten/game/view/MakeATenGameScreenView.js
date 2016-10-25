@@ -196,6 +196,13 @@ define( function( require ) {
       this.challengeLayer.visible = false;
       this.controlLayer.visible = false;
       this.gameStatusBar.visible = false;
+    },
+
+    /**
+     * @override
+     */
+    getTopBoundsOffset: function() {
+      return this.gameStatusBar.height;
     }
   } );
 } );

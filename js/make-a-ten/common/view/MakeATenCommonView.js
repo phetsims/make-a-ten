@@ -227,12 +227,25 @@ define( function( require ) {
     },
 
     /**
+     * Some views may need to constrain the vertical room at the top (for dragging numbers) due to a status bar.
+     * This should be overridden to return the value required.
+     * @public
+     *
+     * @returns {number} - Amount in view coordinates to leave at the top of the screen
+     */
+    getTopBoundsOffset: function() {
+      return 0;
+    },
+
+    /**
      * @override
      */
     layout: function( width, height ) {
       ScreenView.prototype.layout.call( this, width, height );
 
-      this.availableViewBoundsProperty.value = this.visibleBoundsProperty.value;
+      // Some views may need to make extra room for a status bar
+      var top = this.visibleBoundsProperty.value.minY + this.getTopBoundsOffset();
+      this.availableViewBoundsProperty.value = this.visibleBoundsProperty.value.withMinY( top );
 
       this.layoutControls();
     }
