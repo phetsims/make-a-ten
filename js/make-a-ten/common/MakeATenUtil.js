@@ -21,6 +21,19 @@ define( function( require ) {
 
   var MakeATenUtil = {
     /**
+     * Common way of determining number of digits in a number.
+     * @public
+     *
+     * @param {number} number - Should be an integer.
+     */
+    digitsInNumber: function( number ) {
+      assert && assert( number % 1 === 0, 'Should be an integer' );
+
+      // Not using log10, since phet.dot.Util.log10( 1000 ) => 2.9999999999999996, which behaved badly with floor.
+      return ( '' + number ).length;
+    },
+
+    /**
      * Code is copied over from LevelSelectionButton
      * Create a node that is scaled and padded out to meet the size specification.
      * @param {Image} icon

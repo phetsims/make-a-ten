@@ -19,6 +19,7 @@ define( function( require ) {
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var ArithmeticRules = require( 'MAKE_A_TEN/make-a-ten/common/model/ArithmeticRules' );
   var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
+  var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
   var Image = require( 'SCENERY/nodes/Image' );
 
   // images
@@ -217,12 +218,12 @@ define( function( require ) {
           // see issue #7
 
           if ( splitObjectContext.pulledApartPaperNumber.digitLength >=
-               (splitObjectContext.amountRemaining + '').length ) {
+               MakeATenUtil.digitsInNumber( splitObjectContext.amountRemaining ) ) {
             paperNumber.setDestination( paperNumber.position.plus(
               splitObjectContext.amountRemovingOffsetPosition ) );
           }
           if ( splitObjectContext.pulledApartPaperNumber.digitLength >
-               (splitObjectContext.amountRemaining + '').length ) {
+               MakeATenUtil.digitsInNumber( splitObjectContext.amountRemaining ) ) {
             self.moveToFront();
           }
 

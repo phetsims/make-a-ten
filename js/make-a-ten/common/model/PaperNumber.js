@@ -19,11 +19,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
   var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
-
-  // 1-digit numbers have image dimensions of 67x128
-  // 2-digit numbers have image dimensions of (155,156)x(140,141)
-  // 3-digit numbers have image dimensions of 215x177
-  // 4-digit numbers have image dimensions of (271,272)x189
+  var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
 
   var NUMBER_OFFSETS = [
     new Vector2( 0, 0 ),
@@ -77,7 +73,10 @@ define( function( require ) {
    */
   function PaperNumber( numberValue, initialPosition, options ) {
     var self = this;
-    options = _.extend( { opacity: 1 }, options );
+
+    options = _.extend( {
+      opacity: 1
+    }, options );
 
     this.id = PAPER_NUMBER_ID_GENERATOR++;
 
@@ -96,9 +95,6 @@ define( function( require ) {
 
       // Flag that indicates whether this element is animating from one location to another, should not be set externally.
       animating: false,
-
-      //no of digits
-      digitLength: 0,
 
       opacity: options.opacity
 
@@ -122,11 +118,6 @@ define( function( require ) {
         self.trigger( 'returnedToOrigin' );
       }
     } );
-
-    this.numberValueProperty.link( function( newValue ) {
-      self.digitLength = (newValue + '').length;
-    } );
-
   }
 
   makeATen.register( 'PaperNumber', PaperNumber );
@@ -157,6 +148,12 @@ define( function( require ) {
       }
     },
 
+    get digitLength() {
+      assert && assert( this.numberValue > 0 );
+
+      return MakeATenUtil.digitsInNumber( this.numberValue );
+    },
+
     /**
      * A number such as 238 will result in 200,30,8 as base numbers for which we have corresponding images
      *
@@ -165,8 +162,7 @@ define( function( require ) {
     decomposeIntoBaseNumbers: function( value ) {
       this.baseNumbers = [];
       var numberOfSetDimensions = this.getOffsetArrayByDigits( value );
-      var valueStr = value + '';
-      var noOfDigits = valueStr.length;
+      var noOfDigits = MakeATenUtil.digitsInNumber( value );
       var opacityValue = 1;
       var numberPositionIndex = 0;
 
@@ -221,7 +217,7 @@ define( function( require ) {
      * @returns {object}
      */
     getOffsetArrayByDigits: function( value ) {
-      var digits = (value + '').length;
+      var digits = MakeATenUtil.digitsInNumber( value );
       var numberOfSetDimensions = _.clone( NUMBER_IMAGE_OFFSET_DIMENSIONS[ digits - 1 ] ); // digits-1 zero based index
 
       // handle numbers like 102 where there are only two base numbers and the second number is at third position
@@ -357,5 +353,4 @@ define( function( require ) {
     }
 
   } );
-
 } );

@@ -18,6 +18,12 @@ define( function( require ) {
     LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
     PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR: 'rgb( 208, 222, 239 )',
     SCREEN_BACKGROUND_COLOR: '#E8FFB0',
+
+    // TODO: These don't seem consistent. Here are the current sizes:
+    // 1-digit numbers have image dimensions of 67x128
+    // 2-digit numbers have image dimensions of (155,156)x(140,141)
+    // 3-digit numbers have image dimensions of 215x177
+    // 4-digit numbers have image dimensions of (271,272)x189
     PAPER_NUMBER_DIMENSIONS: {
       1: new Dimension2( 67, 128 ), // key is digitLength
       2: new Dimension2( 156, 141 ),

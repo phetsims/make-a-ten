@@ -10,7 +10,7 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Util = require( 'DOT/Util' );
+  var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
 
   /**
    * @constructor
@@ -61,7 +61,7 @@ define( function( require ) {
         }
 
         // How many places are on the number?
-        var maximumPlace = Math.floor( Util.log10( numberValue ) );
+        var maximumPlace = MakeATenUtil.digitsInNumber( numberValue ) - 1;
 
         // Grab the place we'll try to remove from.
         var place = Math.max( minimumPlace, maximumPlace - pulledIndex );

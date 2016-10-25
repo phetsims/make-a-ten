@@ -15,6 +15,7 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
 
   /**
    *
@@ -27,7 +28,8 @@ define( function( require ) {
     this.numberValue = numberValue;
     this.position = position;
     this.opacity = opacity;
-    this.digitLength = (numberValue + '').length;
+    // TODO: can't we pass this in?
+    this.digitLength = MakeATenUtil.digitsInNumber( numberValue );
   }
 
   makeATen.register( 'BaseNumber', BaseNumber );
