@@ -50,7 +50,7 @@ define( function( require ) {
       var editNumberButton = new RectangularPushButton( {
         content: MakeATenUtil.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE ),
         listener: function() {
-          termProperty.set( type );
+          termProperty.value = type;
         },
         baseColor: 'white'
       } );

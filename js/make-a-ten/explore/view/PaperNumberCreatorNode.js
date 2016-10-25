@@ -77,7 +77,7 @@ define( function( require ) {
         var selectedPosition = initialPosition.plus( new Vector2( 0, offsetY ) );
 
         paperNumber.setDestination( selectedPosition );
-        paperNumber.userControlled = true;
+        paperNumber.userControlledProperty.value = true;
         addNumberToModel( paperNumber );
 
       },
@@ -86,15 +86,15 @@ define( function( require ) {
         if ( !paperNumber ) {
           return;
         }
-        var newPos = paperNumber.position.plus( translationParams.delta );
-        paperNumber.constrainPosition( makeATenView.availableViewBoundsProperty.get(), newPos );
+        var newPos = paperNumber.positionProperty.value.plus( translationParams.delta );
+        paperNumber.constrainPosition( makeATenView.availableViewBoundsProperty.value, newPos );
       },
 
       end: function( event, trail ) {
         if ( !paperNumber ) {
           return;
         }
-        paperNumber.userControlled = false;
+        paperNumber.userControlledProperty.value = false;
         var droppedPoint = event.pointer.point;
         var droppedViewPoint = parentScreenView.globalToLocalPoint( event.pointer.point );
 

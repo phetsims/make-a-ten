@@ -44,8 +44,8 @@ define( function( require ) {
      */
     calculateTotal: function() {
       var total = 0;
-      this.paperNumbers.forEach( function( model ) {
-        total += model.numberValue;
+      this.paperNumbers.forEach( function( paperNumber ) {
+        total += paperNumber.numberValueProperty.value;
       } );
       this.sumProperty.value = total;
     },
@@ -54,7 +54,7 @@ define( function( require ) {
       MakeATenCommonModel.prototype.addPaperNumber.call( this, paperNumber );
       var self = this;
       paperNumber.numberValueProperty.link( function( newValue ) {
-        if ( !paperNumber.userControlled ) {
+        if ( !paperNumber.userControlledProperty.value ) {
           self.calculateTotal();
           self.interactionSucceeded = true;
         }
@@ -62,8 +62,8 @@ define( function( require ) {
 
       // The shape will be removed from the model if and when it returns to its origination point.  This is how a shape
       // can be 'put back' into the panel.
-      paperNumber.on( 'returnedToOrigin', function() {
-        if ( !paperNumber.userControlled ) {
+      paperNumber.returnedToOriginEmitter.addListener( function() {
+        if ( !paperNumber.userControlledProperty.value ) {
           // The shape has been returned to the panel.
           self.paperNumbers.remove( paperNumber );
         }

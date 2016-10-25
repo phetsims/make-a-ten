@@ -145,7 +145,7 @@ define( function( require ) {
 
     function startMoving( paperNumber ) {
       movableObject = paperNumber;
-      movableObject.userControlled = true;
+      movableObject.userControlledProperty.value = true;
     }
 
     var paperNodeDragHandler = new SimpleDragHandler( {
@@ -160,14 +160,14 @@ define( function( require ) {
         startOffset = self.globalToParentPoint( event.pointer.point );
         currentPoint = startOffset.copy();
 
-        if ( paperNumber.numberValue === 1 ) {
+        if ( paperNumber.numberValueProperty.value === 1 ) {
           startMoving( paperNumber );
           return;
         }
 
         var pulledOutIndex = self.determineDigitIndex( startOffset );
-        var amountToRemove = ArithmeticRules.pullApartNumbers( paperNumber.numberValue, pulledOutIndex );
-        var amountRemaining = paperNumber.numberValue - amountToRemove;
+        var amountToRemove = ArithmeticRules.pullApartNumbers( paperNumber.numberValueProperty.value, pulledOutIndex );
+        var amountRemaining = paperNumber.numberValueProperty.value - amountToRemove;
 
         // it cannot be split - so start moving
         if ( !amountToRemove ) {
@@ -219,7 +219,7 @@ define( function( require ) {
 
           if ( splitObjectContext.pulledApartPaperNumber.digitLength >=
                MakeATenUtil.digitsInNumber( splitObjectContext.amountRemaining ) ) {
-            paperNumber.setDestination( paperNumber.position.plus(
+            paperNumber.setDestination( paperNumber.positionProperty.value.plus(
               splitObjectContext.amountRemovingOffsetPosition ) );
           }
           if ( splitObjectContext.pulledApartPaperNumber.digitLength >
@@ -232,14 +232,14 @@ define( function( require ) {
 
         //in case of split mode, the movableObject is set, only if the "move" started after a certain distance
         if ( movableObject ) {
-          var newPosition = movableObject.position.plus( delta );
+          var newPosition = movableObject.positionProperty.value.plus( delta );
           //constrain
           movableObject.constrainPosition( availableViewBoundsProperty.value, newPosition );
 
           // if it is a new created object, change the opacity
           if ( movableObject !== paperNumber ) {
             // gradually increase the opacity from 0.8 to 1 as we move away from the number, otherwise the change looks sudden
-            movableObject.opacity = 0.9 + (0.005 * Math.min( 20, transDistance / SPLIT_OPACITY_FACTOR ));
+            movableObject.opacityProperty.value = 0.9 + (0.005 * Math.min( 20, transDistance / SPLIT_OPACITY_FACTOR ));
           }
         }
 
@@ -248,10 +248,10 @@ define( function( require ) {
 
       end: function( event, trail ) {
         if ( movableObject ) {
-          movableObject.userControlled = false;
+          movableObject.userControlledProperty.value = false;
           var droppedPoint = event.pointer.point;
           tryToCombineNumbers( movableObject, droppedPoint );
-          movableObject.trigger( 'endDrag' );
+          movableObject.endDragEmitter.emit();
         }
 
         resetDrag();
@@ -265,7 +265,7 @@ define( function( require ) {
     paperNodeDragHandler.move = function( event ) {
 
       // if it is 1, we can only move
-      if ( paperNumber.numberValue === 1 ) {
+      if ( paperNumber.numberValueProperty.value === 1 ) {
         self.cursor = 'move';
         return;
       }
@@ -299,7 +299,7 @@ define( function( require ) {
      * @private
      */
     onUserControlledChange: function() {
-      if ( this.paperNumber.userControlled ) {
+      if ( this.paperNumber.userControlledProperty.value ) {
         this.moveToFront();
       }
     },
@@ -355,7 +355,7 @@ define( function( require ) {
 
       for ( var i = 0; i < attachableNodeCandidates.length; i++ ) {
         var droppedNode = attachableNodeCandidates[ i ];
-        var isOpposite = this.paperNumber.numberValue > droppedNode.paperNumber.numberValue;
+        var isOpposite = this.paperNumber.numberValueProperty.value > droppedNode.paperNumber.numberValueProperty.value;
         var widerNode = isOpposite ? this : droppedNode;
         var smallerNode = isOpposite ? droppedNode : this;
 

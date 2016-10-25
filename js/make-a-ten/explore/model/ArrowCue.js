@@ -76,11 +76,11 @@ define( function( require ) {
     positionAt: function( paperNumber ) {
       var paperNumberDimension = paperNumber.getDimension();
 
-      var rightTop = new Vector2( paperNumber.position.x + paperNumberDimension.width - CUE_IMAGE_DIMENSION.width / 2,
-        paperNumber.position.y + paperNumberDimension.height * 0.15 - CUE_IMAGE_DIMENSION.height / 2 );
+      var rightTop = new Vector2( paperNumber.positionProperty.value.x + paperNumberDimension.width - CUE_IMAGE_DIMENSION.width / 2,
+        paperNumber.positionProperty.value.y + paperNumberDimension.height * 0.15 - CUE_IMAGE_DIMENSION.height / 2 );
 
-      var bottomCenter = new Vector2( paperNumber.position.x + paperNumberDimension.width * 0.5 - CUE_IMAGE_DIMENSION.width / 2,
-        paperNumber.position.y + paperNumberDimension.height * 0.8 - CUE_IMAGE_DIMENSION.height / 2 );
+      var bottomCenter = new Vector2( paperNumber.positionProperty.value.x + paperNumberDimension.width * 0.5 - CUE_IMAGE_DIMENSION.width / 2,
+        paperNumber.positionProperty.value.y + paperNumberDimension.height * 0.8 - CUE_IMAGE_DIMENSION.height / 2 );
 
       this.moveArrowCuePositionProperty.value = bottomCenter;
       this.splitArrowCuePositionProperty.value = rightTop;

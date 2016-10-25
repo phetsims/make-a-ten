@@ -14,9 +14,12 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Emitter = require( 'AXON/Emitter' );
+  var Property = require( 'AXON/Property' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
   var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
@@ -74,31 +77,30 @@ define( function( require ) {
   function PaperNumber( numberValue, initialPosition, options ) {
     var self = this;
 
+    // TODO: check if this is overridden
     options = _.extend( {
       opacity: 1
     }, options );
 
     this.id = nextPaperNumberId++;
 
-    PropertySet.call( this, {
+    // @public {NumberProperty} - The number that this model represents, e.g. 324
+    this.numberValueProperty = new NumberProperty( numberValue );
 
-      // number this paper model represents ex 324
-      numberValue: numberValue,
+    // @public {Property.<Vector2>} - Property that indicates where in model space the upper left corner of this shape
+    //                                is. In general, this should not be set directly outside of this type, and should
+    //                                only be manipulated through the methods defined below.
+    this.positionProperty = new Property( initialPosition.copy() );
 
-      // Property that indicates where in model space the upper left corner of this shape is.  In general, this should
-      // not be set directly outside of this type, and should only be manipulated through the methods defined below.
-      position: initialPosition.copy(),
+    // @public {BooleanProperty} - Flag that tracks whether the user is dragging this number around. Should be set
+    //                             externally, generally by the view node.
+    this.userControlledProperty = new BooleanProperty( false );
 
-      // Flag that tracks whether the user is dragging this shape around.  Should be set externally, generally by the a
-      // view node.
-      userControlled: false,
+    // @public {BooleanProperty} - Whether this element is animating from one location to another, do not set externally.
+    this.animatingProperty = new BooleanProperty( false );
 
-      // Flag that indicates whether this element is animating from one location to another, should not be set externally.
-      animating: false,
-
-      opacity: options.opacity
-
-    } );
+    // @public {NumberProperty}
+    this.opacityProperty = new NumberProperty( options.opacity );
 
     // Destination is used for animation, and should be set through accessor methods only.
     this.destination = initialPosition.copy(); // @private
@@ -110,49 +112,51 @@ define( function( require ) {
 
     this.animationVelocity = MakeATenSharedConstants.ANIMATION_VELOCITY;
 
-    this.decomposeIntoBaseNumbers( this.numberValue );
+    this.decomposeIntoBaseNumbers( this.numberValueProperty.value );
+
+    this.returnedToOriginEmitter = new Emitter();
+    this.endDragEmitter = new Emitter();
 
     // Trigger an event whenever this shape returns to its original position.
     this.positionProperty.lazyLink( function( position ) {
       assert && assert( isFinite( position.y ) );
       if ( position.equals( initialPosition ) ) {
-        self.trigger( 'returnedToOrigin' );
+        self.returnedToOriginEmitter.emit();
       }
     } );
   }
 
   makeATen.register( 'PaperNumber', PaperNumber );
 
-  return inherit( PropertySet, PaperNumber, {
-
+  return inherit( Object, PaperNumber, {
     /**
      *
      * @param {number} dt
      */
     step: function( dt ) {
-      if ( !this.userControlled ) {
+      if ( !this.userControlledProperty.value ) {
 
         // perform any animation
-        var distanceToDestination = this.position.distance( this.destination );
+        var distanceToDestination = this.positionProperty.value.distance( this.destination );
         if ( distanceToDestination > dt * this.animationVelocity ) {
           // Move a step toward the destination.
-          var stepVector = this.destination.minus( this.position ).setMagnitude( this.animationVelocity * dt );
-          this.position = this.position.plus( stepVector );
+          var stepVector = this.destination.minus( this.positionProperty.value ).setMagnitude( this.animationVelocity * dt );
+          this.positionProperty.value = this.positionProperty.value.plus( stepVector );
 
         }
-        else if ( this.animating ) {
+        else if ( this.animatingProperty.value ) {
           // Less than one time step away, so just go to the destination.
-          this.position = this.destination;
-          this.animating = false;
+          this.positionProperty.value = this.destination;
+          this.animatingProperty.value = false;
         }
 
       }
     },
 
     get digitLength() {
-      assert && assert( this.numberValue > 0 );
+      assert && assert( this.numberValueProperty.value > 0 );
 
-      return MakeATenUtil.digitsInNumber( this.numberValue );
+      return MakeATenUtil.digitsInNumber( this.numberValueProperty.value );
     },
 
     /**
@@ -186,7 +190,7 @@ define( function( require ) {
     },
 
     canPullApart: function() {
-      return (this.numberValue !== 1);
+      return this.numberValueProperty.value !== 1;
     },
 
     /**
@@ -261,7 +265,6 @@ define( function( require ) {
 
     },
 
-
     /**
      *
      * @param newNumber
@@ -270,15 +273,14 @@ define( function( require ) {
       newNumber = +newNumber;
       var oldDigitsLength = this.digitLength;
       this.decomposeIntoBaseNumbers( newNumber );
-      this.numberValue = newNumber;
+      this.numberValueProperty.value = newNumber;
       var newDigitLength = this.digitLength;
 
       //Collapsed into a single Number, adjust the positions issue #21
       if ( newDigitLength - oldDigitsLength > 0 ) {
         var offsets = NUMBER_IMAGE_OFFSET_DIMENSIONS[ newDigitLength - 1 ];
-        this.setDestination( this.position.plus( new Vector2( -offsets[ 1 ].x, -offsets[ 1 ].y ) ) );
+        this.setDestination( this.positionProperty.value.plus( new Vector2( -offsets[ 1 ].x, -offsets[ 1 ].y ) ) );
       }
-
     },
 
     /**
@@ -291,10 +293,10 @@ define( function( require ) {
       this.animationVelocity = ( animationVelocity !== undefined ) ? animationVelocity : MakeATenSharedConstants.ANIMATION_VELOCITY;
 
       if ( animate ) {
-        this.animating = true;
+        this.animatingProperty.value = true;
       }
       else {
-        this.position = destination;
+        this.positionProperty.value = destination;
       }
     },
 

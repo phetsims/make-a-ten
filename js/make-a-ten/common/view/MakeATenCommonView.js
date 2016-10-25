@@ -66,7 +66,7 @@ define( function( require ) {
 
     this.availableViewBoundsProperty.lazyLink( function( newBounds ) {
       makeATenModel.paperNumbers.forEach( function( numberModel ) {
-        numberModel.constrainPosition( newBounds, numberModel.position );
+        numberModel.constrainPosition( newBounds, numberModel.positionProperty.value );
       } );
     } );
 
@@ -118,10 +118,10 @@ define( function( require ) {
 
             //the node, that hovers over other, should have minimum opacity
             if ( displayOrder1 > displayOrder2 ) {
-              paperNumberNode1.paperNumber.opacity = MakeATenSharedConstants.HOVER_OPACITY;
+              paperNumberNode1.paperNumber.opacityProperty.value = MakeATenSharedConstants.HOVER_OPACITY;
             }
             else {
-              paperNumberNode2.paperNumber.opacity = MakeATenSharedConstants.HOVER_OPACITY;
+              paperNumberNode2.paperNumber.opacityProperty.value = MakeATenSharedConstants.HOVER_OPACITY;
             }
           }
         }
@@ -191,8 +191,8 @@ define( function( require ) {
       }
 
       for ( var i = 0; i < droppedNodes.length; i++ ) {
-        var numberA = draggedPaperNumber.numberValue;
-        var numberB = droppedNodes[ i ].paperNumber.numberValue;
+        var numberA = draggedPaperNumber.numberValueProperty.value;
+        var numberB = droppedNodes[ i ].paperNumber.numberValueProperty.value;
         if ( ArithmeticRules.canAddNumbers( numberA, numberB ) ) {
           var droppedPaperNumber = droppedNodes[ i ].paperNumber;
           this.makeATenModel.collapseNumberModels( draggedPaperNumber, droppedPaperNumber );

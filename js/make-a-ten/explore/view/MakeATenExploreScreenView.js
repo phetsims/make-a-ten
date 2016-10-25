@@ -210,12 +210,12 @@ define( function( require ) {
       this.makeATenModel.addPaperNumber( paperNumber );
 
       // see if the user has dropped the paperNumber on Explorer panel, if yes return it to origin
-      paperNumber.on( 'endDrag', function() {
+      paperNumber.endDragEmitter.addListener( function() {
 
         var panelBounds = self.returnZoneBounds;
         var paperNumberDimension = paperNumber.getDimension(); // local
-        var paperCenter = new Vector2( paperNumber.position.x + paperNumberDimension.width * 0.5,
-          paperNumber.position.y + paperNumberDimension.height * 0.5 );
+        var paperCenter = new Vector2( paperNumber.positionProperty.value.x + paperNumberDimension.width * 0.5,
+          paperNumber.positionProperty.value.y + paperNumberDimension.height * 0.5 );
 
         if ( panelBounds.containsPoint( paperCenter ) ) {
           var baseNumbers = paperNumber.baseNumbers;
@@ -232,7 +232,7 @@ define( function( require ) {
 
             //Each part's position needs to offset from the currentPosition, so the split begins at the
             // right place
-            paperNumberPart.position = paperNumber.position.plus( baseNumbers[ i ].position );
+            paperNumberPart.positionProperty.value = paperNumber.positionProperty.value.plus( baseNumbers[ i ].position );
             paperNumberPart.returnToOrigin( true, MakeATenSharedConstants.ANIMATION_VELOCITY / 1.5 );// true is for animate and return
           }
 

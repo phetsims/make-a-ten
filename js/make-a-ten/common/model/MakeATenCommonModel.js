@@ -47,8 +47,8 @@ define( function( require ) {
      * @param {PaperNumber} dropTargetNumberModel
      */
     collapseNumberModels: function( draggedPaperNumber, dropTargetNumberModel ) {
-      var dropTargetNumberValue = dropTargetNumberModel.numberValue;
-      var draggedNumberValue = draggedPaperNumber.numberValue;
+      var dropTargetNumberValue = dropTargetNumberModel.numberValueProperty.value;
+      var draggedNumberValue = draggedPaperNumber.numberValueProperty.value;
 
       var modelToRemove = dropTargetNumberModel;
       var modelToChange = draggedPaperNumber;
@@ -84,17 +84,17 @@ define( function( require ) {
       var rightPaperModel = paperNumber1;
       var leftPaperModel = paperNumber2;
 
-      if ( rightPaperModel.position.x < leftPaperModel.position.x ) {
+      if ( rightPaperModel.positionProperty.value.x < leftPaperModel.positionProperty.value.x ) {
         rightPaperModel = paperNumber2;
         leftPaperModel = paperNumber1;
       }
 
       var animateToDestination = true;
       var delta = new Vector2( repelRightDistance, 0 );
-      rightPaperModel.constrainPosition( this.viewPortBounds, rightPaperModel.position.plus( delta ), animateToDestination );
+      rightPaperModel.constrainPosition( this.viewPortBounds, rightPaperModel.positionProperty.value.plus( delta ), animateToDestination );
 
       delta = new Vector2( repelLeftDistance, 0 );
-      leftPaperModel.constrainPosition( this.viewPortBounds, leftPaperModel.position.plus( delta ), animateToDestination );
+      leftPaperModel.constrainPosition( this.viewPortBounds, leftPaperModel.positionProperty.value.plus( delta ), animateToDestination );
     },
 
     reset: function() {
