@@ -69,6 +69,7 @@ define( function( require ) {
     this.resetAllButton = new ResetAllButton( {
       listener: function() {
         makeATenModel.reset();
+        self.reset();
       }
     } );
     this.addChild( this.resetAllButton );
@@ -248,6 +249,14 @@ define( function( require ) {
       this.availableViewBoundsProperty.value = this.visibleBoundsProperty.value.withMinY( top );
 
       this.layoutControls();
+    },
+
+    /**
+     * To reset the view, should be overridden
+     * @public
+     */
+    reset: function() {
+
     }
   } );
 } );

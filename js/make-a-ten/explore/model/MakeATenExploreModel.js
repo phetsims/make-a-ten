@@ -1,6 +1,7 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
+ * TODO: doc
  *
  * @author Sharfudeen Ashraf
  */
@@ -10,17 +11,18 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
   var ArrowCue = require( 'MAKE_A_TEN/make-a-ten/explore/model/ArrowCue' );
 
   /**
-   *
    * @constructor
    */
   function MakeATenExploreModel() {
+    // @public {NumberProperty} - The total sum of the current numbers
+    this.sumProperty = new NumberProperty( 0 );
+
     MakeATenCommonModel.call( this, {
-      sum: 0,
-      hideTotal: false,
       interactionAttempted: false,
       interactionSucceeded: false
     } );
@@ -48,7 +50,7 @@ define( function( require ) {
       this.paperNumbers.forEach( function( model ) {
         total += model.numberValue;
       } );
-      this.sum = total;
+      this.sumProperty.value = total;
     },
 
     addPaperNumber: function( paperNumber ) {
@@ -60,7 +62,6 @@ define( function( require ) {
           self.interactionSucceeded = true;
         }
       } );
-
 
       // The shape will be removed from the model if and when it returns to its origination point.  This is how a shape
       // can be 'put back' into the panel.
@@ -75,7 +76,7 @@ define( function( require ) {
     reset: function() {
       MakeATenCommonModel.prototype.reset.call( this );
 
-      this.paperNumbers.clear();
+      this.sumProperty.reset();
     }
 
   } );

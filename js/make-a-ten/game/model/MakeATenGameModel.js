@@ -173,13 +173,14 @@ define( function( require ) {
     },
 
     reset: function() {
+      MakeATenCommonModel.prototype.reset.call( this );
+
       this.soundEnabledProperty.reset();
       this.currentLevelProperty.reset();
       this.currentScoreProperty.reset();
       this.currentChallengeProperty.reset();
       this.gameStateProperty.reset();
 
-      this.paperNumbers.clear();
       for ( var i = 0; i < this.levels.length; i++ ) {
         this.levels[ i ].reset();
       }

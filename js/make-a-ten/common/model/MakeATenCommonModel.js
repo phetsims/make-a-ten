@@ -106,6 +106,9 @@ define( function( require ) {
 
     reset: function() {
       PropertySet.prototype.reset.call( this );
+
+      // Used by all screens
+      this.paperNumbers.clear();
     }
 
   } );

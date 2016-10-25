@@ -56,7 +56,7 @@ define( function( require ) {
      */
     reset: function() {
       MakeATenCommonModel.prototype.reset.call( this );
-      this.paperNumbers.clear();
+
       this.expressionTerms.reset();
     }
 

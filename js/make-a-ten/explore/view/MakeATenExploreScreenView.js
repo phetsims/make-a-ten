@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Panel = require( 'SUN/Panel' );
   var Vector2 = require( 'DOT/Vector2' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
@@ -44,6 +45,9 @@ define( function( require ) {
     var canPlaceNumberCallback = this.canPlaceNumberAt.bind( this );
 
     MakeATenCommonView.call( this, makeATenExploreModel, addPaperNumberCallback );
+
+    // @public {BooleanProperty} - Whether the total (sum) is hidden
+    this.hideTotalProperty = new BooleanProperty( false );
 
     var sumText = new Text( '0', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
     var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
@@ -118,7 +122,7 @@ define( function( require ) {
       fill: 'black'
     } );
 
-    this.hideTotalCheckBox = new CheckBox( hideTotalText, makeATenExploreModel.hideTotalProperty, {
+    this.hideTotalCheckBox = new CheckBox( hideTotalText, this.hideTotalProperty, {
       spacing: 10,
       boxWidth: 30
     } );
@@ -129,7 +133,7 @@ define( function( require ) {
 
     this.hideTotalCheckBox.touchArea = this.hideTotalCheckBox.localBounds.dilatedXY( 10, 4 );
 
-    makeATenExploreModel.hideTotalProperty.link( function( hideTotal ) {
+    this.hideTotalProperty.link( function( hideTotal ) {
       self.equationHBox.visible = !hideTotal;
     } );
 
@@ -236,6 +240,15 @@ define( function( require ) {
         }
 
       } );
+    },
+
+    /**
+     * @override
+     */
+    reset: function() {
+      MakeATenCommonView.prototype.reset.call( this );
+
+      this.hideTotalProperty.reset();
     }
   } );
 } );
