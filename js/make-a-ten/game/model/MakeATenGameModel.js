@@ -156,8 +156,8 @@ define( function( require ) {
     createTerms: function( numberChallenge ) {
       var self = this;
       this.paperNumbers.clear();
-      this.expressionTerms.leftTerm = numberChallenge.leftTerm;
-      this.expressionTerms.rightTerm = numberChallenge.rightTerm;
+      this.expressionTerms.leftTermProperty.value = numberChallenge.leftTerm;
+      this.expressionTerms.rightTermProperty.value = numberChallenge.rightTerm;
 
       var valuesToCreate = [ numberChallenge.leftTerm, numberChallenge.rightTerm ];
       var xOffSet = 200;

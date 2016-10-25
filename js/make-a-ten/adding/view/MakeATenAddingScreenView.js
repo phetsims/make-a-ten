@@ -79,10 +79,10 @@ define( function( require ) {
 
     function onNumberSubmit( value ) {
       if ( makeATenAddingModel.expressionTerms.activeTerm === ActiveTerm.LEFT ) {
-        makeATenAddingModel.expressionTerms.leftTerm = value;
+        makeATenAddingModel.expressionTerms.leftTermProperty.value = value;
       }
       if ( makeATenAddingModel.expressionTerms.activeTerm === ActiveTerm.RIGHT ) {
-        makeATenAddingModel.expressionTerms.rightTerm = value;
+        makeATenAddingModel.expressionTerms.rightTermProperty.value = value;
       }
 
       makeATenAddingModel.createTerms();
@@ -106,10 +106,10 @@ define( function( require ) {
 
       keyBoardPanel.visible = true;
       if ( term === ActiveTerm.LEFT ) {
-        keyBoardPanel.setValue( makeATenAddingModel.expressionTerms.leftTerm );
+        keyBoardPanel.setValue( makeATenAddingModel.expressionTerms.leftTermProperty.value );
       }
       if ( term === ActiveTerm.RIGHT ) {
-        keyBoardPanel.setValue( makeATenAddingModel.expressionTerms.rightTerm );
+        keyBoardPanel.setValue( makeATenAddingModel.expressionTerms.rightTermProperty.value );
       }
     } );
 
