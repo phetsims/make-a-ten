@@ -125,10 +125,10 @@ define( function( require ) {
       this.progressIndicator.right = this.backgroundRectangle.right - 30;
       this.progressIndicator.centerY = this.backgroundRectangle.centerY;
 
-      this.levelNumberText.centerY = this.backgroundRectangle.centerY;
       this.levelNumberText.left = this.backButton.right + 30;
+      this.levelNumberText.centerY = this.backgroundRectangle.centerY;
 
-      this.levelDescriptionText.centerX = this.backgroundRectangle.centerX;
+      this.levelDescriptionText.left = this.levelNumberText.right + 30;
       this.levelDescriptionText.centerY = this.backgroundRectangle.centerY;
     }
   } );
