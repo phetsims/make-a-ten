@@ -10,7 +10,9 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var Property = require( 'AXON/Property' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Vector2 = require( 'DOT/Vector2' );
   var Dimension2 = require( 'DOT/Dimension2' );
 
@@ -21,18 +23,25 @@ define( function( require ) {
    * @constructor
    */
   function ArrowCue() {
-    PropertySet.call( this, {
-      moveArrowCuePosition: new Vector2(),
-      splitArrowCuePosition: new Vector2(),
-      opacity: 1,
-      targetOpacity: 1,
-      visible: false
-    } );
+    // @public {Property.<Vector2>}
+    this.moveArrowCuePositionProperty = new Property( new Vector2() );
+
+    // @public {Property.<Vector2>}
+    this.splitArrowCuePositionProperty = new Property( new Vector2() );
+
+    // @public {NumberProperty}
+    this.opacityProperty = new NumberProperty( 1 );
+
+    // @public {NumberProperty}
+    this.targetOpacityProperty = new NumberProperty( 1 );
+
+    // @public {BooleanProperty}
+    this.visibleProperty = new BooleanProperty( false );
   }
 
   makeATen.register( 'ArrowCue', ArrowCue );
 
-  return inherit( PropertySet, ArrowCue, {
+  return inherit( Object, ArrowCue, {
 
     /**
      *
@@ -46,18 +55,18 @@ define( function( require ) {
 
       var opacityReductionFactor = dt * 3;
 
-      if ( this.targetOpacity !== this.opacity ) {
-        this.opacity -= this.opacity * opacityReductionFactor;
+      if ( this.targetOpacityProperty.value !== this.opacityProperty.value ) {
+        this.opacityProperty.value -= this.opacityProperty.value * opacityReductionFactor;
       }
 
-      if ( Math.abs( this.opacity ) < dt ) {
-        this.targetOpacity = this.opacity = 0;
+      if ( Math.abs( this.opacityProperty.value ) < dt ) {
+        this.targetOpacityProperty.value = this.opacityProperty.value = 0;
         this.visible = false;
       }
     },
 
     fadeAway: function() {
-      this.targetOpacity = 0;
+      this.targetOpacityProperty.value = 0;
     },
 
     /**
@@ -73,8 +82,8 @@ define( function( require ) {
       var bottomCenter = new Vector2( paperNumber.position.x + paperNumberDimension.width * 0.5 - CUE_IMAGE_DIMENSION.width / 2,
         paperNumber.position.y + paperNumberDimension.height * 0.8 - CUE_IMAGE_DIMENSION.height / 2 );
 
-      this.moveArrowCuePosition = bottomCenter;
-      this.splitArrowCuePosition = rightTop;
+      this.moveArrowCuePositionProperty.value = bottomCenter;
+      this.splitArrowCuePositionProperty.value = rightTop;
     }
 
   } );
