@@ -79,7 +79,7 @@ define( function( require ) {
       listener: function() {
         gameModel.nextChallenge();
       },
-      top: this.layoutBounds.centerY - 100,
+      top: this.layoutBounds.centerY,
       right: this.layoutBounds.right - 20
     } );
 
