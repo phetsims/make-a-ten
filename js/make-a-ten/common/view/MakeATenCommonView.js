@@ -11,6 +11,7 @@ define( function( require ) {
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
   var arrayRemove = require( 'PHET_CORE/arrayRemove' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Property = require( 'AXON/Property' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -29,6 +30,12 @@ define( function( require ) {
     var self = this;
     ScreenView.call( this, { layoutBounds: MakeATenSharedConstants.LAYOUT_BOUNDS } );
     this.makeATenModel = makeATenModel;
+
+    // @public {BooleanProperty} - Whether the user has interacted with numbers on this screen
+    this.interactionAttemptedProperty = new BooleanProperty( false );
+
+    // @public {BooleanProperty} - Whether the user's interaction succeeded?
+    this.interactionSucceededProperty = new BooleanProperty( false );
 
     this.paperNumberLayerNode = new Node();
 
@@ -180,7 +187,7 @@ define( function( require ) {
       //Show Arrow cue if user hasn't succeeded in combining or splitting a number
       if ( !this.makeATenModel.interactionSucceeded && this.makeATenModel.arrowCue ) {
         this.makeATenModel.arrowCue.positionAt( draggedPaperNumber );
-        this.makeATenModel.interactionAttempted = true;
+        this.interactionAttemptedProperty.value = true;
       }
 
       for ( var i = 0; i < droppedNodes.length; i++ ) {
@@ -256,7 +263,8 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-
+      this.interactionAttemptedProperty.reset();
+      this.interactionSucceededProperty.reset();
     }
   } );
 } );

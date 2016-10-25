@@ -10,31 +10,24 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   *
-   * @param {Object} props
    * @constructor
    */
-  function MakeATenCommonModel( props ) {
-    PropertySet.call( this, props );
-
+  function MakeATenCommonModel() {
     //filled by View
     this.viewPortBounds = null; // filled by the view during resize
 
     // Observable array of the numbers that have been placed
     this.paperNumbers = new ObservableArray();
-
   }
 
   makeATen.register( 'MakeATenCommonModel', MakeATenCommonModel );
 
-  return inherit( PropertySet, MakeATenCommonModel, {
-
+  return inherit( Object, MakeATenCommonModel, {
     /**
      *
      * @param {number} dt
@@ -105,8 +98,6 @@ define( function( require ) {
     },
 
     reset: function() {
-      PropertySet.prototype.reset.call( this );
-
       // Used by all screens
       this.paperNumbers.clear();
     }

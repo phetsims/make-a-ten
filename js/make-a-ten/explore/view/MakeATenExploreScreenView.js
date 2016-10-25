@@ -142,13 +142,13 @@ define( function( require ) {
 
     this.addChild( new ArrowCueNode( makeATenExploreModel.arrowCue ) );
 
-    makeATenExploreModel.interactionAttemptedProperty.link( function( interactionAttempted ) {
+    this.interactionAttemptedProperty.link( function( interactionAttempted ) {
       if ( interactionAttempted ) {
         makeATenExploreModel.arrowCue.visible = true;
       }
     } );
 
-    makeATenExploreModel.interactionSucceededProperty.link( function( interactionSucceeded ) {
+    this.interactionSucceededProperty.link( function( interactionSucceeded ) {
       if ( interactionSucceeded ) {
         makeATenExploreModel.arrowCue.fadeAway();
       }

@@ -86,8 +86,7 @@ define( function( require ) {
     // @public {Property.<GameState>} - Current game state
     this.gameStateProperty = new Property( GameState.CHOOSING_LEVEL );
 
-    // Making Tens Commmon Model is a propertySet
-    MakeATenCommonModel.call( this, {} );
+    MakeATenCommonModel.call( this );
 
     this.expressionTerms = new ExpressionTerms();
 

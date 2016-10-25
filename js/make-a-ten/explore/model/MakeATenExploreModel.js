@@ -22,10 +22,7 @@ define( function( require ) {
     // @public {NumberProperty} - The total sum of the current numbers
     this.sumProperty = new NumberProperty( 0 );
 
-    MakeATenCommonModel.call( this, {
-      interactionAttempted: false,
-      interactionSucceeded: false
-    } );
+    MakeATenCommonModel.call( this );
 
     this.arrowCue = new ArrowCue();
 

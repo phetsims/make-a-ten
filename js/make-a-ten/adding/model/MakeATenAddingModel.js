@@ -24,7 +24,8 @@ define( function( require ) {
     // leftTerm,rightTerm,activeTerm and showBackground
     // TODO: what is the comment above?
     this.expressionTerms = new ExpressionTerms();
-    MakeATenCommonModel.call( this, {} );
+
+    MakeATenCommonModel.call( this );
   }
 
   makeATen.register( 'MakeATenAddingModel', MakeATenAddingModel );
