@@ -128,7 +128,7 @@ define( function( require ) {
     handleGameStateChange: function( gameState ) {
       // Hide all nodes - the appropriate ones will be shown later based on the current state.
       this.hideAllGameNodes();
-      var challenge = this.makeATenModel.currentChallenge;
+      var challenge = this.makeATenModel.currentChallengeProperty.value;
 
 
       // Show the nodes appropriate to the state

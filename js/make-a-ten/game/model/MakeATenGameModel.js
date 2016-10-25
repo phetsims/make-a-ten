@@ -1,6 +1,7 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
+ * Model for the game screen of Make a Ten.
  *
  * @author Sharfudeen Ashraf
  */
@@ -10,6 +11,9 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Vector2 = require( 'DOT/Vector2' );
   var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
   var NumberChallengeFactory = require( 'MAKE_A_TEN/make-a-ten/game/model/NumberChallengeFactory' );
@@ -49,9 +53,11 @@ define( function( require ) {
   function MakeATenGameModel() {
     var self = this;
 
-    // TODO: can we not have to create this early?
+    // Created here, since due to the initialization of phet.joist.random we need to delay until the model is created
+    // (can't do at require.js load time), thus we have a separate challenge factory.
     var numberChallengeFactory = new NumberChallengeFactory();
 
+    // @public {Array.<Level>} - All of the game levels for this screen.
     this.levels = [
       new Level( 1, '#FC4280', levelIcon1, gameInfoLevel1String, numberChallengeFactory ),
       new Level( 2, '#FC4280', levelIcon2, gameInfoLevel2String, numberChallengeFactory ),
@@ -65,21 +71,29 @@ define( function( require ) {
       new Level( 10, '#8653BF', levelIcon10, gameInfoLevel10String, numberChallengeFactory )
     ];
 
+    // @public {BooleanProperty} - Whether sounds will occur on completion of game actions.
+    this.soundEnabledProperty = new BooleanProperty( true );
+
+    // @public {Property.<Level>} - The current level
+    this.currentLevelProperty = new Property( this.levels[ 0 ] );
+
+    // @public {NumberProperty} - The score for whatever the current level is.
+    this.currentScoreProperty = new NumberProperty( 0 );
+
+    // @public {Property.<NumberChallenge|null>} - The current challenge when in a level
+    this.currentChallengeProperty = new Property( null );
+
+    // @public {Property.<GameState>} - Current game state
+    this.gameStateProperty = new Property( GameState.CHOOSING_LEVEL );
+
     // Making Tens Commmon Model is a propertySet
-    MakeATenCommonModel.call( this, {
-      soundEnabled: true,
-      currentLevel: this.levels[ 0 ],
-      currentScore: 0,
-      currentChallenge: null,
-      // Current state of the game, see GameState for valid values.
-      gameState: GameState.CHOOSING_LEVEL
-    } );
+    MakeATenCommonModel.call( this, {} );
 
     this.expressionTerms = new ExpressionTerms();
 
     this.paperNumbers.lengthProperty.link( function( modelLength, prevModelLength ) {
-      if ( modelLength === 1 && prevModelLength === 2 && self.gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
-        self.gameState = GameState.CORRECT_ANSWER;
+      if ( modelLength === 1 && prevModelLength === 2 && self.gameStateProperty.value === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
+        self.gameStateProperty.value = GameState.CORRECT_ANSWER;
       }
     } );
 
@@ -107,13 +121,13 @@ define( function( require ) {
      * @param {Level} level
      */
     startLevel: function( level ) {
-      this.currentLevel = level;
+      this.currentLevelProperty.value = level;
 
       // Set up the model for the next challenge
-      this.currentChallenge = level.generateChallenge();
+      this.currentChallengeProperty.value = level.generateChallenge();
 
       // Change to new game state.
-      this.gameState = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
+      this.gameStateProperty.value = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
     },
 
     /**
@@ -121,17 +135,17 @@ define( function( require ) {
      * combines the numbers b making Tens his score for that level will be incremented
      */
     handleCorrectAnswer: function() {
-      this.currentLevel.scoreProperty.value++;
-      this.gameState = GameState.MOVE_TO_NEXT_CHALLENGE;
+      this.currentLevelProperty.value.scoreProperty.value++;
+      this.gameStateProperty.value = GameState.MOVE_TO_NEXT_CHALLENGE;
     },
 
     nextChallenge: function() {
-      this.currentChallenge = this.currentLevel.generateChallenge();
-      this.gameState = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
+      this.currentChallengeProperty.value = this.currentLevelProperty.value.generateChallenge();
+      this.gameStateProperty.value = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
     },
 
     setChoosingLevelState: function() {
-      this.gameState = GameState.CHOOSING_LEVEL;
+      this.gameStateProperty.value = GameState.CHOOSING_LEVEL;
       this.paperNumbers.clear();
     },
 
@@ -159,6 +173,12 @@ define( function( require ) {
     },
 
     reset: function() {
+      this.soundEnabledProperty.reset();
+      this.currentLevelProperty.reset();
+      this.currentScoreProperty.reset();
+      this.currentChallengeProperty.reset();
+      this.gameStateProperty.reset();
+
       this.paperNumbers.clear();
       for ( var i = 0; i < this.levels.length; i++ ) {
         this.levels[ i ].reset();
