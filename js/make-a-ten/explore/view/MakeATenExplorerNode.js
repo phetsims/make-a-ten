@@ -28,7 +28,7 @@ define( function( require ) {
    * @param {MakeATenCommonView} makeATenView
    * @constructor
    */
-  function MakeATenExplorerNode( numberValue, addNumberToModel, tryToCombineNumbers, canPlaceNumber, makeATenView ) {
+  function MakeATenExplorerNode( numberValue, makeATenView ) {
     Node.call( this );
 
     var numberCollectionLayer = new Node();

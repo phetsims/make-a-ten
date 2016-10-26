@@ -42,7 +42,6 @@ define( function( require ) {
     var self = this;
 
     var addPaperNumberCallback = this.addPaperNumber.bind( this );
-    var canPlaceNumberCallback = this.canPlaceNumberAt.bind( this );
 
     MakeATenCommonView.call( this, makeATenExploreModel, addPaperNumberCallback );
 
@@ -64,18 +63,12 @@ define( function( require ) {
     makeATenExploreModel.sumProperty.linkAttribute( sumText, 'text' );
     this.addChild( this.equationHBox );
 
-    var explorerNodes = [];
     // Create the composite nodes that contain the number collections
-    var exploreHundredsNode = new MakeATenExplorerNode( 100, addPaperNumberCallback,
-      this.tryToCombineNumbers, canPlaceNumberCallback, this );
-    explorerNodes.push( exploreHundredsNode );
-    var exploreTensNode = new MakeATenExplorerNode( 10, addPaperNumberCallback,
-      this.tryToCombineNumbers, canPlaceNumberCallback, this );
-    explorerNodes.push( exploreTensNode );
-    var exploreOnesNode = new MakeATenExplorerNode( 1,
-      addPaperNumberCallback,
-      this.tryToCombineNumbers, canPlaceNumberCallback, this );
-    explorerNodes.push( exploreOnesNode );
+    var explorerNodes = [
+      new MakeATenExplorerNode( 100, this ),
+      new MakeATenExplorerNode( 10, this ),
+      new MakeATenExplorerNode( 1, this )
+    ];
 
     // Add a non-scrolling panel
     var creatorNodeHBox = new HBox( { children: explorerNodes, spacing: 30 } );
