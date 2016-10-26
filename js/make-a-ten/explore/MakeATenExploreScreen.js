@@ -10,7 +10,7 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var MakeATenExploreModel = require( 'MAKE_A_TEN/make-a-ten/explore/model/MakeATenExploreModel' );
-  var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
   var MakeATenExploreScreenView = require( 'MAKE_A_TEN/make-a-ten/explore/view/MakeATenExploreScreenView' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -27,12 +27,12 @@ define( function( require ) {
    */
   function MakeATenExploreScreen() {
 
-    var homeScreenIcon = MakeATenUtil.createIconWithBackgroundColor( exploreHomeScreenImage, MakeATenSharedConstants.SCREEN_BACKGROUND_COLOR );
-    var navigationBarIcon = MakeATenUtil.createIconWithBackgroundColor( exploreNavBarImage, MakeATenSharedConstants.SCREEN_BACKGROUND_COLOR );
+    var homeScreenIcon = MakeATenUtil.createIconWithBackgroundColor( exploreHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR );
+    var navigationBarIcon = MakeATenUtil.createIconWithBackgroundColor( exploreNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR );
 
     var options = {
       name: screenExploreString,
-      backgroundColor: MakeATenSharedConstants.SCREEN_BACKGROUND_COLOR,
+      backgroundColor: MakeATenConstants.SCREEN_BACKGROUND_COLOR,
       homeScreenIcon: homeScreenIcon,
       navigationBarIcon: navigationBarIcon
     };

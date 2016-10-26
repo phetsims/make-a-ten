@@ -11,7 +11,7 @@ define( function( require ) {
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var MakeATenGameModel = require( 'MAKE_A_TEN/make-a-ten/game/model/MakeATenGameModel' );
   var MakeATenGameScreenView = require( 'MAKE_A_TEN/make-a-ten/game/view/MakeATenGameScreenView' );
-  var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
@@ -27,12 +27,12 @@ define( function( require ) {
    */
   function MakeATenGameScreen() {
 
-    var homeScreenIcon = MakeATenUtil.createIconWithBackgroundColor( gameHomeScreenImage, MakeATenSharedConstants.SCREEN_BACKGROUND_COLOR );
-    var navigationBarIcon = MakeATenUtil.createIconWithBackgroundColor( gameNavBarImage, MakeATenSharedConstants.SCREEN_BACKGROUND_COLOR );
+    var homeScreenIcon = MakeATenUtil.createIconWithBackgroundColor( gameHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR );
+    var navigationBarIcon = MakeATenUtil.createIconWithBackgroundColor( gameNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR );
 
     var options = {
       name: screenGameString,
-      backgroundColor: MakeATenSharedConstants.SCREEN_BACKGROUND_COLOR,
+      backgroundColor: MakeATenConstants.SCREEN_BACKGROUND_COLOR,
       homeScreenIcon: homeScreenIcon,
       navigationBarIcon: navigationBarIcon
     };

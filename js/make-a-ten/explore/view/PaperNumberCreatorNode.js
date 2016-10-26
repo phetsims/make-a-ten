@@ -18,7 +18,7 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var PaperNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperNumberNode' );
-  var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
 
   /**
@@ -138,7 +138,7 @@ define( function( require ) {
      */
     getGlobalObjectCreationBounds: function() {
       var localNodeBounds = this.localBounds;
-      var pullBounds = Bounds2.rect( localNodeBounds.x, localNodeBounds.height * MakeATenSharedConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION,
+      var pullBounds = Bounds2.rect( localNodeBounds.x, localNodeBounds.height * MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION,
         localNodeBounds.width, localNodeBounds.height );
       var globalCreationBounds = this.localToGlobalBounds( pullBounds );
       return globalCreationBounds;

@@ -11,7 +11,7 @@ define( function( require ) {
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
-  var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -78,8 +78,8 @@ define( function( require ) {
      * @param {PaperNumber} paperNumber2
      */
     repelAway: function( paperNumber1, paperNumber2 ) {
-      var repelRightDistance = MakeATenSharedConstants.MOVE_AWAY_DISTANCE[ paperNumber1.digitLength ];
-      var repelLeftDistance = MakeATenSharedConstants.MOVE_AWAY_DISTANCE[ paperNumber2.digitLength ] * -1;
+      var repelRightDistance = MakeATenConstants.MOVE_AWAY_DISTANCE[ paperNumber1.digitLength ];
+      var repelLeftDistance = MakeATenConstants.MOVE_AWAY_DISTANCE[ paperNumber2.digitLength ] * -1;
 
       var rightPaperModel = paperNumber1;
       var leftPaperModel = paperNumber2;

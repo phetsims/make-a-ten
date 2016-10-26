@@ -43,10 +43,10 @@ define( function( require ) {
        * Handles how the number should be split and returns the new pulledout number
        * Ex : 9 splits into 8 and 1, number 60 splits into 50 and 10 etc
        *
-       * @param {number} pulledIndex // in number 309 if the pulled index is 2, it mean users pulled 9
+       * @param {number} pulledPlace // in number 309 if the pulled index is 2, it mean users pulled 9
        * @returns {number} // zero means no value is pulled out
        */
-      pullApartNumbers: function( numberValue, pulledIndex ) {
+      pullApartNumbers: function( numberValue, pulledPlace ) {
         if ( numberValue <= 1 ) {
           return null;
         }
@@ -64,7 +64,7 @@ define( function( require ) {
         var maximumPlace = MakeATenUtil.digitsInNumber( numberValue ) - 1;
 
         // Grab the place we'll try to remove from.
-        var place = Math.max( minimumPlace, maximumPlace - pulledIndex );
+        var place = Math.max( minimumPlace, pulledPlace );
 
         var amountToRemove;
         if ( place === maximumPlace ) {

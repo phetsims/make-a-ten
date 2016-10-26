@@ -14,57 +14,16 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Vector2 = require( 'DOT/Vector2' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Emitter = require( 'AXON/Emitter' );
   var Property = require( 'AXON/Property' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
 
-  var NUMBER_OFFSETS = [
-    new Vector2( 0, 0 ),
-    new Vector2( 70, 4 ),
-    new Vector2( 55, 18 ),
-    new Vector2( 65, 6 )
-  ];
-
-  // TODO: reordering of indices, https://github.com/phetsims/make-a-ten/issues/155
-  // constants
-  var TWO_DIGIT_OFFSET_DIMENSIONS = {
-    0: NUMBER_OFFSETS[ 0 ],
-    1: NUMBER_OFFSETS[ 1 ]
-  };
-
-  // how much 2 digit and single digit must offset from parent
-  var THREE_DIGIT_OFFSET_DIMENSIONS = {
-    0: NUMBER_OFFSETS[ 0 ],
-    1: NUMBER_OFFSETS[ 2 ],
-    2: NUMBER_OFFSETS[ 2 ].plus( NUMBER_OFFSETS[ 1 ] ) // the diff between 2 and 3 is same as diff between first and second in TWO_DIGIT
-  };
-
-  var FOUR_DIGIT_OFFSET_DIMENSIONS = {
-    0: NUMBER_OFFSETS[ 0 ],
-    1: NUMBER_OFFSETS[ 3 ],
-    2: NUMBER_OFFSETS[ 3 ].plus( NUMBER_OFFSETS[ 2 ] ),
-    3: NUMBER_OFFSETS[ 3 ].plus( NUMBER_OFFSETS[ 2 ] ).plus( NUMBER_OFFSETS[ 1 ] )
-  };
-
-  var SINGLE_DIGIT_OFFSET_DIMENSIONS = {
-    0: NUMBER_OFFSETS[ 0 ]
-  };
-
-  var NUMBER_IMAGE_OFFSET_DIMENSIONS = {
-    0: SINGLE_DIGIT_OFFSET_DIMENSIONS,
-    1: TWO_DIGIT_OFFSET_DIMENSIONS,
-    2: THREE_DIGIT_OFFSET_DIMENSIONS,
-    3: FOUR_DIGIT_OFFSET_DIMENSIONS
-  };
-
-  // Used for tracking paperNumber Models
-  // https://github.com/phetsims/make-a-ten/issues/199
+  // Incremented for number IDs
   var nextPaperNumberId = 1;
 
   /**
@@ -82,6 +41,7 @@ define( function( require ) {
       opacity: 1
     }, options );
 
+    // IDs required for map-like lookup, see https://github.com/phetsims/make-a-ten/issues/199
     this.id = nextPaperNumberId++;
 
     // @public {NumberProperty} - The number that this model represents, e.g. 324
@@ -110,9 +70,9 @@ define( function( require ) {
     // The baseNumber object represents the "parts"
     this.baseNumbers = [];
 
-    this.animationVelocity = MakeATenSharedConstants.ANIMATION_VELOCITY;
+    this.animationVelocity = MakeATenConstants.ANIMATION_VELOCITY;
 
-    this.decomposeIntoBaseNumbers( this.numberValueProperty.value );
+    this.baseNumbers = PaperNumber.getBaseNumbers( this.numberValueProperty.value );
 
     this.returnedToOriginEmitter = new Emitter();
     this.endDragEmitter = new Emitter();
@@ -159,36 +119,6 @@ define( function( require ) {
       return MakeATenUtil.digitsInNumber( this.numberValueProperty.value );
     },
 
-    /**
-     * A number such as 238 will result in 200,30,8 as base numbers for which we have corresponding images
-     *
-     * @param {number} value
-     */
-    decomposeIntoBaseNumbers: function( value ) {
-      this.baseNumbers = [];
-      var numberOfSetDimensions = this.getOffsetArrayByDigits( value );
-      var digitCount = MakeATenUtil.digitsInNumber( value );
-      var opacityValue = 1;
-      var numberPositionIndex = 0;
-
-      for ( var i = 0; i < digitCount; i++ ) {
-        var place = digitCount - i - 1;
-        var digit = Math.floor( value / Math.pow( 10, place ) ) % 10;
-        var baseNumberValue = digit * Math.pow( 10, place );
-        if ( baseNumberValue === 0 ) {
-          continue;
-        }
-
-        var offset = numberOfSetDimensions[ numberPositionIndex ];
-        var baseNumber = new BaseNumber( baseNumberValue, offset.copy(), opacityValue );
-        this.baseNumbers.push( baseNumber );
-
-        //keep reducing the opacity for numbers placed on the top
-        opacityValue = opacityValue - 0.03;
-        numberPositionIndex++;
-      }
-    },
-
     canPullApart: function() {
       return this.numberValueProperty.value !== 1;
     },
@@ -198,89 +128,17 @@ define( function( require ) {
      * @returns {*}
      */
     getDimension: function() {
-      return MakeATenSharedConstants.PAPER_NUMBER_DIMENSIONS[ this.digitLength ];
-    },
-
-
-    /**
-     * Calculates at which point the split must happen
-     *
-     * @param newPulledNumber
-     * @returns {Vector2}
-     */
-    getDigitOffsetPosition: function( newPulledNumber ) {
-      var newPulledNumberLength = (newPulledNumber + '').length;
-      var numberOfSetDimensions = NUMBER_IMAGE_OFFSET_DIMENSIONS[ this.digitLength - 1 ]; // digits-1 zero based index
-      var digitDifference = this.digitLength - newPulledNumberLength;
-      return numberOfSetDimensions[ digitDifference ];
+      return MakeATenConstants.PAPER_NUMBER_DIMENSIONS[ this.digitLength - 1 ];
     },
 
     /**
-     * Based on the number of digits gives an array of offset position
-     *
-     * @param value
-     * @returns {object}
-     */
-    getOffsetArrayByDigits: function( value ) {
-      var digits = MakeATenUtil.digitsInNumber( value );
-      var numberOfSetDimensions = _.clone( NUMBER_IMAGE_OFFSET_DIMENSIONS[ digits - 1 ] ); // digits-1 zero based index
-
-      // handle numbers like 102 where there are only two base numbers and the second number is at third position
-      if ( digits === 3 ) {
-        var isBase2NumbersWithOffset = (value % 100 > 0) && (value % 100 < 10);
-        if ( isBase2NumbersWithOffset ) {
-          // the second number (index =1) is at third position For example in numbers like 107, the second
-          // base number '7' is at third position, so assign the third positional value
-          numberOfSetDimensions[ 1 ] = numberOfSetDimensions[ 2 ];
-        }
-      }
-
-      if ( digits === 4 ) {
-
-        //handle numbers like 1070
-        var twoDigitOffset = (value % 1000 >= 10) && (value % 1000 < 100);
-        if ( twoDigitOffset ) {
-          numberOfSetDimensions[ 1 ] = numberOfSetDimensions[ 2 ];
-          numberOfSetDimensions[ 2 ] = numberOfSetDimensions[ 3 ];
-          return numberOfSetDimensions;
-        }
-
-        //handle numbers like 1007
-        var singleDigitOffset = (value % 1000 < 10 );
-        if ( singleDigitOffset ) {
-          numberOfSetDimensions[ 1 ] = numberOfSetDimensions[ 3 ];
-          return numberOfSetDimensions;
-        }
-
-        //handle number line 1107
-        var intermediateOffset = (value % 1000 > 100 && value % 100 < 10);
-        if ( intermediateOffset ) {
-          numberOfSetDimensions[ 2 ] = numberOfSetDimensions[ 3 ];
-          return numberOfSetDimensions;
-        }
-
-      }
-
-      return numberOfSetDimensions;
-
-    },
-
-    /**
-     *
      * @param newNumber
      */
     changeNumber: function( newNumber ) {
-      newNumber = +newNumber;
-      var oldDigitsLength = this.digitLength;
-      this.decomposeIntoBaseNumbers( newNumber );
+      newNumber = +newNumber; // TODO: eek, cast?
+      // TODO: reduce duplication with constructor
+      this.baseNumbers = PaperNumber.getBaseNumbers( newNumber );
       this.numberValueProperty.value = newNumber;
-      var newDigitLength = this.digitLength;
-
-      //Collapsed into a single Number, adjust the positions issue #21
-      if ( newDigitLength - oldDigitsLength > 0 ) {
-        var offsets = NUMBER_IMAGE_OFFSET_DIMENSIONS[ newDigitLength - 1 ];
-        this.setDestination( this.positionProperty.value.plus( new Vector2( -offsets[ 1 ].x, -offsets[ 1 ].y ) ) );
-      }
     },
 
     /**
@@ -290,7 +148,7 @@ define( function( require ) {
      */
     setDestination: function( destination, animate, animationVelocity ) {
       this.destination = destination;
-      this.animationVelocity = ( animationVelocity !== undefined ) ? animationVelocity : MakeATenSharedConstants.ANIMATION_VELOCITY;
+      this.animationVelocity = ( animationVelocity !== undefined ) ? animationVelocity : MakeATenConstants.ANIMATION_VELOCITY;
 
       if ( animate ) {
         this.animatingProperty.value = true;
@@ -327,33 +185,60 @@ define( function( require ) {
     },
 
     /**
-     * Based on the position (relative to the node, determine if the point is one the first digit
-     * or  second digit or third digit
+     * Returns the lowest place number whose bounds include the position.
+     * @public
      *
-     * Example: if the Number is 134  and user has clicked on 1, the positional index
-     * would be 0 and it if is 3 the positional index would be 1 and if it is 4 the positional index would be 2
-     *
-     * @param {Vector2} position - position local to the node
-     * @returns {number} - The positional index (This is used to calculate which number should be pulled out)
+     * @param {Vector2} position - Position relative to this number's origin.
+     * @returns {BaseNumber}
      */
-    determineDigitIndex: function( position ) {
-      if ( this.baseNumbers.length === 1 ) {
-        return 0;
-      }
+    getBaseNumberAt: function( position ) {
+      for ( var i = 0; i < this.baseNumbers.length; i++ ) {
+        assert && assert( i === 0 || this.baseNumbers[ i ].place > this.baseNumbers[ i - 1 ].place,
+          'Ensure that we start at lower places, required for this to work properly' );
 
-      var basePositions = NUMBER_IMAGE_OFFSET_DIMENSIONS[ this.digitLength - 1 ];
+        var baseNumber = this.baseNumbers[ i ];
 
-      for ( var i = 0; i < basePositions.length - 1; i++ ) {
-        if ( position.x >= basePositions[ i ].x && position.x <= basePositions[ i + 1 ].x ) {
-          return i;
+        if ( baseNumber.bounds.containsPoint( position ) ) {
+          return baseNumber;
         }
       }
-      return i;
+
+      // TODO: remove for production, or assert?
+      console.log( 'WARNING: outside number bounds' );
+
+      return this.baseNumbers[ this.baseNumbers.length - 1 ];
     },
 
     resetOpacity: function() {
       this.opacityProperty.reset();
     }
 
+  }, {
+    /**
+     * Given a number, returns an array of BaseNumbers that will represent the digit places.
+     * @public
+     *
+     * @param {number} number - The number we want to break into digit places.
+     * @returns {Array.<BaseNumber>}
+     */
+    getBaseNumbers: function( number ) {
+      assert && assert( number > 0 && number % 1 === 0 );
+
+      var result = [];
+
+      var remainder = number;
+      var place = 0;
+      while ( remainder ) {
+        var digit = remainder % 10;
+        if ( digit ) {
+          result.push( new BaseNumber( digit, place ) );
+        }
+
+        remainder = ( remainder - digit ) / 10;
+        place++;
+      }
+
+      return result;
+    }
   } );
 } );

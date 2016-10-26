@@ -17,7 +17,7 @@ define( function( require ) {
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var MakeATenExplorerNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/MakeATenExplorerNode' );
   var ArrowCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/ArrowCueNode' );
-  var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var CheckBox = require( 'SUN/CheckBox' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -82,7 +82,7 @@ define( function( require ) {
 
     // PaperNumber ContainerPanel
     this.paperNumbersContainerPanel = new Panel( creatorNodeHBox, {
-      fill: MakeATenSharedConstants.PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR,
+      fill: MakeATenConstants.PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR,
       stroke: 'black',
       lineWidth: 1.5,
       bottom: this.layoutBounds.bottom - 15,
@@ -233,7 +233,7 @@ define( function( require ) {
             //Each part's position needs to offset from the currentPosition, so the split begins at the
             // right place
             paperNumberPart.positionProperty.value = paperNumber.positionProperty.value.plus( baseNumbers[ i ].position );
-            paperNumberPart.returnToOrigin( true, MakeATenSharedConstants.ANIMATION_VELOCITY / 1.5 );// true is for animate and return
+            paperNumberPart.returnToOrigin( true, MakeATenConstants.ANIMATION_VELOCITY / 1.5 );// true is for animate and return
           }
 
           paperNumber.returnToOrigin( false );

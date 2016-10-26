@@ -17,7 +17,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PaperNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperNumberNode' );
   var ArithmeticRules = require( 'MAKE_A_TEN/make-a-ten/common/model/ArithmeticRules' );
-  var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
 
   /**
@@ -28,7 +28,7 @@ define( function( require ) {
    */
   function MakeATenCommonView( makeATenModel, addPaperNumber ) {
     var self = this;
-    ScreenView.call( this, { layoutBounds: MakeATenSharedConstants.LAYOUT_BOUNDS } );
+    ScreenView.call( this, { layoutBounds: MakeATenConstants.LAYOUT_BOUNDS } );
     this.makeATenModel = makeATenModel;
 
     // @public {BooleanProperty} - Whether the user has interacted with numbers on this screen
@@ -118,10 +118,10 @@ define( function( require ) {
 
             //the node, that hovers over other, should have minimum opacity
             if ( displayOrder1 > displayOrder2 ) {
-              paperNumberNode1.paperNumber.opacityProperty.value = MakeATenSharedConstants.HOVER_OPACITY;
+              paperNumberNode1.paperNumber.opacityProperty.value = MakeATenConstants.HOVER_OPACITY;
             }
             else {
-              paperNumberNode2.paperNumber.opacityProperty.value = MakeATenSharedConstants.HOVER_OPACITY;
+              paperNumberNode2.paperNumber.opacityProperty.value = MakeATenConstants.HOVER_OPACITY;
             }
           }
         }

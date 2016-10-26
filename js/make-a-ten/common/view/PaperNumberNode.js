@@ -18,7 +18,7 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var ArithmeticRules = require( 'MAKE_A_TEN/make-a-ten/common/model/ArithmeticRules' );
-  var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
   var Image = require( 'SCENERY/nodes/Image' );
 
@@ -103,12 +103,15 @@ define( function( require ) {
     paperNumber.numberValueProperty.link( function( newNumber ) {
       imageNumberNode.removeAllChildren();
 
-      _.each( paperNumber.baseNumbers, function( baseNumberObj ) {
-        var baseNumberImage = PaperNumberNode.getNumberImage( baseNumberObj.numberValue );
+      var numBaseNumbers = paperNumber.baseNumbers.length;
+      _.each( paperNumber.baseNumbers, function( baseNumber, index ) {
+        var baseNumberImage = PaperNumberNode.getNumberImage( baseNumber.numberValue );
         var baseNumberImageNode = new Image( baseNumberImage );
-        baseNumberImageNode.leftTop = baseNumberObj.position;
-        baseNumberImageNode.imageOpacity = baseNumberObj.opacity;
-        imageNumberNode.addChild( baseNumberImageNode );
+        baseNumberImageNode.translation = baseNumber.offset;
+
+        // Bottom number has full opacity, and each successive number has *0.97 the opacity.
+        baseNumberImageNode.imageOpacity = Math.pow( 0.97, numBaseNumbers - index - 1 );
+        imageNumberNode.insertChild( 0, baseNumberImageNode );
       } );
 
       changeMouseAndTouchAreas();
@@ -165,8 +168,8 @@ define( function( require ) {
           return;
         }
 
-        var pulledOutIndex = self.determineDigitIndex( startOffset );
-        var amountToRemove = ArithmeticRules.pullApartNumbers( paperNumber.numberValueProperty.value, pulledOutIndex );
+        var pulledPlace = self.paperNumber.getBaseNumberAt( self.parentToLocalPoint( startOffset ) ).place;
+        var amountToRemove = ArithmeticRules.pullApartNumbers( paperNumber.numberValueProperty.value, pulledPlace );
         var amountRemaining = paperNumber.numberValueProperty.value - amountToRemove;
 
         // it cannot be split - so start moving
@@ -177,10 +180,9 @@ define( function( require ) {
 
         // When splitting a single digit from a two, make sure the mouse is near that second digit (or third digit)
         // In the case of splitting equal digits (ex 30 splitting in to 20 and 10) we don't need to check this condition
-        var amountRemovingOffsetPosition = self.paperNumber.getDigitOffsetPosition( amountRemaining );
         var totalBounds = self.bounds;
         var splitRect = Bounds2.rect( totalBounds.x, totalBounds.y,
-          totalBounds.width, totalBounds.height * MakeATenSharedConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION );
+          totalBounds.width, totalBounds.height * MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION );
 
         //if the below condition is true, start splitting
         if ( splitRect.containsPoint( startOffset ) ) {
@@ -190,8 +192,7 @@ define( function( require ) {
           } );
           splitObjectContext = {
             pulledApartPaperNumber: pulledApartPaperNumber,
-            amountRemaining: amountRemaining,
-            amountRemovingOffsetPosition: amountRemovingOffsetPosition
+            amountRemaining: amountRemaining
           };
           return;
         }
@@ -213,14 +214,9 @@ define( function( require ) {
           paperNumber.changeNumber( splitObjectContext.amountRemaining );
           startMoving( splitObjectContext.pulledApartPaperNumber );
 
-          // After a Number is pulled the  remaining digits must stay in the same place.We use the amountRemovingOffsetPosition
-          // to adjust the new paperModel's position
-          // see issue #7
-
           if ( splitObjectContext.pulledApartPaperNumber.digitLength >=
                MakeATenUtil.digitsInNumber( splitObjectContext.amountRemaining ) ) {
-            paperNumber.setDestination( paperNumber.positionProperty.value.plus(
-              splitObjectContext.amountRemovingOffsetPosition ) );
+            paperNumber.setDestination( paperNumber.positionProperty.value );
           }
           if ( splitObjectContext.pulledApartPaperNumber.digitLength >
                MakeATenUtil.digitsInNumber( splitObjectContext.amountRemaining ) ) {
@@ -272,7 +268,7 @@ define( function( require ) {
 
       var localNodeBounds = self.localBounds;
       var pullBounds = Bounds2.rect( localNodeBounds.x, localNodeBounds.y,
-        localNodeBounds.width, localNodeBounds.height * MakeATenSharedConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION );
+        localNodeBounds.width, localNodeBounds.height * MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION );
 
       var globalBounds = self.localToGlobalBounds( pullBounds );
       if ( globalBounds.containsPoint( event.pointer.point ) ) {
@@ -326,18 +322,7 @@ define( function( require ) {
      * @param newPulledNumber
      */
     determinePulledOutNumberPosition: function( newPulledNumber ) {
-      return this.leftTop.plus( this.paperNumber.getDigitOffsetPosition( newPulledNumber ) );
-    },
-
-    /**
-     * Based on the position (relative to the node, determine if the point is one the first digit
-     * or  second digit or third digit
-     *
-     * @param {number} return value is either 0,1 or 2
-     */
-    determineDigitIndex: function( parentPos ) {
-      var localPos = this.parentToLocalPoint( parentPos );
-      return this.paperNumber.determineDigitIndex( localPos );
+      return this.leftTop.copy(); // TODO: is this needed?
     },
 
     /**

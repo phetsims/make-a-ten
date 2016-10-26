@@ -21,7 +21,7 @@ define( function( require ) {
   var Level = require( 'MAKE_A_TEN/make-a-ten/game/model/Level' );
   var ExpressionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/ExpressionTerms' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
-  var MakeATenSharedConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenSharedConstants' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
   // Level descriptions
   var gameInfoLevel1String = require( 'string!MAKE_A_TEN/game.info.level1' );
@@ -165,7 +165,7 @@ define( function( require ) {
         if ( numberValue === '' || numberValue === 0 ) {
           return;
         }
-        var initialPosition = new Vector2( xOffSet, MakeATenSharedConstants.LAYOUT_BOUNDS.height / 2.5 );
+        var initialPosition = new Vector2( xOffSet, MakeATenConstants.LAYOUT_BOUNDS.height / 2.5 );
         self.addPaperNumber( new PaperNumber( numberValue, initialPosition ) );
         xOffSet += 350;
       } );
