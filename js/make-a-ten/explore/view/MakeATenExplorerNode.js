@@ -20,13 +20,10 @@ define( function( require ) {
   ];
 
   /**
+   * @constructor
    *
    * @param {number} numberValue
-   * @param {Function} addNumberToModel
-   * @param {Function} tryToCombineNumbers
-   * @param {Function} canPlaceNumber
    * @param {MakeATenCommonView} makeATenView
-   * @constructor
    */
   function MakeATenExplorerNode( numberValue, makeATenView ) {
     Node.call( this );
@@ -39,9 +36,7 @@ define( function( require ) {
       numberCollectionLayer.addChild( paperNumberCreatorNode );
       paperNumberCreatorNode.left = offset.x;
       paperNumberCreatorNode.top = offset.y;
-
     } );
-
   }
 
   makeATen.register( 'MakeATenExplorerNode', MakeATenExplorerNode );

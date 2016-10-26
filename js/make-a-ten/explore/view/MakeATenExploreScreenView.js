@@ -17,6 +17,7 @@ define( function( require ) {
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var MakeATenExplorerNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/MakeATenExplorerNode' );
   var ArrowCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/ArrowCueNode' );
+  var ExplorePanel = require( 'MAKE_A_TEN/make-a-ten/explore/view/ExplorePanel' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var CheckBox = require( 'SUN/CheckBox' );
@@ -61,7 +62,9 @@ define( function( require ) {
     } );
 
     makeATenExploreModel.sumProperty.linkAttribute( sumText, 'text' );
+
     this.addChild( this.equationHBox );
+    this.addChild( new Explorepanel( this ) );
 
     // Create the composite nodes that contain the number collections
     var explorerNodes = [
@@ -205,9 +208,11 @@ define( function( require ) {
       MakeATenCommonView.prototype.addPaperNumber.call( this, paperNumber );
 
       // TODO: surely there are better ways of doing this
+      // TODO: how memory-leaky!
       // see if the user has dropped the paperNumber on Explorer panel, if yes return it to origin
       paperNumber.endDragEmitter.addListener( function() {
 
+        // TODO return zone bounds are probable totally incorrect!
         var panelBounds = self.returnZoneBounds;
         var paperNumberDimension = paperNumber.getDimension(); // local
         var paperCenter = new Vector2( paperNumber.positionProperty.value.x + paperNumberDimension.width * 0.5,
