@@ -46,7 +46,8 @@ define( function( require ) {
     this.paperNumberNodeMap = {}; // @private {number} PaperNumber.id => {PaperNumberNode} - lookup map for efficiency
 
     function handlePaperNumberAdded( addedNumberModel ) {
-      var paperNumberNode = new PaperNumberNode( addedNumberModel, self.availableViewBoundsProperty, self.addPaperNumber, self.tryToCombineNumbers );
+      var combineCallback = self.tryToCombineNumbers.bind( self, addedNumberModel );
+      var paperNumberNode = new PaperNumberNode( addedNumberModel, self.availableViewBoundsProperty, self.addPaperNumber, combineCallback );
       self.addPaperNumberNode( paperNumberNode );
     }
 
@@ -66,7 +67,7 @@ define( function( require ) {
 
     this.availableViewBoundsProperty.lazyLink( function( newBounds ) {
       makeATenModel.paperNumbers.forEach( function( numberModel ) {
-        numberModel.constrainPosition( newBounds, numberModel.positionProperty.value );
+        numberModel.setConstrainedDestination( newBounds, numberModel.positionProperty.value );
       } );
     } );
 
@@ -174,9 +175,8 @@ define( function( require ) {
     /**
      * When user drops a node on another node , add if the arthimetic rules match
      * @param {PaperNumberNode} draggedPaperNumber
-     * @param {Vector} droppedPoint (on screen coordinates)
      */
-    tryToCombineNumbers: function( draggedPaperNumber, droppedPoint ) {
+    tryToCombineNumbers: function( draggedPaperNumber ) {
       var draggedNode = this.findPaperNumberNode( draggedPaperNumber );
       var allPaperNumberNodes = this.paperNumberLayerNode.children;
       var droppedNodes = draggedNode.findAttachableNodes( allPaperNumberNodes );
@@ -195,6 +195,7 @@ define( function( require ) {
         var numberB = droppedNodes[ i ].paperNumber.numberValueProperty.value;
         if ( ArithmeticRules.canAddNumbers( numberA, numberB ) ) {
           var droppedPaperNumber = droppedNodes[ i ].paperNumber;
+          // TODO: some assumption was made here that seems bad, hard to add single digits
           this.makeATenModel.collapseNumberModels( draggedPaperNumber, droppedPaperNumber );
           return;
         }

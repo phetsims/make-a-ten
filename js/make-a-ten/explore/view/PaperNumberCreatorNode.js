@@ -87,7 +87,7 @@ define( function( require ) {
           return;
         }
         var newPos = paperNumber.positionProperty.value.plus( translationParams.delta );
-        paperNumber.constrainPosition( makeATenView.availableViewBoundsProperty.value, newPos );
+        paperNumber.setConstrainedDestination( makeATenView.availableViewBoundsProperty.value, newPos );
       },
 
       end: function( event, trail ) {

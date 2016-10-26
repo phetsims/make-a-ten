@@ -91,10 +91,10 @@ define( function( require ) {
 
       var animateToDestination = true;
       var delta = new Vector2( repelRightDistance, 0 );
-      rightPaperModel.constrainPosition( this.viewPortBounds, rightPaperModel.positionProperty.value.plus( delta ), animateToDestination );
+      rightPaperModel.setConstrainedDestination( this.viewPortBounds, rightPaperModel.positionProperty.value.plus( delta ), animateToDestination );
 
       delta = new Vector2( repelLeftDistance, 0 );
-      leftPaperModel.constrainPosition( this.viewPortBounds, leftPaperModel.positionProperty.value.plus( delta ), animateToDestination );
+      leftPaperModel.setConstrainedDestination( this.viewPortBounds, leftPaperModel.positionProperty.value.plus( delta ), animateToDestination );
     },
 
     reset: function() {

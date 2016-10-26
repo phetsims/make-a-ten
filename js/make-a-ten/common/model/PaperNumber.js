@@ -14,7 +14,6 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Bounds2 = require( 'DOT/Bounds2' );
   var Emitter = require( 'AXON/Emitter' );
   var Property = require( 'AXON/Property' );
   var NumberProperty = require( 'AXON/NumberProperty' );
@@ -135,6 +134,17 @@ define( function( require ) {
     },
 
     /**
+     * Returns the bounds of the paper number relative to the paper number's origin.
+     * @public
+     *
+     * @returns {Bounds2}
+     */
+    getLocalBounds: function() {
+      // Use the largest base number
+      return this.baseNumbers[ this.baseNumbers.length - 1 ].bounds;
+    },
+
+    /**
      * @param newNumber
      */
     changeNumber: function( newNumber ) {
@@ -162,20 +172,21 @@ define( function( require ) {
     },
 
     /**
+     * If our paper number is outside of the available view bounds, move in inside those bounds.
+     * @public
      *
-     * Make sure the paper number is within view Port
      * @param {Bounds2} viewBounds
      * @param {Vector2} position
-     * @param {boolean} animate // (optional) indicates if the new constrained position should be directly set or animated
+     * @param {boolean} [animate] - Indicates if the new constrained position should be directly set or animated
      */
-    constrainPosition: function( viewBounds, newPosition, animate ) {
-      var paperDimension = this.getDimension();
-      var paperWidth = paperDimension.width;
-      var paperHeight = paperDimension.height;
-      var overAllBounds = Bounds2.rect( viewBounds.x - paperWidth / 2, viewBounds.y - paperHeight / 2,
-        viewBounds.width, viewBounds.height - paperHeight / 2 );
-      var newPos = overAllBounds.closestPointTo( newPosition );
-      this.setDestination( newPos, animate );
+    setConstrainedDestination: function( viewBounds, newDestination, animate ) {
+      // Determine how our number's origin can be placed in the bounds
+      var localBounds = this.getLocalBounds();
+      var center = localBounds.center;
+
+      // TODO: This needs to be improved
+      var originBounds = viewBounds.withMaxY( viewBounds.maxY - localBounds.height / 2 ).shifted( center.x, center.y );
+      this.setDestination( originBounds.closestPointTo( newDestination ), animate );
     },
 
     /**

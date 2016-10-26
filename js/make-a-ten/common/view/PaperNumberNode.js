@@ -13,8 +13,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var arrayRemove = require( 'PHET_CORE/arrayRemove' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var ArithmeticRules = require( 'MAKE_A_TEN/make-a-ten/common/model/ArithmeticRules' );
@@ -85,54 +85,68 @@ define( function( require ) {
    * @param {PaperNumber} paperNumber
    * @param {Property<Bounds2>} availableViewBoundsProperty
    * @param {Function<paperNumber>} addNumberModelCallback A callback to invoke when a  Number is  split
-   * @param {Function<paperNumber,droppedPoint>} tryToCombineNumbers A callback to invoke when a Number is  combined
+   * @param {Function<>} tryToCombineNumbers - Called with no arguments to try to combine our paper number
    * @constructor
    */
   function PaperNumberNode( paperNumber, availableViewBoundsProperty, addNumberModelCallback, tryToCombineNumbers ) {
     var self = this;
-    this.paperNumber = paperNumber;
-    this.availableViewBoundsProperty = availableViewBoundsProperty;
+
+    assert && assert( !!addNumberModelCallback, 'Required' );
+    assert && assert( !!tryToCombineNumbers, 'Required' );
+
     Node.call( this );
 
-    this.addNumberModelCallback = addNumberModelCallback || _.noop;
-    tryToCombineNumbers = tryToCombineNumbers || _.noop;
+    this.paperNumber = paperNumber;
 
-    var imageNumberNode = new Node();
-    this.addChild( imageNumberNode );
+    // @private {Bounds2}
+    this.availableViewBoundsProperty = availableViewBoundsProperty;
 
-    paperNumber.numberValueProperty.link( function( newNumber ) {
-      imageNumberNode.removeAllChildren();
-
-      var numBaseNumbers = paperNumber.baseNumbers.length;
-      _.each( paperNumber.baseNumbers, function( baseNumber, index ) {
-        var baseNumberImage = PaperNumberNode.getNumberImage( baseNumber.numberValue );
-        var baseNumberImageNode = new Image( baseNumberImage );
-        baseNumberImageNode.translation = baseNumber.offset;
-
-        // Bottom number has full opacity, and each successive number has *0.97 the opacity.
-        baseNumberImageNode.imageOpacity = Math.pow( 0.97, numBaseNumbers - index - 1 );
-        imageNumberNode.insertChild( 0, baseNumberImageNode );
-      } );
-
-      changeMouseAndTouchAreas();
-
+    this.numberImageContainer = new Node( {
+      pickable: false
     } );
+    this.addChild( this.numberImageContainer );
 
-    function changeMouseAndTouchAreas() {
-      // Set up the mouse and touch areas for this node so that we can pass
-      // the query parameter ?showPointerAreas to visualize the areas
-      var paperNumberBounds = self.getBounds();
+    this.splitTarget = new Rectangle( 0, 0, 100, 100, {
+      cursor: 'pointer'
+    } );
+    this.addChild( this.splitTarget );
 
-      var mouseArea = Shape.rectangle( 0, 0,
-        paperNumberBounds.width,
-        paperNumberBounds.height );
+    this.moveTarget = new Rectangle( 0, 0, 100, 100, {
+      cursor: 'move'
+    } );
+    this.addChild( this.moveTarget );
 
-      self.touchArea = mouseArea;
-      self.mouseArea = mouseArea;
-    }
+    var dragOffset;
+    this.moveDragHandler = new SimpleDragHandler( {
+      start: function( event, trail ) {
+        paperNumber.userControlledProperty.value = true;
 
-    paperNumber.positionProperty.linkAttribute( this, 'leftTop' );
-    paperNumber.opacityProperty.linkAttribute( imageNumberNode, 'imageOpacity' );
+        var viewPosition = self.globalToParentPoint( event.pointer.point );
+        dragOffset = paperNumber.positionProperty.value.minus( viewPosition );
+      },
+
+      drag: function( event, trail ) {
+        var viewPosition = self.globalToParentPoint( event.pointer.point );
+
+        // TODO: can we do a more direct set, without having to go through the animation bit?
+        paperNumber.setConstrainedDestination( availableViewBoundsProperty.value, dragOffset.plus( viewPosition ) );
+      },
+
+      end: function( event, trail ) {
+        paperNumber.userControlledProperty.value = false;
+
+        tryToCombineNumbers();
+        paperNumber.endDragEmitter.emit(); // TODO: why is this needed?
+      }
+    } );
+    this.moveTarget.addInputListener( this.moveDragHandler );
+
+    this.paperNumber.numberValueProperty.link( this.onNumberChange.bind( this ) );
+
+    paperNumber.positionProperty.linkAttribute( this, 'translation' );
+
+    // TODO: why are we setting this on ourself? Node's imageOpacity doesn't do anything?
+    paperNumber.opacityProperty.linkAttribute( this, 'imageOpacity' );
 
     var movableObject = null;
     var startOffset = null;
@@ -210,7 +224,7 @@ define( function( require ) {
 
         //if it is splitMode
         if ( splitObjectContext && transDistance > MIN_SPLIT_DISTANCE ) {
-          self.addNumberModelCallback( splitObjectContext.pulledApartPaperNumber );
+          addNumberModelCallback( splitObjectContext.pulledApartPaperNumber );
           paperNumber.changeNumber( splitObjectContext.amountRemaining );
           startMoving( splitObjectContext.pulledApartPaperNumber );
 
@@ -230,7 +244,7 @@ define( function( require ) {
         if ( movableObject ) {
           var newPosition = movableObject.positionProperty.value.plus( delta );
           //constrain
-          movableObject.constrainPosition( availableViewBoundsProperty.value, newPosition );
+          movableObject.setConstrainedDestination( availableViewBoundsProperty.value, newPosition );
 
           // if it is a new created object, change the opacity
           if ( movableObject !== paperNumber ) {
@@ -255,7 +269,7 @@ define( function( require ) {
 
     } );
 
-    this.addInputListener( paperNodeDragHandler );
+    // this.addInputListener( paperNodeDragHandler );
 
     // show proper cursor to differentiate move and split
     paperNodeDragHandler.move = function( event ) {
@@ -290,6 +304,41 @@ define( function( require ) {
   makeATen.register( 'PaperNumberNode', PaperNumberNode );
 
   return inherit( Node, PaperNumberNode, {
+    onNumberChange: function() {
+      var self = this;
+
+      this.numberImageContainer.removeAllChildren();
+
+      var numBaseNumbers = this.paperNumber.baseNumbers.length;
+      _.each( this.paperNumber.baseNumbers, function( baseNumber, index ) {
+        var baseNumberImage = PaperNumberNode.getNumberImage( baseNumber.numberValue );
+        var baseNumberImageNode = new Image( baseNumberImage );
+        baseNumberImageNode.translation = baseNumber.offset;
+
+        // Bottom number has full opacity, and each successive number has *0.97 the opacity.
+        baseNumberImageNode.imageOpacity = Math.pow( 0.97, numBaseNumbers - index - 1 );
+        self.numberImageContainer.insertChild( 0, baseNumberImageNode );
+      } );
+
+      var fullBounds = this.paperNumber.baseNumbers[ this.paperNumber.baseNumbers.length - 1 ].bounds;
+
+      if ( this.paperNumber.numberValueProperty.value === 1 ) {
+        self.splitTarget.visible = false;
+        self.moveTarget.mouseArea = self.moveTarget.touchArea = self.moveTarget.rectBounds = fullBounds;
+      }
+      else {
+        self.splitTarget.visible = true;
+
+        // Locate the boundary between the "move" input area and "split" input area.
+        var moveToSplitRatio = 0.38;
+        var boundaryY = fullBounds.maxY * ( 1 - moveToSplitRatio ) + fullBounds.minY * moveToSplitRatio;
+
+        // Modify our move/split targets
+        self.moveTarget.mouseArea = self.moveTarget.touchArea = self.moveTarget.rectBounds = fullBounds.withMinY( boundaryY );
+        self.splitTarget.mouseArea = self.splitTarget.touchArea = self.splitTarget.rectBounds = fullBounds.withMaxY( boundaryY );
+      }
+    },
+
     /**
      * When our model becomes user-controlled, move our node to the front.
      * @private
