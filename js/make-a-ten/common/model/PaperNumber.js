@@ -167,12 +167,12 @@ define( function( require ) {
     decomposeIntoBaseNumbers: function( value ) {
       this.baseNumbers = [];
       var numberOfSetDimensions = this.getOffsetArrayByDigits( value );
-      var noOfDigits = MakeATenUtil.digitsInNumber( value );
+      var digitCount = MakeATenUtil.digitsInNumber( value );
       var opacityValue = 1;
       var numberPositionIndex = 0;
 
-      for ( var i = 0; i < noOfDigits; i++ ) {
-        var place = noOfDigits - i - 1;
+      for ( var i = 0; i < digitCount; i++ ) {
+        var place = digitCount - i - 1;
         var digit = Math.floor( value / Math.pow( 10, place ) ) % 10;
         var baseNumberValue = digit * Math.pow( 10, place );
         if ( baseNumberValue === 0 ) {
