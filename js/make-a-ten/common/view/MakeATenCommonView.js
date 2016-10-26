@@ -46,7 +46,7 @@ define( function( require ) {
     this.paperNumberNodes = []; // @private {Array.<PaperNumberNode>} - All PaperNumberNodes available
     this.paperNumberNodeMap = {}; // @private {number} PaperNumber.id => {PaperNumberNode} - lookup map for efficiency
 
-    var createNumberCallback = this.createNumberForViewPosition.bind( this );
+    var createNumberCallback = this.createAndDragNumber.bind( this );
 
     // TODO: factor out into bind?
     function handlePaperNumberAdded( addedNumberModel ) {
@@ -135,14 +135,14 @@ define( function( require ) {
 
     /**
      * Given a number and a pointer's position in view coordinates, create a paper number and a corresponding node,
-     * and position it so that the user's pointer is over the move-zone of the paper number.
+     * position it so that the user's pointer is over the move-zone of the paper number, and start dragging it.
      * @public
      *
+     * @param {Event} event - The Scenery event that triggered this.
      * @param {number} numberVale - The numeric value for the new paper number.
      * @param {Vector2} viewPosition - Location in view coordinates of the user's pointer
-     * @returns {PaperNumberNode} - The created node for the paper number.
      */
-    createNumberForViewPosition: function( numberValue, viewPosition ) {
+    createAndDragNumber: function( event, numberValue, viewPosition ) {
       // TODO: do we want an initial position ever?
       var paperNumber = new PaperNumber( numberValue, new Vector2() );
 
@@ -151,7 +151,9 @@ define( function( require ) {
 
       // Add it and lookup the related node.
       this.addPaperNumber( paperNumber );
-      return this.findPaperNumberNode( paperNumber );
+
+      var paperNumberNode = this.findPaperNumberNode( paperNumber );
+      paperNumberNode.moveDragHandler.tryToSnag( event );
     },
 
     /**

@@ -12,21 +12,15 @@ define( function( require ) {
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Bounds2 = require( 'DOT/Bounds2' );
   var PaperNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperNumberNode' );
-  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
 
   /**
    * @param {number} numberValue
-   * @param {Function} addNumberToModel  - A function for adding the created number  to the model
-   * @param {Function} tryToCombineNumbers
-   * @param {Function} canPlaceNumber - A function to determine if the PaperNumber can be placed on the board
    * @param {MakeATenExploreScreenView} makeATenView
    * @constructor
    */
-  function PaperNumberCreatorNode( numberValue, addNumberToModel, tryToCombineNumbers, canPlaceNumber,
-                                   makeATenView ) {
+  function PaperNumberCreatorNode( numberValue, makeATenView ) {
     Node.call( this, {
       cursor: 'pointer'
     } );
@@ -43,12 +37,10 @@ define( function( require ) {
           return;
         }
 
+        // We want this relative to the screen view, so it is guaranteed to be the proper view coordinates.
         var viewPosition = makeATenView.globalToLocalPoint( event.pointer.point );
 
-        // TODO: encapsulate?
-        var newPaperNumberNode = makeATenView.createNumberForViewPosition( numberValue, viewPosition );
-
-        newPaperNumberNode.moveDragHandler.tryToSnag( event );
+        makeATenView.createAndDragNumber( event, numberValue, viewPosition );
       }
     } );
   }

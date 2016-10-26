@@ -79,11 +79,11 @@ define( function( require ) {
    *
    * @param {PaperNumber} paperNumber
    * @param {Property<Bounds2>} availableViewBoundsProperty
-   * @param {Function<number,Vector2>} addPaperNumberNode - Returns a new PaperNumberNode reference.
+   * @param {Function<Event,number,Vector2>} createAndDragNumber - Returns a new PaperNumberNode reference.
    * @param {Function<>} tryToCombineNumbers - Called with no arguments to try to combine our paper number.
    * @constructor
    */
-  function PaperNumberNode( paperNumber, availableViewBoundsProperty, addPaperNumberNode, tryToCombineNumbers ) {
+  function PaperNumberNode( paperNumber, availableViewBoundsProperty, createAndDragNumber, tryToCombineNumbers ) {
     var self = this;
 
     Node.call( this );
@@ -154,10 +154,8 @@ define( function( require ) {
           return;
         }
 
-        var newPaperNumberNode = addPaperNumberNode( amountToRemove, viewPosition );
         paperNumber.changeNumber( amountRemaining );
-
-        newPaperNumberNode.moveDragHandler.tryToSnag( event );
+        createAndDragNumber( event, amountToRemove, viewPosition );
       }
     } );
 

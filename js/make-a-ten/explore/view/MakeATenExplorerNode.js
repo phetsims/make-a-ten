@@ -35,8 +35,7 @@ define( function( require ) {
     this.addChild( numberCollectionLayer );
 
     NUMBER_CREATOR_OFFSET_POSITIONS.forEach( function( offset ) {
-      var paperNumberCreatorNode = new PaperNumberCreatorNode( numberValue,
-        addNumberToModel, tryToCombineNumbers, canPlaceNumber, makeATenView );
+      var paperNumberCreatorNode = new PaperNumberCreatorNode( numberValue, makeATenView );
       numberCollectionLayer.addChild( paperNumberCreatorNode );
       paperNumberCreatorNode.left = offset.x;
       paperNumberCreatorNode.top = offset.y;
