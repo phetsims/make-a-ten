@@ -36,12 +36,11 @@ define( function( require ) {
   function PaperNumber( numberValue, initialPosition, options ) {
     var self = this;
 
-    // TODO: check if this is overridden
     options = _.extend( {
       opacity: 1
     }, options );
 
-    // IDs required for map-like lookup, see https://github.com/phetsims/make-a-ten/issues/199
+    // @public {number} - IDs required for map-like lookup, see https://github.com/phetsims/make-a-ten/issues/199
     this.id = nextPaperNumberId++;
 
     // @public {NumberProperty} - The number that this model represents, e.g. 324
@@ -62,20 +61,21 @@ define( function( require ) {
     // @public {NumberProperty}
     this.opacityProperty = new NumberProperty( options.opacity );
 
-    // Destination is used for animation, and should be set through accessor methods only.
+    // @public {Vector2} - Destination is used for animation, and should be set through accessor methods only.
     this.destination = initialPosition.copy(); // @private
 
-
-    // A number like 120 is composed of  to 2 number images in this simulation.
-    // The baseNumber object represents the "parts"
-    this.baseNumbers = [];
-
-    this.animationVelocity = MakeATenConstants.ANIMATION_VELOCITY;
-
+    // @public {Array.<BaseNumber>} - Represents the non-zero place values in this number. 1034 will have three place
+    //                                values, 4, 30 and 1000, which when summed will equal our number.
     this.baseNumbers = PaperNumber.getBaseNumbers( this.numberValueProperty.value );
 
+    // @public {Emitter} - Fires when a paper number is returned to the origin.
     this.returnedToOriginEmitter = new Emitter();
+
+    // @public {Emitter} - Fires when the user stops dragging a paper number.
     this.endDragEmitter = new Emitter();
+
+    // @private {Vector2} - How fast the current animation will progress towards the destination.
+    this.animationVelocity = MakeATenConstants.ANIMATION_VELOCITY;
 
     // Trigger an event whenever this shape returns to its original position.
     this.positionProperty.lazyLink( function( position ) {
@@ -90,18 +90,21 @@ define( function( require ) {
 
   return inherit( Object, PaperNumber, {
     /**
+     * Animates the number towards its destination.
+     * @public
      *
      * @param {number} dt
      */
     step: function( dt ) {
       if ( !this.userControlledProperty.value ) {
+        var currentPosition = this.positionProperty.value;
 
         // perform any animation
-        var distanceToDestination = this.positionProperty.value.distance( this.destination );
+        var distanceToDestination = currentPosition.distance( this.destination );
         if ( distanceToDestination > dt * this.animationVelocity ) {
           // Move a step toward the destination.
-          var stepVector = this.destination.minus( this.positionProperty.value ).setMagnitude( this.animationVelocity * dt );
-          this.positionProperty.value = this.positionProperty.value.plus( stepVector );
+          var stepVector = this.destination.minus( currentPosition ).setMagnitude( this.animationVelocity * dt );
+          this.positionProperty.value = currentPosition.plus( stepVector );
 
         }
         else if ( this.animatingProperty.value ) {
