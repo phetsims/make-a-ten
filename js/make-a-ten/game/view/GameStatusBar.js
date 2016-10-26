@@ -14,7 +14,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ProgressIndicatorLabelNode = require( 'MAKE_A_TEN/make-a-ten/game/view/ProgressIndicatorLabelNode' );
+  var ScoreNode = require( 'MAKE_A_TEN/make-a-ten/game/view/ScoreNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -69,15 +69,14 @@ define( function( require ) {
     } );
     this.addChild( this.levelDescriptionText );
 
-    this.progressIndicator = new ProgressIndicatorLabelNode( 1, gameModel.currentScoreProperty, {
+    this.scoreNode = new ScoreNode( gameModel.currentScoreProperty, {
       pickable: false,
-      starDiameter: 75,
       labelColor: TEXT_COLOR
     } );
-    this.addChild( this.progressIndicator );
+    this.addChild( this.scoreNode );
 
     gameModel.currentLevelProperty.link( this.updateLevelInfo.bind( this ) );
-    this.progressIndicator.scoreChangedEmitter.addListener( this.layout.bind( this, null ) );
+    this.scoreNode.scoreChangedEmitter.addListener( this.layout.bind( this, null ) );
 
     // Pass options to parent class
     this.mutate( options );
@@ -122,8 +121,8 @@ define( function( require ) {
       this.backButton.left = this.backgroundRectangle.left + 30;
       this.backButton.centerY = this.backgroundRectangle.centerY;
 
-      this.progressIndicator.right = this.backgroundRectangle.right - 30;
-      this.progressIndicator.centerY = this.backgroundRectangle.centerY;
+      this.scoreNode.right = this.backgroundRectangle.right - 30;
+      this.scoreNode.centerY = this.backgroundRectangle.centerY;
 
       this.levelNumberText.left = this.backButton.right + 30;
       this.levelNumberText.centerY = this.backgroundRectangle.centerY;

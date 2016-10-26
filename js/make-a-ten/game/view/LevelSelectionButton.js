@@ -21,7 +21,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ProgressIndicatorLabelNode = require( 'MAKE_A_TEN/make-a-ten/game/view/ProgressIndicatorLabelNode' );
+  var ScoreNode = require( 'MAKE_A_TEN/make-a-ten/game/view/ScoreNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -47,13 +47,12 @@ define( function( require ) {
 
   /**
    * @param {Node} icon Scenery node that appears on the button above the progress indicator, scaled to fit
-   * @param {number} numStars Number of stars to show in the progress indicator at the bottom of the button
    * @param {function} fireFunction Called when the button fires
    * @param {Property.<number>} scoreProperty
    * @param {Object} [options]
    * @constructor
    */
-  function LevelSelectionButton( icon, numStars, fireFunction, scoreProperty, options ) {
+  function LevelSelectionButton( icon, fireFunction, scoreProperty, options ) {
 
     Node.call( this );
 
@@ -66,10 +65,10 @@ define( function( require ) {
       buttonXMargin: 10,
       buttonYMargin: 10,
       // progress indicator (stars)
-      progressIndicatorProportion: 0.2, // percentage of the button height occupied by the progress indicator, (0,0.5]
-      progressIndicatorMinXMargin: 10,
-      progressIndicatorMinYMargin: 5,
-      iconToProgressIndicatorYSpace: 10,
+      scoreNodeProportion: 0.2, // percentage of the button height occupied by the progress indicator, (0,0.5]
+      scoreNodeMinXMargin: 10,
+      scoreNodeMinYMargin: 5,
+      iconToscoreNodeYSpace: 10,
       // best time (optional)
       bestTimeProperty: null, // null if no best time || {Property.<number>} best time in seconds
       bestTimeVisibleProperty: null, // null || Property.<boolean>} controls visibility of best time
@@ -80,51 +79,44 @@ define( function( require ) {
       phetioID: null
     }, options );
 
-    assert && assert( options.progressIndicatorProportion > 0 && options.progressIndicatorProportion <= 0.5, 'progressIndicatorProportion value out of range' );
+    assert && assert( options.scoreNodeProportion > 0 && options.scoreNodeProportion <= 0.5, 'scoreNodeProportion value out of range' );
 
     var maxContentWidth = options.buttonWidth - 2 * options.buttonXMargin;
 
     // Progress indicator (stars), scaled to fit
-    var progressIndicatorBackground = new Rectangle( 0, 0, maxContentWidth,
-      options.buttonHeight * options.progressIndicatorProportion, options.cornerRadius, options.cornerRadius, {
+    var scoreNodeBackground = new Rectangle( 0, 0, maxContentWidth,
+      options.buttonHeight * options.scoreNodeProportion, options.cornerRadius, options.cornerRadius, {
         fill: 'white',
         stroke: 'black',
         lineWidth: 1,
         pickable: false
       } );
-    var progressIndicator = new ProgressIndicatorLabelNode( numStars, scoreProperty, {
-      pickable: false,
-      starDiameter: options.buttonWidth / ( numStars + 1 )
+    var scoreNode = new ScoreNode( scoreProperty, {
+      pickable: false
     } );
-    progressIndicator.scale( Math.min(
-      ( progressIndicatorBackground.width - 2 * options.progressIndicatorMinXMargin ) / progressIndicator.width,
-      ( progressIndicatorBackground.height - 2 * options.progressIndicatorMinYMargin ) / progressIndicator.height ) );
+    scoreNode.scale( Math.min(
+      ( scoreNodeBackground.width - 2 * options.scoreNodeMinXMargin ) / scoreNode.width,
+      ( scoreNodeBackground.height - 2 * options.scoreNodeMinYMargin ) / scoreNode.height ) );
 
     // Icon, scaled and padded to fit and to make the button size correct.
-    var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - progressIndicatorBackground.height -
-                                                    2 * options.buttonYMargin - options.iconToProgressIndicatorYSpace );
+    var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - scoreNodeBackground.height -
+                                                    2 * options.buttonYMargin - options.iconToscoreNodeYSpace );
     var adjustedIcon = createSizedImageNode( icon, iconSize );
-    adjustedIcon.pickable = false; // TODO: is this needed?
+    adjustedIcon.pickable = false;
 
     // Assemble the content.
     var contentNode = new Node();
-    if ( progressIndicatorBackground.width > adjustedIcon.width ) {
-      adjustedIcon.centerX = progressIndicatorBackground.centerX;
+    if ( scoreNodeBackground.width > adjustedIcon.width ) {
+      adjustedIcon.centerX = scoreNodeBackground.centerX;
     }
     else {
-      progressIndicatorBackground.centerX = adjustedIcon.centerX;
+      scoreNodeBackground.centerX = adjustedIcon.centerX;
     }
-    progressIndicatorBackground.top = adjustedIcon.bottom + options.iconToProgressIndicatorYSpace;
-    progressIndicator.center = progressIndicatorBackground.center;
+    scoreNodeBackground.top = adjustedIcon.bottom + options.iconToscoreNodeYSpace;
+    scoreNode.center = scoreNodeBackground.center;
     contentNode.addChild( adjustedIcon );
-    contentNode.addChild( progressIndicatorBackground );
-    contentNode.addChild( progressIndicator );
-
-    scoreProperty.link( function( score ) {
-      if ( score > 0 ) {
-        progressIndicatorBackground.top = adjustedIcon.bottom + options.iconToProgressIndicatorYSpace - 2;
-      }
-    } );
+    contentNode.addChild( scoreNodeBackground );
+    contentNode.addChild( scoreNode );
 
     // Create the button
     var buttonOptions = {

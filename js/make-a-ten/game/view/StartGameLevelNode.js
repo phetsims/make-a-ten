@@ -61,7 +61,7 @@ define( function( require ) {
       var fireCallback = this.gameModel.startLevel.bind( this.gameModel, level );
       var center = MakeATenSharedConstants.LAYOUT_BOUNDS.center.plus( new Vector2( xOffset * X_OFFSET, yOffset * Y_OFFSET ) );
 
-      this.addChild( new LevelSelectionButton( level.iconNode, 1, fireCallback, level.scoreProperty, {
+      this.addChild( new LevelSelectionButton( level.iconNode, fireCallback, level.scoreProperty, {
         baseColor: level.color,
         scale: 0.9, // TODO: why?
         center: center
