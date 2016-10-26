@@ -16,9 +16,10 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
 
   /**
+   * @constructor
+   *
    * @param {number} numberValue
    * @param {MakeATenExploreScreenView} makeATenView
-   * @constructor
    */
   function PaperNumberCreatorNode( numberValue, makeATenView ) {
     Node.call( this, {
@@ -40,6 +41,7 @@ define( function( require ) {
         // We want this relative to the screen view, so it is guaranteed to be the proper view coordinates.
         var viewPosition = makeATenView.globalToLocalPoint( event.pointer.point );
 
+        // Create and start dragging the new paper number node
         makeATenView.createAndDragNumber( event, numberValue, viewPosition );
       }
     } );
@@ -48,5 +50,4 @@ define( function( require ) {
   makeATen.register( 'PaperNumberCreatorNode', PaperNumberCreatorNode );
 
   return inherit( Node, PaperNumberCreatorNode );
-
 } );
