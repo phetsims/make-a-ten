@@ -14,6 +14,7 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Vector2 = require( 'DOT/Vector2' );
   var Emitter = require( 'AXON/Emitter' );
   var Property = require( 'AXON/Property' );
   var NumberProperty = require( 'AXON/NumberProperty' );
@@ -142,6 +143,17 @@ define( function( require ) {
     getLocalBounds: function() {
       // Use the largest base number
       return this.baseNumbers[ this.baseNumbers.length - 1 ].bounds;
+    },
+
+    // TODO: doc
+    getDragTargetOffset: function() {
+      var bounds = this.getLocalBounds();
+
+      var ratio = MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION / 2;
+      var x = bounds.centerX;
+      var y = bounds.minY * ratio + bounds.maxY * ( 1 - ratio );
+
+      return new Vector2( x, y );
     },
 
     /**

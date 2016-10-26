@@ -14,12 +14,9 @@ define( function( require ) {
   var arrayRemove = require( 'PHET_CORE/arrayRemove' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Bounds2 = require( 'DOT/Bounds2' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var ArithmeticRules = require( 'MAKE_A_TEN/make-a-ten/common/model/ArithmeticRules' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
-  var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
   var Image = require( 'SCENERY/nodes/Image' );
 
   // images
@@ -61,8 +58,6 @@ define( function( require ) {
   var image9000 = require( 'image!MAKE_A_TEN/9000.png' );
 
   // constants
-  var SPLIT_OPACITY_FACTOR = 5; // for a distance of 5 apply some transparency to make the split effect realistic
-  var MIN_SPLIT_DISTANCE = 6;
   var DROP_BOUNDS_HEIGHT_PROPORTION = 0.35; // the bounds proportion within which if user drops a number, we can consider collapsing them
   var MIN_DISTANCE_DIFFERENCE_TO_COLLAPSE = 30;
   var PAPER_NUMBER_IMAGES = {
@@ -84,15 +79,12 @@ define( function( require ) {
    *
    * @param {PaperNumber} paperNumber
    * @param {Property<Bounds2>} availableViewBoundsProperty
-   * @param {Function<paperNumber>} addNumberModelCallback A callback to invoke when a  Number is  split
-   * @param {Function<>} tryToCombineNumbers - Called with no arguments to try to combine our paper number
+   * @param {Function<number,Vector2>} addPaperNumberNode - Returns a new PaperNumberNode reference.
+   * @param {Function<>} tryToCombineNumbers - Called with no arguments to try to combine our paper number.
    * @constructor
    */
-  function PaperNumberNode( paperNumber, availableViewBoundsProperty, addNumberModelCallback, tryToCombineNumbers ) {
+  function PaperNumberNode( paperNumber, availableViewBoundsProperty, addPaperNumberNode, tryToCombineNumbers ) {
     var self = this;
-
-    assert && assert( !!addNumberModelCallback, 'Required' );
-    assert && assert( !!tryToCombineNumbers, 'Required' );
 
     Node.call( this );
 
@@ -141,161 +133,40 @@ define( function( require ) {
     } );
     this.moveTarget.addInputListener( this.moveDragHandler );
 
+    this.splitTarget.addInputListener( {
+      down: function( event ) {
+        // Ignore non-left mouse buttons
+        if ( event.pointer.isMouse && event.domEvent && event.domEvent.button !== 0 ) {
+          return;
+        }
+
+        var viewPosition = self.globalToParentPoint( event.pointer.point );
+
+        // Determine how much (if any) gets moved off
+        var pulledPlace = paperNumber.getBaseNumberAt( self.parentToLocalPoint( viewPosition ) ).place;
+        var amountToRemove = ArithmeticRules.pullApartNumbers( paperNumber.numberValueProperty.value, pulledPlace );
+        var amountRemaining = paperNumber.numberValueProperty.value - amountToRemove;
+
+        // it cannot be split - so start moving
+        if ( !amountToRemove ) {
+          // TODO: can this actually happen?
+          self.moveDragHandler.tryToSnag( event );
+          return;
+        }
+
+        var newPaperNumberNode = addPaperNumberNode( amountToRemove, viewPosition );
+        paperNumber.changeNumber( amountRemaining );
+
+        newPaperNumberNode.moveDragHandler.tryToSnag( event );
+      }
+    } );
+
     this.paperNumber.numberValueProperty.link( this.onNumberChange.bind( this ) );
 
     paperNumber.positionProperty.linkAttribute( this, 'translation' );
 
     // TODO: why are we setting this on ourself? Node's imageOpacity doesn't do anything?
     paperNumber.opacityProperty.linkAttribute( this, 'imageOpacity' );
-
-    var movableObject = null;
-    var startOffset = null;
-    var splitObjectContext = null;
-    var currentPoint = null;
-
-    function resetDrag() {
-      startOffset = null;
-      currentPoint = null;
-      splitObjectContext = null;
-      movableObject = null;
-    }
-
-    function startMoving( paperNumber ) {
-      movableObject = paperNumber;
-      movableObject.userControlledProperty.value = true;
-    }
-
-    var paperNodeDragHandler = new SimpleDragHandler( {
-
-      // Allow moving a finger (touch) across this node to interact with it
-      allowTouchSnag: true,
-
-      dragCursor: null,
-
-      start: function( event, trail ) {
-        resetDrag();
-        startOffset = self.globalToParentPoint( event.pointer.point );
-        currentPoint = startOffset.copy();
-
-        if ( paperNumber.numberValueProperty.value === 1 ) {
-          startMoving( paperNumber );
-          return;
-        }
-
-        var pulledPlace = self.paperNumber.getBaseNumberAt( self.parentToLocalPoint( startOffset ) ).place;
-        var amountToRemove = ArithmeticRules.pullApartNumbers( paperNumber.numberValueProperty.value, pulledPlace );
-        var amountRemaining = paperNumber.numberValueProperty.value - amountToRemove;
-
-        // it cannot be split - so start moving
-        if ( !amountToRemove ) {
-          startMoving( paperNumber );
-          return;
-        }
-
-        // When splitting a single digit from a two, make sure the mouse is near that second digit (or third digit)
-        // In the case of splitting equal digits (ex 30 splitting in to 20 and 10) we don't need to check this condition
-        var totalBounds = self.bounds;
-        var splitRect = Bounds2.rect( totalBounds.x, totalBounds.y,
-          totalBounds.width, totalBounds.height * MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION );
-
-        //if the below condition is true, start splitting
-        if ( splitRect.containsPoint( startOffset ) ) {
-          var pulledOutPosition = self.determinePulledOutNumberPosition( amountToRemove );
-          var pulledApartPaperNumber = new PaperNumber( amountToRemove, pulledOutPosition, {
-            opacity: 0.95
-          } );
-          splitObjectContext = {
-            pulledApartPaperNumber: pulledApartPaperNumber,
-            amountRemaining: amountRemaining
-          };
-          return;
-        }
-
-        // none matched, start moving
-        startMoving( paperNumber );
-      },
-
-      // Handler that moves the shape in model space.
-      translate: function( translationParams ) {
-        // How far it has moved from the original position
-        var delta = translationParams.delta;
-        currentPoint = currentPoint.plus( delta );
-        var transDistance = currentPoint.distance( startOffset );
-
-        //if it is splitMode
-        if ( splitObjectContext && transDistance > MIN_SPLIT_DISTANCE ) {
-          addNumberModelCallback( splitObjectContext.pulledApartPaperNumber );
-          paperNumber.changeNumber( splitObjectContext.amountRemaining );
-          startMoving( splitObjectContext.pulledApartPaperNumber );
-
-          if ( splitObjectContext.pulledApartPaperNumber.digitLength >=
-               MakeATenUtil.digitsInNumber( splitObjectContext.amountRemaining ) ) {
-            paperNumber.setDestination( paperNumber.positionProperty.value );
-          }
-          if ( splitObjectContext.pulledApartPaperNumber.digitLength >
-               MakeATenUtil.digitsInNumber( splitObjectContext.amountRemaining ) ) {
-            self.moveToFront();
-          }
-
-          splitObjectContext = null;
-        }
-
-        //in case of split mode, the movableObject is set, only if the "move" started after a certain distance
-        if ( movableObject ) {
-          var newPosition = movableObject.positionProperty.value.plus( delta );
-          //constrain
-          movableObject.setConstrainedDestination( availableViewBoundsProperty.value, newPosition );
-
-          // if it is a new created object, change the opacity
-          if ( movableObject !== paperNumber ) {
-            // gradually increase the opacity from 0.8 to 1 as we move away from the number, otherwise the change looks sudden
-            movableObject.opacityProperty.value = 0.9 + (0.005 * Math.min( 20, transDistance / SPLIT_OPACITY_FACTOR ));
-          }
-        }
-
-        return translationParams.position;
-      },
-
-      end: function( event, trail ) {
-        if ( movableObject ) {
-          movableObject.userControlledProperty.value = false;
-          var droppedPoint = event.pointer.point;
-          tryToCombineNumbers( movableObject, droppedPoint );
-          movableObject.endDragEmitter.emit();
-        }
-
-        resetDrag();
-      }
-
-    } );
-
-    // this.addInputListener( paperNodeDragHandler );
-
-    // show proper cursor to differentiate move and split
-    paperNodeDragHandler.move = function( event ) {
-
-      // if it is 1, we can only move
-      if ( paperNumber.numberValueProperty.value === 1 ) {
-        self.cursor = 'move';
-        return;
-      }
-
-      var localNodeBounds = self.localBounds;
-      var pullBounds = Bounds2.rect( localNodeBounds.x, localNodeBounds.y,
-        localNodeBounds.width, localNodeBounds.height * MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION );
-
-      var globalBounds = self.localToGlobalBounds( pullBounds );
-      if ( globalBounds.containsPoint( event.pointer.point ) ) {
-        self.cursor = 'pointer';
-      }
-      else {
-        self.cursor = 'move';
-      }
-    };
-
-    paperNodeDragHandler.out = function( args ) {
-      self.cursor = 'default';
-    };
 
     // @private {function} - Listener reference that gets attached/detached. Handles moving the Node to the front.
     this.userControlledListener = this.onUserControlledChange.bind( this );
@@ -330,7 +201,7 @@ define( function( require ) {
         self.splitTarget.visible = true;
 
         // Locate the boundary between the "move" input area and "split" input area.
-        var moveToSplitRatio = 0.38;
+        var moveToSplitRatio = MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION;
         var boundaryY = fullBounds.maxY * ( 1 - moveToSplitRatio ) + fullBounds.minY * moveToSplitRatio;
 
         // Modify our move/split targets

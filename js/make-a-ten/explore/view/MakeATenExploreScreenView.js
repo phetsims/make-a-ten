@@ -199,6 +199,7 @@ define( function( require ) {
     },
 
     /**
+     * @override
      * Intercept the addPaperNumber function and delegate it to the MakeATenCommonModel
      * This interception allows to hook functionality to see if the user leaves the Paper over the explorer carousel
      * in order to return them to the origin
@@ -207,8 +208,10 @@ define( function( require ) {
      */
     addPaperNumber: function( paperNumber ) {
       var self = this;
-      this.makeATenModel.addPaperNumber( paperNumber );
 
+      MakeATenCommonView.prototype.addPaperNumber.call( this, paperNumber );
+
+      // TODO: surely there are better ways of doing this
       // see if the user has dropped the paperNumber on Explorer panel, if yes return it to origin
       paperNumber.endDragEmitter.addListener( function() {
 

@@ -11,10 +11,12 @@ define( function( require ) {
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
   var arrayRemove = require( 'PHET_CORE/arrayRemove' );
+  var Vector2 = require( 'DOT/Vector2' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Property = require( 'AXON/Property' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var PaperNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperNumberNode' );
   var ArithmeticRules = require( 'MAKE_A_TEN/make-a-ten/common/model/ArithmeticRules' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
@@ -39,7 +41,6 @@ define( function( require ) {
 
     this.paperNumberLayerNode = new Node();
 
-    this.addPaperNumber = addPaperNumber || makeATenModel.addPaperNumber.bind( makeATenModel );
     this.tryToCombineNumbers = this.tryToCombineNumbers.bind( this );
 
     this.paperNumberNodes = []; // @private {Array.<PaperNumberNode>} - All PaperNumberNodes available
@@ -47,7 +48,14 @@ define( function( require ) {
 
     function handlePaperNumberAdded( addedNumberModel ) {
       var combineCallback = self.tryToCombineNumbers.bind( self, addedNumberModel );
-      var paperNumberNode = new PaperNumberNode( addedNumberModel, self.availableViewBoundsProperty, self.addPaperNumber, combineCallback );
+      // TODO: bind this
+      var addNumberCallback = function( numberValue, viewPosition ) {
+        var paperNumber = new PaperNumber( numberValue, new Vector2() );
+        paperNumber.setDestination( viewPosition.minus( paperNumber.getDragTargetOffset() ), false );
+        self.addPaperNumber( paperNumber );
+        return self.findPaperNumberNode( paperNumber );
+      };
+      var paperNumberNode = new PaperNumberNode( addedNumberModel, self.availableViewBoundsProperty, addNumberCallback, combineCallback );
       self.addPaperNumberNode( paperNumberNode );
     }
 
@@ -127,6 +135,16 @@ define( function( require ) {
           }
         }
       }
+    },
+
+    /**
+     * Forwards to the model, available to be overridden.
+     * @public
+     *
+     * @param {PaperNumber} paperNumber
+     */
+    addPaperNumber: function( paperNumber ) {
+      this.makeATenModel.addPaperNumber( paperNumber );
     },
 
     /**
