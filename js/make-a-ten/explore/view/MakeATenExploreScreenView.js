@@ -235,7 +235,7 @@ define( function( require ) {
 
             //Each part's position needs to offset from the currentPosition, so the split begins at the
             // right place
-            paperNumberPart.positionProperty.value = paperNumber.positionProperty.value.plus( baseNumbers[ i ].position );
+            paperNumberPart.positionProperty.value = paperNumber.positionProperty.value.plus( baseNumbers[ i ].offset );
             paperNumberPart.returnToOrigin( true, MakeATenConstants.ANIMATION_VELOCITY / 1.5 );// true is for animate and return
           }
 

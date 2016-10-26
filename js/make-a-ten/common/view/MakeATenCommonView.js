@@ -46,16 +46,12 @@ define( function( require ) {
     this.paperNumberNodes = []; // @private {Array.<PaperNumberNode>} - All PaperNumberNodes available
     this.paperNumberNodeMap = {}; // @private {number} PaperNumber.id => {PaperNumberNode} - lookup map for efficiency
 
+    var createNumberCallback = this.createNumberForViewPosition.bind( this );
+
+    // TODO: factor out into bind?
     function handlePaperNumberAdded( addedNumberModel ) {
       var combineCallback = self.tryToCombineNumbers.bind( self, addedNumberModel );
-      // TODO: bind this
-      var addNumberCallback = function( numberValue, viewPosition ) {
-        var paperNumber = new PaperNumber( numberValue, new Vector2() );
-        paperNumber.setDestination( viewPosition.minus( paperNumber.getDragTargetOffset() ), false );
-        self.addPaperNumber( paperNumber );
-        return self.findPaperNumberNode( paperNumber );
-      };
-      var paperNumberNode = new PaperNumberNode( addedNumberModel, self.availableViewBoundsProperty, addNumberCallback, combineCallback );
+      var paperNumberNode = new PaperNumberNode( addedNumberModel, self.availableViewBoundsProperty, createNumberCallback, combineCallback );
       self.addPaperNumberNode( paperNumberNode );
     }
 
@@ -135,6 +131,27 @@ define( function( require ) {
           }
         }
       }
+    },
+
+    /**
+     * Given a number and a pointer's position in view coordinates, create a paper number and a corresponding node,
+     * and position it so that the user's pointer is over the move-zone of the paper number.
+     * @public
+     *
+     * @param {number} numberVale - The numeric value for the new paper number.
+     * @param {Vector2} viewPosition - Location in view coordinates of the user's pointer
+     * @returns {PaperNumberNode} - The created node for the paper number.
+     */
+    createNumberForViewPosition: function( numberValue, viewPosition ) {
+      // TODO: do we want an initial position ever?
+      var paperNumber = new PaperNumber( numberValue, new Vector2() );
+
+      // Once we have the number's bounds, we set the position so that our pointer is in the middle of the drag target.
+      paperNumber.setDestination( viewPosition.minus( paperNumber.getDragTargetOffset() ), false );
+
+      // Add it and lookup the related node.
+      this.addPaperNumber( paperNumber );
+      return this.findPaperNumberNode( paperNumber );
     },
 
     /**
