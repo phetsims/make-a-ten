@@ -55,14 +55,14 @@ define( function( require ) {
     //                             externally, generally by the view node.
     this.userControlledProperty = new BooleanProperty( false );
 
-    // @public {BooleanProperty} - Whether this element is animating from one location to another, do not set externally.
-    this.animatingProperty = new BooleanProperty( false );
-
     // @public {NumberProperty}
     this.opacityProperty = new NumberProperty( options.opacity );
 
     // @public {Vector2} - Destination is used for animation, and should be set through accessor methods only.
     this.destination = initialPosition.copy(); // @private
+
+    // @public {boolean} - Whether this element is animating from one location to another, do not set externally.
+    this.animating = false;
 
     // @public {Array.<BaseNumber>} - Represents the non-zero place values in this number. 1034 will have three place
     //                                values, 4, 30 and 1000, which when summed will equal our number.
@@ -107,10 +107,10 @@ define( function( require ) {
           this.positionProperty.value = currentPosition.plus( stepVector );
 
         }
-        else if ( this.animatingProperty.value ) {
+        else if ( this.animating ) {
           // Less than one time step away, so just go to the destination.
           this.positionProperty.value = this.destination;
-          this.animatingProperty.value = false;
+          this.animating = false;
         }
 
       }
@@ -154,7 +154,7 @@ define( function( require ) {
       this.animationVelocity = ( animationVelocity !== undefined ) ? animationVelocity : MakeATenConstants.ANIMATION_VELOCITY;
 
       if ( animate ) {
-        this.animatingProperty.value = true;
+        this.animating = true;
       }
       else {
         this.positionProperty.value = destination;
