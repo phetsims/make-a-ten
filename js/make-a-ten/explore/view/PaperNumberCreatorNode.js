@@ -55,18 +55,6 @@ define( function( require ) {
 
   makeATen.register( 'PaperNumberCreatorNode', PaperNumberCreatorNode );
 
-  return inherit( Node, PaperNumberCreatorNode, {
-    /**
-     * returns {Bound2}  the bounds only within which a new PaperNumber can be pulled out and created
-     */
-    getGlobalObjectCreationBounds: function() {
-      var localNodeBounds = this.localBounds;
-      var pullBounds = Bounds2.rect( localNodeBounds.x, localNodeBounds.height * MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION,
-        localNodeBounds.width, localNodeBounds.height );
-      var globalCreationBounds = this.localToGlobalBounds( pullBounds );
-      return globalCreationBounds;
-    }
-
-  } );
+  return inherit( Node, PaperNumberCreatorNode );
 
 } );
