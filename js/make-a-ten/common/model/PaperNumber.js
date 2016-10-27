@@ -157,13 +157,16 @@ define( function( require ) {
     },
 
     /**
-     * @param newNumber
+     * Changes the number that this paper number represents.
+     * @public
+     *
+     * @param {number} numberValue
      */
-    changeNumber: function( newNumber ) {
-      newNumber = +newNumber; // TODO: eek, cast?
-      // TODO: reduce duplication with constructor
-      this.baseNumbers = PaperNumber.getBaseNumbers( newNumber );
-      this.numberValueProperty.value = newNumber;
+    changeNumber: function( numberValue ) {
+      assert && assert( typeof numberValue === 'number' );
+
+      this.baseNumbers = PaperNumber.getBaseNumbers( numberValue );
+      this.numberValueProperty.value = numberValue;
     },
 
     /**
