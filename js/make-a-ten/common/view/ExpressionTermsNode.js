@@ -1,9 +1,8 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- * The node that displays the sum of all paper numbers placed on the explorer screen
- * TODO: Also used on the game screen, in a different context, and with an additional term? Doc?
- * TODO: Not even used on the Explore screen?!?
+ * Displays a partial addition formula (or fragments), like "7 + 2 =", where parts can be filled in, and layout
+ * automatically adjusts.
  *
  * @author Sharfudeen Ashraf
  */
@@ -38,26 +37,21 @@ define( function( require ) {
 
     Node.call( this, options );
 
-    var leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, {
+    var backgroundOptions = {
       stroke: STROKE_COLOR,
       lineDash: LINE_DASH,
       lineWidth: 2,
       visible: options.highlightBorders
-    } );
+    };
 
-    var rightNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, {
-      stroke: STROKE_COLOR,
-      lineDash: LINE_DASH,
-      lineWidth: 2,
-      visible: options.highlightBorders
-    } );
+    var leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, backgroundOptions );
+    var rightNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, backgroundOptions );
 
     var plusText = new Text( '+', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
     var equalsSignText = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
 
     var numberDisplayBox = new HBox( {
-      children: [ leftNumberDisplayBackground, plusText,
-        rightNumberDisplayBackground ],
+      children: [ leftNumberDisplayBackground, plusText, rightNumberDisplayBackground ],
       spacing: 5,
       resize: false // since we toggle the stroke
     } );
