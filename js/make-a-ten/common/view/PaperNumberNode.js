@@ -165,12 +165,15 @@ define( function( require ) {
       }
     } );
 
-    this.paperNumber.numberValueProperty.link( this.updateNumber.bind( this ) );
+    // @private {Function} - Listener that hooks model position to view translation.
+    this.translationListener = function( position ) {
+      self.translation = position;
+    };
 
-    // Hook model position to view position
-    paperNumber.positionProperty.linkAttribute( this, 'translation' );
+    // @private {Function} - Listener for when our number changes
+    this.updateNumberListener = this.updateNumber.bind( this );
 
-    // @private {function} - Listener reference that gets attached/detached. Handles moving the Node to the front.
+    // @private {Function} - Listener reference that gets attached/detached. Handles moving the Node to the front.
     this.userControlledListener = function( userControlled ) {
       if ( userControlled ) {
         self.moveToFront();
@@ -223,8 +226,9 @@ define( function( require ) {
      * @public
      */
     attachListeners: function() {
-      // TODO: checks for leaks
       this.paperNumber.userControlledProperty.link( this.userControlledListener );
+      this.paperNumber.numberValueProperty.link( this.updateNumberListener );
+      this.paperNumber.positionProperty.link( this.translationListener );
     },
 
     /**
@@ -232,17 +236,9 @@ define( function( require ) {
      * @public
      */
     detachListeners: function() {
-      // TODO: checks for leaks
+      this.paperNumber.positionProperty.unlink( this.translationListener );
+      this.paperNumber.numberValueProperty.unlink( this.updateNumberListener );
       this.paperNumber.userControlledProperty.unlink( this.userControlledListener );
-    },
-
-    /**
-     * Each number is made up of base numbers. This method tells at what position the pulled out number ly
-     *
-     * @param newPulledNumber
-     */
-    determinePulledOutNumberPosition: function( newPulledNumber ) {
-      return this.leftTop.copy(); // TODO: is this needed?
     },
 
     /**
@@ -253,7 +249,6 @@ define( function( require ) {
      * @returns {Array}
      */
     findAttachableNodes: function( allPaperNumberNodes ) {
-      // TODO: Can we do this in the model?
       var attachableNodeCandidates = allPaperNumberNodes.slice();
       arrayRemove( attachableNodeCandidates, this );
 
