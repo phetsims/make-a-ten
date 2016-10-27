@@ -77,40 +77,48 @@ define( function( require ) {
    * @constructor
    *
    * @param {PaperNumber} paperNumber
-   * @param {Property<Bounds2>} availableViewBoundsProperty
-   * @param {Function<Event,number,Vector2>} createAndDragNumber - Returns a new PaperNumberNode reference.
-   * @param {Function<>} tryToCombineNumbers - Called with no arguments to try to combine our paper number.
+   * @param {Property.<Bounds2>} availableViewBoundsProperty
+   * @param {Function} createAndDragNumber - function( event, numberValue, viewPosition ), creates a new dragged number.
+   * @param {Function} tryToCombineNumbers - function(), called with no arguments to try to combine our paper number.
    */
   function PaperNumberNode( paperNumber, availableViewBoundsProperty, createAndDragNumber, tryToCombineNumbers ) {
     var self = this;
 
     Node.call( this );
 
+    // @public {PaperNumber} - Our model
     this.paperNumber = paperNumber;
 
     // @private {Bounds2}
     this.availableViewBoundsProperty = availableViewBoundsProperty;
 
+    // @private {Node} - Container for the digit image nodes
     this.numberImageContainer = new Node( {
       pickable: false
     } );
     this.addChild( this.numberImageContainer );
 
+    // @private {Rectangle} - Hit target for the "split" behavior, where one number would be pulled off from the
+    //                        existing number.
     this.splitTarget = new Rectangle( 0, 0, 100, 100, {
       cursor: 'pointer'
     } );
     this.addChild( this.splitTarget );
 
+    // @private {Rectangle} - Hit target for the "move" behavior, which just drags the existing paper number.
     this.moveTarget = new Rectangle( 0, 0, 100, 100, {
       cursor: 'move'
     } );
     this.addChild( this.moveTarget );
 
+    // View-coordinate offset between our position and the pointer's position, used for keeping drags synced.
     var dragOffset;
+    // @public {SimpleDragHandler} - TODO: Can we add a function for hooking, instead of leaving public?
     this.moveDragHandler = new SimpleDragHandler( {
       start: function( event, trail ) {
         paperNumber.userControlledProperty.value = true;
 
+        // Record our initial offset (where on the paper number the pointer is).
         var viewPosition = self.globalToParentPoint( event.pointer.point );
         dragOffset = paperNumber.positionProperty.value.minus( viewPosition );
       },
