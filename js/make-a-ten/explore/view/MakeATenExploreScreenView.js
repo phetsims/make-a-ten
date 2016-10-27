@@ -11,11 +11,9 @@ define( function( require ) {
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var Panel = require( 'SUN/Panel' );
   var Vector2 = require( 'DOT/Vector2' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
-  var MakeATenExplorerNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/MakeATenExplorerNode' );
   var ArrowCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/ArrowCueNode' );
   var ExplorePanel = require( 'MAKE_A_TEN/make-a-ten/explore/view/ExplorePanel' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
@@ -64,51 +62,11 @@ define( function( require ) {
     makeATenExploreModel.sumProperty.linkAttribute( sumText, 'text' );
 
     this.addChild( this.equationHBox );
-    this.addChild( new Explorepanel( this ) );
 
-    // Create the composite nodes that contain the number collections
-    var explorerNodes = [
-      new MakeATenExplorerNode( 100, this ),
-      new MakeATenExplorerNode( 10, this ),
-      new MakeATenExplorerNode( 1, this )
-    ];
+    this.explorePanel = new ExplorePanel( this );
+    this.addChild( this.explorePanel );
 
-    // Add a non-scrolling panel
-    var creatorNodeHBox = new HBox( { children: explorerNodes, spacing: 30 } );
-
-    // PaperNumber ContainerPanel
-    this.paperNumbersContainerPanel = new Panel( creatorNodeHBox, {
-      fill: MakeATenConstants.PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR,
-      stroke: 'black',
-      lineWidth: 1.5,
-      bottom: this.layoutBounds.bottom - 15,
-      centerX: (this.layoutBounds.width / 2) - 12,
-      xMargin: 30,
-      yMargin: 5,
-      resize: false
-
-    } );
-
-    this.addChild( this.paperNumbersContainerPanel );
     this.addChild( this.paperNumberLayerNode );
-
-
-    var carouselContainerStartPos = this.paperNumbersContainerPanel.leftTop.plus(
-      new Vector2( this.paperNumbersContainerPanel.xMargin, this.paperNumbersContainerPanel.yMargin ) );
-
-    var shapeCreatorHundredsContainerPos = carouselContainerStartPos.plus(
-      creatorNodeHBox.children[ 0 ].leftTop );
-    var shapeCreatorTensContainerPos = carouselContainerStartPos.plus(
-      creatorNodeHBox.children[ 1 ].leftTop );
-    var shapeCreatorSinglesContainer = carouselContainerStartPos.plus(
-      creatorNodeHBox.children[ 2 ].leftTop );
-
-    // used for sending PaperNumber models to its origin
-    this.explorePanelPositions = {
-      3: shapeCreatorHundredsContainerPos,
-      2: shapeCreatorTensContainerPos,
-      1: shapeCreatorSinglesContainer
-    };
 
     var hideTotalText = new Text( makeATenHideTotalString, {
       font: new PhetFont( {
@@ -133,9 +91,7 @@ define( function( require ) {
       self.equationHBox.visible = !hideTotal;
     } );
 
-    var repositoryPanelBounds = this.paperNumbersContainerPanel.bounds;
-    this.returnZoneBounds = repositoryPanelBounds.withMaxY( this.layoutBounds.bottom );
-
+    // TODO: update arrow cues!
     this.addChild( new ArrowCueNode( makeATenExploreModel.arrowCue ) );
 
     this.interactionAttemptedProperty.link( function( interactionAttempted ) {
@@ -164,14 +120,19 @@ define( function( require ) {
 
       var visibleBounds = this.visibleBoundsProperty.value;
 
-      this.paperNumbersContainerPanel.centerX = visibleBounds.centerX;
-      this.paperNumbersContainerPanel.bottom = visibleBounds.bottom - 10;
+      this.explorePanel.centerX = visibleBounds.centerX;
+      this.explorePanel.bottom = visibleBounds.bottom - 10;
 
-      this.hideTotalCheckBox.left = this.paperNumbersContainerPanel.right + 20;
+      this.hideTotalCheckBox.left = this.explorePanel.right + 20;
       this.hideTotalCheckBox.bottom = visibleBounds.bottom - 10;
 
       this.equationHBox.left = visibleBounds.left + SUM_NODE_OFFSET_X;
       this.equationHBox.top = visibleBounds.top + SUM_NODE_OFFSET_Y;
+    },
+
+    // TODO: doc
+    getReturnZoneBounds: function() {
+      return this.explorePanel.bounds.withMaxY( this.visibleBoundsProperty.value.bottom );
     },
 
     /**
@@ -190,7 +151,7 @@ define( function( require ) {
       var heightPart = paperNumberDimension.height * 0.3;
       var maxY = Math.min( droppedPosition.y, this.layoutBounds.maxY );
       var bounds2 = Bounds2.rect( droppedPosition.x, maxY, widthPart, heightPart );
-      var intersects = this.returnZoneBounds.intersectsBounds( bounds2 );
+      var intersects = this.getReturnZoneBounds().intersectsBounds( bounds2 );
       return !intersects;
     },
 
@@ -213,8 +174,9 @@ define( function( require ) {
       paperNumber.endDragEmitter.addListener( function() {
 
         // TODO return zone bounds are probable totally incorrect!
-        var panelBounds = self.returnZoneBounds;
+        var panelBounds = self.getReturnZoneBounds();
         var paperNumberDimension = paperNumber.getDimension(); // local
+        // TODO: that's not the center!
         var paperCenter = new Vector2( paperNumber.positionProperty.value.x + paperNumberDimension.width * 0.5,
           paperNumber.positionProperty.value.y + paperNumberDimension.height * 0.5 );
 
@@ -227,7 +189,7 @@ define( function( require ) {
 
             // We have reference to the explorer's digit collection, give that value as the initial
             // position based on the digit length
-            var initialPos = self.explorePanelPositions[ digits ];
+            var initialPos = self.explorePanel.getOriginLocation( digits );
             var paperNumberPart = new PaperNumber( baseNumbers[ i ].numberValue, initialPos );
             self.makeATenModel.addPaperNumber( paperNumberPart );
 

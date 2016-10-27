@@ -22,21 +22,33 @@ define( function( require ) {
   /**
    * @constructor
    *
-   * @param {MakeATenCommonView} makeATenView
+   * @param {MakeATenExploreScreenView} screenView
    */
-  function ExplorePanel( makeATenView ) {
-    var content = new HBox();
+  function ExplorePanel( screenView, options ) {
+
+    options = _.extend( {
+      fill: MakeATenConstants.PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR,
+      stroke: 'black',
+      lineWidth: 1.5,
+      xMargin: 30,
+      yMargin: 5,
+      resize: false
+    }, options );
+
+    // @private {MakeATenExploreScreenView}
+    this.screenView = screenView;
 
     function createTarget( numberValue ) {
       var node = new Node( {
         cursor: 'pointer',
         // empirically determined stacking
         children: [ new Vector2( -8, -8 ), new Vector2( 0, 0 ) ].map( function( offset ) {
-          var image = Image( PaperNumberNode.getNumberImage( numberValue ) );
+          // TODO: no need to duplicate these types of images?
+          var image = new Image( PaperNumberNode.getNumberImage( numberValue ) );
           image.scale( 0.64, 0.55 );
           image.translation = offset;
           return image;
-        } );
+        } )
       } );
 
       node.addInputListener( {
@@ -47,10 +59,10 @@ define( function( require ) {
           }
 
           // We want this relative to the screen view, so it is guaranteed to be the proper view coordinates.
-          var viewPosition = makeATenView.globalToLocalPoint( event.pointer.point );
+          var viewPosition = screenView.globalToLocalPoint( event.pointer.point );
 
           // Create and start dragging the new paper number node
-          makeATenView.createAndDragNumber( event, numberValue, viewPosition );
+          screenView.createAndDragNumber( event, numberValue, viewPosition );
         }
       } );
 
@@ -70,19 +82,26 @@ define( function( require ) {
       spacing: 30
     } );
 
-    Panel.call( this, box, {
-      fill: MakeATenConstants.PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR,
-      stroke: 'black',
-      lineWidth: 1.5,
-      bottom: this.layoutBounds.bottom - 15,
-      centerX: this.layoutBounds.centerX - 12, // TODO: why not centered?
-      xMargin: 30,
-      yMargin: 5,
-      resize: false
-    } );
+    Panel.call( this, box, options );
   }
 
   makeATen.register( 'ExplorePanel', ExplorePanel );
 
-  return inherit( Panel, ExplorePanel );
+  return inherit( Panel, ExplorePanel, {
+    getOriginLocation: function( digits ) {
+      var target;
+      switch ( digits ) {
+        case 1:
+          target = this.oneTarget; break;
+        case 2:
+          target = this.tenTarget; break;
+        case 3:
+          target = this.hundredTarget; break;
+        default:
+          // Probably something big, no better place to send it
+          target = this.hundredTarget;
+      }
+      return this.screenView.getUniqueLeafTrailTo( this ).localToGlobalPoint( target.center );
+    }
+  } );
 } );
