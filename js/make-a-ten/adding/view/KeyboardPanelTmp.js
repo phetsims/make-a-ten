@@ -27,7 +27,7 @@ define( function( require ) {
    * @param {Function} onSubmit -- TODO: docs?!?
    * @constructor
    */
-  function KeyBoardPanel( onSubmit, maxDigits ) {
+  function KeyboardPanel( onSubmit, maxDigits ) {
 
     var self = this;
     this.numberEntryControl = new NumberEntryControl( { maxDigits: maxDigits, readoutFont: new PhetFont( 25 ) } );
@@ -63,9 +63,9 @@ define( function( require ) {
     } );
   }
 
-  makeATen.register( 'KeyBoardPanel', KeyBoardPanel );
+  makeATen.register( 'KeyboardPanel', KeyboardPanel );
 
-  return inherit( Panel, KeyBoardPanel, {
+  return inherit( Panel, KeyboardPanel, {
     /**
      * Sets the readout value of the keypad
      * @public

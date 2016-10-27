@@ -15,7 +15,7 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Dimension2 = require( 'DOT/Dimension2' );
-  var KeyBoardPanel = require( 'MAKE_A_TEN/make-a-ten/adding/view/KeyBoardPanel' );
+  var KeyboardPanel = require( 'MAKE_A_TEN/make-a-ten/adding/view/KeyboardPanel' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var ExpressionTermsNode = require( 'MAKE_A_TEN/make-a-ten/common/view/ExpressionTermsNode' );
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
@@ -90,7 +90,7 @@ define( function( require ) {
 
     }
 
-    var keyBoardPanel = new KeyBoardPanel( onNumberSubmit, MAX_DIGITS );
+    var keyBoardPanel = new KeyboardPanel( onNumberSubmit, MAX_DIGITS );
     this.addChild( keyBoardPanel );
 
     keyBoardPanel.centerX = expressionTermsNode.centerX - 25;
