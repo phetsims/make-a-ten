@@ -23,7 +23,7 @@ define( function( require ) {
    * @constructor
    *
    * @param {MakeATenExploreScreenView} screenView
-   * @param {Object} [options] - Passed to Scenery
+   * @param {Object} [options] - Passed to Node
    */
   function ExplorePanel( screenView, options ) {
 
@@ -102,7 +102,9 @@ define( function( require ) {
           // Probably something big, no better place to send it
           target = this.hundredTarget;
       }
-      return this.screenView.getUniqueLeafTrailTo( this ).localToGlobalPoint( target.center );
+      var trail = this.screenView.getUniqueLeafTrailTo( target );
+      trail = trail.slice( 1, trail.length );
+      return trail.localToGlobalPoint( target.localBounds.center );
     }
   } );
 } );

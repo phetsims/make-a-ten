@@ -175,10 +175,8 @@ define( function( require ) {
 
         // TODO return zone bounds are probable totally incorrect!
         var panelBounds = self.getReturnZoneBounds();
-        var paperNumberDimension = paperNumber.getDimension(); // local
         // TODO: that's not the center!
-        var paperCenter = new Vector2( paperNumber.positionProperty.value.x + paperNumberDimension.width * 0.5,
-          paperNumber.positionProperty.value.y + paperNumberDimension.height * 0.5 );
+        var paperCenter = paperNumber.positionProperty.value.plus( paperNumber.getLocalBounds().center );
 
         if ( panelBounds.containsPoint( paperCenter ) ) {
           var baseNumbers = paperNumber.baseNumbers;
@@ -190,18 +188,19 @@ define( function( require ) {
             // We have reference to the explorer's digit collection, give that value as the initial
             // position based on the digit length
             var initialPos = self.explorePanel.getOriginLocation( digits );
+            // TODO: don't require creating a full other one to determine the center offset
+            initialPos = initialPos.minus( new PaperNumber( baseNumbers[ i ].numberValue, new Vector2() ).getLocalBounds().center );
             var paperNumberPart = new PaperNumber( baseNumbers[ i ].numberValue, initialPos );
             self.makeATenModel.addPaperNumber( paperNumberPart );
 
             //Each part's position needs to offset from the currentPosition, so the split begins at the
             // right place
-            paperNumberPart.positionProperty.value = paperNumber.positionProperty.value.plus( baseNumbers[ i ].offset );
+            paperNumberPart.positionProperty.value = paperNumber.positionProperty.value;
             paperNumberPart.returnToOrigin( true, MakeATenConstants.ANIMATION_VELOCITY / 1.5 );// true is for animate and return
           }
 
           paperNumber.returnToOrigin( false );
         }
-
       } );
     },
 
