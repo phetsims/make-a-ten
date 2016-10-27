@@ -1,6 +1,9 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
+ * Game screen for make-a-ten. Includes 10 levels, where the goal for each is to combine the 2 numbers together into
+ * one number by manipulating with the concept of making a ten. Each level can generate an infinite number of
+ * challenges, so the score for each level is an integer (instead of a proportion like other sims).
  *
  * @author Sharfudeen Ashraf
  */
@@ -24,25 +27,19 @@ define( function( require ) {
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
 
-  //strings
+  // strings
   var nextString = require( 'string!MAKE_A_TEN/next' );
 
   /**
-   * @param {MakeATenGameModel} model
    * @constructor
+   *
+   * @param {MakeATenGameModel} model
    */
   function MakeATenGameScreenView( model ) {
     MakeATenCommonView.call( this, model );
 
-    this.rootNode = new Node();
-    this.addChild( this.rootNode );
-
-    // Add layers used to control game appearance.
-    this.controlLayer = new Node();
-    this.rootNode.addChild( this.controlLayer );
-
     this.challengeLayer = new Node();
-    this.rootNode.addChild( this.challengeLayer );
+    this.addChild( this.challengeLayer );
     this.challengeLayer.addChild( this.paperNumberLayerNode );
 
     // The node that display "12 + 100 = "
@@ -53,7 +50,7 @@ define( function( require ) {
 
     // Add the node that allows the user to choose a game level to play.
     this.startGameLevelNode = new StartGameLevelNode( model );
-    this.rootNode.addChild( this.startGameLevelNode );
+    this.addChild( this.startGameLevelNode );
 
     // created lazily
     var infoDialog = null;
@@ -72,7 +69,7 @@ define( function( require ) {
       top: this.layoutBounds.top + 20,
       right: this.layoutBounds.right - 20
     } );
-    this.rootNode.addChild( this.infoButton );
+    this.addChild( this.infoButton );
 
     this.nextChallengeButton = new NextArrowButton( nextString, {
       listener: function() {
@@ -82,20 +79,20 @@ define( function( require ) {
       right: this.layoutBounds.right - 20
     } );
 
-    this.rootNode.addChild( this.nextChallengeButton );
+    this.addChild( this.nextChallengeButton );
 
     // Sound and timer controls.
     this.soundToggleButton = new SoundToggleButton( model.soundEnabledProperty, {
       x: 20,
       bottom: this.layoutBounds.height - 20
     } );
-    this.rootNode.addChild( this.soundToggleButton );
+    this.addChild( this.soundToggleButton );
 
     // Hook up the audio player to the sound settings.
     this.gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
 
     this.gameStatusBar = new GameStatusBar( model );
-    this.rootNode.addChild( this.gameStatusBar );
+    this.addChild( this.gameStatusBar );
 
     // Hook up the update function for handling changes to game state.
     model.gameStateProperty.link( this.handleGameStateChange.bind( this ) );
@@ -156,7 +153,7 @@ define( function( require ) {
     },
 
     moveToNextChallenge: function() {
-      this.show( [ this.challengeLayer, this.controlLayer, this.nextChallengeButton, this.gameStatusBar ] );
+      this.show( [ this.challengeLayer, this.nextChallengeButton, this.gameStatusBar ] );
     },
 
     // @private
@@ -166,14 +163,14 @@ define( function( require ) {
 
     // @private, Utility method for hiding all of the game nodes whose visibility changes during the course of a challenge.
     hideAllGameNodes: function() {
-      var gameNodes = [ this.startGameLevelNode, this.resetAllButton, this.challengeLayer, this.controlLayer, this.soundToggleButton, this.nextChallengeButton, this.infoButton ];
+      var gameNodes = [ this.startGameLevelNode, this.resetAllButton, this.challengeLayer, this.soundToggleButton, this.nextChallengeButton, this.infoButton ];
       gameNodes.forEach( function( node ) { node.visible = false; } );
     },
 
     // @private
     handlePresentingInteractiveChallengeState: function( challenge ) {
       this.model.createTerms( challenge );
-      this.show( [ this.challengeLayer, this.controlLayer, this.gameStatusBar ] );
+      this.show( [ this.challengeLayer, this.gameStatusBar ] );
     },
 
     // @private
@@ -182,13 +179,12 @@ define( function( require ) {
       // Give the user the appropriate audio and visual feedback
       this.gameAudioPlayer.correctAnswer();
 
-      this.show( [ this.challengeLayer, this.controlLayer, this.gameStatusBar ] );
+      this.show( [ this.challengeLayer, this.gameStatusBar ] );
     },
 
     // @private
     hideChallenge: function() {
       this.challengeLayer.visible = false;
-      this.controlLayer.visible = false;
       this.gameStatusBar.visible = false;
     },
 
