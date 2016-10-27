@@ -182,8 +182,8 @@ define( function( require ) {
         var baseNumberImageNode = new Image( baseNumberImage );
         baseNumberImageNode.translation = baseNumber.offset;
 
-        // Bottom number has full opacity, and each successive number has *0.97 the opacity.
-        baseNumberImageNode.imageOpacity = Math.pow( 0.97, numBaseNumbers - index - 1 );
+        // Bottom number has 0.95 opacity, and each successive number has *0.97 the opacity.
+        baseNumberImageNode.imageOpacity = 0.95 * Math.pow( 0.97, numBaseNumbers - index - 1 );
         self.numberImageContainer.insertChild( 0, baseNumberImageNode );
       } );
 
@@ -221,6 +221,7 @@ define( function( require ) {
      * @public
      */
     attachListeners: function() {
+      // TODO: checks for leaks
       this.paperNumber.userControlledProperty.link( this.userControlledListener );
     },
 
@@ -229,6 +230,7 @@ define( function( require ) {
      * @public
      */
     detachListeners: function() {
+      // TODO: checks for leaks
       this.paperNumber.userControlledProperty.unlink( this.userControlledListener );
     },
 
