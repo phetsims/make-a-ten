@@ -45,23 +45,21 @@ define( function( require ) {
     } );
 
 
-    // type is either "lt" or "rt" - (left or right)
-    function createEditNumberButton( termProperty, type ) {
-      var editNumberButton = new RectangularPushButton( {
+    function createEditNumberButton( term ) {
+      return new RectangularPushButton( {
         content: MakeATenUtil.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE ),
         listener: function() {
-          termProperty.value = type;
+          model.expressionTerms.activeTermProperty.value = term;
         },
         baseColor: 'white'
       } );
-      return editNumberButton;
     }
 
     this.addChild( background );
     this.addChild( this.paperNumberLayerNode );
 
-    var leftEditNumberButton = createEditNumberButton( model.expressionTerms.activeTermProperty, ActiveTerm.LEFT );
-    var rightEditNumberButton = createEditNumberButton( model.expressionTerms.activeTermProperty, ActiveTerm.RIGHT );
+    var leftEditNumberButton = createEditNumberButton( ActiveTerm.LEFT );
+    var rightEditNumberButton = createEditNumberButton( ActiveTerm.RIGHT );
 
     var editButtonBox = new HBox( { children: [ leftEditNumberButton, rightEditNumberButton ], spacing: 45 } );
     this.addChild( editButtonBox );
