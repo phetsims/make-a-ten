@@ -23,6 +23,7 @@ define( function( require ) {
    * @constructor
    *
    * @param {MakeATenExploreScreenView} screenView
+   * @param {Object} [options] - Passed to Scenery
    */
   function ExplorePanel( screenView, options ) {
 
