@@ -92,48 +92,6 @@ define( function( require ) {
   return inherit( ScreenView, MakeATenCommonView, {
 
     /**
-     * @override
-     * @param {number} dt
-     */
-    step: function( st ) {
-
-      // if objects overlap  each other, both should'nt be a full solid,
-      // the object hovering over should have some transparency -> issue #69
-      var allPaperNumberNodes = this.paperNumberNodes;
-
-      //reset the default opacity
-      for ( var i = 0; i < allPaperNumberNodes.length; i++ ) {
-        allPaperNumberNodes[ i ].paperNumber.resetOpacity();
-      }
-
-      for ( i = 0; i < allPaperNumberNodes.length; i++ ) {
-        for ( var j = 0; j < allPaperNumberNodes.length; j++ ) {
-
-          var paperNumberNode1 = allPaperNumberNodes[ i ];
-          var paperNumberNode2 = allPaperNumberNodes[ j ];
-
-          if ( paperNumberNode1 === paperNumberNode2 ) {
-            continue;
-          }
-
-          if ( paperNumberNode1.getBounds().intersectsBounds( paperNumberNode2.getBounds() ) ) {
-
-            var displayOrder1 = allPaperNumberNodes.indexOf( paperNumberNode1 );
-            var displayOrder2 = allPaperNumberNodes.indexOf( paperNumberNode2 );
-
-            //the node, that hovers over other, should have minimum opacity
-            if ( displayOrder1 > displayOrder2 ) {
-              paperNumberNode1.paperNumber.opacityProperty.value = MakeATenConstants.HOVER_OPACITY;
-            }
-            else {
-              paperNumberNode2.paperNumber.opacityProperty.value = MakeATenConstants.HOVER_OPACITY;
-            }
-          }
-        }
-      }
-    },
-
-    /**
      * Given a number and a pointer's position in view coordinates, create a paper number and a corresponding node,
      * position it so that the user's pointer is over the move-zone of the paper number, and start dragging it.
      * @public

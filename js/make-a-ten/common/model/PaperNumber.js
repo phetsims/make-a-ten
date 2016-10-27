@@ -55,9 +55,6 @@ define( function( require ) {
     //                             externally, generally by the view node.
     this.userControlledProperty = new BooleanProperty( false );
 
-    // @public {NumberProperty}
-    this.opacityProperty = new NumberProperty( options.opacity );
-
     // @public {Vector2} - Destination is used for animation, and should be set through accessor methods only.
     this.destination = initialPosition.copy(); // @private
 
@@ -237,12 +234,7 @@ define( function( require ) {
       console.log( 'WARNING: outside number bounds' );
 
       return this.baseNumbers[ this.baseNumbers.length - 1 ];
-    },
-
-    resetOpacity: function() {
-      this.opacityProperty.reset();
     }
-
   }, {
     /**
      * Given a number, returns an array of BaseNumbers that will represent the digit places.

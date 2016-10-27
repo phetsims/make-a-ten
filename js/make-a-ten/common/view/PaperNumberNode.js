@@ -167,10 +167,8 @@ define( function( require ) {
 
     this.paperNumber.numberValueProperty.link( this.onNumberChange.bind( this ) );
 
+    // Hook model position to view position
     paperNumber.positionProperty.linkAttribute( this, 'translation' );
-
-    // TODO: why are we setting this on ourself? Node's imageOpacity doesn't do anything?
-    paperNumber.opacityProperty.linkAttribute( this, 'imageOpacity' );
 
     // @private {function} - Listener reference that gets attached/detached. Handles moving the Node to the front.
     this.userControlledListener = this.onUserControlledChange.bind( this );
