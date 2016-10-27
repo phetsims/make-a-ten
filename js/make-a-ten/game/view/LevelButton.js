@@ -31,22 +31,18 @@ define( function( require ) {
 
     Node.call( this );
 
-    options = _.extend( {
-      // button size and appearance
-      buttonWidth: 150,
-      buttonHeight: 150,
-      cornerRadius: 10,
-      buttonXMargin: 10,
-      buttonYMargin: 10,
-      // progress indicator (stars)
-      iconToscoreNodeYSpace: 10
-    }, options );
+    var buttonWidth = 150;
+    var buttonHeight = 150;
+    var buttonXMargin = 10;
+    var buttonYMargin = 10;
 
-    var maxContentWidth = options.buttonWidth - 2 * options.buttonXMargin;
+    var iconScorePadding = 10;
+    var maxContentWidth = buttonWidth - 2 * buttonXMargin;
 
     // Progress indicator (stars), scaled to fit
+    var scoreCornerRadius = 10;
     var scoreNodeBackground = new Rectangle( 0, 0, maxContentWidth,
-      options.buttonHeight * 0.2, options.cornerRadius, options.cornerRadius, {
+      buttonHeight * 0.2, scoreCornerRadius, scoreCornerRadius, {
         fill: 'white',
         stroke: 'black',
         lineWidth: 1,
@@ -62,8 +58,8 @@ define( function( require ) {
       ( scoreNodeBackground.height - 2 * scoreNodeMinYMargin ) / scoreNode.height ) );
 
     // Icon, scaled and padded to fit and to make the button size correct.
-    var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - scoreNodeBackground.height -
-                                                    2 * options.buttonYMargin - options.iconToscoreNodeYSpace );
+    var iconSize = new Dimension2( maxContentWidth, buttonHeight - scoreNodeBackground.height -
+                                                    2 * buttonYMargin - iconScorePadding );
     var adjustedIcon = MakeATenUtil.createSizedImageNode( level.iconNode, iconSize );
     adjustedIcon.pickable = false;
 
@@ -75,7 +71,7 @@ define( function( require ) {
     else {
       scoreNodeBackground.centerX = adjustedIcon.centerX;
     }
-    scoreNodeBackground.top = adjustedIcon.bottom + options.iconToscoreNodeYSpace;
+    scoreNodeBackground.top = adjustedIcon.bottom + iconScorePadding;
     scoreNode.center = scoreNodeBackground.center;
     contentNode.addChild( adjustedIcon );
     contentNode.addChild( scoreNodeBackground );
@@ -84,10 +80,10 @@ define( function( require ) {
     // Create the button
     this.addChild( new RectangularPushButton( {
       content: contentNode,
-      xMargin: options.buttonXMargin,
-      yMargin: options.buttonYMargin,
+      xMargin: buttonXMargin,
+      yMargin: buttonYMargin,
       baseColor: level.color,
-      cornerRadius: options.cornerRadius,
+      cornerRadius: 10,
       listener: fireCallback
     } ) );
 
