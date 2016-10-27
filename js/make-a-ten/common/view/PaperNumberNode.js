@@ -58,8 +58,6 @@ define( function( require ) {
   var image9000 = require( 'image!MAKE_A_TEN/9000.png' );
 
   // constants
-  var DROP_BOUNDS_HEIGHT_PROPORTION = 0.35; // the bounds proportion within which if user drops a number, we can consider collapsing them
-  var MIN_DISTANCE_DIFFERENCE_TO_COLLAPSE = 30;
   var PAPER_NUMBER_IMAGES = {
     1: image1, 2: image2, 3: image3,
     4: image4, 5: image5, 6: image6,
@@ -251,50 +249,15 @@ define( function( require ) {
      * @returns {Array}
      */
     findAttachableNodes: function( allPaperNumberNodes ) {
+      // TODO: Can we do this in the model?
       var attachableNodeCandidates = allPaperNumberNodes.slice();
       arrayRemove( attachableNodeCandidates, this );
 
-      var attachableNodes = [];
-
-      for ( var i = 0; i < attachableNodeCandidates.length; i++ ) {
-        var droppedNode = attachableNodeCandidates[ i ];
-        var isOpposite = this.paperNumber.numberValueProperty.value > droppedNode.paperNumber.numberValueProperty.value;
-        var widerNode = isOpposite ? this : droppedNode;
-        var smallerNode = isOpposite ? droppedNode : this;
-
-        var smallerDigitLength = smallerNode.paperNumber.digitLength;
-        var widerDigitLength = widerNode.paperNumber.digitLength;
-
-        var yDiff = Math.abs( droppedNode.top - this.top );
-        var dropPositionHeightTolerance = smallerNode.bounds.height * DROP_BOUNDS_HEIGHT_PROPORTION;
-        var yInRange = Math.abs( yDiff ) < dropPositionHeightTolerance;
-
-        var withinXRange = false;
-        var distanceBetweenEdges = 10000;
-        //if same length
-        if ( smallerDigitLength === widerDigitLength ) {
-          distanceBetweenEdges = Math.abs( widerNode.x - smallerNode.x );
-          //if the distance is between 2 left edges is less than half the width, consider close enough
-          withinXRange = distanceBetweenEdges < MIN_DISTANCE_DIFFERENCE_TO_COLLAPSE;
-        }
-        else {
-          distanceBetweenEdges = Math.abs( widerNode.bounds.maxX - smallerNode.bounds.maxX );
-          if ( smallerNode.bounds.maxX > widerNode.bounds.maxX ) {
-            withinXRange = distanceBetweenEdges < MIN_DISTANCE_DIFFERENCE_TO_COLLAPSE / 2;
-          }
-          else {
-            withinXRange = distanceBetweenEdges < MIN_DISTANCE_DIFFERENCE_TO_COLLAPSE;
-          }
-        }
-
-
-        if ( withinXRange && yInRange ) {
-          attachableNodes.push( droppedNode );
-        }
-
-      }
-
-      return attachableNodes;
+      var currentPosition = this.paperNumber.positionProperty.value;
+      return attachableNodeCandidates.filter( function( candidateNode ) {
+        var distance = currentPosition.distance( candidateNode.paperNumber.positionProperty.value );
+        return distance < 70;
+      } );
     }
 
   }, {

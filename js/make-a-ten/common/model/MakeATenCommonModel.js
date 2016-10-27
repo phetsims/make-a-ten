@@ -39,7 +39,6 @@ define( function( require ) {
     },
 
     /**
-     *
      * When collapsing, we remove either the dropTarget object and change the number value of the dragged objects
      * but if the dropTarget is larger than the dragged number , reverse the objects to remove and change.
      *
