@@ -133,26 +133,6 @@ define( function( require ) {
     },
 
     /**
-     * Used to determine if the user has placed the picked number sufficiently away from
-     * the container panel. if not return the number back to the container itself
-     *
-     * @param {PaperNumber} paperNumber
-     * @param {Vector2} droppedPosition
-     */
-    canPlaceNumberAt: function( paperNumber, droppedPosition ) {
-      var paperNumberDimension = paperNumber.getDimension();
-
-      //  create a bounds using the dropped position and dimension of the paperNumber
-      //  How far away the user has to drop the number varies with the size of the paper number
-      var widthPart = paperNumberDimension.width * 0.3;
-      var heightPart = paperNumberDimension.height * 0.3;
-      var maxY = Math.min( droppedPosition.y, this.layoutBounds.maxY );
-      var bounds2 = Bounds2.rect( droppedPosition.x, maxY, widthPart, heightPart );
-      var intersects = this.getReturnZoneBounds().intersectsBounds( bounds2 );
-      return !intersects;
-    },
-
-    /**
      * @override
      * Intercept the addPaperNumber function and delegate it to the MakeATenCommonModel
      * This interception allows to hook functionality to see if the user leaves the Paper over the explorer carousel
