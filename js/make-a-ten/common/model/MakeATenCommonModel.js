@@ -43,18 +43,18 @@ define( function( require ) {
      * but if the dropTarget is larger than the dragged number , reverse the objects to remove and change.
      *
      * @param {PaperNumber} draggedPaperNumber
-     * @param {PaperNumber} dropTargetNumberModel
+     * @param {PaperNumber} dropTargetNumber
      */
-    collapseNumberModels: function( draggedPaperNumber, dropTargetNumberModel ) {
-      var dropTargetNumberValue = dropTargetNumberModel.numberValueProperty.value;
+    collapseNumberModels: function( draggedPaperNumber, dropTargetNumber ) {
+      var dropTargetNumberValue = dropTargetNumber.numberValueProperty.value;
       var draggedNumberValue = draggedPaperNumber.numberValueProperty.value;
 
-      var modelToRemove = dropTargetNumberModel;
+      var modelToRemove = dropTargetNumber;
       var modelToChange = draggedPaperNumber;
 
       if ( dropTargetNumberValue > draggedNumberValue ) {
         modelToRemove = draggedPaperNumber;
-        modelToChange = dropTargetNumberModel;
+        modelToChange = dropTargetNumber;
       }
       this.paperNumbers.remove( modelToRemove );
       var newValue = dropTargetNumberValue + draggedNumberValue;
@@ -80,20 +80,20 @@ define( function( require ) {
       var repelRightDistance = MakeATenConstants.MOVE_AWAY_DISTANCE[ paperNumber1.digitLength ];
       var repelLeftDistance = MakeATenConstants.MOVE_AWAY_DISTANCE[ paperNumber2.digitLength ] * -1;
 
-      var rightPaperModel = paperNumber1;
-      var leftPaperModel = paperNumber2;
+      var rightPaperNumber = paperNumber1;
+      var leftPaperNumber = paperNumber2;
 
-      if ( rightPaperModel.positionProperty.value.x < leftPaperModel.positionProperty.value.x ) {
-        rightPaperModel = paperNumber2;
-        leftPaperModel = paperNumber1;
+      if ( rightPaperNumber.positionProperty.value.x < leftPaperNumber.positionProperty.value.x ) {
+        rightPaperNumber = paperNumber2;
+        leftPaperNumber = paperNumber1;
       }
 
       var animateToDestination = true;
       var delta = new Vector2( repelRightDistance, 0 );
-      rightPaperModel.setConstrainedDestination( this.viewPortBounds, rightPaperModel.positionProperty.value.plus( delta ), animateToDestination );
+      rightPaperNumber.setConstrainedDestination( this.viewPortBounds, rightPaperNumber.positionProperty.value.plus( delta ), animateToDestination );
 
       delta = new Vector2( repelLeftDistance, 0 );
-      leftPaperModel.setConstrainedDestination( this.viewPortBounds, leftPaperModel.positionProperty.value.plus( delta ), animateToDestination );
+      leftPaperNumber.setConstrainedDestination( this.viewPortBounds, leftPaperNumber.positionProperty.value.plus( delta ), animateToDestination );
     },
 
     reset: function() {

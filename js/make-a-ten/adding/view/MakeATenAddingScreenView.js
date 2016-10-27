@@ -29,18 +29,18 @@ define( function( require ) {
   var EDIT_ICON_SIZE = new Dimension2( 32, 28 );
 
   /**
-   * @param {MakeATenAddingModel} makeATenAddingModel
+   * @param {MakeATenAddingModel} model
    * @constructor
    */
-  function MakeATenAddingScreenView( makeATenAddingModel ) {
+  function MakeATenAddingScreenView( model ) {
 
-    MakeATenCommonView.call( this, makeATenAddingModel );
+    MakeATenCommonView.call( this, model );
 
     // dismiss any open keyboard if a click/touch hits the background directly
     var background = Rectangle.bounds( this.layoutBounds );
     background.addInputListener( {
       down: function( event ) {
-        makeATenAddingModel.expressionTerms.activeTermProperty.value = ActiveTerm.NONE; // this will close the keyboard button
+        model.expressionTerms.activeTermProperty.value = ActiveTerm.NONE; // this will close the keyboard button
       }
     } );
 
@@ -60,8 +60,8 @@ define( function( require ) {
     this.addChild( background );
     this.addChild( this.paperNumberLayerNode );
 
-    var leftEditNumberButton = createEditNumberButton( makeATenAddingModel.expressionTerms.activeTermProperty, ActiveTerm.LEFT );
-    var rightEditNumberButton = createEditNumberButton( makeATenAddingModel.expressionTerms.activeTermProperty, ActiveTerm.RIGHT );
+    var leftEditNumberButton = createEditNumberButton( model.expressionTerms.activeTermProperty, ActiveTerm.LEFT );
+    var rightEditNumberButton = createEditNumberButton( model.expressionTerms.activeTermProperty, ActiveTerm.RIGHT );
 
     var editButtonBox = new HBox( { children: [ leftEditNumberButton, rightEditNumberButton ], spacing: 45 } );
     this.addChild( editButtonBox );
@@ -69,7 +69,7 @@ define( function( require ) {
     editButtonBox.top = this.layoutBounds.top + 32;
 
     // The node that display "12 + 100 = "
-    var expressionTermsNode = new ExpressionTermsNode( makeATenAddingModel.expressionTerms, {
+    var expressionTermsNode = new ExpressionTermsNode( model.expressionTerms, {
       highlightBorders: true
     } );
     this.addChild( expressionTermsNode );
@@ -78,15 +78,15 @@ define( function( require ) {
     expressionTermsNode.top = this.layoutBounds.top + 85;
 
     function onNumberSubmit( value ) {
-      if ( makeATenAddingModel.expressionTerms.activeTermProperty.value === ActiveTerm.LEFT ) {
-        makeATenAddingModel.expressionTerms.leftTermProperty.value = value;
+      if ( model.expressionTerms.activeTermProperty.value === ActiveTerm.LEFT ) {
+        model.expressionTerms.leftTermProperty.value = value;
       }
-      if ( makeATenAddingModel.expressionTerms.activeTermProperty.value === ActiveTerm.RIGHT ) {
-        makeATenAddingModel.expressionTerms.rightTermProperty.value = value;
+      if ( model.expressionTerms.activeTermProperty.value === ActiveTerm.RIGHT ) {
+        model.expressionTerms.rightTermProperty.value = value;
       }
 
-      makeATenAddingModel.createTerms();
-      makeATenAddingModel.expressionTerms.activeTermProperty.value = ActiveTerm.NONE;
+      model.createTerms();
+      model.expressionTerms.activeTermProperty.value = ActiveTerm.NONE;
 
     }
 
@@ -96,7 +96,7 @@ define( function( require ) {
     keyBoardPanel.centerX = expressionTermsNode.centerX - 25;
     keyBoardPanel.top = expressionTermsNode.top + 120;
 
-    makeATenAddingModel.expressionTerms.activeTermProperty.link( function( term ) {
+    model.expressionTerms.activeTermProperty.link( function( term ) {
 
       // TODO: seems like this could be cleaned up a bit?
       if ( term === ActiveTerm.NONE ) {
@@ -106,10 +106,10 @@ define( function( require ) {
 
       keyBoardPanel.visible = true;
       if ( term === ActiveTerm.LEFT ) {
-        keyBoardPanel.setValue( makeATenAddingModel.expressionTerms.leftTermProperty.value );
+        keyBoardPanel.setValue( model.expressionTerms.leftTermProperty.value );
       }
       if ( term === ActiveTerm.RIGHT ) {
-        keyBoardPanel.setValue( makeATenAddingModel.expressionTerms.rightTermProperty.value );
+        keyBoardPanel.setValue( model.expressionTerms.rightTermProperty.value );
       }
     } );
 

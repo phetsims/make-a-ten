@@ -32,14 +32,14 @@ define( function( require ) {
   /**
    * @constructor
    *
-   * @param {MakeATenGameModel> gameModel
+   * @param {MakeATenGameModel> model
    * @param {Object} [options]
    */
-  function GameStatusBar( gameModel, options ) {
+  function GameStatusBar( model, options ) {
     Node.call( this );
 
     // @private {MakeATenGameModel}
-    this.gameModel = gameModel;
+    this.model = model;
 
     // @private {Bounds2} - Last recorded layout bounds that we can use
     this.lastBounds = new Bounds2( 0, 0, 100, 100 );
@@ -50,7 +50,7 @@ define( function( require ) {
     this.addChild( this.backgroundRectangle );
 
     this.backButton = new BackButton( {
-      listener: gameModel.setChoosingLevelState.bind( gameModel ),
+      listener: model.setChoosingLevelState.bind( model ),
       scale: 1
     } );
     this.addChild( this.backButton );
@@ -69,13 +69,13 @@ define( function( require ) {
     } );
     this.addChild( this.levelDescriptionText );
 
-    this.scoreNode = new ScoreNode( gameModel.currentScoreProperty, {
+    this.scoreNode = new ScoreNode( model.currentScoreProperty, {
       pickable: false,
       labelColor: TEXT_COLOR
     } );
     this.addChild( this.scoreNode );
 
-    gameModel.currentLevelProperty.link( this.updateLevelInfo.bind( this ) );
+    model.currentLevelProperty.link( this.updateLevelInfo.bind( this ) );
     this.scoreNode.scoreChangedEmitter.addListener( this.layout.bind( this, null ) );
 
     // Pass options to parent class
@@ -89,7 +89,7 @@ define( function( require ) {
      * Update the status bar with the current level information
      */
     updateLevelInfo: function() {
-      var level = this.gameModel.currentLevelProperty.value;
+      var level = this.model.currentLevelProperty.value;
 
       this.backgroundRectangle.fill = level.color;
       this.levelNumberText.text = StringUtils.format( gameInfoLevelXString, '' + level.number );

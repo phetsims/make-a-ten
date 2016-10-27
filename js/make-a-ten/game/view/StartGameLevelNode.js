@@ -25,25 +25,25 @@ define( function( require ) {
   /**
    * @constructor
    *
-   * @param {MakeATenGameModel} gameModel - Our model
+   * @param {MakeATenGameModel} model - Our model
    */
-  function StartGameLevelNode( gameModel ) {
+  function StartGameLevelNode( model ) {
     Node.call( this );
 
     // @private {MakeATenGameModel}
-    this.gameModel = gameModel;
+    this.model = model;
 
     // Add the level buttons
-    this.addLevelButton( gameModel.levels[ 0 ], -1, -1 );
-    this.addLevelButton( gameModel.levels[ 1 ], 0, -1 );
-    this.addLevelButton( gameModel.levels[ 2 ], 1, -1 );
-    this.addLevelButton( gameModel.levels[ 3 ], -1.5, 0 );
-    this.addLevelButton( gameModel.levels[ 4 ], -0.5, 0 );
-    this.addLevelButton( gameModel.levels[ 5 ], 0.5, 0 );
-    this.addLevelButton( gameModel.levels[ 6 ], 1.5, 0 );
-    this.addLevelButton( gameModel.levels[ 7 ], -1, 1 );
-    this.addLevelButton( gameModel.levels[ 8 ], 0, 1 );
-    this.addLevelButton( gameModel.levels[ 9 ], 1, 1 );
+    this.addLevelButton( model.levels[ 0 ], -1, -1 );
+    this.addLevelButton( model.levels[ 1 ], 0, -1 );
+    this.addLevelButton( model.levels[ 2 ], 1, -1 );
+    this.addLevelButton( model.levels[ 3 ], -1.5, 0 );
+    this.addLevelButton( model.levels[ 4 ], -0.5, 0 );
+    this.addLevelButton( model.levels[ 5 ], 0.5, 0 );
+    this.addLevelButton( model.levels[ 6 ], 1.5, 0 );
+    this.addLevelButton( model.levels[ 7 ], -1, 1 );
+    this.addLevelButton( model.levels[ 8 ], 0, 1 );
+    this.addLevelButton( model.levels[ 9 ], 1, 1 );
   }
 
   makeATen.register( 'StartGameLevelNode', StartGameLevelNode );
@@ -58,7 +58,7 @@ define( function( require ) {
      * @param {number} yOffset - How many buttons to the bottom of the vertical center should we be?
      */
     addLevelButton: function( level, xOffset, yOffset ) {
-      var fireCallback = this.gameModel.startLevel.bind( this.gameModel, level );
+      var fireCallback = this.model.startLevel.bind( this.model, level );
       var center = MakeATenConstants.LAYOUT_BOUNDS.center.plus( new Vector2( xOffset * X_OFFSET, yOffset * Y_OFFSET ) );
 
       this.addChild( new LevelSelectionButton( level.iconNode, fireCallback, level.scoreProperty, {

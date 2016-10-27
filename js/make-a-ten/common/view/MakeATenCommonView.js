@@ -25,13 +25,13 @@ define( function( require ) {
   /**
    * @constructor
    *
-   * @param {MakeATenModel} makeATenModel
+   * @param {MakeATenModel} model
    * @param {Function} [addPaperNumber] - callback
    */
-  function MakeATenCommonView( makeATenModel, addPaperNumber ) {
+  function MakeATenCommonView( model, addPaperNumber ) {
     var self = this;
     ScreenView.call( this, { layoutBounds: MakeATenConstants.LAYOUT_BOUNDS } );
-    this.makeATenModel = makeATenModel;
+    this.model = model;
 
     // @public {BooleanProperty} - Whether the user has interacted with numbers on this screen
     this.interactionAttemptedProperty = new BooleanProperty( false );
@@ -49,38 +49,38 @@ define( function( require ) {
     var createNumberCallback = this.createAndDragNumber.bind( this );
 
     // TODO: factor out into bind?
-    function handlePaperNumberAdded( addedNumberModel ) {
-      var combineCallback = self.tryToCombineNumbers.bind( self, addedNumberModel );
-      var paperNumberNode = new PaperNumberNode( addedNumberModel, self.availableViewBoundsProperty, createNumberCallback, combineCallback );
+    function handlePaperNumberAdded( addedPaperNumber ) {
+      var combineCallback = self.tryToCombineNumbers.bind( self, addedPaperNumber );
+      var paperNumberNode = new PaperNumberNode( addedPaperNumber, self.availableViewBoundsProperty, createNumberCallback, combineCallback );
       self.addPaperNumberNode( paperNumberNode );
     }
 
-    makeATenModel.paperNumbers.addItemRemovedListener( function removalListener( removedNumberModel ) {
-      self.removePaperNumberNode( self.findPaperNumberNode( removedNumberModel ) );
+    model.paperNumbers.addItemRemovedListener( function removalListener( removedPaperNumber ) {
+      self.removePaperNumberNode( self.findPaperNumberNode( removedPaperNumber ) );
     } );
 
     //Initial Number Node creation
-    makeATenModel.paperNumbers.forEach( handlePaperNumberAdded );
+    model.paperNumbers.forEach( handlePaperNumberAdded );
 
     // Observe new items
-    makeATenModel.paperNumbers.addItemAddedListener( handlePaperNumberAdded );
+    model.paperNumbers.addItemAddedListener( handlePaperNumberAdded );
 
     // used to prevent numbers from moving outside the visible model bounds when dragged
     // TODO: don't initialize as null?
     this.availableViewBoundsProperty = new Property( null );// filled by layout method
 
     this.availableViewBoundsProperty.lazyLink( function( availableViewBounds ) {
-      makeATenModel.paperNumbers.forEach( function( paperNumber ) {
+      model.paperNumbers.forEach( function( paperNumber ) {
         paperNumber.setConstrainedDestination( availableViewBounds, paperNumber.positionProperty.value );
       } );
     } );
 
-    this.availableViewBoundsProperty.linkAttribute( makeATenModel, 'viewPortBounds' );
+    this.availableViewBoundsProperty.linkAttribute( model, 'viewPortBounds' );
 
     // Create and add the Reset All Button in the bottom right, which resets the model
     this.resetAllButton = new ResetAllButton( {
       listener: function() {
-        makeATenModel.reset();
+        model.reset();
         self.reset();
       }
     } );
@@ -163,7 +163,7 @@ define( function( require ) {
      * @param {PaperNumber} paperNumber
      */
     addPaperNumber: function( paperNumber ) {
-      this.makeATenModel.addPaperNumber( paperNumber );
+      this.model.addPaperNumber( paperNumber );
     },
 
     /**
@@ -222,8 +222,8 @@ define( function( require ) {
       droppedNodes.reverse();
 
       //Show Arrow cue if user hasn't succeeded in combining or splitting a number
-      if ( !this.makeATenModel.interactionSucceeded && this.makeATenModel.arrowCue ) {
-        this.makeATenModel.arrowCue.positionAt( draggedPaperNumber );
+      if ( !this.model.interactionSucceeded && this.model.arrowCue ) {
+        this.model.arrowCue.positionAt( draggedPaperNumber );
         this.interactionAttemptedProperty.value = true;
       }
 
@@ -233,7 +233,7 @@ define( function( require ) {
         if ( ArithmeticRules.canAddNumbers( numberA, numberB ) ) {
           var droppedPaperNumber = droppedNodes[ i ].paperNumber;
           // TODO: some assumption was made here that seems bad, hard to add single digits
-          this.makeATenModel.collapseNumberModels( draggedPaperNumber, droppedPaperNumber );
+          this.model.collapseNumberModels( draggedPaperNumber, droppedPaperNumber );
           return;
         }
         else {
@@ -241,7 +241,7 @@ define( function( require ) {
           // repel numbers - show rejection
           var paperNumber1 = draggedNode.paperNumber;
           var paperNumber2 = droppedNodes[ i ].paperNumber;
-          this.makeATenModel.repelAway( paperNumber1, paperNumber2 );
+          this.model.repelAway( paperNumber1, paperNumber2 );
           return;
         }
       }

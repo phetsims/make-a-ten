@@ -90,8 +90,8 @@ define( function( require ) {
 
     this.expressionTerms = new ExpressionTerms();
 
-    this.paperNumbers.lengthProperty.link( function( modelLength, prevModelLength ) {
-      if ( modelLength === 1 && prevModelLength === 2 && self.gameStateProperty.value === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
+    this.paperNumbers.lengthProperty.link( function( newLength, oldLength ) {
+      if ( newLength === 1 && oldLength === 2 && self.gameStateProperty.value === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
         self.gameStateProperty.value = GameState.CORRECT_ANSWER;
       }
     } );

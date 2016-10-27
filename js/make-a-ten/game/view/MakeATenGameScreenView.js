@@ -28,11 +28,11 @@ define( function( require ) {
   var nextString = require( 'string!MAKE_A_TEN/next' );
 
   /**
-   * @param {MakeATenGameModel} gameModel
+   * @param {MakeATenGameModel} model
    * @constructor
    */
-  function MakeATenGameScreenView( gameModel ) {
-    MakeATenCommonView.call( this, gameModel );
+  function MakeATenGameScreenView( model ) {
+    MakeATenCommonView.call( this, model );
 
     this.rootNode = new Node();
     this.addChild( this.rootNode );
@@ -46,13 +46,13 @@ define( function( require ) {
     this.challengeLayer.addChild( this.paperNumberLayerNode );
 
     // The node that display "12 + 100 = "
-    var expressionTermsNode = new ExpressionTermsNode( gameModel.expressionTerms );
+    var expressionTermsNode = new ExpressionTermsNode( model.expressionTerms );
     expressionTermsNode.left = this.layoutBounds.left + 38;
     expressionTermsNode.top = this.layoutBounds.top + 75;
     this.challengeLayer.addChild( expressionTermsNode );
 
     // Add the node that allows the user to choose a game level to play.
-    this.startGameLevelNode = new StartGameLevelNode( gameModel );
+    this.startGameLevelNode = new StartGameLevelNode( model );
     this.rootNode.addChild( this.startGameLevelNode );
 
     // created lazily
@@ -65,7 +65,7 @@ define( function( require ) {
       baseColor: '#eeeeee',
       listener: function() {
         if ( !infoDialog ) {
-          infoDialog = new InfoDialog( gameModel.levels );
+          infoDialog = new InfoDialog( model.levels );
         }
         infoDialog.show();
       },
@@ -76,7 +76,7 @@ define( function( require ) {
 
     this.nextChallengeButton = new NextArrowButton( nextString, {
       listener: function() {
-        gameModel.nextChallenge();
+        model.nextChallenge();
       },
       top: this.layoutBounds.centerY,
       right: this.layoutBounds.right - 20
@@ -85,20 +85,20 @@ define( function( require ) {
     this.rootNode.addChild( this.nextChallengeButton );
 
     // Sound and timer controls.
-    this.soundToggleButton = new SoundToggleButton( gameModel.soundEnabledProperty, {
+    this.soundToggleButton = new SoundToggleButton( model.soundEnabledProperty, {
       x: 20,
       bottom: this.layoutBounds.height - 20
     } );
     this.rootNode.addChild( this.soundToggleButton );
 
     // Hook up the audio player to the sound settings.
-    this.gameAudioPlayer = new GameAudioPlayer( gameModel.soundEnabledProperty );
+    this.gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
 
-    this.gameStatusBar = new GameStatusBar( gameModel );
+    this.gameStatusBar = new GameStatusBar( model );
     this.rootNode.addChild( this.gameStatusBar );
 
     // Hook up the update function for handling changes to game state.
-    gameModel.gameStateProperty.link( this.handleGameStateChange.bind( this ) );
+    model.gameStateProperty.link( this.handleGameStateChange.bind( this ) );
 
     this.layoutControls();
   }
@@ -122,7 +122,7 @@ define( function( require ) {
     handleGameStateChange: function( gameState ) {
       // Hide all nodes - the appropriate ones will be shown later based on the current state.
       this.hideAllGameNodes();
-      var challenge = this.makeATenModel.currentChallengeProperty.value;
+      var challenge = this.model.currentChallengeProperty.value;
 
 
       // Show the nodes appropriate to the state
@@ -172,13 +172,13 @@ define( function( require ) {
 
     // @private
     handlePresentingInteractiveChallengeState: function( challenge ) {
-      this.makeATenModel.createTerms( challenge );
+      this.model.createTerms( challenge );
       this.show( [ this.challengeLayer, this.controlLayer, this.gameStatusBar ] );
     },
 
     // @private
     handleCorrectAnswer: function() {
-      this.makeATenModel.handleCorrectAnswer();
+      this.model.handleCorrectAnswer();
       // Give the user the appropriate audio and visual feedback
       this.gameAudioPlayer.correctAnswer();
 

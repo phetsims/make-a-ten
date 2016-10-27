@@ -30,15 +30,15 @@ define( function( require ) {
   var EQUATION_COLOR = 'rgb(63,63,183)';
 
   /**
-   * @param {MakeATenExploreModel} makeATenExploreModel
+   * @param {MakeATenExploreModel} model
    * @constructor
    */
-  function MakeATenExploreScreenView( makeATenExploreModel ) {
+  function MakeATenExploreScreenView( model ) {
     var self = this;
 
     var addPaperNumberCallback = this.addPaperNumber.bind( this );
 
-    MakeATenCommonView.call( this, makeATenExploreModel, addPaperNumberCallback );
+    MakeATenCommonView.call( this, model, addPaperNumberCallback );
 
     // @public {BooleanProperty} - Whether the total (sum) is hidden
     this.hideTotalProperty = new BooleanProperty( false );
@@ -55,7 +55,7 @@ define( function( require ) {
       ], spacing: spaceBetweenSumAndEquals
     } );
 
-    makeATenExploreModel.sumProperty.linkAttribute( sumText, 'text' );
+    model.sumProperty.linkAttribute( sumText, 'text' );
 
     this.addChild( this.equationHBox );
 
@@ -88,17 +88,17 @@ define( function( require ) {
     } );
 
     // TODO: update arrow cues!
-    this.addChild( new ArrowCueNode( makeATenExploreModel.arrowCue ) );
+    this.addChild( new ArrowCueNode( model.arrowCue ) );
 
     this.interactionAttemptedProperty.link( function( interactionAttempted ) {
       if ( interactionAttempted ) {
-        makeATenExploreModel.arrowCue.visible = true;
+        model.arrowCue.visible = true;
       }
     } );
 
     this.interactionSucceededProperty.link( function( interactionSucceeded ) {
       if ( interactionSucceeded ) {
-        makeATenExploreModel.arrowCue.fadeAway();
+        model.arrowCue.fadeAway();
       }
     } );
 
@@ -167,7 +167,7 @@ define( function( require ) {
             // TODO: don't require creating a full other one to determine the center offset
             initialPos = initialPos.minus( new PaperNumber( baseNumbers[ i ].numberValue, new Vector2() ).getLocalBounds().center );
             var paperNumberPart = new PaperNumber( baseNumbers[ i ].numberValue, initialPos );
-            self.makeATenModel.addPaperNumber( paperNumberPart );
+            self.model.addPaperNumber( paperNumberPart );
 
             //Each part's position needs to offset from the currentPosition, so the split begins at the
             // right place
