@@ -12,7 +12,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var StartGameLevelNode = require( 'MAKE_A_TEN/make-a-ten/game/view/StartGameLevelNode' );
   var InfoDialog = require( 'MAKE_A_TEN/make-a-ten/game/view/InfoDialog' );
@@ -86,16 +85,11 @@ define( function( require ) {
     this.rootNode.addChild( this.nextChallengeButton );
 
     // Sound and timer controls.
-    this.audioAndSoundControlBox = new HBox( {
-      children: [
-        new SoundToggleButton( gameModel.soundEnabledProperty )
-      ],
-      spacing: 10,
+    this.soundToggleButton = new SoundToggleButton( gameModel.soundEnabledProperty, {
       x: 20,
       bottom: this.layoutBounds.height - 20
     } );
-
-    this.rootNode.addChild( this.audioAndSoundControlBox );
+    this.rootNode.addChild( this.soundToggleButton );
 
     // Hook up the audio player to the sound settings.
     this.gameAudioPlayer = new GameAudioPlayer( gameModel.soundEnabledProperty );
@@ -157,7 +151,7 @@ define( function( require ) {
 
     // @private
     handleChoosingLevelState: function() {
-      this.show( [ this.startGameLevelNode, this.resetAllButton, this.audioAndSoundControlBox, this.infoButton ] );
+      this.show( [ this.startGameLevelNode, this.resetAllButton, this.soundToggleButton, this.infoButton ] );
       this.hideChallenge();
     },
 
@@ -172,7 +166,7 @@ define( function( require ) {
 
     // @private, Utility method for hiding all of the game nodes whose visibility changes during the course of a challenge.
     hideAllGameNodes: function() {
-      var gameNodes = [ this.startGameLevelNode, this.resetAllButton, this.challengeLayer, this.controlLayer, this.audioAndSoundControlBox, this.nextChallengeButton, this.infoButton ];
+      var gameNodes = [ this.startGameLevelNode, this.resetAllButton, this.challengeLayer, this.controlLayer, this.soundToggleButton, this.nextChallengeButton, this.infoButton ];
       gameNodes.forEach( function( node ) { node.visible = false; } );
     },
 
