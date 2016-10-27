@@ -162,7 +162,8 @@ define( function( require ) {
       var valuesToCreate = [ numberChallenge.leftTerm, numberChallenge.rightTerm ];
       var xOffSet = 200;
       _.each( valuesToCreate, function( numberValue ) {
-        if ( numberValue === '' || numberValue === 0 ) {
+        assert && assert( typeof numberValue === 'number' );
+        if ( !numberValue ) {
           return;
         }
         var initialPosition = new Vector2( xOffSet, MakeATenConstants.LAYOUT_BOUNDS.height / 2.5 );

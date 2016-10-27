@@ -21,7 +21,6 @@ define( function( require ) {
   var CheckBox = require( 'SUN/CheckBox' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Bounds2 = require( 'DOT/Bounds2' );
 
   // strings
   var makeATenHideTotalString = require( 'string!MAKE_A_TEN/make-a-ten.hide.total' );
