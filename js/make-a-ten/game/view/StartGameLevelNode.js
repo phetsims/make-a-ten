@@ -61,9 +61,8 @@ define( function( require ) {
       var fireCallback = this.model.startLevel.bind( this.model, level );
       var center = MakeATenConstants.LAYOUT_BOUNDS.center.plus( new Vector2( xOffset * X_OFFSET, yOffset * Y_OFFSET ) );
 
-      this.addChild( new LevelButton( level.iconNode, fireCallback, level.scoreProperty, {
-        baseColor: level.color,
-        scale: 0.9, // TODO: why?
+      this.addChild( new LevelButton( level, fireCallback, {
+        scale: 0.9,
         center: center
       } ) );
     }
