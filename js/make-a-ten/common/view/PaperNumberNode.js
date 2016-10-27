@@ -165,7 +165,7 @@ define( function( require ) {
       }
     } );
 
-    this.paperNumber.numberValueProperty.link( this.onNumberChange.bind( this ) );
+    this.paperNumber.numberValueProperty.link( this.updateNumber.bind( this ) );
 
     // Hook model position to view position
     paperNumber.positionProperty.linkAttribute( this, 'translation' );
@@ -181,24 +181,26 @@ define( function( require ) {
   makeATen.register( 'PaperNumberNode', PaperNumberNode );
 
   return inherit( Node, PaperNumberNode, {
-    onNumberChange: function() {
+    /**
+     * Rebuilds the image nodes that display the actual paper number, and resizes the mouse/touch targets.
+     * @private
+     */
+    updateNumber: function() {
       var self = this;
 
-      this.numberImageContainer.removeAllChildren();
-
-      var numBaseNumbers = this.paperNumber.baseNumbers.length;
-      _.each( this.paperNumber.baseNumbers, function( baseNumber, index ) {
-        var baseNumberImage = PaperNumberNode.getNumberImage( baseNumber.numberValue );
-        var baseNumberImageNode = new Image( baseNumberImage );
-        baseNumberImageNode.translation = baseNumber.offset;
-
-        // Bottom number has 0.95 opacity, and each successive number has *0.97 the opacity.
-        baseNumberImageNode.imageOpacity = 0.95 * Math.pow( 0.97, numBaseNumbers - index - 1 );
-        self.numberImageContainer.insertChild( 0, baseNumberImageNode );
+      var reversedBaseNumbers = this.paperNumber.baseNumbers.slice().reverse();
+      // Reversing allows easier opacity computation and has the nodes in order for setting children.
+      this.numberImageContainer.children = _.map( reversedBaseNumbers, function( baseNumber, index ) {
+        return new Image( PaperNumberNode.getNumberImage( baseNumber.numberValue ), {
+          translation: baseNumber.offset,
+          imageOpacity: 0.95 * Math.pow( 0.97, index ) // each number has successively less opacity on top
+        } );
       } );
 
+      // Grab the bounds of the biggest base number for the full bounds
       var fullBounds = this.paperNumber.baseNumbers[ this.paperNumber.baseNumbers.length - 1 ].bounds;
 
+      // Split target only visible if our number is > 1. Move target can resize as needed.
       if ( this.paperNumber.numberValueProperty.value === 1 ) {
         self.splitTarget.visible = false;
         self.moveTarget.mouseArea = self.moveTarget.touchArea = self.moveTarget.rectBounds = fullBounds;
