@@ -40,7 +40,7 @@ define( function( require ) {
     var background = Rectangle.bounds( this.layoutBounds );
     background.addInputListener( {
       down: function( event ) {
-        makeATenAddingModel.activeTerm = ActiveTerm.NONE; // this will close the keyboard button
+        makeATenAddingModel.activeTermProperty.value = ActiveTerm.NONE; // this will close the keyboard button
       }
     } );
 
@@ -78,15 +78,15 @@ define( function( require ) {
     expressionTermsNode.top = this.layoutBounds.top + 85;
 
     function onNumberSubmit( value ) {
-      if ( makeATenAddingModel.expressionTerms.activeTerm === ActiveTerm.LEFT ) {
+      if ( makeATenAddingModel.expressionTerms.activeTermProperty.value === ActiveTerm.LEFT ) {
         makeATenAddingModel.expressionTerms.leftTermProperty.value = value;
       }
-      if ( makeATenAddingModel.expressionTerms.activeTerm === ActiveTerm.RIGHT ) {
+      if ( makeATenAddingModel.expressionTerms.activeTermProperty.value === ActiveTerm.RIGHT ) {
         makeATenAddingModel.expressionTerms.rightTermProperty.value = value;
       }
 
       makeATenAddingModel.createTerms();
-      makeATenAddingModel.expressionTerms.activeTerm = ActiveTerm.NONE;
+      makeATenAddingModel.expressionTerms.activeTermProperty.value = ActiveTerm.NONE;
 
     }
 

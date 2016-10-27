@@ -39,7 +39,7 @@ define( function( require ) {
      * @returns {boolean}
      */
     hasBothTerms: function() {
-      return this.activeTerm === ActiveTerm.NONE && this.leftTermProperty.value > 0 && this.rightTermProperty.value > 0;
+      return this.activeTermProperty.value === ActiveTerm.NONE && this.leftTermProperty.value > 0 && this.rightTermProperty.value > 0;
     },
 
     reset: function() {
