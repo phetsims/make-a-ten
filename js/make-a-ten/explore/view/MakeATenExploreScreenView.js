@@ -26,10 +26,7 @@ define( function( require ) {
   // strings
   var makeATenHideTotalString = require( 'string!MAKE_A_TEN/make-a-ten.hide.total' );
 
-  // These offsets are with respect to ViewPort Bounds not layout bounds
-  // this is done to make sure the sumEquationNode is always at top left even after window resize and scale
-  var SUM_NODE_OFFSET_X = 30;
-  var SUM_NODE_OFFSET_Y = 30;
+  // constants
   var EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
   var EQUATION_COLOR = 'rgb(63,63,183)';
 
@@ -126,8 +123,8 @@ define( function( require ) {
       this.hideTotalCheckBox.left = this.explorePanel.right + 20;
       this.hideTotalCheckBox.bottom = visibleBounds.bottom - 10;
 
-      this.equationHBox.left = visibleBounds.left + SUM_NODE_OFFSET_X;
-      this.equationHBox.top = visibleBounds.top + SUM_NODE_OFFSET_Y;
+      this.equationHBox.left = visibleBounds.left + 30;
+      this.equationHBox.top = visibleBounds.top + 30;
     },
 
     // TODO: doc
