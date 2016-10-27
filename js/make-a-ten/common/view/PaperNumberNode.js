@@ -171,7 +171,11 @@ define( function( require ) {
     paperNumber.positionProperty.linkAttribute( this, 'translation' );
 
     // @private {function} - Listener reference that gets attached/detached. Handles moving the Node to the front.
-    this.userControlledListener = this.onUserControlledChange.bind( this );
+    this.userControlledListener = function( userControlled ) {
+      if ( userControlled ) {
+        self.moveToFront();
+      }
+    };
   }
 
   makeATen.register( 'PaperNumberNode', PaperNumberNode );
@@ -209,16 +213,6 @@ define( function( require ) {
         // Modify our move/split targets
         self.moveTarget.mouseArea = self.moveTarget.touchArea = self.moveTarget.rectBounds = fullBounds.withMinY( boundaryY );
         self.splitTarget.mouseArea = self.splitTarget.touchArea = self.splitTarget.rectBounds = fullBounds.withMaxY( boundaryY );
-      }
-    },
-
-    /**
-     * When our model becomes user-controlled, move our node to the front.
-     * @private
-     */
-    onUserControlledChange: function() {
-      if ( this.paperNumber.userControlledProperty.value ) {
-        this.moveToFront();
       }
     },
 
