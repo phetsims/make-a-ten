@@ -14,7 +14,7 @@ define( function( require ) {
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LevelSelectionButton = require( 'MAKE_A_TEN/make-a-ten/game/view/LevelSelectionButton' );
+  var LevelButton = require( 'MAKE_A_TEN/make-a-ten/game/view/LevelButton' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -61,7 +61,7 @@ define( function( require ) {
       var fireCallback = this.model.startLevel.bind( this.model, level );
       var center = MakeATenConstants.LAYOUT_BOUNDS.center.plus( new Vector2( xOffset * X_OFFSET, yOffset * Y_OFFSET ) );
 
-      this.addChild( new LevelSelectionButton( level.iconNode, fireCallback, level.scoreProperty, {
+      this.addChild( new LevelButton( level.iconNode, fireCallback, level.scoreProperty, {
         baseColor: level.color,
         scale: 0.9, // TODO: why?
         center: center

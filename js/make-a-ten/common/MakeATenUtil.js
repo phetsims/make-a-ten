@@ -34,7 +34,8 @@ define( function( require ) {
     },
 
     /**
-     * Code is copied over from LevelSelectionButton
+     * Code is copied over from LevelButton
+     * TODO: deduplication
      * Create a node that is scaled and padded out to meet the size specification.
      * @param {Image} icon
      * @param {Dimension2} size

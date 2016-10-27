@@ -1,11 +1,7 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- * Button for selecting a game level. The user of MakeATen game
- * can play as many level as he wants and there is no such thing as perfect score.
- * The Vegas LevelSelectionButton is copied over to MakeATen, because of the need to display
- * the score in "Text", next  to the star symbol.
- *
+ * Button that will open a particular game level. Originally from LevelSelectionButton.
  *
  * @author Sharfudeen Ashraf
  * @author John Blanco
@@ -22,37 +18,20 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ScoreNode = require( 'MAKE_A_TEN/make-a-ten/game/view/ScoreNode' );
+  var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-  // constants
-  var SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
-
-  // TODO: Consider making this commonly accessible (or finding a better way to do it).
-  // Create a node that is scaled and padded out to meet the size specification.
-  function createSizedImageNode( icon, size ) {
-    icon.scale( Math.min( size.width / icon.bounds.width, size.height / icon.bounds.height ) );
-    if ( Math.abs( icon.bounds.width - size.width ) < SCALING_TOLERANCE &&
-         Math.abs( icon.bounds.height - size.height ) < SCALING_TOLERANCE ) {
-      // The aspect ratio of the icon matched that of the specified size, so no padding is necessary.
-      return icon;
-    }
-    // else padding is needed in either the horizontal or vertical direction.
-    var background = Rectangle.dimension( size, { fill: null } );
-    icon.center = background.center;
-    background.addChild( icon );
-    return background;
-  }
-
   /**
+   * @constructor
+   *
    * @param {Node} icon Scenery node that appears on the button above the progress indicator, scaled to fit
-   * @param {function} fireFunction Called when the button fires
+   * @param {Function} fireCallback Called when the button fires
    * @param {Property.<number>} scoreProperty
    * @param {Object} [options]
-   * @constructor
    */
-  function LevelSelectionButton( icon, fireFunction, scoreProperty, options ) {
+  function LevelButton( icon, fireCallback, scoreProperty, options ) {
 
     Node.call( this );
 
@@ -101,7 +80,7 @@ define( function( require ) {
     // Icon, scaled and padded to fit and to make the button size correct.
     var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - scoreNodeBackground.height -
                                                     2 * options.buttonYMargin - options.iconToscoreNodeYSpace );
-    var adjustedIcon = createSizedImageNode( icon, iconSize );
+    var adjustedIcon = MakeATenUtil.createSizedImageNode( icon, iconSize );
     adjustedIcon.pickable = false;
 
     // Assemble the content.
@@ -125,7 +104,7 @@ define( function( require ) {
       yMargin: options.buttonYMargin,
       baseColor: options.baseColor,
       cornerRadius: options.cornerRadius,
-      listener: fireFunction,
+      listener: fireCallback,
       phetioID: options.phetioID
     };
     var button = new RectangularPushButton( buttonOptions );
@@ -149,7 +128,7 @@ define( function( require ) {
     this.mutate( options );
   }
 
-  makeATen.register( 'LevelSelectionButton', LevelSelectionButton );
+  makeATen.register( 'LevelButton', LevelButton );
 
-  return inherit( Node, LevelSelectionButton );
+  return inherit( Node, LevelButton );
 } );
