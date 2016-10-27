@@ -40,7 +40,7 @@ define( function( require ) {
     var background = Rectangle.bounds( this.layoutBounds );
     background.addInputListener( {
       down: function( event ) {
-        makeATenAddingModel.activeTermProperty.value = ActiveTerm.NONE; // this will close the keyboard button
+        makeATenAddingModel.expressionTerms.activeTermProperty.value = ActiveTerm.NONE; // this will close the keyboard button
       }
     } );
 
