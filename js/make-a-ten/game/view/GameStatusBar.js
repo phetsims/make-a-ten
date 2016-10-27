@@ -1,7 +1,8 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- * TODO: documentation
+ * Status bar along the top of the game screen when in an active challenge. Shows the level #, description,
+ * a back button, and the current score.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -23,8 +24,9 @@ define( function( require ) {
   // Template for inserting the level number
   var gameInfoLevelXString = require( 'string!MAKE_A_TEN/game.info.levelX' );
 
+  // constants
   var BAR_HEIGHT = 60;
-
+  var BAR_PADDING = 30;
   var TEXT_COLOR = 'white';
   var LEVEL_NUMBER_FONT = new PhetFont( { size: 18, weight: 'bold' } );
   var LEVEL_DESCRIPTION_FONT = new PhetFont( 18 );
@@ -33,7 +35,7 @@ define( function( require ) {
    * @constructor
    *
    * @param {MakeATenGameModel> model
-   * @param {Object} [options]
+   * @param {Object} [options] - Passed to Node
    */
   function GameStatusBar( model, options ) {
     Node.call( this );
@@ -41,20 +43,23 @@ define( function( require ) {
     // @private {MakeATenGameModel}
     this.model = model;
 
-    // @private {Bounds2} - Last recorded layout bounds that we can use
+    // @private {Bounds2} - Last recorded layout bounds that we can use.
     this.lastBounds = new Bounds2( 0, 0, 100, 100 );
 
+    // @private {Rectangle} - The colored background.
     this.backgroundRectangle = new Rectangle( 0, 0, 100, BAR_HEIGHT, {
       fill: 'black'
     } );
     this.addChild( this.backgroundRectangle );
 
+    // @private {BackButton}
     this.backButton = new BackButton( {
       listener: model.setChoosingLevelState.bind( model ),
       scale: 1
     } );
     this.addChild( this.backButton );
 
+    // @private {Text} - Text updated in updateLevelInfo
     this.levelNumberText = new Text( 'Level X', {
       font: LEVEL_NUMBER_FONT,
       fill: TEXT_COLOR,
@@ -62,6 +67,7 @@ define( function( require ) {
     } );
     this.addChild( this.levelNumberText );
 
+    // @private {Text} - Text updated in updateLevelInfo
     this.levelDescriptionText = new Text( 'Blah blah', {
       font: LEVEL_DESCRIPTION_FONT,
       fill: TEXT_COLOR,
@@ -69,12 +75,14 @@ define( function( require ) {
     } );
     this.addChild( this.levelDescriptionText );
 
+    // @private {ScoreNode}
     this.scoreNode = new ScoreNode( model.currentScoreProperty, {
       pickable: false,
       labelColor: TEXT_COLOR
     } );
     this.addChild( this.scoreNode );
 
+    // Persistent, no need to worry about unlinking
     model.currentLevelProperty.link( this.updateLevelInfo.bind( this ) );
     this.scoreNode.scoreChangedEmitter.addListener( this.layout.bind( this, null ) );
 
@@ -87,6 +95,7 @@ define( function( require ) {
   return inherit( Node, GameStatusBar, {
     /**
      * Update the status bar with the current level information
+     * @private
      */
     updateLevelInfo: function() {
       var level = this.model.currentLevelProperty.value;
@@ -114,21 +123,22 @@ define( function( require ) {
         bounds = this.lastBounds;
       }
 
-      this.x = bounds.left;
-      this.y = bounds.top;
+      this.translation = bounds.leftTop;
       this.backgroundRectangle.rectWidth = bounds.width;
 
-      this.backButton.left = this.backgroundRectangle.left + 30;
-      this.backButton.centerY = this.backgroundRectangle.centerY;
+      var verticalCenter = this.backgroundRectangle.centerY;
 
-      this.scoreNode.right = this.backgroundRectangle.right - 30;
-      this.scoreNode.centerY = this.backgroundRectangle.centerY;
+      this.backButton.left = this.backgroundRectangle.left + BAR_PADDING;
+      this.backButton.centerY = verticalCenter;
 
-      this.levelNumberText.left = this.backButton.right + 30;
-      this.levelNumberText.centerY = this.backgroundRectangle.centerY;
+      this.scoreNode.right = this.backgroundRectangle.right - BAR_PADDING;
+      this.scoreNode.centerY = verticalCenter;
 
-      this.levelDescriptionText.left = this.levelNumberText.right + 30;
-      this.levelDescriptionText.centerY = this.backgroundRectangle.centerY;
+      this.levelNumberText.left = this.backButton.right + BAR_PADDING;
+      this.levelNumberText.centerY = verticalCenter;
+
+      this.levelDescriptionText.left = this.levelNumberText.right + BAR_PADDING;
+      this.levelDescriptionText.centerY = verticalCenter;
     }
   } );
 } );
