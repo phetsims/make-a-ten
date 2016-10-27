@@ -39,6 +39,8 @@ define( function( require ) {
     // @public {BooleanProperty} - Whether the user's interaction succeeded?
     this.interactionSucceededProperty = new BooleanProperty( false );
 
+    // @protected {Node} - Where all of the paper numbers are. NOTE: Subtypes need to add this as a child with the
+    //                     proper place in layering (this common view doesn't do that).
     this.paperNumberLayerNode = new Node();
 
     this.tryToCombineNumbers = this.tryToCombineNumbers.bind( this );

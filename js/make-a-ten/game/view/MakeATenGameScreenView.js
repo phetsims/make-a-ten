@@ -38,8 +38,11 @@ define( function( require ) {
   function MakeATenGameScreenView( model ) {
     MakeATenCommonView.call( this, model );
 
+    // @private {Node} - Layer for the paper numbers and expression formula
     this.challengeLayer = new Node();
     this.addChild( this.challengeLayer );
+
+    // Add the paper number layer from our supertype
     this.challengeLayer.addChild( this.paperNumberLayerNode );
 
     // The node that display "12 + 100 = "
@@ -48,13 +51,14 @@ define( function( require ) {
     expressionTermsNode.top = this.layoutBounds.top + 75;
     this.challengeLayer.addChild( expressionTermsNode );
 
-    // Add the node that allows the user to choose a game level to play.
+    // @private {StartGameLevelNode} - Shows buttons that allow selecting the level to play
     this.startGameLevelNode = new StartGameLevelNode( model );
     this.addChild( this.startGameLevelNode );
 
     // created lazily
     var infoDialog = null;
 
+    // @private {RectangularPushButton} - Shows '?' in the corner that pops up the info dialog when clicked.
     this.infoButton = new RectangularPushButton( {
       content: new Text( '?', {
         font: new PhetFont( { size: 20, weight: 'bold' } )
@@ -71,6 +75,7 @@ define( function( require ) {
     } );
     this.addChild( this.infoButton );
 
+    // @private {NextArrowButton} - Moves to the next challenge when clicked
     this.nextChallengeButton = new NextArrowButton( nextString, {
       listener: function() {
         model.nextChallenge();
@@ -78,25 +83,26 @@ define( function( require ) {
       top: this.layoutBounds.centerY,
       right: this.layoutBounds.right - 20
     } );
-
     this.addChild( this.nextChallengeButton );
 
-    // Sound and timer controls.
+    // @private {SoundToggleButton} - Toggle whether audio is enabled
     this.soundToggleButton = new SoundToggleButton( model.soundEnabledProperty, {
       x: 20,
       bottom: this.layoutBounds.height - 20
     } );
     this.addChild( this.soundToggleButton );
 
-    // Hook up the audio player to the sound settings.
-    this.gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
-
+    // @private {GameStatusBar} - Status bar at the top of the screen
     this.gameStatusBar = new GameStatusBar( model );
     this.addChild( this.gameStatusBar );
+
+    // Hook up the audio player to the sound settings.
+    this.gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
 
     // Hook up the update function for handling changes to game state.
     model.gameStateProperty.link( this.handleGameStateChange.bind( this ) );
 
+    // Trigger initial layout
     this.layoutControls();
   }
 
@@ -113,8 +119,10 @@ define( function( require ) {
     },
 
     /**
-     * @private, When the game state changes, update the view with the appropriate buttons and readouts.
-     * @param gameState
+     * When the game state changes, update the view with the appropriate buttons and readouts.
+     * @private
+     *
+     * @param {GameState} gameState
      */
     handleGameStateChange: function( gameState ) {
       // Hide all nodes - the appropriate ones will be shown later based on the current state.
