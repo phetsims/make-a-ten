@@ -69,9 +69,9 @@ define( function( require ) {
     // TODO: don't initialize as null?
     this.availableViewBoundsProperty = new Property( null );// filled by layout method
 
-    this.availableViewBoundsProperty.lazyLink( function( newBounds ) {
-      makeATenModel.paperNumbers.forEach( function( numberModel ) {
-        numberModel.setConstrainedDestination( newBounds, numberModel.positionProperty.value );
+    this.availableViewBoundsProperty.lazyLink( function( availableViewBounds ) {
+      makeATenModel.paperNumbers.forEach( function( paperNumber ) {
+        paperNumber.setConstrainedDestination( availableViewBounds, paperNumber.positionProperty.value );
       } );
     } );
 

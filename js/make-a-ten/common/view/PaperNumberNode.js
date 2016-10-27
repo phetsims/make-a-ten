@@ -74,12 +74,12 @@ define( function( require ) {
   };
 
   /**
+   * @constructor
    *
    * @param {PaperNumber} paperNumber
    * @param {Property<Bounds2>} availableViewBoundsProperty
    * @param {Function<Event,number,Vector2>} createAndDragNumber - Returns a new PaperNumberNode reference.
    * @param {Function<>} tryToCombineNumbers - Called with no arguments to try to combine our paper number.
-   * @constructor
    */
   function PaperNumberNode( paperNumber, availableViewBoundsProperty, createAndDragNumber, tryToCombineNumbers ) {
     var self = this;

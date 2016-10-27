@@ -196,8 +196,9 @@ define( function( require ) {
       var localBounds = this.getLocalBounds();
       var center = localBounds.center;
 
-      // TODO: This needs to be improved
-      var originBounds = viewBounds.withMaxY( viewBounds.maxY - localBounds.height / 2 ).shifted( center.x, center.y );
+      var extraBottomPadding = 10;
+      var originBounds = viewBounds.withMaxY( viewBounds.maxY - localBounds.height / 2 - extraBottomPadding )
+                                   .shifted( -center.x, -center.y );
       this.setDestination( originBounds.closestPointTo( newDestination ), animate );
     },
 
