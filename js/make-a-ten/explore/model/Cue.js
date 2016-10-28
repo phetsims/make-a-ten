@@ -16,7 +16,7 @@ define( function( require ) {
   var NumberProperty = require( 'AXON/NumberProperty' );
 
   // constants
-  var FADE_SPEED = 0.5;
+  var FADE_SPEED = 0.8;
 
   // state enumeration for the cue
   var CueState = Object.freeze( {
@@ -41,10 +41,6 @@ define( function( require ) {
 
     // @private {Property.<CueState>}
     this.stateProperty = new Property( CueState.UNATTACHED );
-
-    this.stateProperty.link( function( state ) {
-      console.log( state );
-    } );
   }
 
   makeATen.register( 'Cue', Cue );

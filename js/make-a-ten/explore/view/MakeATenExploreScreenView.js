@@ -15,6 +15,8 @@ define( function( require ) {
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var ExplorePanel = require( 'MAKE_A_TEN/make-a-ten/explore/view/ExplorePanel' );
+  var MoveCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/MoveCueNode' );
+  var SplitCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/SplitCueNode' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var CheckBox = require( 'SUN/CheckBox' );
@@ -71,6 +73,9 @@ define( function( require ) {
     this.addChild( this.explorePanel );
 
     this.addChild( this.paperNumberLayerNode );
+
+    this.addChild( new MoveCueNode( model.moveCue ) );
+    this.addChild( new SplitCueNode( model.splitCue ) );
 
     var hideTotalText = new Text( makeATenHideTotalString, {
       font: new PhetFont( {

@@ -19,6 +19,7 @@ define( function( require ) {
     LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
     PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR: 'rgb( 208, 222, 239 )',
     SCREEN_BACKGROUND_COLOR: '#E8FFB0',
+    CUE_FILL: 'rgb(63,63,183)',
 
     // TODO: These don't seem consistent. Here are the current sizes:
     // 1-digit numbers have image dimensions of 67x128
