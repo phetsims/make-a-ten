@@ -30,7 +30,7 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function ExpressionTermsNode( expressionTerms, options ) {
+  function AdditionTermsNode( additionTerms, options ) {
     options = _.extend( {
       highlightBorders: false
     }, options );
@@ -78,23 +78,23 @@ define( function( require ) {
       return termValue ? ( '' + termValue ) : '';
     }
 
-    expressionTerms.leftTermProperty.link( function( leftTerm ) {
+    additionTerms.leftTermProperty.link( function( leftTerm ) {
       leftTermText.text = termToString( leftTerm );
       layout();
     } );
 
-    expressionTerms.rightTermProperty.link( function( rightTerm ) {
+    additionTerms.rightTermProperty.link( function( rightTerm ) {
       rightTermText.text = termToString( rightTerm );
       layout();
     } );
 
     // TODO: separate highlightBorders into a separate parameter (presumably)
     if ( options.highlightBorders ) {
-      expressionTerms.activeTermProperty.link( function( term ) {
+      additionTerms.activeTermProperty.link( function( term ) {
         // TODO: improve term enumeration
         leftNumberDisplayBackground.stroke = ( term === ActiveTerm.LEFT ) ? STROKE_COLOR : null;
         rightNumberDisplayBackground.stroke = ( term === ActiveTerm.RIGHT ) ? STROKE_COLOR : null;
-        equalsSignText.visible = expressionTerms.hasBothTerms();
+        equalsSignText.visible = additionTerms.hasBothTerms();
       } );
     }
 
@@ -108,8 +108,8 @@ define( function( require ) {
     rightTermText.left = rightNumberDisplayBackground.left + rightNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
   }
 
-  makeATen.register( 'ExpressionTermsNode', ExpressionTermsNode );
+  makeATen.register( 'AdditionTermsNode', AdditionTermsNode );
 
-  return inherit( Node, ExpressionTermsNode );
+  return inherit( Node, AdditionTermsNode );
 
 } );

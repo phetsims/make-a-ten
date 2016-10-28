@@ -19,7 +19,7 @@ define( function( require ) {
   var NumberChallengeFactory = require( 'MAKE_A_TEN/make-a-ten/game/model/NumberChallengeFactory' );
   var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
   var Level = require( 'MAKE_A_TEN/make-a-ten/game/model/Level' );
-  var ExpressionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/ExpressionTerms' );
+  var AdditionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/AdditionTerms' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
@@ -52,6 +52,8 @@ define( function( require ) {
    */
   function MakeATenGameModel() {
     var self = this;
+
+    MakeATenCommonModel.call( this );
 
     // Created here, since due to the initialization of phet.joist.random we need to delay until the model is created
     // (can't do at require.js load time), thus we have a separate challenge factory.
@@ -86,10 +88,10 @@ define( function( require ) {
     // @public {Property.<GameState>} - Current game state
     this.gameStateProperty = new Property( GameState.CHOOSING_LEVEL );
 
-    MakeATenCommonModel.call( this );
+    // @public {AdditionTerms} - Our left and right terms to be added.
+    this.additionTerms = new AdditionTerms();
 
-    this.expressionTerms = new ExpressionTerms();
-
+    // Check for when the challenge is completed
     this.paperNumbers.lengthProperty.link( function( newLength, oldLength ) {
       // Check oldLength to make sure it's not from the paper numbers just added.
       if ( newLength === 1 && oldLength === 2 && self.gameStateProperty.value === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
@@ -98,9 +100,10 @@ define( function( require ) {
     } );
 
     // Keep our currentScore updated when the level changes.
-    this.currentLevelProperty.link( function( level, oldLevel ) {
+    this.currentLevelProperty.link( function( level ) {
       self.currentScoreProperty.value = level.scoreProperty.value;
     } );
+
     // Keep our currentScore updated when our current level's score changes.
     this.levels.forEach( function( level ) {
       level.scoreProperty.link( function( score ) {
@@ -157,8 +160,8 @@ define( function( require ) {
     createTerms: function( numberChallenge ) {
       var self = this;
       this.paperNumbers.clear();
-      this.expressionTerms.leftTermProperty.value = numberChallenge.leftTerm;
-      this.expressionTerms.rightTermProperty.value = numberChallenge.rightTerm;
+      this.additionTerms.leftTermProperty.value = numberChallenge.leftTerm;
+      this.additionTerms.rightTermProperty.value = numberChallenge.rightTerm;
 
       var valuesToCreate = [ numberChallenge.leftTerm, numberChallenge.rightTerm ];
       var xOffSet = 200;

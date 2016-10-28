@@ -18,7 +18,7 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function ExpressionTerms() {
+  function AdditionTerms() {
     // @public {NumberProperty} - The left-hand term for the addition.
     this.leftTermProperty = new NumberProperty( 0 );
 
@@ -29,12 +29,12 @@ define( function( require ) {
     this.activeTermProperty = new Property( ActiveTerm.NONE );
   }
 
-  makeATen.register( 'ExpressionTerms', ExpressionTerms );
+  makeATen.register( 'AdditionTerms', AdditionTerms );
 
-  return inherit( Object, ExpressionTerms, {
-
+  return inherit( Object, AdditionTerms, {
     /**
-     * Useful for showing equals sign
+     * Returns whether both of the terms have non-zero values (and are not being edited).
+     * @public
      *
      * @returns {boolean}
      */
@@ -42,11 +42,14 @@ define( function( require ) {
       return this.activeTermProperty.value === ActiveTerm.NONE && this.leftTermProperty.value > 0 && this.rightTermProperty.value > 0;
     },
 
+    /**
+     * Reset all of the terms
+     * @public
+     */
     reset: function() {
       this.leftTermProperty.reset();
       this.rightTermProperty.reset();
       this.activeTermProperty.reset();
     }
   } );
-
 } );

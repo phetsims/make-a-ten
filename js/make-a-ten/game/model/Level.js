@@ -16,6 +16,7 @@ define( function( require ) {
   var NumberProperty = require( 'AXON/NumberProperty' );
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
 
+  // constants
   var ICON_SIZE = new Dimension2( 729 / 2, 420 / 2 );
 
   /**
@@ -25,6 +26,7 @@ define( function( require ) {
    * @param {string} color - The color for the level
    * @param {HTMLImageElement} icon - Image to be shown as the icon for the level
    * @param {string} description - Translated description to be shown in info and the status bar
+   * @param {NumberChallengeFactory} numberChallengeFactory - For generating challenges
    */
   function Level( number, color, icon, description, numberChallengeFactory ) {
 

@@ -20,7 +20,7 @@ define( function( require ) {
   var InfoDialog = require( 'MAKE_A_TEN/make-a-ten/game/view/InfoDialog' );
   var GameStatusBar = require( 'MAKE_A_TEN/make-a-ten/game/view/GameStatusBar' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
-  var ExpressionTermsNode = require( 'MAKE_A_TEN/make-a-ten/common/view/ExpressionTermsNode' );
+  var AdditionTermsNode = require( 'MAKE_A_TEN/make-a-ten/common/view/AdditionTermsNode' );
   var NextArrowButton = require( 'MAKE_A_TEN/make-a-ten/game/view/NextArrowButton' );
   var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
@@ -46,10 +46,10 @@ define( function( require ) {
     this.challengeLayer.addChild( this.paperNumberLayerNode );
 
     // The node that display "12 + 100 = "
-    var expressionTermsNode = new ExpressionTermsNode( model.expressionTerms );
-    expressionTermsNode.left = this.layoutBounds.left + 38;
-    expressionTermsNode.top = this.layoutBounds.top + 75;
-    this.challengeLayer.addChild( expressionTermsNode );
+    var additionTermsNode = new AdditionTermsNode( model.additionTerms );
+    additionTermsNode.left = this.layoutBounds.left + 38;
+    additionTermsNode.top = this.layoutBounds.top + 75;
+    this.challengeLayer.addChild( additionTermsNode );
 
     // @private {StartGameLevelNode} - Shows buttons that allow selecting the level to play
     this.startGameLevelNode = new StartGameLevelNode( model );

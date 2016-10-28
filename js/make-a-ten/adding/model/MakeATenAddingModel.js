@@ -12,7 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Vector2 = require( 'DOT/Vector2' );
   var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
-  var ExpressionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/ExpressionTerms' );
+  var AdditionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/AdditionTerms' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
@@ -22,7 +22,7 @@ define( function( require ) {
   function MakeATenAddingModel() {
     // leftTerm,rightTerm,activeTerm and showBackground
     // TODO: what is the comment above?
-    this.expressionTerms = new ExpressionTerms();
+    this.additionTerms = new AdditionTerms();
 
     MakeATenCommonModel.call( this );
   }
@@ -37,7 +37,7 @@ define( function( require ) {
     createTerms: function() {
       var self = this;
       this.paperNumbers.clear();
-      var valuesToCreate = [ this.expressionTerms.leftTermProperty.value, this.expressionTerms.rightTermProperty.value ];
+      var valuesToCreate = [ this.additionTerms.leftTermProperty.value, this.additionTerms.rightTermProperty.value ];
 
       var xOffSet = 200;
       _.each( valuesToCreate, function( numberValue ) {
@@ -57,7 +57,7 @@ define( function( require ) {
     reset: function() {
       MakeATenCommonModel.prototype.reset.call( this );
 
-      this.expressionTerms.reset();
+      this.additionTerms.reset();
     }
   } );
 } );
