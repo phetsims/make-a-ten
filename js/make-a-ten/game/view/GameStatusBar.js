@@ -54,7 +54,7 @@ define( function( require ) {
 
     // @private {BackButton}
     this.backButton = new BackButton( {
-      listener: model.setChoosingLevelState.bind( model ),
+      listener: model.moveToChoosingLevel.bind( model ),
       scale: 1
     } );
     this.addChild( this.backButton );

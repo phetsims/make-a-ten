@@ -78,7 +78,7 @@ define( function( require ) {
     // @private {NextArrowButton} - Moves to the next challenge when clicked
     this.nextChallengeButton = new NextArrowButton( nextString, {
       listener: function() {
-        model.nextChallenge();
+        model.moveToNextChallenge();
       },
       top: this.layoutBounds.centerY,
       right: this.layoutBounds.right - 20
@@ -142,10 +142,10 @@ define( function( require ) {
      */
     handleGameStateChange: function( gameState ) {
       if ( gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) {
-        this.model.createTerms( this.model.currentChallengeProperty.value );
+        this.model.setupChallenge( this.model.currentChallengeProperty.value );
       }
       if ( gameState === GameState.CORRECT_ANSWER ) {
-        this.model.handleCorrectAnswer();
+        this.model.incrementScore();
         this.gameAudioPlayer.correctAnswer();
       }
 

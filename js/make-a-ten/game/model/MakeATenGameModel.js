@@ -134,48 +134,58 @@ define( function( require ) {
     },
 
     /**
-     * TODO: fix typos
-     * The user can play as many times as wants. And Each time, he
-     * combines the numbers b making Tens his score for that level will be incremented
+     * Increments the score of the current level.
+     * @public
      */
-    handleCorrectAnswer: function() {
+    incrementScore: function() {
       this.currentLevelProperty.value.scoreProperty.value++;
     },
 
-    nextChallenge: function() {
+    /**
+     * Moves to the next challenge (the current challenge's solution was correct).
+     * @public
+     */
+    moveToNextChallenge: function() {
       this.currentChallengeProperty.value = this.currentLevelProperty.value.generateChallenge();
       this.gameStateProperty.value = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
     },
 
-    setChoosingLevelState: function() {
+    /**
+     * Moves back to the level selection.
+     * @public
+     */
+    moveToChoosingLevel: function() {
       this.gameStateProperty.value = GameState.CHOOSING_LEVEL;
       this.paperNumbers.clear();
     },
 
     /**
-     * //@private
-     * creates PaperNumbers based on the type of Number Challenge
+     * Creates paper numbers for the specified challenge.
+     * @public
+     *
      * @param {NumberChallenge} numberChallenge
      */
-    createTerms: function( numberChallenge ) {
+    setupChallenge: function( numberChallenge ) {
       var self = this;
+
       this.paperNumbers.clear();
       this.additionTerms.leftTermProperty.value = numberChallenge.leftTerm;
       this.additionTerms.rightTermProperty.value = numberChallenge.rightTerm;
 
-      var valuesToCreate = [ numberChallenge.leftTerm, numberChallenge.rightTerm ];
-      var xOffSet = 200;
-      _.each( valuesToCreate, function( numberValue ) {
-        assert && assert( typeof numberValue === 'number' );
-        if ( !numberValue ) {
-          return;
+      _.each( [ numberChallenge.leftTerm, numberChallenge.rightTerm ], function( numberValue, index ) {
+        if ( numberValue ) {
+          // at 1/3 and 2/3 of bounds (approximately)
+          var x = MakeATenConstants.LAYOUT_BOUNDS.width * ( 1 + index ) / 3;
+          var initialPosition = new Vector2( x, MakeATenConstants.LAYOUT_BOUNDS.height / 2.5 );
+          self.addPaperNumber( new PaperNumber( numberValue, initialPosition ) );
         }
-        var initialPosition = new Vector2( xOffSet, MakeATenConstants.LAYOUT_BOUNDS.height / 2.5 );
-        self.addPaperNumber( new PaperNumber( numberValue, initialPosition ) );
-        xOffSet += 350;
       } );
     },
 
+    /**
+     * Resets our game model.
+     * @public
+     */
     reset: function() {
       MakeATenCommonModel.prototype.reset.call( this );
 
@@ -189,8 +199,5 @@ define( function( require ) {
         this.levels[ i ].reset();
       }
     }
-  }, {
-    // TODO: factor this out
-    NUMBER_OF_LEVELS: 10
   } );
 } );
