@@ -113,7 +113,7 @@ define( function( require ) {
       this.addPaperNumber( paperNumber );
 
       var paperNumberNode = this.findPaperNumberNode( paperNumber );
-      paperNumberNode.moveDragHandler.tryToSnag( event );
+      paperNumberNode.startSyntheticDrag( event );
     },
 
     /**

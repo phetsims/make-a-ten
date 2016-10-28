@@ -101,6 +101,9 @@ define( function( require ) {
     // @public {Emitter} - Triggered when user interaction with this paper number begins.
     this.interactionStartedEmitter = new Emitter();
 
+    // @private {boolean} - When true, don't emit from the moveEmitter (synthetic drag)
+    this.preventMoveEmit = false;
+
     // @private {Bounds2}
     this.availableViewBoundsProperty = availableViewBoundsProperty;
 
@@ -135,7 +138,9 @@ define( function( require ) {
         dragOffset = paperNumber.positionProperty.value.minus( viewPosition );
 
         self.interactionStartedEmitter.emit1( self );
-        self.moveEmitter.emit1( self );
+        if ( !self.preventMoveEmit ) {
+          self.moveEmitter.emit1( self );
+        }
       },
 
       drag: function( event, trail ) {
@@ -171,7 +176,7 @@ define( function( require ) {
         // it cannot be split - so start moving
         if ( !amountToRemove ) {
           // TODO: can this actually happen?
-          self.moveDragHandler.tryToSnag( event );
+          self.startSyntheticDrag( event );
           return;
         }
 
@@ -238,6 +243,20 @@ define( function( require ) {
         self.moveTarget.mouseArea = self.moveTarget.touchArea = self.moveTarget.rectBounds = fullBounds.withMinY( boundaryY );
         self.splitTarget.mouseArea = self.splitTarget.touchArea = self.splitTarget.rectBounds = fullBounds.withMaxY( boundaryY );
       }
+    },
+
+    /**
+     * Called when we grab an event from a different input (like clicking the paper number in the explore panel, or
+     * splitting paper numbers), and starts a drag on this paper number.
+     * @public
+     *
+     * @param {Event} event - Scenery event from the relevant input handler
+     */
+    startSyntheticDrag: function( event ) {
+      // Don't emit a move event, as we don't want the cue to disappear.
+      this.preventMoveEmit = true;
+      this.moveDragHandler.tryToSnag( event );
+      this.preventMoveEmit = false;
     },
 
     /**
