@@ -16,9 +16,9 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ScoreNode = require( 'MAKE_A_TEN/make-a-ten/game/view/ScoreNode' );
-  var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
 
   /**
    * @constructor
@@ -60,7 +60,7 @@ define( function( require ) {
     // Icon, scaled and padded to fit and to make the button size correct.
     var iconSize = new Dimension2( maxContentWidth, buttonHeight - scoreNodeBackground.height -
                                                     2 * buttonYMargin - iconScorePadding );
-    var adjustedIcon = MakeATenUtil.createSizedImageNode( level.iconNode, iconSize );
+    var adjustedIcon = LevelSelectionButton.createSizedImageNode( level.iconNode, iconSize );
     adjustedIcon.pickable = false;
 
     // Assemble the content.

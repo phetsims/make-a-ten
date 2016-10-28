@@ -12,15 +12,15 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Dimension2 = require( 'DOT/Dimension2' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Plane = require( 'SCENERY/nodes/Plane' );
-  var Dimension2 = require( 'DOT/Dimension2' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
   var KeyboardPanel = require( 'MAKE_A_TEN/make-a-ten/adding/view/KeyboardPanel' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var AdditionTermsNode = require( 'MAKE_A_TEN/make-a-ten/common/view/AdditionTermsNode' );
-  var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
   var ActiveTerm = require( 'MAKE_A_TEN/make-a-ten/adding/model/ActiveTerm' );
 
   // images
@@ -52,7 +52,7 @@ define( function( require ) {
 
     function createEditNumberButton( term ) {
       return new RectangularPushButton( {
-        content: MakeATenUtil.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE ),
+        content: LevelSelectionButton.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE ),
         listener: function() {
           model.additionTerms.activeTermProperty.value = term;
         },

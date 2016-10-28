@@ -14,7 +14,7 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var Image = require( 'SCENERY/nodes/Image' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
+  var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
 
   // constants
   var ICON_SIZE = new Dimension2( 729 / 2, 420 / 2 );
@@ -37,7 +37,7 @@ define( function( require ) {
     this.color = color;
 
     // @public {Node} - A properly sized node for use as an icon representing the level
-    this.iconNode = MakeATenUtil.createSizedImageNode( new Image( icon ), ICON_SIZE );
+    this.iconNode = LevelSelectionButton.createSizedImageNode( new Image( icon ), ICON_SIZE );
 
     // @public {string} - Translated description to be shown in info and the status bar
     this.description = description;
