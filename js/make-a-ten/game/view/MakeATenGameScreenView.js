@@ -99,11 +99,27 @@ define( function( require ) {
     // Hook up the audio player to the sound settings.
     this.gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
 
-    // Hook up the update function for handling changes to game state.
-    model.gameStateProperty.link( this.handleGameStateChange.bind( this ) );
+    // @private {Array.<Node>} - All controls that we'll want to potentially toggle visibility on.
+    this.allControls = [ this.startGameLevelNode, this.resetAllButton, this.challengeLayer, this.soundToggleButton,
+                         this.nextChallengeButton, this.infoButton, this.gameStatusBar ];
+
+    // @private {Object} - Maps {GameState} => {Array.<Node>}, for what controls should be visible during that state.
+    this.controlVisibilityMap = {};
+    this.controlVisibilityMap[ GameState.CHOOSING_LEVEL ] = [
+      this.startGameLevelNode, this.resetAllButton, this.soundToggleButton, this.infoButton
+    ];
+    this.controlVisibilityMap[ GameState.PRESENTING_INTERACTIVE_CHALLENGE ] = [
+      this.challengeLayer, this.gameStatusBar
+    ];
+    this.controlVisibilityMap[ GameState.CORRECT_ANSWER ] = [
+      this.challengeLayer, this.nextChallengeButton, this.gameStatusBar
+    ];
 
     // Trigger initial layout
     this.layoutControls();
+
+    // Hook up the update function for handling changes to game state.
+    model.gameStateProperty.link( this.handleGameStateChange.bind( this ) );
   }
 
   makeATen.register( 'MakeATenGameScreenView', MakeATenGameScreenView );
@@ -125,79 +141,26 @@ define( function( require ) {
      * @param {GameState} gameState
      */
     handleGameStateChange: function( gameState ) {
-      // Hide all nodes - the appropriate ones will be shown later based on the current state.
-      this.hideAllGameNodes();
-      var challenge = this.model.currentChallengeProperty.value;
+      console.log( gameState );
 
-
-      // Show the nodes appropriate to the state
-      switch( gameState ) {
-
-        case GameState.CHOOSING_LEVEL:
-          this.handleChoosingLevelState();
-          break;
-
-        case GameState.PRESENTING_INTERACTIVE_CHALLENGE:
-          this.handlePresentingInteractiveChallengeState( challenge );
-          break;
-
-        case GameState.CORRECT_ANSWER:
-          this.handleCorrectAnswer( challenge );
-          break;
-
-        case GameState.MOVE_TO_NEXT_CHALLENGE:
-          this.moveToNextChallenge();
-          break;
-
-        default:
-          throw new Error( 'Unhandled game state: ' + gameState );
+      if ( gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) {
+        this.model.createTerms( this.model.currentChallengeProperty.value );
       }
-    },
+      if ( gameState === GameState.CORRECT_ANSWER ) {
+        this.model.handleCorrectAnswer();
+        this.gameAudioPlayer.correctAnswer();
+      }
 
-    // @private
-    handleChoosingLevelState: function() {
-      this.show( [ this.startGameLevelNode, this.resetAllButton, this.soundToggleButton, this.infoButton ] );
-      this.hideChallenge();
-    },
-
-    moveToNextChallenge: function() {
-      this.show( [ this.challengeLayer, this.nextChallengeButton, this.gameStatusBar ] );
-    },
-
-    // @private
-    show: function( nodesToShow ) {
-      nodesToShow.forEach( function( nodeToShow ) { nodeToShow.visible = true; } );
-    },
-
-    // @private, Utility method for hiding all of the game nodes whose visibility changes during the course of a challenge.
-    hideAllGameNodes: function() {
-      var gameNodes = [ this.startGameLevelNode, this.resetAllButton, this.challengeLayer, this.soundToggleButton, this.nextChallengeButton, this.infoButton ];
-      gameNodes.forEach( function( node ) { node.visible = false; } );
-    },
-
-    // @private
-    handlePresentingInteractiveChallengeState: function( challenge ) {
-      this.model.createTerms( challenge );
-      this.show( [ this.challengeLayer, this.gameStatusBar ] );
-    },
-
-    // @private
-    handleCorrectAnswer: function() {
-      this.model.handleCorrectAnswer();
-      // Give the user the appropriate audio and visual feedback
-      this.gameAudioPlayer.correctAnswer();
-
-      this.show( [ this.challengeLayer, this.gameStatusBar ] );
-    },
-
-    // @private
-    hideChallenge: function() {
-      this.challengeLayer.visible = false;
-      this.gameStatusBar.visible = false;
+      // Toggle visibility on controls as needed, showing the visibleControls and hiding the rest.
+      var visibleControls = this.controlVisibilityMap[ gameState ];
+      this.allControls.forEach( function( node ) {
+        node.visible = _.contains( visibleControls, node );
+      } );
     },
 
     /**
      * @override
+     * @returns {number} - Amount in view coordinates to leave at the top of the screen.
      */
     getTopBoundsOffset: function() {
       return this.gameStatusBar.height;

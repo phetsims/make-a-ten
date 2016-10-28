@@ -40,8 +40,6 @@ define( function( require ) {
       new Vector2( -190, -28 )
     ],
 
-    HOVER_OPACITY: 0.95,
-
     //based on where the user clicked on the node, determine if it is split or move
     SPLIT_BOUNDARY_HEIGHT_PROPORTION: 0.38,
     // velocity at which animated elements move

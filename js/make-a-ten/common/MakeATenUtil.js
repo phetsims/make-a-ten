@@ -73,7 +73,6 @@ define( function( require ) {
         ]
       } );
     }
-
   };
 
   makeATen.register( 'MakeATenUtil', MakeATenUtil );

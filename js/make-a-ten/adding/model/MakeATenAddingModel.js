@@ -17,7 +17,6 @@ define( function( require ) {
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
   /**
-   *
    * @constructor
    */
   function MakeATenAddingModel() {
@@ -60,6 +59,5 @@ define( function( require ) {
 
       this.expressionTerms.reset();
     }
-
   } );
 } );

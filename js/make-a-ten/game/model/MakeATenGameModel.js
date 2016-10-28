@@ -91,6 +91,7 @@ define( function( require ) {
     this.expressionTerms = new ExpressionTerms();
 
     this.paperNumbers.lengthProperty.link( function( newLength, oldLength ) {
+      // Check oldLength to make sure it's not from the paper numbers just added.
       if ( newLength === 1 && oldLength === 2 && self.gameStateProperty.value === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
         self.gameStateProperty.value = GameState.CORRECT_ANSWER;
       }
@@ -130,12 +131,12 @@ define( function( require ) {
     },
 
     /**
+     * TODO: fix typos
      * The user can play as many times as wants. And Each time, he
      * combines the numbers b making Tens his score for that level will be incremented
      */
     handleCorrectAnswer: function() {
       this.currentLevelProperty.value.scoreProperty.value++;
-      this.gameStateProperty.value = GameState.MOVE_TO_NEXT_CHALLENGE;
     },
 
     nextChallenge: function() {
