@@ -30,9 +30,10 @@ define( function( require ) {
    * @param {number} place - The decimal exponent for the number digit * 10^place.
    */
   function BaseNumber( digit, place ) {
+    // @public {number} - The numeric value, e.g. 200 if digit is 2 and place is 2
     this.numberValue = digit * Math.pow( 10, place );
 
-    // TODO: can't we pass this in?
+    // @public {number} - Number of digits in our numeric value
     this.digitLength = MakeATenUtil.digitsInNumber( this.numberValue );
 
     // @public {number} - The place in the number (power of 10) that our digit would be multiplied by to sum, e.g.

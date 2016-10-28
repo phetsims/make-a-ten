@@ -1,6 +1,7 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
+ * Base model for Make a Ten screens.
  *
  * @author Sharfudeen Ashraf
  */
