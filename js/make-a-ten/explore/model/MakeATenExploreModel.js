@@ -27,8 +27,7 @@ define( function( require ) {
 
     MakeATenCommonModel.call( this );
 
-    var initialNumberPosition = new Vector2( MakeATenConstants.LAYOUT_BOUNDS.centerX, MakeATenConstants.LAYOUT_BOUNDS.height / 2.5 );
-    this.addPaperNumber( new PaperNumber( 10, initialNumberPosition ) );
+    this.addInitialNumbers();
 
     this.arrowCue = new ArrowCue();
 
@@ -76,11 +75,36 @@ define( function( require ) {
       } );
     },
 
+    /**
+     * Adds any required initial numbers.
+     * @private
+     */
+    addInitialNumbers: function() {
+      var self = this;
+
+      // Check for an array of numbers, e.g. ?exploreNumbers=10,51, where 0 indicates none
+      var initialNumbers = QueryStringMachine.get( 'exploreNumbers', {
+        type: 'array',
+        elementSchema: {
+          type: 'number'
+        },
+        defaultValue: [ 10 ]
+      } );
+      _.forEach( initialNumbers, function( number, index ) {
+        if ( !number ) { return; } // TODO: how to get empty arrays?
+
+        // evenly distribute across the screen
+        var x = MakeATenConstants.LAYOUT_BOUNDS.width * ( 1 + index ) / ( initialNumbers.length + 1 );
+        var initialNumberPosition = new Vector2( x, MakeATenConstants.LAYOUT_BOUNDS.height / 2.5 );
+        self.addPaperNumber( new PaperNumber( number, initialNumberPosition ) );
+      } );
+    },
+
     reset: function() {
       MakeATenCommonModel.prototype.reset.call( this );
 
       this.sumProperty.reset();
+      this.addInitialNumbers();
     }
-
   } );
 } );

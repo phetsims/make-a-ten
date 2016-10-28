@@ -61,15 +61,15 @@ define( function( require ) {
       self.removePaperNumberNode( self.findPaperNumberNode( removedPaperNumber ) );
     } );
 
+    // used to prevent numbers from moving outside the visible model bounds when dragged
+    // TODO: don't initialize as null?
+    this.availableViewBoundsProperty = new Property( MakeATenConstants.LAYOUT_BOUNDS );// filled by layout method
+
     //Initial Number Node creation
     model.paperNumbers.forEach( handlePaperNumberAdded );
 
     // Observe new items
     model.paperNumbers.addItemAddedListener( handlePaperNumberAdded );
-
-    // used to prevent numbers from moving outside the visible model bounds when dragged
-    // TODO: don't initialize as null?
-    this.availableViewBoundsProperty = new Property( null );// filled by layout method
 
     this.availableViewBoundsProperty.lazyLink( function( availableViewBounds ) {
       model.paperNumbers.forEach( function( paperNumber ) {

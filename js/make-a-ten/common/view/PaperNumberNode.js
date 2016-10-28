@@ -86,6 +86,8 @@ define( function( require ) {
 
     Node.call( this );
 
+    assert && assert( availableViewBoundsProperty );
+
     // @public {PaperNumber} - Our model
     this.paperNumber = paperNumber;
 
