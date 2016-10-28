@@ -1,6 +1,8 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
+ * Explore screenview of Make a Ten. Provides a panel where 100s, 10s or 1s can be dragged out, combined, and pulled
+ * apart, and displays the total in the upper-left.
  *
  * @author Sharfudeen Ashraf
  */
@@ -98,18 +100,6 @@ define( function( require ) {
 
     this.hideTotalProperty.link( function( hideTotal ) {
       self.equationHBox.visible = !hideTotal;
-    } );
-
-    this.interactionAttemptedProperty.link( function( interactionAttempted ) {
-      if ( interactionAttempted ) {
-        model.arrowCue.visible = true;
-      }
-    } );
-
-    this.interactionSucceededProperty.link( function( interactionSucceeded ) {
-      if ( interactionSucceeded ) {
-        model.arrowCue.fadeAway();
-      }
     } );
 
     this.layoutControls();

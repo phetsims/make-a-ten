@@ -1,7 +1,8 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- * Common move/split cue model.
+ * Common move/split cue model. The cue represents a visual indicator that sticks to a paper number, and lets the user
+ * know they can do an operation. It will fade away when the operation is performed, but will return upon reset all.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -20,10 +21,10 @@ define( function( require ) {
 
   // state enumeration for the cue
   var CueState = Object.freeze( {
-    UNATTACHED: 'UNATTACHED',
-    ATTACHED: 'ATTACHED',
-    FADING: 'FADING',
-    FADED: 'FADED'
+    UNATTACHED: 'UNATTACHED', // "not faded, but not visible"
+    ATTACHED: 'ATTACHED', // "on a number, but not fading"
+    FADING: 'FADING', // "on a number, but fading"
+    FADED: 'FADED' // "faded, will not return until reset all"
   } );
 
   /**

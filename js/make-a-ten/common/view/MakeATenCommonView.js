@@ -12,7 +12,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var arrayRemove = require( 'PHET_CORE/arrayRemove' );
   var Vector2 = require( 'DOT/Vector2' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Property = require( 'AXON/Property' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -32,12 +31,6 @@ define( function( require ) {
     var self = this;
     ScreenView.call( this, { layoutBounds: MakeATenConstants.LAYOUT_BOUNDS } );
     this.model = model;
-
-    // @public {BooleanProperty} - Whether the user has interacted with numbers on this screen
-    this.interactionAttemptedProperty = new BooleanProperty( false );
-
-    // @public {BooleanProperty} - Whether the user's interaction succeeded?
-    this.interactionSucceededProperty = new BooleanProperty( false );
 
     // @protected {Node} - Where all of the paper numbers are. NOTE: Subtypes need to add this as a child with the
     //                     proper place in layering (this common view doesn't do that).
@@ -181,12 +174,6 @@ define( function( require ) {
       //check them in reverse order (the one on the top should get more priority)
       droppedNodes.reverse();
 
-      //Show Arrow cue if user hasn't succeeded in combining or splitting a number
-      if ( !this.model.interactionSucceeded && this.model.arrowCue ) {
-        this.model.arrowCue.positionAt( draggedPaperNumber );
-        this.interactionAttemptedProperty.value = true;
-      }
-
       for ( var i = 0; i < droppedNodes.length; i++ ) {
         var numberA = draggedPaperNumber.numberValueProperty.value;
         var numberB = droppedNodes[ i ].paperNumber.numberValueProperty.value;
@@ -261,8 +248,7 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      this.interactionAttemptedProperty.reset();
-      this.interactionSucceededProperty.reset();
+
     }
   } );
 } );

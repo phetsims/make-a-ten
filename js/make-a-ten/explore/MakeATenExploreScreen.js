@@ -1,6 +1,8 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
+ * Explore screen of Make a Ten. Provides a panel where 100s, 10s or 1s can be dragged out, combined, and pulled
+ * apart, and displays the total in the upper-left.
  *
  * @author Sharfudeen Ashraf
  */
@@ -16,6 +18,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
 
+  // images
   var exploreHomeScreenImage = require( 'image!MAKE_A_TEN/explore-home-screen.png' );
   var exploreNavBarImage = require( 'image!MAKE_A_TEN/explore-nav-bar.png' );
 
@@ -27,14 +30,11 @@ define( function( require ) {
    */
   function MakeATenExploreScreen() {
 
-    var homeScreenIcon = MakeATenUtil.createIconWithBackgroundColor( exploreHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR );
-    var navigationBarIcon = MakeATenUtil.createIconWithBackgroundColor( exploreNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR );
-
     var options = {
       name: screenExploreString,
       backgroundColor: MakeATenConstants.SCREEN_BACKGROUND_COLOR,
-      homeScreenIcon: homeScreenIcon,
-      navigationBarIcon: navigationBarIcon
+      homeScreenIcon: MakeATenUtil.createIconWithBackgroundColor( exploreHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      navigationBarIcon: MakeATenUtil.createIconWithBackgroundColor( exploreNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
     };
 
     Screen.call( this,

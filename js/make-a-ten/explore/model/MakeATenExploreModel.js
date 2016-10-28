@@ -1,7 +1,7 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- * TODO: doc
+ * Model for the Explore screen in Make a Ten. Includes the total, cues, and adding in initial numbers.
  *
  * @author Sharfudeen Ashraf
  */
@@ -27,28 +27,45 @@ define( function( require ) {
 
     MakeATenCommonModel.call( this );
 
+    // @public {Cue} - Visually indicates numbers can be moved
     this.moveCue = new Cue();
+
+    // @public {Cue} - Visually indicates numbers can be split (pulled apart)
     this.splitCue = new Cue();
 
-    this.addInitialNumbers();
+    // @private {Function} - To be called when we need to recalculate the total
+    var calculateTotalListener = this.calculateTotal.bind( this );
 
-    this.paperNumbers.lengthProperty.link( this.calculateTotal.bind( this ) );
+    this.paperNumbers.lengthProperty.link( calculateTotalListener );
+
+    // Listen to number changes of paper numbers
+    this.paperNumbers.addItemAddedListener( function( paperNumber ) {
+      paperNumber.numberValueProperty.link( calculateTotalListener );
+    } );
+    this.paperNumbers.addItemRemovedListener( function( paperNumber ) {
+      paperNumber.numberValueProperty.unlink( calculateTotalListener );
+    } );
+
+    this.addInitialNumbers();
   }
 
   makeATen.register( 'MakeATenExploreModel', MakeATenExploreModel );
 
   return inherit( MakeATenCommonModel, MakeATenExploreModel, {
-
-    // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
+    /**
+     * @override
+     */
     step: function( dt ) {
       MakeATenCommonModel.prototype.step.call( this, dt );
 
+      // Animate fading if necessary
       this.moveCue.step( dt );
       this.splitCue.step( dt );
     },
 
     /**
-     * Every time the user creates a new paperModel call this to update the sum
+     * Updates the total sum of the paper numbers.
+     * @private
      */
     calculateTotal: function() {
       var total = 0;
@@ -58,16 +75,15 @@ define( function( require ) {
       this.sumProperty.value = total;
     },
 
+    /**
+     * @override
+     */
     addPaperNumber: function( paperNumber ) {
-      MakeATenCommonModel.prototype.addPaperNumber.call( this, paperNumber );
       var self = this;
-      paperNumber.numberValueProperty.link( function( newValue ) {
-        if ( !paperNumber.userControlledProperty.value ) {
-          self.calculateTotal();
-          self.interactionSucceeded = true;
-        }
-      } );
 
+      MakeATenCommonModel.prototype.addPaperNumber.call( this, paperNumber );
+
+      // TODO: This should be improved
       // The shape will be removed from the model if and when it returns to its origination point.  This is how a shape
       // can be 'put back' into the panel.
       paperNumber.returnedToOriginEmitter.addListener( function() {
@@ -109,6 +125,9 @@ define( function( require ) {
       } );
     },
 
+    /**
+     * @override
+     */
     reset: function() {
       MakeATenCommonModel.prototype.reset.call( this );
 
