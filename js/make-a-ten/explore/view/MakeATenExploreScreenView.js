@@ -132,8 +132,17 @@ define( function( require ) {
      * @returns {boolean}
      */
     isNumberInReturnZone: function( paperNumber ) {
+      // Compute the local point on the number that would need to go into the return zone.
+      // This point is a bit farther down than the exact center, as it was annoying to "miss" the return zone
+      // slightly by being too high (while the mouse WAS in the return zone).
+      var localBounds = paperNumber.getLocalBounds();
+      var localReturnPoint = localBounds.center.plus( localBounds.centerBottom ).dividedScalar( 2 );
+
+      // And the bounds of our panel
       var panelBounds = this.explorePanel.bounds.withMaxY( this.visibleBoundsProperty.value.bottom );
-      var paperCenter = paperNumber.positionProperty.value.plus( paperNumber.getLocalBounds().center );
+
+      // View coordinate of our return point
+      var paperCenter = paperNumber.positionProperty.value.plus( localReturnPoint );
 
       return panelBounds.containsPoint( paperCenter );
     },
