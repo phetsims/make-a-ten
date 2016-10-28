@@ -14,22 +14,22 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Vector2 = require( 'DOT/Vector2' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var CheckBox = require( 'SUN/CheckBox' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var ExplorePanel = require( 'MAKE_A_TEN/make-a-ten/explore/view/ExplorePanel' );
   var MoveCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/MoveCueNode' );
   var SplitCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/SplitCueNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var CheckBox = require( 'SUN/CheckBox' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
   // strings
   var makeATenHideTotalString = require( 'string!MAKE_A_TEN/make-a-ten.hide.total' );
 
   // constants
   var EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
-  var EQUATION_COLOR = 'rgb(63,63,183)';
 
   /**
    * @param {MakeATenExploreModel} model
@@ -58,8 +58,8 @@ define( function( require ) {
     // @public {BooleanProperty} - Whether the total (sum) is hidden
     this.hideTotalProperty = new BooleanProperty( false );
 
-    var sumText = new Text( '0', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
-    var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
+    var sumText = new Text( '0', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
+    var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
 
     var spaceBetweenSumAndEquals = 15; // spacing between equation elements
     // Perform the layout by placing everything in an HBox.

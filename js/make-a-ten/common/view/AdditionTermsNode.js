@@ -18,11 +18,11 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var ActiveTerm = require( 'MAKE_A_TEN/make-a-ten/adding/model/ActiveTerm' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
   // constants
   var TERM_FONT = new PhetFont( { size: 45, weight: 'bold' } );
   var EQUATION_FONT = new PhetFont( { size: 45, weight: 'bold' } );
-  var EQUATION_COLOR = 'rgb(63,63,183)';
   var STROKE_COLOR = '#000';
   var LINE_DASH = [ 5, 5 ];
   var LAYOUT_MULTIPLIER = 1 / 8; // Fraction offset of the text from the background's border
@@ -47,8 +47,8 @@ define( function( require ) {
     var leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, backgroundOptions );
     var rightNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, backgroundOptions );
 
-    var plusText = new Text( '+', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
-    var equalsSignText = new Text( '=', { font: EQUATION_FONT, fill: EQUATION_COLOR } );
+    var plusText = new Text( '+', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
+    var equalsSignText = new Text( '=', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
 
     var numberDisplayBox = new HBox( {
       children: [ leftNumberDisplayBackground, plusText, rightNumberDisplayBackground ],
@@ -56,8 +56,8 @@ define( function( require ) {
       resize: false // since we toggle the stroke
     } );
 
-    var leftTermText = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
-    var rightTermText = new Text( '', { font: TERM_FONT, fill: EQUATION_COLOR } );
+    var leftTermText = new Text( '', { font: TERM_FONT, fill: MakeATenConstants.EQUATION_FILL } );
+    var rightTermText = new Text( '', { font: TERM_FONT, fill: MakeATenConstants.EQUATION_FILL } );
 
     this.addChild( leftTermText );
     this.addChild( rightTermText );
