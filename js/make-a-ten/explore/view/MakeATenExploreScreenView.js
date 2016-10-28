@@ -55,25 +55,23 @@ define( function( require ) {
 
     MakeATenCommonView.call( this, model );
 
-    // @public {BooleanProperty} - Whether the total (sum) is hidden
-    this.hideTotalProperty = new BooleanProperty( false );
+    // @private {BooleanProperty} - Whether the total (sum) is hidden
+    this.hideSumProperty = new BooleanProperty( false );
 
     var sumText = new Text( '0', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
-    var equalsSignNode = new Text( '=', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
-
-    var spaceBetweenSumAndEquals = 15; // spacing between equation elements
-    // Perform the layout by placing everything in an HBox.
-    this.equationHBox = new HBox( {
-      children: [
-        sumText,
-        equalsSignNode
-      ], spacing: spaceBetweenSumAndEquals
-    } );
-
     model.sumProperty.linkAttribute( sumText, 'text' );
 
-    this.addChild( this.equationHBox );
+    // @private {HBox} - Displays the sum of our numbers and an equals sign, e.g. "256 ="
+    this.sumNode = new HBox( {
+      children: [
+        sumText,
+        new Text( '=', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } )
+      ], spacing: 15
+    } );
 
+    this.addChild( this.sumNode );
+
+    // @private {ExplorePanel} - Shows 100,10,1 that can be dragged.
     this.explorePanel = new ExplorePanel( this );
     this.addChild( this.explorePanel );
 
@@ -82,7 +80,7 @@ define( function( require ) {
     this.addChild( new MoveCueNode( model.moveCue ) );
     this.addChild( new SplitCueNode( model.splitCue ) );
 
-    var hideTotalText = new Text( makeATenHideTotalString, {
+    var hideSumText = new Text( makeATenHideTotalString, {
       font: new PhetFont( {
         size: 25,
         weight: 'bold'
@@ -90,19 +88,16 @@ define( function( require ) {
       fill: 'black'
     } );
 
-    this.hideTotalCheckBox = new CheckBox( hideTotalText, this.hideTotalProperty, {
+    // @private {CheckBox} - When checked, hides the sum in the upper-left
+    this.hideSumCheckBox = new CheckBox( hideSumText, this.hideSumProperty, {
       spacing: 10,
       boxWidth: 30
     } );
-    this.addChild( this.hideTotalCheckBox );
+    this.hideSumCheckBox.touchArea = this.hideSumCheckBox.localBounds.dilatedXY( 10, 4 );
+    this.addChild( this.hideSumCheckBox );
 
-    this.hideTotalCheckBox.right = this.layoutBounds.right - 110;
-    this.hideTotalCheckBox.bottom = this.layoutBounds.bottom - 20;
-
-    this.hideTotalCheckBox.touchArea = this.hideTotalCheckBox.localBounds.dilatedXY( 10, 4 );
-
-    this.hideTotalProperty.link( function( hideTotal ) {
-      self.equationHBox.visible = !hideTotal;
+    this.hideSumProperty.link( function( hideSum ) {
+      self.sumNode.visible = !hideSum;
     } );
 
     this.layoutControls();
@@ -122,11 +117,11 @@ define( function( require ) {
       this.explorePanel.centerX = visibleBounds.centerX;
       this.explorePanel.bottom = visibleBounds.bottom - 10;
 
-      this.hideTotalCheckBox.left = this.explorePanel.right + 20;
-      this.hideTotalCheckBox.bottom = visibleBounds.bottom - 10;
+      this.hideSumCheckBox.left = this.explorePanel.right + 20;
+      this.hideSumCheckBox.bottom = visibleBounds.bottom - 10;
 
-      this.equationHBox.left = visibleBounds.left + 30;
-      this.equationHBox.top = visibleBounds.top + 30;
+      this.sumNode.left = visibleBounds.left + 30;
+      this.sumNode.top = visibleBounds.top + 30;
     },
 
     /**
@@ -149,6 +144,7 @@ define( function( require ) {
     addPaperNumberNode: function( paperNumberNode ) {
       MakeATenCommonView.prototype.addPaperNumberNode.call( this, paperNumberNode );
 
+      // Add listeners
       paperNumberNode.moveEmitter.addListener( this.numberMoveListener );
       paperNumberNode.splitEmitter.addListener( this.numberSplitListener );
       paperNumberNode.interactionStartedEmitter.addListener( this.numberInteractionListener );
@@ -160,16 +156,17 @@ define( function( require ) {
      * @override
      */
     removePaperNumberNode: function( paperNumberNode ) {
+      // Remove listeners
       paperNumberNode.paperNumber.endDragEmitter.removeListener( this.numberDragFinishedListener );
       paperNumberNode.paperNumber.endAnimationEmitter.removeListener( this.numberAnimationFinishedListener );
       paperNumberNode.interactionStartedEmitter.removeListener( this.numberInteractionListener );
       paperNumberNode.splitEmitter.removeListener( this.numberSplitListener );
       paperNumberNode.moveEmitter.removeListener( this.numberMoveListener );
 
+      // Detach any attached cues
       if ( this.model.moveCue.paperNumberProperty.value === paperNumberNode.paperNumber ) {
         this.model.moveCue.detach();
       }
-
       if ( this.model.splitCue.paperNumberProperty.value === paperNumberNode.paperNumber ) {
         this.model.splitCue.detach();
       }
@@ -262,7 +259,7 @@ define( function( require ) {
     reset: function() {
       MakeATenCommonView.prototype.reset.call( this );
 
-      this.hideTotalProperty.reset();
+      this.hideSumProperty.reset();
     }
   } );
 } );
