@@ -42,6 +42,9 @@ define( function( require ) {
     // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
     step: function( dt ) {
       MakeATenCommonModel.prototype.step.call( this, dt );
+
+      this.moveCue.step( dt );
+      this.splitCue.step( dt );
     },
 
     /**
@@ -96,7 +99,13 @@ define( function( require ) {
         // evenly distribute across the screen
         var x = MakeATenConstants.LAYOUT_BOUNDS.width * ( 1 + index ) / ( initialNumbers.length + 1 );
         var initialNumberPosition = new Vector2( x, MakeATenConstants.LAYOUT_BOUNDS.height / 2.5 );
-        self.addPaperNumber( new PaperNumber( number, initialNumberPosition ) );
+        var paperNumber = new PaperNumber( number, initialNumberPosition );
+        self.addPaperNumber( paperNumber );
+
+        self.moveCue.attachToNumber( paperNumber );
+        if ( number > 1 ) {
+          self.splitCue.attachToNumber( paperNumber );
+        }
       } );
     },
 
@@ -104,6 +113,8 @@ define( function( require ) {
       MakeATenCommonModel.prototype.reset.call( this );
 
       this.sumProperty.reset();
+      this.moveCue.reset();
+      this.splitCue.reset();
       this.addInitialNumbers();
     }
   } );

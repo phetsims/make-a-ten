@@ -39,8 +39,12 @@ define( function( require ) {
     // @public {NumberProperty} - What the visibility of the cue shoudl be.
     this.opacityProperty = new NumberProperty( 1 );
 
-    // @private {CueState}
-    this.state = CueState.UNATTACHED;
+    // @private {Property.<CueState>}
+    this.stateProperty = new Property( CueState.UNATTACHED );
+
+    this.stateProperty.link( function( state ) {
+      console.log( state );
+    } );
   }
 
   makeATen.register( 'Cue', Cue );
@@ -53,7 +57,7 @@ define( function( require ) {
      * @param {number} dt - Changed model time
      */
     step: function( dt ) {
-      if ( this.state === CueState.FADING ) {
+      if ( this.stateProperty.value === CueState.FADING ) {
         // Fade
         this.opacityProperty.value = Math.max( 0, this.opacityProperty.value - FADE_SPEED * dt );
 
@@ -71,9 +75,9 @@ define( function( require ) {
      * @param {PaperNumber} paperNumber
      */
     attachToNumber: function( paperNumber ) {
-      if ( this.state === CueState.FADED ) { return; }
+      if ( this.stateProperty.value === CueState.FADED ) { return; }
 
-      this.state = ( this.state === CueState.FADING ) ? this.state : CueState.ATTACHED;
+      this.stateProperty.value = ( this.stateProperty.value === CueState.FADING ) ? this.stateProperty.value : CueState.ATTACHED;
       this.paperNumberProperty.value = paperNumber;
       this.visibilityProperty.value = true;
     },
@@ -83,9 +87,9 @@ define( function( require ) {
      * @public
      */
     detach: function() {
-      if ( this.state === CueState.FADED ) { return; }
+      if ( this.stateProperty.value === CueState.FADED ) { return; }
 
-      if ( this.state === CueState.FADING ) {
+      if ( this.stateProperty.value === CueState.FADING ) {
         this.changeToFaded();
       }
       else {
@@ -98,10 +102,10 @@ define( function( require ) {
      * @public
      */
     triggerFade: function() {
-      if ( this.state === CueState.ATTACHED ) {
-        this.state = CueState.FADING;
+      if ( this.stateProperty.value === CueState.ATTACHED ) {
+        this.stateProperty.value = CueState.FADING;
       }
-      else if ( this.state === CueState.UNATTACHED ) {
+      else if ( this.stateProperty.value === CueState.UNATTACHED ) {
         // If we're not attached, just immediately switch to fully faded.
         this.changeToFaded();
       }
@@ -120,7 +124,7 @@ define( function( require ) {
      * @private
      */
     changeToUnattached: function() {
-      this.state = CueState.UNATTACHED;
+      this.stateProperty.value = CueState.UNATTACHED;
       this.visibilityProperty.value = false;
       this.opacityProperty.value = 1;
       this.paperNumberProperty.value = null;
@@ -131,7 +135,7 @@ define( function( require ) {
      * @private
      */
     changeToFaded: function() {
-      this.state = CueState.FADED;
+      this.stateProperty.value = CueState.FADED;
       this.visibilityProperty.value = false;
       this.opacityProperty.value = 1;
       this.paperNumberProperty.value = null;

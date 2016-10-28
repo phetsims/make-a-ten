@@ -37,6 +37,15 @@ define( function( require ) {
 
     var addPaperNumberCallback = this.addPaperNumber.bind( this );
 
+    // @private {Function} - Called with function( paperNumberNode ) on number moves
+    this.numberMoveListener = this.onNumberMove.bind( this );
+
+    // @private {Function} - Called with function( paperNumberNode ) on number splits
+    this.numberSplitListener = this.onNumberSplit.bind( this );
+
+    // @private {Function} - Called with function( paperNumberNode ) when a number begins to be interacted with.
+    this.numberInteractionListener = this.onNumberInteractionStarted.bind( this );
+
     MakeATenCommonView.call( this, model, addPaperNumberCallback );
 
     // @public {BooleanProperty} - Whether the total (sum) is hidden
@@ -174,6 +183,70 @@ define( function( require ) {
           paperNumber.returnToOrigin( false );
         }
       } );
+    },
+
+    /**
+     * @override
+     */
+    addPaperNumberNode: function( paperNumberNode ) {
+      MakeATenCommonView.prototype.addPaperNumberNode.call( this, paperNumberNode );
+
+      paperNumberNode.moveEmitter.addListener( this.numberMoveListener );
+      paperNumberNode.splitEmitter.addListener( this.numberSplitListener );
+      paperNumberNode.interactionStartedEmitter.addListener( this.numberInteractionListener );
+    },
+
+    /**
+     * @override
+     */
+    removePaperNumberNode: function( paperNumberNode ) {
+      paperNumberNode.interactionStartedEmitter.removeListener( this.numberInteractionListener );
+      paperNumberNode.splitEmitter.removeListener( this.numberSplitListener );
+      paperNumberNode.moveEmitter.removeListener( this.numberMoveListener );
+
+      if ( this.model.moveCue.paperNumberProperty.value === paperNumberNode.paperNumber ) {
+        this.model.moveCue.detach();
+      }
+
+      if ( this.model.splitCue.paperNumberProperty.value === paperNumberNode.paperNumber ) {
+        this.model.splitCue.detach();
+      }
+
+      MakeATenCommonView.prototype.removePaperNumberNode.call( this, paperNumberNode );
+    },
+
+    /**
+     * Called when a paper number node drag starts.
+     * @private
+     *
+     * @param {PaperNumberNode} paperNumberNode
+     */
+    onNumberMove: function( paperNumberNode ) {
+      this.model.moveCue.triggerFade();
+    },
+
+    /**
+     * Called when a paper number node is split.
+     * @private
+     *
+     * @param {PaperNumberNode} paperNumberNode
+     */
+    onNumberSplit: function( paperNumberNode ) {
+      this.model.splitCue.triggerFade();
+    },
+
+    /**
+     * Called when a paper number node starts being interacted with.
+     * @private
+     *
+     * @param {PaperNumberNode} paperNumberNode
+     */
+    onNumberInteractionStarted: function( paperNumberNode ) {
+      var paperNumber = paperNumberNode.paperNumber;
+      this.model.moveCue.attachToNumber( paperNumber );
+      if ( paperNumber.numberValueProperty.value > 1 ) {
+        this.model.splitCue.attachToNumber( paperNumber );
+      }
     },
 
     /**

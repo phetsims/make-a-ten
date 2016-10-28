@@ -12,6 +12,7 @@ define( function( require ) {
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
   var arrayRemove = require( 'PHET_CORE/arrayRemove' );
+  var Emitter = require( 'AXON/Emitter' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
@@ -91,6 +92,15 @@ define( function( require ) {
     // @public {PaperNumber} - Our model
     this.paperNumber = paperNumber;
 
+    // @public {Emitter} - Triggered with self when this paper number node starts to get dragged
+    this.moveEmitter = new Emitter();
+
+    // @public {Emitter} - Triggered with self when this paper number node is split
+    this.splitEmitter = new Emitter();
+
+    // @public {Emitter} - Triggered when user interaction with this paper number begins.
+    this.interactionStartedEmitter = new Emitter();
+
     // @private {Bounds2}
     this.availableViewBoundsProperty = availableViewBoundsProperty;
 
@@ -123,6 +133,9 @@ define( function( require ) {
         // Record our initial offset (where on the paper number the pointer is).
         var viewPosition = self.globalToParentPoint( event.pointer.point );
         dragOffset = paperNumber.positionProperty.value.minus( viewPosition );
+
+        self.interactionStartedEmitter.emit1( self );
+        self.moveEmitter.emit1( self );
       },
 
       drag: function( event, trail ) {
@@ -163,6 +176,10 @@ define( function( require ) {
         }
 
         paperNumber.changeNumber( amountRemaining );
+
+        self.interactionStartedEmitter.emit1( self );
+        self.splitEmitter.emit1( self );
+
         createAndDragNumber( event, amountToRemove, viewPosition );
       }
     } );
