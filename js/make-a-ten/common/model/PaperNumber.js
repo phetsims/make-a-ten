@@ -68,9 +68,6 @@ define( function( require ) {
 
     // @public {Emitter} - Fires when the animation towards our destination ends (we hit our destination).
     this.endAnimationEmitter = new Emitter();
-
-    // @private {Vector2} - How fast the current animation will progress towards the destination.
-    this.animationVelocity = MakeATenConstants.ANIMATION_VELOCITY;
   }
 
   makeATen.register( 'PaperNumber', PaperNumber );
@@ -88,9 +85,9 @@ define( function( require ) {
 
         // perform any animation
         var distanceToDestination = currentPosition.distance( this.destination );
-        if ( distanceToDestination > dt * this.animationVelocity ) {
+        if ( distanceToDestination > dt * MakeATenConstants.ANIMATION_VELOCITY ) {
           // Move a step toward the destination.
-          var stepVector = this.destination.minus( currentPosition ).setMagnitude( this.animationVelocity * dt );
+          var stepVector = this.destination.minus( currentPosition ).setMagnitude( MakeATenConstants.ANIMATION_VELOCITY * dt );
           this.positionProperty.value = currentPosition.plus( stepVector );
 
         }
@@ -159,12 +156,9 @@ define( function( require ) {
     /**
      * @param {Vector2} destination
      * @param {boolean} animate
-     * @param {number} [animationVelocity]
      */
-    setDestination: function( destination, animate, animationVelocity ) {
+    setDestination: function( destination, animate ) {
       this.destination = destination;
-      // TODO: determine if we need the velocity override?
-      this.animationVelocity = ( animationVelocity !== undefined ) ? animationVelocity : MakeATenConstants.ANIMATION_VELOCITY;
 
       if ( animate ) {
         this.animating = true;
@@ -191,15 +185,6 @@ define( function( require ) {
       var originBounds = viewBounds.withMaxY( viewBounds.maxY - localBounds.height / 2 - extraBottomPadding )
                                    .shifted( -center.x, -center.y );
       this.setDestination( originBounds.closestPointTo( newDestination ), animate );
-    },
-
-    /**
-     * Return the shape to the place where it was originally created.
-     * @param {boolean} animate
-     * @param {number} [animationVelocity]
-     */
-    returnToOrigin: function( animate, animationVelocity ) {
-      this.setDestination( this.positionProperty.initialValue, animate, animationVelocity );
     },
 
     /**
