@@ -243,6 +243,9 @@ define( function( require ) {
         self.moveTarget.mouseArea = self.moveTarget.touchArea = self.moveTarget.rectBounds = fullBounds.withMinY( boundaryY );
         self.splitTarget.mouseArea = self.splitTarget.touchArea = self.splitTarget.rectBounds = fullBounds.withMaxY( boundaryY );
       }
+
+      // Changing the number must have happened from an interaction. If combined, we want to put cues on this.
+      this.interactionStartedEmitter.emit1( this );
     },
 
     /**

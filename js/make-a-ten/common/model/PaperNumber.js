@@ -230,8 +230,8 @@ define( function( require ) {
         }
       }
 
-      // TODO: remove for production, or assert?
-      console.log( 'WARNING: outside number bounds' );
+      // TODO: is this ever a problem?
+      assert && assert( false, 'WARNING: outside number bounds' );
 
       return this.baseNumbers[ this.baseNumbers.length - 1 ];
     }

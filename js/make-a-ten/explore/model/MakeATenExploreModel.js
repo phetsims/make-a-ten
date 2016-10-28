@@ -30,14 +30,6 @@ define( function( require ) {
     this.moveCue = new Cue();
     this.splitCue = new Cue();
 
-    // TODO: remove this debugging statement
-    this.moveCue.stateProperty.link( function( state ) {
-      console.log( 'move: ' + state );
-    } );
-    this.splitCue.stateProperty.link( function( state ) {
-      console.log( 'split: ' + state );
-    } );
-
     this.addInitialNumbers();
 
     this.paperNumbers.lengthProperty.link( this.calculateTotal.bind( this ) );
