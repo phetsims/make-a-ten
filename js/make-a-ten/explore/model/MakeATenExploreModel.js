@@ -11,11 +11,8 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Vector2 = require( 'DOT/Vector2' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
-  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
-  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var Cue = require( 'MAKE_A_TEN/make-a-ten/explore/model/Cue' );
 
   /**
@@ -83,24 +80,18 @@ define( function( require ) {
       var self = this;
 
       // Check for an array of numbers, e.g. ?exploreNumbers=10,51, where 0 indicates none
-      var initialNumbers = QueryStringMachine.get( 'exploreNumbers', {
+      this.addMultipleNumbers( QueryStringMachine.get( 'exploreNumbers', {
         type: 'array',
         elementSchema: {
           type: 'number'
         },
         defaultValue: [ 10 ]
-      } );
-      _.forEach( initialNumbers, function( number, index ) {
-        if ( !number ) { return; } // TODO: how to get empty arrays?
+      } ) );
 
-        // evenly distribute across the screen
-        var x = MakeATenConstants.LAYOUT_BOUNDS.width * ( 1 + index ) / ( initialNumbers.length + 1 );
-        var initialNumberPosition = new Vector2( x, MakeATenConstants.LAYOUT_BOUNDS.height / 2.5 );
-        var paperNumber = new PaperNumber( number, initialNumberPosition );
-        self.addPaperNumber( paperNumber );
-
+      // Attach cues to any available numbers
+      this.paperNumbers.forEach( function( paperNumber ) {
         self.moveCue.attachToNumber( paperNumber );
-        if ( number > 1 ) {
+        if ( paperNumber.numberValueProperty.value > 1 ) {
           self.splitCue.attachToNumber( paperNumber );
         }
       } );

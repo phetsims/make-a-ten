@@ -83,9 +83,8 @@ define( function( require ) {
         model.additionTerms.rightTermProperty.value = value;
       }
 
-      model.createTerms();
+      model.setupTerms();
       model.additionTerms.activeTermProperty.value = ActiveTerm.NONE;
-
     }
 
     var keyBoardPanel = new KeyboardPanel( onNumberSubmit, MAX_DIGITS );

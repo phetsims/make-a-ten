@@ -12,6 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
+  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -76,6 +77,32 @@ define( function( require ) {
       this.paperNumbers.remove( paperNumber );
     },
 
+    // TODO: doc
+    removeAllPaperNumbers: function() {
+      this.paperNumbers.clear();
+    },
+
+    /**
+     * Given an array of integers, create and add paper numbers for each that are evenly distributed across the screen.
+     * @public
+     *
+     * @param {Array.<number>} numbers
+     */
+    addMultipleNumbers: function( numbers ) {
+      for ( var i = 0; i < numbers.length; i++ ) {
+        var number = numbers[ i ];
+
+        // Ingore 0s
+        if ( !number ) { continue; }
+
+        // evenly distribute across the screen
+        var x = MakeATenConstants.LAYOUT_BOUNDS.width * ( 1 + i ) / ( numbers.length + 1 );
+        var initialNumberPosition = new Vector2( x, MakeATenConstants.LAYOUT_BOUNDS.height / 2.5 );
+        var paperNumber = new PaperNumber( number, initialNumberPosition );
+        this.addPaperNumber( paperNumber );
+      }
+    },
+
     /**
      *
      * @param {PaperNumber} paperNumber1
@@ -102,9 +129,7 @@ define( function( require ) {
     },
 
     reset: function() {
-      // Used by all screens
-      this.paperNumbers.clear();
+      this.removeAllPaperNumbers();
     }
-
   } );
 } );

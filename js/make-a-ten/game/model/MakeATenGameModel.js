@@ -14,14 +14,11 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var Vector2 = require( 'DOT/Vector2' );
   var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
   var NumberChallengeFactory = require( 'MAKE_A_TEN/make-a-ten/game/model/NumberChallengeFactory' );
   var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
   var Level = require( 'MAKE_A_TEN/make-a-ten/game/model/Level' );
   var AdditionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/AdditionTerms' );
-  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
-  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
   // Level descriptions
   var gameInfoLevel1String = require( 'string!MAKE_A_TEN/game.info.level1' );
@@ -156,7 +153,7 @@ define( function( require ) {
      */
     moveToChoosingLevel: function() {
       this.gameStateProperty.value = GameState.CHOOSING_LEVEL;
-      this.paperNumbers.clear();
+      this.removeAllPaperNumbers();
     },
 
     /**
@@ -166,20 +163,10 @@ define( function( require ) {
      * @param {NumberChallenge} numberChallenge
      */
     setupChallenge: function( numberChallenge ) {
-      var self = this;
-
-      this.paperNumbers.clear();
+      this.removeAllPaperNumbers();
       this.additionTerms.leftTermProperty.value = numberChallenge.leftTerm;
       this.additionTerms.rightTermProperty.value = numberChallenge.rightTerm;
-
-      _.each( [ numberChallenge.leftTerm, numberChallenge.rightTerm ], function( numberValue, index ) {
-        if ( numberValue ) {
-          // at 1/3 and 2/3 of bounds (approximately)
-          var x = MakeATenConstants.LAYOUT_BOUNDS.width * ( 1 + index ) / 3;
-          var initialPosition = new Vector2( x, MakeATenConstants.LAYOUT_BOUNDS.height / 2.5 );
-          self.addPaperNumber( new PaperNumber( numberValue, initialPosition ) );
-        }
-      } );
+      this.addMultipleNumbers( [ numberChallenge.leftTerm, numberChallenge.rightTerm ] );
     },
 
     /**
