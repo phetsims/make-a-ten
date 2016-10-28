@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Vector2 = require( 'DOT/Vector2' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Image = require( 'SCENERY/nodes/Image' );
@@ -19,13 +20,16 @@ define( function( require ) {
   var PaperNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperNumberNode' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
+  var MAX_SUM = 9999;
+
   /**
    * @constructor
    *
    * @param {MakeATenExploreScreenView} screenView
+   * @param {NumberProperty} sumProperty
    * @param {Object} [options] - Passed to Node
    */
-  function ExplorePanel( screenView, options ) {
+  function ExplorePanel( screenView, sumProperty, options ) {
 
     options = _.extend( {
       fill: MakeATenConstants.PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR,
@@ -51,6 +55,11 @@ define( function( require ) {
           return image;
         } )
       } );
+
+      // We need to be disabled if adding this number would increase the sum past the maximum sum.
+      new DerivedProperty( [ sumProperty ], function( sum ) {
+        return sum + numberValue <= MAX_SUM;
+      } ).linkAttribute( node, 'visible' );
 
       node.addInputListener( {
         down: function( event ) {

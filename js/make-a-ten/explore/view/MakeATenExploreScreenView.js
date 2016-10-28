@@ -72,7 +72,7 @@ define( function( require ) {
     this.addChild( this.sumNode );
 
     // @private {ExplorePanel} - Shows 100,10,1 that can be dragged.
-    this.explorePanel = new ExplorePanel( this );
+    this.explorePanel = new ExplorePanel( this, model.sumProperty );
     this.addChild( this.explorePanel );
 
     this.addChild( this.paperNumberLayerNode );
