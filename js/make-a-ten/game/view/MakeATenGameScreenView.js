@@ -141,8 +141,6 @@ define( function( require ) {
      * @param {GameState} gameState
      */
     handleGameStateChange: function( gameState ) {
-      console.log( gameState );
-
       if ( gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) {
         this.model.createTerms( this.model.currentChallengeProperty.value );
       }
