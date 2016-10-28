@@ -18,6 +18,7 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var PaperNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperNumberNode' );
+  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
   var MAX_SUM = 9999;
@@ -70,9 +71,13 @@ define( function( require ) {
 
           // We want this relative to the screen view, so it is guaranteed to be the proper view coordinates.
           var viewPosition = screenView.globalToLocalPoint( event.pointer.point );
+          var paperNumber = new PaperNumber( numberValue, new Vector2() );
+
+          // Once we have the number's bounds, we set the position so that our pointer is in the middle of the drag target.
+          paperNumber.setDestination( viewPosition.minus( paperNumber.getDragTargetOffset() ), false );
 
           // Create and start dragging the new paper number node
-          screenView.createAndDragNumber( event, numberValue, viewPosition );
+          screenView.addAndDragNumber( event, paperNumber );
         }
       } );
 

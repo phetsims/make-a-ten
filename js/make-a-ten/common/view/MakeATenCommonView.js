@@ -11,11 +11,9 @@ define( function( require ) {
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
   var arrayRemove = require( 'PHET_CORE/arrayRemove' );
-  var Vector2 = require( 'DOT/Vector2' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Property = require( 'AXON/Property' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var PaperNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperNumberNode' );
   var ArithmeticRules = require( 'MAKE_A_TEN/make-a-ten/common/model/ArithmeticRules' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
@@ -40,12 +38,12 @@ define( function( require ) {
     this.paperNumberNodes = []; // @private {Array.<PaperNumberNode>} - All PaperNumberNodes available
     this.paperNumberNodeMap = {}; // @private {number} PaperNumber.id => {PaperNumberNode} - lookup map for efficiency
 
-    var createNumberCallback = this.createAndDragNumber.bind( this );
+    var addAndDragNumberCallback = this.addAndDragNumber.bind( this );
 
     // TODO: factor out into bind?
     function handlePaperNumberAdded( addedPaperNumber ) {
       var combineCallback = self.tryToCombineNumbers.bind( self, addedPaperNumber );
-      var paperNumberNode = new PaperNumberNode( addedPaperNumber, self.availableViewBoundsProperty, createNumberCallback, combineCallback );
+      var paperNumberNode = new PaperNumberNode( addedPaperNumber, self.availableViewBoundsProperty, addAndDragNumberCallback, combineCallback );
       self.addPaperNumberNode( paperNumberNode );
     }
 
@@ -86,21 +84,13 @@ define( function( require ) {
   return inherit( ScreenView, MakeATenCommonView, {
 
     /**
-     * Given a number and a pointer's position in view coordinates, create a paper number and a corresponding node,
-     * position it so that the user's pointer is over the move-zone of the paper number, and start dragging it.
+     * Add a paper number to the model and immediately start dragging it with the provided event.
      * @public
      *
      * @param {Event} event - The Scenery event that triggered this.
-     * @param {number} numberVale - The numeric value for the new paper number.
-     * @param {Vector2} viewPosition - Location in view coordinates of the user's pointer
+     * @param {PaperNumber} paperNumber - The paper number to add and then drag
      */
-    createAndDragNumber: function( event, numberValue, viewPosition ) {
-      // TODO: do we want an initial position ever?
-      var paperNumber = new PaperNumber( numberValue, new Vector2() );
-
-      // Once we have the number's bounds, we set the position so that our pointer is in the middle of the drag target.
-      paperNumber.setDestination( viewPosition.minus( paperNumber.getDragTargetOffset() ), false );
-
+    addAndDragNumber: function( event, paperNumber ) {
       // Add it and lookup the related node.
       this.model.addPaperNumber( paperNumber );
 
@@ -177,7 +167,7 @@ define( function( require ) {
           // repel numbers - show rejection
           var paperNumber1 = draggedNode.paperNumber;
           var paperNumber2 = droppedNodes[ i ].paperNumber;
-          this.model.repelAway( paperNumber1, paperNumber2 );
+          this.model.repelAway( this.availableViewBoundsProperty.value, paperNumber1, paperNumber2 );
           return;
         }
       }

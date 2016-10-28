@@ -17,6 +17,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var ArithmeticRules = require( 'MAKE_A_TEN/make-a-ten/common/model/ArithmeticRules' );
+  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
 
@@ -79,10 +80,10 @@ define( function( require ) {
    *
    * @param {PaperNumber} paperNumber
    * @param {Property.<Bounds2>} availableViewBoundsProperty
-   * @param {Function} createAndDragNumber - function( event, numberValue, viewPosition ), creates a new dragged number.
+   * @param {Function} addAndDragNumber - function( event, paperNumber ), adds and starts a drag for a number
    * @param {Function} tryToCombineNumbers - function(), called with no arguments to try to combine our paper number.
    */
-  function PaperNumberNode( paperNumber, availableViewBoundsProperty, createAndDragNumber, tryToCombineNumbers ) {
+  function PaperNumberNode( paperNumber, availableViewBoundsProperty, addAndDragNumber, tryToCombineNumbers ) {
     var self = this;
 
     Node.call( this );
@@ -185,7 +186,8 @@ define( function( require ) {
         self.interactionStartedEmitter.emit1( self );
         self.splitEmitter.emit1( self );
 
-        createAndDragNumber( event, amountToRemove, viewPosition );
+        var newPaperNumber = new PaperNumber( amountToRemove, paperNumber.positionProperty.value );
+        addAndDragNumber( event, newPaperNumber );
       }
     } );
 
