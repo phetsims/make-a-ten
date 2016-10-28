@@ -11,9 +11,12 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Vector2 = require( 'DOT/Vector2' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
+  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var ArrowCue = require( 'MAKE_A_TEN/make-a-ten/explore/model/ArrowCue' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
   /**
    * @constructor
@@ -23,6 +26,9 @@ define( function( require ) {
     this.sumProperty = new NumberProperty( 0 );
 
     MakeATenCommonModel.call( this );
+
+    var initialNumberPosition = new Vector2( MakeATenConstants.LAYOUT_BOUNDS.centerX, MakeATenConstants.LAYOUT_BOUNDS.height / 2.5 );
+    this.addPaperNumber( new PaperNumber( 10, initialNumberPosition ) );
 
     this.arrowCue = new ArrowCue();
 
