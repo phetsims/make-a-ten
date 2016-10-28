@@ -63,7 +63,8 @@ define( function( require ) {
     this.levelNumberText = new Text( 'Level X', {
       font: LEVEL_NUMBER_FONT,
       fill: TEXT_COLOR,
-      pickable: false
+      pickable: false,
+      maxWidth: 120
     } );
     this.addChild( this.levelNumberText );
 
@@ -71,7 +72,8 @@ define( function( require ) {
     this.levelDescriptionText = new Text( 'Blah blah', {
       font: LEVEL_DESCRIPTION_FONT,
       fill: TEXT_COLOR,
-      pickable: false
+      pickable: false,
+      maxWidth: 700
     } );
     this.addChild( this.levelDescriptionText );
 

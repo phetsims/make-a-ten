@@ -40,7 +40,7 @@ define( function( require ) {
 
     var labelArrowBox = new HBox( {
       children: [
-        new Text( buttonText, { font: LABEL_FONT, fill: 'black' } ),
+        new Text( buttonText, { font: LABEL_FONT, fill: 'black', maxWidth: 150 } ),
         new Path( arrowShape, { fill: 'black' } )
       ],
       spacing: 15

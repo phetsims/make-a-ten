@@ -35,7 +35,8 @@ define( function( require ) {
     var buttonOptions = {
       font: new PhetFont( 18 ),
       baseColor: '#F2E916',
-      cornerRadius: 4
+      cornerRadius: 4,
+      maxTextWidth: 100
     };
 
     var submitNumberButton = new TextPushButton( makeATenKeypadSubmitString, _.extend( {

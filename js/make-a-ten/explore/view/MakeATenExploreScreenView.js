@@ -81,6 +81,7 @@ define( function( require ) {
     this.addChild( new SplitCueNode( model.splitCue ) );
 
     var hideSumText = new Text( makeATenHideTotalString, {
+      maxWidth: 150,
       font: new PhetFont( {
         size: 25,
         weight: 'bold'

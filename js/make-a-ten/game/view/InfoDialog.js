@@ -30,16 +30,23 @@ define( function( require ) {
    * @param {Array.<Level>} levels - All game levels
    */
   function InfoDialog( levels ) {
-    var padWidth = new Text( StringUtils.format( gameInfoLevelXString, '10' ), { font: LEVEL_NUMBER_FONT } ).width + 20;
+    var levelMaxWidth = 100;
+
+    var padWidth = new Text( StringUtils.format( gameInfoLevelXString, '10' ), {
+      font: LEVEL_NUMBER_FONT,
+      maxWidth: levelMaxWidth
+    } ).width + 20;
     function createLevelNode( level ) {
       return new Node( {
         children: [
           new Text( StringUtils.format( gameInfoLevelXString, '' + level.number ), {
-            font: LEVEL_NUMBER_FONT
+            font: LEVEL_NUMBER_FONT,
+            maxWidth: levelMaxWidth
           } ),
           new Text( level.description, {
             font: LEVEL_DESCRIPTION_FONT,
-            x: padWidth
+            x: padWidth,
+            maxWidth: 500
           } )
         ]
       } );
