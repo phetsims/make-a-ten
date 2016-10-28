@@ -21,27 +21,24 @@ define( function( require ) {
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
   // constants
-  var TERM_FONT = new PhetFont( { size: 45, weight: 'bold' } );
   var EQUATION_FONT = new PhetFont( { size: 45, weight: 'bold' } );
   var STROKE_COLOR = '#000';
-  var LINE_DASH = [ 5, 5 ];
   var LAYOUT_MULTIPLIER = 1 / 8; // Fraction offset of the text from the background's border
 
   /**
    * @constructor
+   *
+   * @param {AdditionTerms} additionTerms - Our model, contains information about the left/right and active terms
+   * @param {boolean} highlightBorders - Whether there should be highlighted borders around the active term.
    */
-  function AdditionTermsNode( additionTerms, options ) {
-    options = _.extend( {
-      highlightBorders: false
-    }, options );
-
-    Node.call( this, options );
+  function AdditionTermsNode( additionTerms, highlightBorders ) {
+    Node.call( this );
 
     var backgroundOptions = {
       stroke: STROKE_COLOR,
-      lineDash: LINE_DASH,
+      lineDash: [ 5, 5 ],
       lineWidth: 2,
-      visible: options.highlightBorders
+      visible: highlightBorders
     };
 
     var leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, backgroundOptions );
@@ -56,8 +53,8 @@ define( function( require ) {
       resize: false // since we toggle the stroke
     } );
 
-    var leftTermText = new Text( '', { font: TERM_FONT, fill: MakeATenConstants.EQUATION_FILL } );
-    var rightTermText = new Text( '', { font: TERM_FONT, fill: MakeATenConstants.EQUATION_FILL } );
+    var leftTermText = new Text( '', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
+    var rightTermText = new Text( '', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
 
     this.addChild( leftTermText );
     this.addChild( rightTermText );
@@ -73,32 +70,26 @@ define( function( require ) {
       }
     }
 
-    function termToString( termValue ) {
-      assert && assert( typeof termValue === 'number', 'Sanity, due to the previous implementation' );
-      return termValue ? ( '' + termValue ) : '';
-    }
-
-    additionTerms.leftTermProperty.link( function( leftTerm ) {
-      leftTermText.text = termToString( leftTerm );
+    additionTerms.leftTermProperty.link( function( term ) {
+      leftTermText.text = term ? term : '';
       layout();
     } );
 
-    additionTerms.rightTermProperty.link( function( rightTerm ) {
-      rightTermText.text = termToString( rightTerm );
+    additionTerms.rightTermProperty.link( function( term ) {
+      rightTermText.text = term ? term : '';
       layout();
     } );
 
-    // TODO: separate highlightBorders into a separate parameter (presumably)
-    if ( options.highlightBorders ) {
+    // Add highlights if applicable
+    if ( highlightBorders ) {
       additionTerms.activeTermProperty.link( function( term ) {
-        // TODO: improve term enumeration
         leftNumberDisplayBackground.stroke = ( term === ActiveTerm.LEFT ) ? STROKE_COLOR : null;
         rightNumberDisplayBackground.stroke = ( term === ActiveTerm.RIGHT ) ? STROKE_COLOR : null;
         equalsSignText.visible = additionTerms.hasBothTerms();
       } );
     }
 
-    // Vertical layout
+    // Center everything vertically
     var centerY = numberDisplayBox.centerY;
     leftTermText.centerY = centerY;
     rightTermText.centerY = centerY;
@@ -111,5 +102,4 @@ define( function( require ) {
   makeATen.register( 'AdditionTermsNode', AdditionTermsNode );
 
   return inherit( Node, AdditionTermsNode );
-
 } );

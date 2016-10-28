@@ -46,7 +46,7 @@ define( function( require ) {
     this.challengeLayer.addChild( this.paperNumberLayerNode );
 
     // The node that display "12 + 100 = "
-    var additionTermsNode = new AdditionTermsNode( model.additionTerms );
+    var additionTermsNode = new AdditionTermsNode( model.additionTerms, false );
     additionTermsNode.left = this.layoutBounds.left + 38;
     additionTermsNode.top = this.layoutBounds.top + 75;
     this.challengeLayer.addChild( additionTermsNode );

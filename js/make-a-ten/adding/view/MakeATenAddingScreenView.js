@@ -73,9 +73,7 @@ define( function( require ) {
     editButtonBox.top = this.layoutBounds.top + 32;
 
     // The node that display "12 + 100 = "
-    var additionTermsNode = new AdditionTermsNode( model.additionTerms, {
-      highlightBorders: true
-    } );
+    var additionTermsNode = new AdditionTermsNode( model.additionTerms, true );
     this.addChild( additionTermsNode );
 
     additionTermsNode.left = this.layoutBounds.left + 38;
@@ -102,7 +100,6 @@ define( function( require ) {
     model.additionTerms.activeTermProperty.link( function( term ) {
       keyboardPanel.visible = term !== ActiveTerm.NONE;
 
-      keyboardPanel.visible = true;
       if ( term === ActiveTerm.LEFT ) {
         keyboardPanel.setValue( model.additionTerms.leftTermProperty.value );
       }
