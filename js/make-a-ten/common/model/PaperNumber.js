@@ -1,10 +1,8 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- * Represents a number ranging from 1 to 1999. This is the model class that user
- * drags,splits and combines based on certain arithmetic rules.
- *
- * All these numbers are built from a set of few base numbers
+ * Represents a number ranging from 1 to 9999, that the user can interact with. Contains multiple "base numbers"
+ * for each non-zero digit.
  *
  * @author Sharfudeen Ashraf
  */
@@ -23,21 +21,16 @@ define( function( require ) {
   var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
 
-  // Incremented for number IDs
+  // Incremented for PaperNumber IDs
   var nextPaperNumberId = 1;
 
   /**
-   *
-   * @param {number} numberValue
-   * @param {Vector2} initialPosition
-   * @param {Object} options
    * @constructor
+   *
+   * @param {number} numberValue - Numeric value, e.g. 123
+   * @param {Vector2} initialPosition
    */
-  function PaperNumber( numberValue, initialPosition, options ) {
-    options = _.extend( {
-      opacity: 1
-    }, options );
-
+  function PaperNumber( numberValue, initialPosition ) {
     // @public {number} - IDs required for map-like lookup, see https://github.com/phetsims/make-a-ten/issues/199
     this.id = nextPaperNumberId++;
 
@@ -100,22 +93,16 @@ define( function( require ) {
       }
     },
 
+    /**
+     * The number of digits in the number, including zeros, e.g. 1204 has 4 digits.
+     * @public
+     *
+     * @returns {number}
+     */
     get digitLength() {
       assert && assert( this.numberValueProperty.value > 0 );
 
       return MakeATenUtil.digitsInNumber( this.numberValueProperty.value );
-    },
-
-    canPullApart: function() {
-      return this.numberValueProperty.value !== 1;
-    },
-
-    /**
-     * returns the Dimensions of the Model (based on Image Size)
-     * @returns {*}
-     */
-    getDimension: function() {
-      return MakeATenConstants.PAPER_NUMBER_DIMENSIONS[ this.digitLength - 1 ];
     },
 
     /**
@@ -129,15 +116,17 @@ define( function( require ) {
       return this.baseNumbers[ this.baseNumbers.length - 1 ].bounds;
     },
 
-    // TODO: doc
+    /**
+     * Returns the ideal spot to "drag" a number from (near the center of its move target) relative to its origin.
+     * @public
+     *
+     * @returns {Vector2}
+     */
     getDragTargetOffset: function() {
       var bounds = this.getLocalBounds();
 
       var ratio = MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION / 2;
-      var x = bounds.centerX;
-      var y = bounds.minY * ratio + bounds.maxY * ( 1 - ratio );
-
-      return new Vector2( x, y );
+      return new Vector2( bounds.centerX, bounds.minY * ratio + bounds.maxY * ( 1 - ratio ) );
     },
 
     /**
@@ -154,8 +143,12 @@ define( function( require ) {
     },
 
     /**
+     * Sets the destination of the number. If animate is false, it also sets the position.
+     * @public
+     *
      * @param {Vector2} destination
-     * @param {boolean} animate
+     * @param {boolean} animate - Whether to animate. If true, it will slide towards the destination. If false, it will
+     *                            immediately set the position to be the same as the destination.
      */
     setDestination: function( destination, animate ) {
       this.destination = destination;
@@ -206,7 +199,6 @@ define( function( require ) {
         }
       }
 
-      // TODO: is this ever a problem?
       assert && assert( false, 'WARNING: outside number bounds' );
 
       return this.baseNumbers[ this.baseNumbers.length - 1 ];
@@ -224,6 +216,7 @@ define( function( require ) {
 
       var result = [];
 
+      // Divide by 10 each loop, using the remainder and place location to create the place numbers.
       var remainder = number;
       var place = 0;
       while ( remainder ) {
