@@ -59,6 +59,7 @@ define( function( require ) {
     model.paperNumbers.addItemAddedListener( paperNumberAddedListener );
     model.paperNumbers.addItemRemovedListener( paperNumberRemovedListener );
 
+    // Persistent, no need to unlink
     this.availableViewBoundsProperty.lazyLink( function( availableViewBounds ) {
       model.paperNumbers.forEach( function( paperNumber ) {
         paperNumber.setConstrainedDestination( availableViewBounds, paperNumber.positionProperty.value );
@@ -78,7 +79,6 @@ define( function( require ) {
   makeATen.register( 'MakeATenCommonView', MakeATenCommonView );
 
   return inherit( ScreenView, MakeATenCommonView, {
-
     /**
      * Add a paper number to the model and immediately start dragging it with the provided event.
      * @public
@@ -140,36 +140,37 @@ define( function( require ) {
     },
 
     /**
-     * When user drops a node on another node , add if the arthimetic rules match
+     * When the user drops a paper number they were dragging, see if it can combine with any other nearby paper numbers.
+     * @public
+     *
      * @param {PaperNumber} draggedPaperNumber
      */
     tryToCombineNumbers: function( draggedPaperNumber ) {
       var draggedNode = this.findPaperNumberNode( draggedPaperNumber );
+      var draggedNumberValue = draggedPaperNumber.numberValueProperty.value;
       var allPaperNumberNodes = this.paperNumberLayerNode.children;
       var droppedNodes = draggedNode.findAttachableNodes( allPaperNumberNodes );
 
-      //check them in reverse order (the one on the top should get more priority)
+      // Check them in reverse order (the one on the top should get more priority)
       droppedNodes.reverse();
 
       for ( var i = 0; i < droppedNodes.length; i++ ) {
-        var numberA = draggedPaperNumber.numberValueProperty.value;
-        var numberB = droppedNodes[ i ].paperNumber.numberValueProperty.value;
-        if ( ArithmeticRules.canAddNumbers( numberA, numberB ) ) {
-          var droppedPaperNumber = droppedNodes[ i ].paperNumber;
-          // TODO: some assumption was made here that seems bad, hard to add single digits
+        var droppedNode = droppedNodes[ i ];
+        var droppedPaperNumber = droppedNode.paperNumber;
+        var droppedNumberValue = droppedPaperNumber.numberValueProperty.value;
+
+        if ( ArithmeticRules.canAddNumbers( draggedNumberValue, droppedNumberValue ) ) {
           this.model.collapseNumberModels( draggedPaperNumber, droppedPaperNumber );
-          return;
+          return; // A bit weird, but no need to relayer or try combining with others?
         }
         else {
-
           // repel numbers - show rejection
-          var paperNumber1 = draggedNode.paperNumber;
-          var paperNumber2 = droppedNodes[ i ].paperNumber;
-          this.model.repelAway( this.availableViewBoundsProperty.value, paperNumber1, paperNumber2 );
-          return;
+          this.model.repelAway( this.availableViewBoundsProperty.value, draggedPaperNumber, droppedPaperNumber );
+          return; // A bit weird, but if repelled, no need to check for overlapping bits?
         }
       }
 
+      // TODO: this logic may be removed if we repel everything?
       // if the dragged number is  larger than the the node below it (dropped node), reorder
       // them in a way to bring small number on the top. see issue #39
       for ( i = 0; i < allPaperNumberNodes.length; i++ ) {
@@ -182,7 +183,6 @@ define( function( require ) {
             allPaperNumberNodes[ i ].moveToFront();
           }
         }
-
       }
     },
 
@@ -225,7 +225,7 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-
+      // Meant to be overridden
     }
   } );
 } );
