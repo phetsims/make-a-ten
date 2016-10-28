@@ -14,7 +14,6 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
-  var ArrowCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/ArrowCueNode' );
   var ExplorePanel = require( 'MAKE_A_TEN/make-a-ten/explore/view/ExplorePanel' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -86,9 +85,6 @@ define( function( require ) {
     this.hideTotalProperty.link( function( hideTotal ) {
       self.equationHBox.visible = !hideTotal;
     } );
-
-    // TODO: update arrow cues!
-    this.addChild( new ArrowCueNode( model.arrowCue ) );
 
     this.interactionAttemptedProperty.link( function( interactionAttempted ) {
       if ( interactionAttempted ) {

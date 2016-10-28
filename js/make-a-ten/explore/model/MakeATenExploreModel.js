@@ -15,7 +15,6 @@ define( function( require ) {
   var NumberProperty = require( 'AXON/NumberProperty' );
   var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
-  var ArrowCue = require( 'MAKE_A_TEN/make-a-ten/explore/model/ArrowCue' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
   /**
@@ -29,8 +28,6 @@ define( function( require ) {
 
     this.addInitialNumbers();
 
-    this.arrowCue = new ArrowCue();
-
     this.paperNumbers.lengthProperty.link( this.calculateTotal.bind( this ) );
   }
 
@@ -41,7 +38,6 @@ define( function( require ) {
     // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
     step: function( dt ) {
       MakeATenCommonModel.prototype.step.call( this, dt );
-      this.arrowCue.step( dt );
     },
 
     /**
