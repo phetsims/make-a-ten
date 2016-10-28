@@ -1,6 +1,8 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
+ * Adding screen for Make a Ten. Allows entering two numbers with a keypad, so that the user can experiment with adding
+ * with the sim's usual constraints.
  *
  * @author Sharfudeen Ashraf
  */
@@ -16,6 +18,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
 
+  // images
   var addingHomeScreenImage = require( 'image!MAKE_A_TEN/adding-home-screen.png' );
   var addingNavBarImage = require( 'image!MAKE_A_TEN/adding-nav-bar.png' );
 
@@ -27,14 +30,11 @@ define( function( require ) {
    */
   function MakeATenAddingScreen() {
 
-    var homeScreenIcon = MakeATenUtil.createIconWithBackgroundColor( addingHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR );
-    var navigationBarIcon = MakeATenUtil.createIconWithBackgroundColor( addingNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR );
-
     var options = {
       name: screenAddingString,
       backgroundColor: MakeATenConstants.SCREEN_BACKGROUND_COLOR,
-      homeScreenIcon: homeScreenIcon,
-      navigationBarIcon: navigationBarIcon
+      homeScreenIcon: MakeATenUtil.createIconWithBackgroundColor( addingHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      navigationBarIcon: MakeATenUtil.createIconWithBackgroundColor( addingNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
     };
 
     Screen.call( this,

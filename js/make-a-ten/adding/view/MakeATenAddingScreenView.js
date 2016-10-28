@@ -1,6 +1,8 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
+ * Adding screenview for Make a Ten. Allows entering two numbers with a keypad, so that the user can experiment with
+ * adding with the sim's usual constraints.
  *
  * @author Sharfudeen Ashraf
  */
@@ -13,7 +15,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Plane = require( 'SCENERY/nodes/Plane' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var KeyboardPanel = require( 'MAKE_A_TEN/make-a-ten/adding/view/KeyboardPanel' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
@@ -21,7 +23,7 @@ define( function( require ) {
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
   var ActiveTerm = require( 'MAKE_A_TEN/make-a-ten/adding/model/ActiveTerm' );
 
-  //images
+  // images
   var editIcon = require( 'image!MAKE_A_TEN/edit.png' );
 
   // constants
@@ -36,14 +38,17 @@ define( function( require ) {
 
     MakeATenCommonView.call( this, model );
 
-    // dismiss any open keyboard if a click/touch hits the background directly
-    var background = Rectangle.bounds( this.layoutBounds );
+    // Dismiss any open keyboard if a click/touch hits the background directly
+    var background = new Plane();
     background.addInputListener( {
       down: function( event ) {
         model.additionTerms.activeTermProperty.value = ActiveTerm.NONE; // this will close the keyboard button
       }
     } );
+    this.addChild( background );
 
+    // Where all of the paper numbers go (from supertype)
+    this.addChild( this.paperNumberLayerNode );
 
     function createEditNumberButton( term ) {
       return new RectangularPushButton( {
@@ -55,14 +60,15 @@ define( function( require ) {
       } );
     }
 
-    this.addChild( background );
-    this.addChild( this.paperNumberLayerNode );
-
-    var leftEditNumberButton = createEditNumberButton( ActiveTerm.LEFT );
-    var rightEditNumberButton = createEditNumberButton( ActiveTerm.RIGHT );
-
-    var editButtonBox = new HBox( { children: [ leftEditNumberButton, rightEditNumberButton ], spacing: 45 } );
+    var editButtonBox = new HBox( {
+      children: [
+        createEditNumberButton( ActiveTerm.LEFT ),
+        createEditNumberButton( ActiveTerm.RIGHT )
+      ],
+      spacing: 45
+    } );
     this.addChild( editButtonBox );
+
     editButtonBox.left = this.layoutBounds.left + 75;
     editButtonBox.top = this.layoutBounds.top + 32;
 
@@ -87,26 +93,21 @@ define( function( require ) {
       model.additionTerms.activeTermProperty.value = ActiveTerm.NONE;
     }
 
-    var keyBoardPanel = new KeyboardPanel( onNumberSubmit, MAX_DIGITS );
-    this.addChild( keyBoardPanel );
+    var keyboardPanel = new KeyboardPanel( onNumberSubmit, MAX_DIGITS );
+    this.addChild( keyboardPanel );
 
-    keyBoardPanel.centerX = additionTermsNode.centerX - 25;
-    keyBoardPanel.top = additionTermsNode.top + 120;
+    keyboardPanel.centerX = additionTermsNode.centerX - 25;
+    keyboardPanel.top = additionTermsNode.top + 120;
 
     model.additionTerms.activeTermProperty.link( function( term ) {
+      keyboardPanel.visible = term !== ActiveTerm.NONE;
 
-      // TODO: seems like this could be cleaned up a bit?
-      if ( term === ActiveTerm.NONE ) {
-        keyBoardPanel.visible = false;
-        return;
-      }
-
-      keyBoardPanel.visible = true;
+      keyboardPanel.visible = true;
       if ( term === ActiveTerm.LEFT ) {
-        keyBoardPanel.setValue( model.additionTerms.leftTermProperty.value );
+        keyboardPanel.setValue( model.additionTerms.leftTermProperty.value );
       }
       if ( term === ActiveTerm.RIGHT ) {
-        keyBoardPanel.setValue( model.additionTerms.rightTermProperty.value );
+        keyboardPanel.setValue( model.additionTerms.rightTermProperty.value );
       }
     } );
 
