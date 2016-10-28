@@ -150,37 +150,39 @@ define( function( require ) {
     /**
      * @override
      */
-    addPaperNumberNode: function( paperNumberNode ) {
-      MakeATenCommonView.prototype.addPaperNumberNode.call( this, paperNumberNode );
+    onPaperNumberAdded: function( paperNumber ) {
+      var paperNumberNode = MakeATenCommonView.prototype.onPaperNumberAdded.call( this, paperNumber );
 
       // Add listeners
       paperNumberNode.moveEmitter.addListener( this.numberMoveListener );
       paperNumberNode.splitEmitter.addListener( this.numberSplitListener );
       paperNumberNode.interactionStartedEmitter.addListener( this.numberInteractionListener );
-      paperNumberNode.paperNumber.endAnimationEmitter.addListener( this.numberAnimationFinishedListener );
-      paperNumberNode.paperNumber.endDragEmitter.addListener( this.numberDragFinishedListener );
+      paperNumber.endAnimationEmitter.addListener( this.numberAnimationFinishedListener );
+      paperNumber.endDragEmitter.addListener( this.numberDragFinishedListener );
     },
 
     /**
      * @override
      */
-    removePaperNumberNode: function( paperNumberNode ) {
+    onPaperNumberRemoved: function( paperNumber ) {
+      var paperNumberNode = this.findPaperNumberNode( paperNumber );
+
       // Remove listeners
-      paperNumberNode.paperNumber.endDragEmitter.removeListener( this.numberDragFinishedListener );
-      paperNumberNode.paperNumber.endAnimationEmitter.removeListener( this.numberAnimationFinishedListener );
+      paperNumber.endDragEmitter.removeListener( this.numberDragFinishedListener );
+      paperNumber.endAnimationEmitter.removeListener( this.numberAnimationFinishedListener );
       paperNumberNode.interactionStartedEmitter.removeListener( this.numberInteractionListener );
       paperNumberNode.splitEmitter.removeListener( this.numberSplitListener );
       paperNumberNode.moveEmitter.removeListener( this.numberMoveListener );
 
       // Detach any attached cues
-      if ( this.model.moveCue.paperNumberProperty.value === paperNumberNode.paperNumber ) {
+      if ( this.model.moveCue.paperNumberProperty.value === paperNumber ) {
         this.model.moveCue.detach();
       }
-      if ( this.model.splitCue.paperNumberProperty.value === paperNumberNode.paperNumber ) {
+      if ( this.model.splitCue.paperNumberProperty.value === paperNumber ) {
         this.model.splitCue.detach();
       }
 
-      MakeATenCommonView.prototype.removePaperNumberNode.call( this, paperNumberNode );
+      MakeATenCommonView.prototype.onPaperNumberRemoved.call( this, paperNumber );
     },
 
     /**

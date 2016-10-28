@@ -81,7 +81,7 @@ define( function( require ) {
    * @param {PaperNumber} paperNumber
    * @param {Property.<Bounds2>} availableViewBoundsProperty
    * @param {Function} addAndDragNumber - function( event, paperNumber ), adds and starts a drag for a number
-   * @param {Function} tryToCombineNumbers - function(), called with no arguments to try to combine our paper number.
+   * @param {Function} tryToCombineNumbers - function( paperNumber ), called to combine our paper number
    */
   function PaperNumberNode( paperNumber, availableViewBoundsProperty, addAndDragNumber, tryToCombineNumbers ) {
     var self = this;
@@ -154,7 +154,7 @@ define( function( require ) {
       end: function( event, trail ) {
         paperNumber.userControlledProperty.value = false;
 
-        tryToCombineNumbers();
+        tryToCombineNumbers( self.paperNumber );
         paperNumber.endDragEmitter.emit1( paperNumber );
       }
     } );

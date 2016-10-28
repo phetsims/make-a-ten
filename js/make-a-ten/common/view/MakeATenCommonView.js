@@ -1,6 +1,7 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
+ * Common ScreenView for Make a Ten screens.
  *
  * @author Sharfudeen Ashraf
  */
@@ -10,7 +11,6 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var arrayRemove = require( 'PHET_CORE/arrayRemove' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Property = require( 'AXON/Property' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -26,40 +26,38 @@ define( function( require ) {
    */
   function MakeATenCommonView( model ) {
     var self = this;
+
     ScreenView.call( this, { layoutBounds: MakeATenConstants.LAYOUT_BOUNDS } );
+
+    // @public {MakeATenModel}
     this.model = model;
 
     // @protected {Node} - Where all of the paper numbers are. NOTE: Subtypes need to add this as a child with the
     //                     proper place in layering (this common view doesn't do that).
     this.paperNumberLayerNode = new Node();
 
-    this.tryToCombineNumbers = this.tryToCombineNumbers.bind( this );
+    // @private {Function}
+    this.tryToCombineNumbersCallback = this.tryToCombineNumbers.bind( this );
 
-    this.paperNumberNodes = []; // @private {Array.<PaperNumberNode>} - All PaperNumberNodes available
-    this.paperNumberNodeMap = {}; // @private {number} PaperNumber.id => {PaperNumberNode} - lookup map for efficiency
+    // @private {Function}
+    this.addAndDragNumberCallback = this.addAndDragNumber.bind( this );
 
-    var addAndDragNumberCallback = this.addAndDragNumber.bind( this );
+    // @private {number} PaperNumber.id => {PaperNumberNode} - lookup map for efficiency
+    this.paperNumberNodeMap = {};
 
-    // TODO: factor out into bind?
-    function handlePaperNumberAdded( addedPaperNumber ) {
-      var combineCallback = self.tryToCombineNumbers.bind( self, addedPaperNumber );
-      var paperNumberNode = new PaperNumberNode( addedPaperNumber, self.availableViewBoundsProperty, addAndDragNumberCallback, combineCallback );
-      self.addPaperNumberNode( paperNumberNode );
-    }
+    // @public {Property.<Bounds2>} - The view coordinates where numbers can be dragged. Can update when the sim
+    //                                is resized.
+    this.availableViewBoundsProperty = new Property( MakeATenConstants.LAYOUT_BOUNDS );
 
-    model.paperNumbers.addItemRemovedListener( function removalListener( removedPaperNumber ) {
-      self.removePaperNumberNode( self.findPaperNumberNode( removedPaperNumber ) );
-    } );
+    var paperNumberAddedListener = this.onPaperNumberAdded.bind( this );
+    var paperNumberRemovedListener = this.onPaperNumberRemoved.bind( this );
 
-    // used to prevent numbers from moving outside the visible model bounds when dragged
-    // TODO: don't initialize as null?
-    this.availableViewBoundsProperty = new Property( MakeATenConstants.LAYOUT_BOUNDS );// filled by layout method
+    // Add nodes for every already-existing paper number
+    model.paperNumbers.forEach( paperNumberAddedListener );
 
-    //Initial Number Node creation
-    model.paperNumbers.forEach( handlePaperNumberAdded );
-
-    // Observe new items
-    model.paperNumbers.addItemAddedListener( handlePaperNumberAdded );
+    // Add and remove nodes to match the model
+    model.paperNumbers.addItemAddedListener( paperNumberAddedListener );
+    model.paperNumbers.addItemRemovedListener( paperNumberRemovedListener );
 
     this.availableViewBoundsProperty.lazyLink( function( availableViewBounds ) {
       model.paperNumbers.forEach( function( paperNumber ) {
@@ -67,7 +65,7 @@ define( function( require ) {
       } );
     } );
 
-    // Create and add the Reset All Button in the bottom right, which resets the model
+    // @protected {ResetAllButton}
     this.resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
@@ -97,32 +95,34 @@ define( function( require ) {
     },
 
     /**
-     * Adds a {PaperNumberNode} to the relevant layers, sets up listeners, and internally tracks it.
+     * Creates and adds a PaperNumberNode.
      * @public
      *
-     * @param {PaperNumberNode} paperNumberNode
+     * @param {PaperNumber} paperNumber
+     * @returns {PaperNumberNode} - The created node
      */
-    addPaperNumberNode: function( paperNumberNode ) {
+    onPaperNumberAdded: function( paperNumber ) {
+      var paperNumberNode = new PaperNumberNode( paperNumber, this.availableViewBoundsProperty,
+                                                 this.addAndDragNumberCallback, this.tryToCombineNumbersCallback );
+
       this.paperNumberNodeMap[ paperNumberNode.paperNumber.id ] = paperNumberNode;
-      this.paperNumberNodes.push( paperNumberNode );
-
       this.paperNumberLayerNode.addChild( paperNumberNode );
-
       paperNumberNode.attachListeners();
+
+      return paperNumberNode;
     },
 
     /**
-     * Removes a {PaperNumberNode} from the relevant layers, removes listeners, and removes internal tracking.
+     * Handles removing the relevant PaperNumberNode
      * @public
      *
-     * @param {PaperNumberNode} paperNumberNode
+     * @param {PaperNumber} paperNumber
      */
-    removePaperNumberNode: function( paperNumberNode ) {
-      arrayRemove( this.paperNumberNodes, paperNumberNode );
+    onPaperNumberRemoved: function( paperNumber ) {
+      var paperNumberNode = this.findPaperNumberNode( paperNumber );
+
       delete this.paperNumberNodeMap[ paperNumberNode.paperNumber.id ];
-
       this.paperNumberLayerNode.removeChild( paperNumberNode );
-
       paperNumberNode.detachListeners();
     },
 
@@ -141,7 +141,7 @@ define( function( require ) {
 
     /**
      * When user drops a node on another node , add if the arthimetic rules match
-     * @param {PaperNumberNode} draggedPaperNumber
+     * @param {PaperNumber} draggedPaperNumber
      */
     tryToCombineNumbers: function( draggedPaperNumber ) {
       var draggedNode = this.findPaperNumberNode( draggedPaperNumber );
