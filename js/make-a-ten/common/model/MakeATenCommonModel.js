@@ -20,7 +20,7 @@ define( function( require ) {
    * @constructor
    */
   function MakeATenCommonModel() {
-    // Observable array of the numbers that have been placed
+    // @public {ObservableArray.<PaperNumber>} - Numbers in play that can be interacted with.
     this.paperNumbers = new ObservableArray();
   }
 
@@ -28,6 +28,7 @@ define( function( require ) {
 
   return inherit( Object, MakeATenCommonModel, {
     /**
+     * Steps the model forward by a unit of time.
      *
      * @param {number} dt
      */
@@ -38,8 +39,8 @@ define( function( require ) {
     },
 
     /**
-     * When collapsing, we remove either the dropTarget object and change the number value of the dragged objects
-     * but if the dropTarget is larger than the dragged number , reverse the objects to remove and change.
+     * Given two paper numbers, combine them (set one's value to the sum of their previous values, and remove the
+     * other).
      *
      * @param {PaperNumber} draggedPaperNumber
      * @param {PaperNumber} dropTargetNumber
@@ -47,35 +48,44 @@ define( function( require ) {
     collapseNumberModels: function( draggedPaperNumber, dropTargetNumber ) {
       var dropTargetNumberValue = dropTargetNumber.numberValueProperty.value;
       var draggedNumberValue = draggedPaperNumber.numberValueProperty.value;
-
-      var numberToRemove = dropTargetNumber;
-      var numberToChange = draggedPaperNumber;
-
-      if ( dropTargetNumberValue > draggedNumberValue ) {
-        numberToRemove = draggedPaperNumber;
-        numberToChange = dropTargetNumber;
-      }
-      this.removePaperNumber( numberToRemove );
       var newValue = dropTargetNumberValue + draggedNumberValue;
+
+      // The larger number gets changed, the smaller one gets removed.
+      var droppingOnLarger = dropTargetNumberValue > draggedNumberValue;
+      var numberToRemove = droppingOnLarger ? draggedPaperNumber : dropTargetNumber;
+      var numberToChange = droppingOnLarger ? dropTargetNumber : draggedPaperNumber;
+
+      // Apply changes
+      this.removePaperNumber( numberToRemove );
       numberToChange.changeNumber( newValue );
     },
 
     /**
-     * Function for adding new movable shapes to this model when the user creates them, generally by clicking on some
-     * some sort of creator node.
+     * Add a PaperNumber to the model
      * @public
-     * @param paperNumber
+     *
+     * @param {PaperNumber} paperNumber
      */
     addPaperNumber: function( paperNumber ) {
       this.paperNumbers.push( paperNumber );
     },
 
-    // TODO: doc
+    /**
+     * Remove a PaperNumber from the model
+     * @public
+     *
+     * @param {PaperNumber} paperNumber
+     */
     removePaperNumber: function( paperNumber ) {
       this.paperNumbers.remove( paperNumber );
     },
 
-    // TODO: doc
+    /**
+     * Remove all PaperNumbers from the model.
+     * @public
+     *
+     * @param {PaperNumber} paperNumber
+     */
     removeAllPaperNumbers: function() {
       this.paperNumbers.clear();
     },
@@ -107,25 +117,27 @@ define( function( require ) {
      * @param {PaperNumber} paperNumber2
      */
     repelAway: function( availableModelBounds, paperNumber1, paperNumber2 ) {
-      var repelRightDistance = MakeATenConstants.MOVE_AWAY_DISTANCE[ paperNumber1.digitLength ];
-      var repelLeftDistance = MakeATenConstants.MOVE_AWAY_DISTANCE[ paperNumber2.digitLength ] * -1;
+      // Determine which are 'left' and 'right'
+      var isPaper1Left = paperNumber1.positionProperty.value.x < paperNumber2.positionProperty.value.x;
+      var leftPaperNumber = isPaper1Left ? paperNumber1 : paperNumber2;
+      var rightPaperNumber = isPaper1Left ? paperNumber2 : paperNumber1;
 
-      var rightPaperNumber = paperNumber1;
-      var leftPaperNumber = paperNumber2;
+      // Determine offsets
+      var repelLeftOffset = -MakeATenConstants.MOVE_AWAY_DISTANCE[ leftPaperNumber.digitLength ];
+      var repelRightOffset = MakeATenConstants.MOVE_AWAY_DISTANCE[ rightPaperNumber.digitLength ];
+      var leftPosition = leftPaperNumber.positionProperty.value.plusXY( repelLeftOffset, 0 );
+      var rightPosition = rightPaperNumber.positionProperty.value.plusXY( repelRightOffset, 0 );
 
-      if ( rightPaperNumber.positionProperty.value.x < leftPaperNumber.positionProperty.value.x ) {
-        rightPaperNumber = paperNumber2;
-        leftPaperNumber = paperNumber1;
-      }
-
+      // Kick off the animation to the destination
       var animateToDestination = true;
-      var delta = new Vector2( repelRightDistance, 0 );
-      rightPaperNumber.setConstrainedDestination( availableModelBounds, rightPaperNumber.positionProperty.value.plus( delta ), animateToDestination );
-
-      delta = new Vector2( repelLeftDistance, 0 );
-      leftPaperNumber.setConstrainedDestination( availableModelBounds, leftPaperNumber.positionProperty.value.plus( delta ), animateToDestination );
+      leftPaperNumber.setConstrainedDestination( availableModelBounds, leftPosition, animateToDestination );
+      rightPaperNumber.setConstrainedDestination( availableModelBounds, rightPosition, animateToDestination );
     },
 
+    /**
+     * Reset the model
+     * @public
+     */
     reset: function() {
       this.removeAllPaperNumbers();
     }
