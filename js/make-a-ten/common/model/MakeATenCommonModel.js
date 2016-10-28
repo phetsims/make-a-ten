@@ -20,9 +20,6 @@ define( function( require ) {
    * @constructor
    */
   function MakeATenCommonModel() {
-    //filled by View
-    this.viewPortBounds = null; // filled by the view during resize
-
     // Observable array of the numbers that have been placed
     this.paperNumbers = new ObservableArray();
   }
@@ -105,11 +102,11 @@ define( function( require ) {
     },
 
     /**
-     *
+     * @param {Bounds2} availableModelBounds - Constrain the location to be inside these bounds
      * @param {PaperNumber} paperNumber1
      * @param {PaperNumber} paperNumber2
      */
-    repelAway: function( paperNumber1, paperNumber2 ) {
+    repelAway: function( availableModelBounds, paperNumber1, paperNumber2 ) {
       var repelRightDistance = MakeATenConstants.MOVE_AWAY_DISTANCE[ paperNumber1.digitLength ];
       var repelLeftDistance = MakeATenConstants.MOVE_AWAY_DISTANCE[ paperNumber2.digitLength ] * -1;
 
@@ -123,10 +120,10 @@ define( function( require ) {
 
       var animateToDestination = true;
       var delta = new Vector2( repelRightDistance, 0 );
-      rightPaperNumber.setConstrainedDestination( this.viewPortBounds, rightPaperNumber.positionProperty.value.plus( delta ), animateToDestination );
+      rightPaperNumber.setConstrainedDestination( availableModelBounds, rightPaperNumber.positionProperty.value.plus( delta ), animateToDestination );
 
       delta = new Vector2( repelLeftDistance, 0 );
-      leftPaperNumber.setConstrainedDestination( this.viewPortBounds, leftPaperNumber.positionProperty.value.plus( delta ), animateToDestination );
+      leftPaperNumber.setConstrainedDestination( availableModelBounds, leftPaperNumber.positionProperty.value.plus( delta ), animateToDestination );
     },
 
     reset: function() {

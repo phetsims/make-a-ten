@@ -67,8 +67,6 @@ define( function( require ) {
       } );
     } );
 
-    this.availableViewBoundsProperty.linkAttribute( model, 'viewPortBounds' );
-
     // Create and add the Reset All Button in the bottom right, which resets the model
     this.resetAllButton = new ResetAllButton( {
       listener: function() {
