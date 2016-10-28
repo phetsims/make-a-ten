@@ -1,7 +1,7 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- * Game screen for make-a-ten. Includes 10 levels, where the goal for each is to combine the 2 numbers together into
+ * Game screenview for make-a-ten. Includes 10 levels, where the goal for each is to combine the 2 numbers together into
  * one number by manipulating with the concept of making a ten. Each level can generate an infinite number of
  * challenges, so the score for each level is an integer (instead of a proportion like other sims).
  *

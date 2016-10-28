@@ -1,6 +1,9 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
+ * Game screen for make-a-ten. Includes 10 levels, where the goal for each is to combine the 2 numbers together into
+ * one number by manipulating with the concept of making a ten. Each level can generate an infinite number of
+ * challenges, so the score for each level is an integer (instead of a proportion like other sims).
  *
  * @author Sharfudeen Ashraf
  */
@@ -16,6 +19,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
 
+  // images
   var gameHomeScreenImage = require( 'image!MAKE_A_TEN/game-home-screen.png' );
   var gameNavBarImage = require( 'image!MAKE_A_TEN/game-nav-bar.png' );
 
@@ -27,14 +31,11 @@ define( function( require ) {
    */
   function MakeATenGameScreen() {
 
-    var homeScreenIcon = MakeATenUtil.createIconWithBackgroundColor( gameHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR );
-    var navigationBarIcon = MakeATenUtil.createIconWithBackgroundColor( gameNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR );
-
     var options = {
       name: screenGameString,
       backgroundColor: MakeATenConstants.SCREEN_BACKGROUND_COLOR,
-      homeScreenIcon: homeScreenIcon,
-      navigationBarIcon: navigationBarIcon
+      homeScreenIcon: MakeATenUtil.createIconWithBackgroundColor( gameHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      navigationBarIcon: MakeATenUtil.createIconWithBackgroundColor( gameNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
     };
 
     Screen.call( this,

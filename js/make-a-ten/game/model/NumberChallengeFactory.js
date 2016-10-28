@@ -14,6 +14,9 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberChallenge = require( 'MAKE_A_TEN/make-a-ten/game/model/NumberChallenge' );
 
+  /**
+   * @constructor
+   */
   function NumberChallengeFactory() {
     var self = this;
 
