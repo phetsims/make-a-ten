@@ -34,8 +34,6 @@ define( function( require ) {
    * @constructor
    */
   function PaperNumber( numberValue, initialPosition, options ) {
-    var self = this;
-
     options = _.extend( {
       opacity: 1
     }, options );
@@ -65,22 +63,14 @@ define( function( require ) {
     //                                values, 4, 30 and 1000, which when summed will equal our number.
     this.baseNumbers = PaperNumber.getBaseNumbers( this.numberValueProperty.value );
 
-    // @public {Emitter} - Fires when a paper number is returned to the origin.
-    this.returnedToOriginEmitter = new Emitter();
-
     // @public {Emitter} - Fires when the user stops dragging a paper number.
     this.endDragEmitter = new Emitter();
 
+    // @public {Emitter} - Fires when the animation towards our destination ends (we hit our destination).
+    this.endAnimationEmitter = new Emitter();
+
     // @private {Vector2} - How fast the current animation will progress towards the destination.
     this.animationVelocity = MakeATenConstants.ANIMATION_VELOCITY;
-
-    // Trigger an event whenever this shape returns to its original position.
-    this.positionProperty.lazyLink( function( position ) {
-      assert && assert( isFinite( position.y ) );
-      if ( position.equals( initialPosition ) ) {
-        self.returnedToOriginEmitter.emit();
-      }
-    } );
   }
 
   makeATen.register( 'PaperNumber', PaperNumber );
@@ -108,8 +98,8 @@ define( function( require ) {
           // Less than one time step away, so just go to the destination.
           this.positionProperty.value = this.destination;
           this.animating = false;
+          this.endAnimationEmitter.emit1( this );
         }
-
       }
     },
 
@@ -173,6 +163,7 @@ define( function( require ) {
      */
     setDestination: function( destination, animate, animationVelocity ) {
       this.destination = destination;
+      // TODO: determine if we need the velocity override?
       this.animationVelocity = ( animationVelocity !== undefined ) ? animationVelocity : MakeATenConstants.ANIMATION_VELOCITY;
 
       if ( animate ) {

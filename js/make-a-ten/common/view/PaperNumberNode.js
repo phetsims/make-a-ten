@@ -154,7 +154,7 @@ define( function( require ) {
         paperNumber.userControlledProperty.value = false;
 
         tryToCombineNumbers();
-        paperNumber.endDragEmitter.emit(); // TODO: why is this needed?
+        paperNumber.endDragEmitter.emit1( paperNumber );
       }
     } );
     this.moveTarget.addInputListener( this.moveDragHandler );

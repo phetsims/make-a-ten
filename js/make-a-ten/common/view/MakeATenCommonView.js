@@ -25,9 +25,8 @@ define( function( require ) {
    * @constructor
    *
    * @param {MakeATenModel} model
-   * @param {Function} [addPaperNumber] - callback
    */
-  function MakeATenCommonView( model, addPaperNumber ) {
+  function MakeATenCommonView( model ) {
     var self = this;
     ScreenView.call( this, { layoutBounds: MakeATenConstants.LAYOUT_BOUNDS } );
     this.model = model;
@@ -103,20 +102,10 @@ define( function( require ) {
       paperNumber.setDestination( viewPosition.minus( paperNumber.getDragTargetOffset() ), false );
 
       // Add it and lookup the related node.
-      this.addPaperNumber( paperNumber );
+      this.model.addPaperNumber( paperNumber );
 
       var paperNumberNode = this.findPaperNumberNode( paperNumber );
       paperNumberNode.startSyntheticDrag( event );
-    },
-
-    /**
-     * Forwards to the model, available to be overridden.
-     * @public
-     *
-     * @param {PaperNumber} paperNumber
-     */
-    addPaperNumber: function( paperNumber ) {
-      this.model.addPaperNumber( paperNumber );
     },
 
     /**

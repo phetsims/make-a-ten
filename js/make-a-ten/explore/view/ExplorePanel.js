@@ -70,8 +70,13 @@ define( function( require ) {
       return node;
     }
 
+    // @private {Node}
     this.hundredTarget = createTarget( 100 );
+
+    // @private {Node}
     this.tenTarget = createTarget( 10 );
+
+    // @private {Node}
     this.oneTarget = createTarget( 1 );
 
     var box = new HBox( {
@@ -89,6 +94,14 @@ define( function( require ) {
   makeATen.register( 'ExplorePanel', ExplorePanel );
 
   return inherit( Panel, ExplorePanel, {
+    /**
+     * Given a specified number of digits for a paper number, return the view coordinates of the closest matching
+     * target, so that it can animate back to this location.
+     * @public
+     *
+     * @param {number} digits
+     * @returns {Vector2}
+     */
     getOriginLocation: function( digits ) {
       var target;
       switch ( digits ) {
@@ -102,8 +115,12 @@ define( function( require ) {
           // Probably something big, no better place to send it
           target = this.hundredTarget;
       }
+
+      // Trail to screenView, not including the screenView
       var trail = this.screenView.getUniqueLeafTrailTo( target );
       trail = trail.slice( 1, trail.length );
+
+      // Transformed to view coordinates
       return trail.localToGlobalPoint( target.localBounds.center );
     }
   } );

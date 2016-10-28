@@ -19,7 +19,6 @@ define( function( require ) {
   var ExplorePanel = require( 'MAKE_A_TEN/make-a-ten/explore/view/ExplorePanel' );
   var MoveCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/MoveCueNode' );
   var SplitCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/SplitCueNode' );
-  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var CheckBox = require( 'SUN/CheckBox' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -39,8 +38,6 @@ define( function( require ) {
   function MakeATenExploreScreenView( model ) {
     var self = this;
 
-    var addPaperNumberCallback = this.addPaperNumber.bind( this );
-
     // @private {Function} - Called with function( paperNumberNode ) on number moves
     this.numberMoveListener = this.onNumberMove.bind( this );
 
@@ -50,7 +47,13 @@ define( function( require ) {
     // @private {Function} - Called with function( paperNumberNode ) when a number begins to be interacted with.
     this.numberInteractionListener = this.onNumberInteractionStarted.bind( this );
 
-    MakeATenCommonView.call( this, model, addPaperNumberCallback );
+    // @private {Function} - Called with function( paperNumber ) when a number finishes animation
+    this.numberAnimationFinishedListener = this.onNumberAnimationFinished.bind( this );
+
+    // @private {Function} - Called with function( paperNumber ) when a number finishes being dragged
+    this.numberDragFinishedListener = this.onNumberDragFinished.bind( this );
+
+    MakeATenCommonView.call( this, model );
 
     // @public {BooleanProperty} - Whether the total (sum) is hidden
     this.hideTotalProperty = new BooleanProperty( false );
@@ -126,58 +129,18 @@ define( function( require ) {
       this.equationHBox.top = visibleBounds.top + 30;
     },
 
-    // TODO: doc
-    getReturnZoneBounds: function() {
-      return this.explorePanel.bounds.withMaxY( this.visibleBoundsProperty.value.bottom );
-    },
-
     /**
-     * @override
-     * Intercept the addPaperNumber function and delegate it to the MakeATenCommonModel
-     * This interception allows to hook functionality to see if the user leaves the Paper over the explorer carousel
-     * in order to return them to the origin
-     * @public
-     * @param paperNumber
+     * Whether the paper number is predominantly over the explore panel (should be collected).
+     * @private
+     *
+     * @param {PaperNumber} paperNumber
+     * @returns {boolean}
      */
-    addPaperNumber: function( paperNumber ) {
-      var self = this;
+    isNumberInReturnZone: function( paperNumber ) {
+      var panelBounds = this.explorePanel.bounds.withMaxY( this.visibleBoundsProperty.value.bottom );
+      var paperCenter = paperNumber.positionProperty.value.plus( paperNumber.getLocalBounds().center );
 
-      MakeATenCommonView.prototype.addPaperNumber.call( this, paperNumber );
-
-      // TODO: surely there are better ways of doing this
-      // TODO: how memory-leaky!
-      // see if the user has dropped the paperNumber on Explorer panel, if yes return it to origin
-      paperNumber.endDragEmitter.addListener( function() {
-
-        // TODO return zone bounds are probable totally incorrect!
-        var panelBounds = self.getReturnZoneBounds();
-        // TODO: that's not the center!
-        var paperCenter = paperNumber.positionProperty.value.plus( paperNumber.getLocalBounds().center );
-
-        if ( panelBounds.containsPoint( paperCenter ) ) {
-          var baseNumbers = paperNumber.baseNumbers;
-
-          //create as many number of papernumber nodes as the base numbers and animate each of them
-          for ( var i = 0; i < baseNumbers.length; i++ ) {
-            var digits = baseNumbers[ i ].digitLength;
-
-            // We have reference to the explorer's digit collection, give that value as the initial
-            // position based on the digit length
-            var initialPos = self.explorePanel.getOriginLocation( digits );
-            // TODO: don't require creating a full other one to determine the center offset
-            initialPos = initialPos.minus( new PaperNumber( baseNumbers[ i ].numberValue, new Vector2() ).getLocalBounds().center );
-            var paperNumberPart = new PaperNumber( baseNumbers[ i ].numberValue, initialPos );
-            self.model.addPaperNumber( paperNumberPart );
-
-            //Each part's position needs to offset from the currentPosition, so the split begins at the
-            // right place
-            paperNumberPart.positionProperty.value = paperNumber.positionProperty.value;
-            paperNumberPart.returnToOrigin( true, MakeATenConstants.ANIMATION_VELOCITY / 1.5 );// true is for animate and return
-          }
-
-          paperNumber.returnToOrigin( false );
-        }
-      } );
+      return panelBounds.containsPoint( paperCenter );
     },
 
     /**
@@ -189,12 +152,16 @@ define( function( require ) {
       paperNumberNode.moveEmitter.addListener( this.numberMoveListener );
       paperNumberNode.splitEmitter.addListener( this.numberSplitListener );
       paperNumberNode.interactionStartedEmitter.addListener( this.numberInteractionListener );
+      paperNumberNode.paperNumber.endAnimationEmitter.addListener( this.numberAnimationFinishedListener );
+      paperNumberNode.paperNumber.endDragEmitter.addListener( this.numberDragFinishedListener );
     },
 
     /**
      * @override
      */
     removePaperNumberNode: function( paperNumberNode ) {
+      paperNumberNode.paperNumber.endDragEmitter.removeListener( this.numberDragFinishedListener );
+      paperNumberNode.paperNumber.endAnimationEmitter.removeListener( this.numberAnimationFinishedListener );
       paperNumberNode.interactionStartedEmitter.removeListener( this.numberInteractionListener );
       paperNumberNode.splitEmitter.removeListener( this.numberSplitListener );
       paperNumberNode.moveEmitter.removeListener( this.numberMoveListener );
@@ -241,6 +208,51 @@ define( function( require ) {
       this.model.moveCue.attachToNumber( paperNumber );
       if ( paperNumber.numberValueProperty.value > 1 ) {
         this.model.splitCue.attachToNumber( paperNumber );
+      }
+    },
+
+    /**
+     * Called when a paper number has finished animating to its destination.
+     * @private
+     *
+     * @param {PaperNumber} paperNumber
+     */
+    onNumberAnimationFinished: function( paperNumber ) {
+      // If it animated to the return zone, it's probably split and meant to be returned.
+      if ( this.isNumberInReturnZone( paperNumber ) ) {
+        this.model.removePaperNumber( paperNumber );
+      }
+    },
+
+    /**
+     * Called when a paper number has finished being dragged.
+     * @private
+     *
+     * @param {PaperNumber} paperNumber
+     */
+    onNumberDragFinished: function( paperNumber ) {
+      // Return it to the panel if it's been dropped in the panel.
+      if ( this.isNumberInReturnZone( paperNumber ) ) {
+        var baseNumbers = paperNumber.baseNumbers;
+
+        // Split it into a PaperNumber for each of its base numbers, and animate them to their targets in the
+        // explore panel.
+        for ( var i = baseNumbers.length - 1; i >= 0; i-- ) {
+          var baseNumber = baseNumbers[ i ];
+          var basePaperNumber = new PaperNumber( baseNumber.numberValue, paperNumber.positionProperty.value );
+
+          // Set its destination to the proper target (with the offset so that it will disappear once centered).
+          var targetPosition = this.explorePanel.getOriginLocation( baseNumber.digitLength );
+          var paperCenterOffset = new PaperNumber( baseNumber.numberValue, new Vector2() ).getLocalBounds().center;
+          targetPosition = targetPosition.minus( paperCenterOffset );
+          basePaperNumber.setDestination( targetPosition, true );
+
+          // Add the new base paper number
+          this.model.addPaperNumber( basePaperNumber );
+        }
+
+        // Remove the original paper number (as we have added its components).
+        this.model.removePaperNumber( paperNumber );
       }
     },
 

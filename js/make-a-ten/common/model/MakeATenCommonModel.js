@@ -49,16 +49,16 @@ define( function( require ) {
       var dropTargetNumberValue = dropTargetNumber.numberValueProperty.value;
       var draggedNumberValue = draggedPaperNumber.numberValueProperty.value;
 
-      var modelToRemove = dropTargetNumber;
-      var modelToChange = draggedPaperNumber;
+      var numberToRemove = dropTargetNumber;
+      var numberToChange = draggedPaperNumber;
 
       if ( dropTargetNumberValue > draggedNumberValue ) {
-        modelToRemove = draggedPaperNumber;
-        modelToChange = dropTargetNumber;
+        numberToRemove = draggedPaperNumber;
+        numberToChange = dropTargetNumber;
       }
-      this.paperNumbers.remove( modelToRemove );
+      this.removePaperNumber( numberToRemove );
       var newValue = dropTargetNumberValue + draggedNumberValue;
-      modelToChange.changeNumber( newValue );
+      numberToChange.changeNumber( newValue );
     },
 
     /**
@@ -69,6 +69,11 @@ define( function( require ) {
      */
     addPaperNumber: function( paperNumber ) {
       this.paperNumbers.push( paperNumber );
+    },
+
+    // TODO: doc
+    removePaperNumber: function( paperNumber ) {
+      this.paperNumbers.remove( paperNumber );
     },
 
     /**

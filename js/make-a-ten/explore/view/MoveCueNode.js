@@ -16,6 +16,7 @@ define( function( require ) {
   var CueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/CueNode' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
+  // images
   var handImage = require( 'image!SCENERY_PHET/hand.png' );
 
   /**

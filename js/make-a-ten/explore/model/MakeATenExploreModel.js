@@ -76,25 +76,6 @@ define( function( require ) {
     },
 
     /**
-     * @override
-     */
-    addPaperNumber: function( paperNumber ) {
-      var self = this;
-
-      MakeATenCommonModel.prototype.addPaperNumber.call( this, paperNumber );
-
-      // TODO: This should be improved
-      // The shape will be removed from the model if and when it returns to its origination point.  This is how a shape
-      // can be 'put back' into the panel.
-      paperNumber.returnedToOriginEmitter.addListener( function() {
-        if ( !paperNumber.userControlledProperty.value ) {
-          // The shape has been returned to the panel.
-          self.paperNumbers.remove( paperNumber );
-        }
-      } );
-    },
-
-    /**
      * Adds any required initial numbers.
      * @private
      */
