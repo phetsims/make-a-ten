@@ -1,7 +1,7 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- *
+ * Model for the terms in the addition "leftTerm + rightTerm =".
  *
  * @author Sharfudeen Ashraf
  */
