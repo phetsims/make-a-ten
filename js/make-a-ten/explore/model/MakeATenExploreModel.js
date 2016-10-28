@@ -16,6 +16,7 @@ define( function( require ) {
   var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
+  var Cue = require( 'MAKE_A_TEN/make-a-ten/explore/model/Cue' );
 
   /**
    * @constructor
@@ -25,6 +26,9 @@ define( function( require ) {
     this.sumProperty = new NumberProperty( 0 );
 
     MakeATenCommonModel.call( this );
+
+    this.moveCue = new Cue();
+    this.splitCue = new Cue();
 
     this.addInitialNumbers();
 
