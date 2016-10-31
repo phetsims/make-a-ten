@@ -267,6 +267,7 @@ define( function( require ) {
      * @public
      */
     attachListeners: function() {
+      // mirrored unlinks in detachListeners()
       this.paperNumber.userControlledProperty.link( this.userControlledListener );
       this.paperNumber.numberValueProperty.link( this.updateNumberListener );
       this.paperNumber.positionProperty.link( this.translationListener );

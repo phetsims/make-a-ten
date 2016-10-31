@@ -15,9 +15,10 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   var MakeATenConstants = {
-    // layout bounds used throughout the simulation for laying out the screens
+    // Initial layout bounds
     LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
-    PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR: 'rgb( 208, 222, 239 )',
+
+    // Common colors
     SCREEN_BACKGROUND_COLOR: '#E8FFB0',
     EQUATION_FILL: 'rgb(63,63,183)',
     CUE_FILL: 'rgb(63,63,183)',
@@ -34,7 +35,11 @@ define( function( require ) {
       3: new Dimension2( 272, 189 )
     },
 
-    // TODO: doc
+    /**
+     * {Array.<Vector2>} - Offset from the origin of a paper number's coordinate system to the upper-left corner of
+     * the corresponding image node for a given place, e.g. IMAGE_OFFSETS[ 0 ] is for the 1s place, IMAGE_OFFSETS[ 2 ]
+     * is for the 100s place, etc.
+     */
     IMAGE_OFFSETS: [
       new Vector2( 0, 0 ),
       new Vector2( -70, -4 ),
@@ -42,11 +47,21 @@ define( function( require ) {
       new Vector2( -190, -28 )
     ],
 
-    //based on where the user clicked on the node, determine if it is split or move
+    /**
+     * {number} - Where is the boundary between paper number "move" targets and "split" targets, where 0 would be the
+     * bottom of the paper number and 1 would be the top.
+     */
     SPLIT_BOUNDARY_HEIGHT_PROPORTION: 0.38,
-    // velocity at which animated elements move
-    ANIMATION_VELOCITY: 400, // In screen coordinates per second
-    MOVE_AWAY_DISTANCE: { 1: 50, 2: 100, 3: 150, 4: 160 } // when numbers cannot be added, the distance to move away from each in screen coordinates
+
+    /**
+     * {number} - View coordinates per second for animation
+     */
+    ANIMATION_VELOCITY: 400,
+
+    /**
+     * {Object} - A map from digit length => how far away a number should be separated when it repels from another.
+     */
+    MOVE_AWAY_DISTANCE: { 1: 50, 2: 100, 3: 150, 4: 160 }
   };
 
   makeATen.register( 'MakeATenConstants', MakeATenConstants );

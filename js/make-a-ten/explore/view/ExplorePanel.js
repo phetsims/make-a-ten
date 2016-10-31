@@ -19,7 +19,6 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var PaperNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperNumberNode' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
-  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
   var MAX_SUM = 9999;
 
@@ -33,7 +32,7 @@ define( function( require ) {
   function ExplorePanel( screenView, sumProperty, options ) {
 
     options = _.extend( {
-      fill: MakeATenConstants.PAPER_NUMBER_REPO_PANEL_BACKGROUND_COLOR,
+      fill: 'rgb(208,222,239)',
       stroke: 'black',
       lineWidth: 1.5,
       xMargin: 30,
