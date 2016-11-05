@@ -19,6 +19,7 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
   var NumberEntryControl = require( 'SCENERY_PHET/NumberEntryControl' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
 
   // strings
   var makeATenKeypadSubmitString = require( 'string!MAKE_A_TEN/make-a-ten.keypad.submit' );
@@ -34,7 +35,7 @@ define( function( require ) {
 
     var buttonOptions = {
       font: new PhetFont( 18 ),
-      baseColor: '#F2E916',
+      baseColor: PhetColorScheme.PHET_YELLOW,
       cornerRadius: 4,
       maxTextWidth: 100
     };
