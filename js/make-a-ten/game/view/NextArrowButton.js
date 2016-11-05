@@ -12,7 +12,6 @@ define( function( require ) {
 
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ArrowShape = require( 'SCENERY_PHET/ArrowShape' );
@@ -20,6 +19,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
 
   // constants
   var LABEL_FONT = new PhetFont( { size: 20, weight: 'bold' } );
@@ -47,8 +47,7 @@ define( function( require ) {
     } );
 
     RectangularPushButton.call( this, _.extend( {
-      // Default base code matches the yellow in the PhET logo (the one with the paper airplane).
-      baseColor: new Color( 242, 233, 22 ),
+      baseColor: PhetColorScheme.PHET_YELLOW,
       xMargin: 12,
       yMargin: 10,
       content: labelArrowBox
