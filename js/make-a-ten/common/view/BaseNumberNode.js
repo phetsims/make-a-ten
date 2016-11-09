@@ -27,14 +27,13 @@ define( function( require ) {
   var imageDigit7 = require( 'mipmap!MAKE_A_TEN/digit-7.png' );
   var imageDigit8 = require( 'mipmap!MAKE_A_TEN/digit-8.png' );
   var imageDigit9 = require( 'mipmap!MAKE_A_TEN/digit-9.png' );
-
   var imagePaperBackground1 = require( 'mipmap!MAKE_A_TEN/paper-background-1.png' );
   var imagePaperBackground10 = require( 'mipmap!MAKE_A_TEN/paper-background-10.png' );
   var imagePaperBackground100 = require( 'mipmap!MAKE_A_TEN/paper-background-100.png' );
   var imagePaperBackground1000 = require( 'mipmap!MAKE_A_TEN/paper-background-1000.png' );
 
-  // numZeros => mipmap info
-  var backgroundImages = {
+  // place => mipmap info
+  var BACKGROUND_IMAGE_MAP = {
     0: imagePaperBackground1,
     1: imagePaperBackground10,
     2: imagePaperBackground100,
@@ -42,7 +41,7 @@ define( function( require ) {
   };
 
   // digit => mipmap info
-  var digitHtmlImages = {
+  var DIGIT_IMAGE_MAP = {
     1: imageDigit1,
     2: imageDigit2,
     3: imageDigit3,
@@ -54,87 +53,32 @@ define( function( require ) {
     9: imageDigit9
   };
 
-  var overallDigitOffsets = {
-    1: 93,
-    2: -7,
-    3: -7,
-    4: -9,
-    5: -18,
-    6: -5,
-    7: -24,
-    8: -2,
-    9: -10
+  // place => x/y offsets for the first digit in each place
+  var PLACE_X_OFFSET = { 0: 48, 1: 108, 2: 70, 3: 94 };
+  var PLACE_Y_OFFSET = { 0: 65, 1: 85, 2: 163, 3: 197 };
+
+  // digit => horizontal offset for that digit (applied to all places, includes digit-specific information)
+  var DIGIT_X_OFFSET = { 1: 93, 2: -7, 3: -7, 4: -9, 5: -18, 6: -5, 7: -24, 8: -2, 9: -10 };
+
+  // place => digit => horizontal offset, customized for each digit's location in a base number
+  // TODO: We should be able to get rid of most of these, as they seem to be artifacts of the original layout method.
+  var PLACE_DIGIT_X_OFFSET = {
+    0: { 1: -61, 2: -3, 3: -6, 4: 4, 5: 5, 6: 2, 7: 19, 8: 12, 9: 16 },
+    1: { 1: 4, 2: 7, 3: 4, 4: 0, 5: -2, 6: -1, 7: -13, 8: -8, 9: -13 },
+    2: { 1: -4, 2: -1, 3: 0, 4: -3, 5: -2, 6: -2, 7: -3, 8: -1, 9: -1 },
+    3: { 1: -1, 2: -2, 3: 1, 4: -3, 5: -3, 6: -1, 7: -2, 8: -3, 9: -3 }
   };
 
-  var digitPlacementOffsets = {
-    0: {
-      1: -61,
-      2: -3,
-      3: -6,
-      4: 4,
-      5: 5,
-      6: 2,
-      7: 19,
-      8: 12,
-      9: 16
-    },
-    1: {
-      1: 4,
-      2: 7,
-      3: 4,
-      4: 0,
-      5: -2,
-      6: -1,
-      7: -13,
-      8: -8,
-      9: -13
-    },
-    2: {
-      1: -4,
-      2: -1,
-      3: 0,
-      4: -3,
-      5: -2,
-      6: -2,
-      7: -3,
-      8: -1,
-      9: -1
-    },
-    3: {
-      1: -1,
-      2: -2,
-      3: 1,
-      4: -3,
-      5: -3,
-      6: -1,
-      7: -2,
-      8: -3,
-      9: -3
-    }
-  };
-
-  var horizontalOffset = {
-    0: 48,
-    1: 108,
-    2: 70,
-    3: 94
-  };
-
-  var verticalOffset = {
-    0: 65,
-    1: 85,
-    2: 163,
-    3: 197
-  };
-
-  var zeroOffsets = {
+  // place => horizontal locations of the zeros in the base number
+  var ZERO_OFFSET = {
     0: [],
     1: [ 335 ],
     2: [ 560, 314 ],
     3: [ 825, 580, 335 ]
   };
 
-  var mapScale = 72 / 300;
+  // Scale was increased from 72dpi (pixels) to 300dpi, so that we can have crisper graphics.
+  var SCALE = 72 / 300;
 
   /**
    * @constructor
@@ -144,25 +88,28 @@ define( function( require ) {
    * @param {number} opacity
    */
   function BaseNumberNode( baseNumber, opacity ) {
-    Node.call( this, { scale: mapScale } );
+    Node.call( this, { scale: SCALE } );
 
-    var digit = baseNumber.digit;
-    var place = baseNumber.place;
-    var x = horizontalOffset[ place ] + digitPlacementOffsets[ place ][ digit ] + overallDigitOffsets[ digit ];
-    var y = verticalOffset[ place ];
-    var digitZeroOffsets = zeroOffsets[ place ];
+    // Location of the initial digit
+    var x = PLACE_X_OFFSET[ baseNumber.place ] + PLACE_DIGIT_X_OFFSET[ baseNumber.place ][ baseNumber.digit ] + DIGIT_X_OFFSET[ baseNumber.digit ];
+    var y = PLACE_Y_OFFSET[ baseNumber.place ];
 
+    // Translate everything by our offset
     this.translation = baseNumber.offset;
 
-    this.addChild( new Image( backgroundImages[ place ], {
+    // The paper behind the numbers
+    this.addChild( new Image( BACKGROUND_IMAGE_MAP[ baseNumber.place ], {
       imageOpacity: opacity
     } ) );
 
-    this.addChild( new Image( digitHtmlImages[ digit ], {
+    // The initial (non-zero) digit
+    this.addChild( new Image( DIGIT_IMAGE_MAP[ baseNumber.digit ], {
       x: x,
       y: y
     } ) );
 
+    // Add the zeros
+    var digitZeroOffsets = ZERO_OFFSET[ baseNumber.place ];
     for ( var i = 0; i < digitZeroOffsets.length; i++ ) {
       this.addChild( new Image( imageDigit0, {
         x: digitZeroOffsets[ i ],
@@ -174,18 +121,23 @@ define( function( require ) {
   makeATen.register( 'BaseNumberNode', BaseNumberNode );
 
   inherit( Node, BaseNumberNode, {}, {
-    PAPER_NUMBER_DIMENSIONS: {
-      0: new Dimension2( imagePaperBackground1[ 0 ].width * mapScale, imagePaperBackground1[ 0 ].height * mapScale ),
-      1: new Dimension2( imagePaperBackground10[ 0 ].width * mapScale, imagePaperBackground10[ 0 ].height * mapScale ),
-      2: new Dimension2( imagePaperBackground100[ 0 ].width * mapScale, imagePaperBackground100[ 0 ].height * mapScale ),
-      3: new Dimension2( imagePaperBackground1000[ 0 ].width * mapScale, imagePaperBackground1000[ 0 ].height * mapScale )
-    },
+    /**
+     * @public {Object} - Maps place (0-3) to a {Dimension2} with the width/height
+     */
+    PAPER_NUMBER_DIMENSIONS: _.mapValues( BACKGROUND_IMAGE_MAP, function( mipmap ) {
+      return new Dimension2( mipmap[ 0 ].width * SCALE, mipmap[ 0 ].height * SCALE );
+    } ),
 
+    /**
+     * @public {Array.<Vector2>} - Maps place (0-3) to a {Vector2} that is the offset of the upper-left corner of the
+     *                             BaseNumberNode relative to a 1-digit BaseNumberNode.
+     */
     IMAGE_OFFSETS: [
       new Vector2( 0, 0 ),
-      new Vector2( -70, -( verticalOffset[ 1 ] - verticalOffset[ 0 ] ) * mapScale ),
-      new Vector2( -70 - ( zeroOffsets[ 2 ][ 0 ] - zeroOffsets[ 1 ][ 0 ] ) * mapScale, -( verticalOffset[ 2 ] - verticalOffset[ 0 ] ) * mapScale ),
-      new Vector2( -70 - ( zeroOffsets[ 3 ][ 0 ] - zeroOffsets[ 1 ][ 0 ] ) * mapScale, -( verticalOffset[ 3 ] - verticalOffset[ 0 ] ) * mapScale )
+      new Vector2( -70, -( PLACE_Y_OFFSET[ 1 ] - PLACE_Y_OFFSET[ 0 ] ) * SCALE ),
+      // TODO: clean these up, as they are based somewhat on the 2-digit numbers
+      new Vector2( -70 - ( ZERO_OFFSET[ 2 ][ 0 ] - ZERO_OFFSET[ 1 ][ 0 ] ) * SCALE, -( PLACE_Y_OFFSET[ 2 ] - PLACE_Y_OFFSET[ 0 ] ) * SCALE ),
+      new Vector2( -70 - ( ZERO_OFFSET[ 3 ][ 0 ] - ZERO_OFFSET[ 1 ][ 0 ] ) * SCALE, -( PLACE_Y_OFFSET[ 3 ] - PLACE_Y_OFFSET[ 0 ] ) * SCALE )
     ]
   } );
 
