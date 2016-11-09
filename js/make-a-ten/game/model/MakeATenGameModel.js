@@ -65,9 +65,9 @@ define( function( require ) {
       new Level( 5, '#06A5AD', levelIcon5, gameInfoLevel5String, numberChallengeFactory ),
       new Level( 6, '#06A5AD', levelIcon6, gameInfoLevel6String, numberChallengeFactory ),
       new Level( 7, '#06A5AD', levelIcon7, gameInfoLevel7String, numberChallengeFactory ),
-      new Level( 8, '#8653BF', levelIcon8, gameInfoLevel8String, numberChallengeFactory ),
-      new Level( 9, '#8653BF', levelIcon9, gameInfoLevel9String, numberChallengeFactory ),
-      new Level( 10, '#8653BF', levelIcon10, gameInfoLevel10String, numberChallengeFactory )
+      new Level( 8, '#9778CC', levelIcon8, gameInfoLevel8String, numberChallengeFactory ),
+      new Level( 9, '#9778CC', levelIcon9, gameInfoLevel9String, numberChallengeFactory ),
+      new Level( 10, '#9778CC', levelIcon10, gameInfoLevel10String, numberChallengeFactory )
     ];
 
     // @public {BooleanProperty} - Whether sounds will occur on completion of game actions.

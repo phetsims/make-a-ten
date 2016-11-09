@@ -27,7 +27,7 @@ define( function( require ) {
   // constants
   var BAR_HEIGHT = 60;
   var BAR_PADDING = 30;
-  var TEXT_COLOR = 'white';
+  var TEXT_COLOR = 'black';
   var LEVEL_NUMBER_FONT = new PhetFont( { size: 18, weight: 'bold' } );
   var LEVEL_DESCRIPTION_FONT = new PhetFont( 18 );
 
