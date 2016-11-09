@@ -105,7 +105,8 @@ define( function( require ) {
     } );
     this.moveTarget.addInputListener( this.moveDragHandler );
 
-    this.splitTarget.addInputListener( {
+    // @public {SimpleDragHandler} - TODO: Can we add a function for hooking, instead of leaving public?
+    this.splitDragHandler = {
       down: function( event ) {
         // Ignore non-left mouse buttons
         if ( event.pointer.isMouse && event.domEvent && event.domEvent.button !== 0 ) {
@@ -134,7 +135,8 @@ define( function( require ) {
         var newPaperNumber = new PaperNumber( amountToRemove, paperNumber.positionProperty.value );
         addAndDragNumber( event, newPaperNumber );
       }
-    } );
+    };
+    this.splitTarget.addInputListener( this.splitDragHandler );
 
     // @private {Function} - Listener that hooks model position to view translation.
     this.translationListener = function( position ) {
@@ -205,6 +207,37 @@ define( function( require ) {
       this.preventMoveEmit = true;
       this.moveDragHandler.tryToSnag( event );
       this.preventMoveEmit = false;
+    },
+
+    /**
+     * Implements the API for ClosestDragListener.
+     * @public
+     *
+     * @param {Event} event - Scenery event from the relevant input handler
+     */
+    startDrag: function( event ) {
+      if ( this.globalToLocalPoint( event.pointer.point ).y < this.splitTarget.bottom ) {
+        this.splitDragHandler.down( event );
+      }
+      else {
+        this.moveDragHandler.tryToSnag( event );
+      }
+    },
+
+    /**
+     * Implements the API for ClosestDragListener.
+     * @public
+     *
+     * @param {Vector2} globalPoint
+     */
+    computeDistance: function( globalPoint ) {
+      if ( this.paperNumber.userControlledProperty.value ) {
+        return Number.POSITIVE_INFINITY;
+      }
+      else {
+        var globalBounds = this.localToGlobalBounds( this.paperNumber.getLocalBounds() );
+        return Math.sqrt( globalBounds.minimumDistanceToPointSquared( globalPoint ) );
+      }
     },
 
     /**

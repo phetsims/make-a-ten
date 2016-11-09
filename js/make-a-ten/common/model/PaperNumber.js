@@ -199,8 +199,15 @@ define( function( require ) {
         }
       }
 
-      assert && assert( false, 'WARNING: outside number bounds' );
+      // Outside of the bounds, so we need to check each and determine the closest.
+      for ( i = 0; i < this.baseNumbers.length; i++ ) {
+        baseNumber = this.baseNumbers[ i ];
+        if ( position.x > baseNumber.bounds.left ) {
+          return baseNumber;
+        }
+      }
 
+      // Default the largest one.
       return this.baseNumbers[ this.baseNumbers.length - 1 ];
     }
   }, {

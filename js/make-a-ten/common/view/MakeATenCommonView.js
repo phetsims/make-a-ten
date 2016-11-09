@@ -14,10 +14,12 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var Property = require( 'AXON/Property' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Plane = require( 'SCENERY/nodes/Plane' );
   var PaperNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperNumberNode' );
   var ArithmeticRules = require( 'MAKE_A_TEN/make-a-ten/common/model/ArithmeticRules' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  var ClosestDragListener = require( 'SUN/ClosestDragListener' );
 
   /**
    * @constructor
@@ -48,6 +50,12 @@ define( function( require ) {
     // @public {Property.<Bounds2>} - The view coordinates where numbers can be dragged. Can update when the sim
     //                                is resized.
     this.availableViewBoundsProperty = new Property( MakeATenConstants.LAYOUT_BOUNDS );
+
+    // @private {ClosestDragListener} - Handle touches nearby to the numbers, and interpret those as the proper drag.
+    this.closestDragListener = new ClosestDragListener( 30, 0 );
+    var backgroundDragTarget = new Plane();
+    backgroundDragTarget.addInputListener( this.closestDragListener );
+    this.addChild( backgroundDragTarget );
 
     var paperNumberAddedListener = this.onPaperNumberAdded.bind( this );
     var paperNumberRemovedListener = this.onPaperNumberRemoved.bind( this );
@@ -109,6 +117,8 @@ define( function( require ) {
       this.paperNumberLayerNode.addChild( paperNumberNode );
       paperNumberNode.attachListeners();
 
+      this.closestDragListener.addDraggableItem( paperNumberNode );
+
       return paperNumberNode;
     },
 
@@ -124,6 +134,8 @@ define( function( require ) {
       delete this.paperNumberNodeMap[ paperNumberNode.paperNumber.id ];
       this.paperNumberLayerNode.removeChild( paperNumberNode );
       paperNumberNode.detachListeners();
+
+      this.closestDragListener.removeDraggableItem( paperNumberNode );
     },
 
     /**
