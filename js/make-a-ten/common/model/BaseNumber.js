@@ -14,12 +14,12 @@ define( function( require ) {
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
-  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
+  var PaperImage = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperImage' );
 
   // Precompute bounds for each digit
   var DIGIT_BOUNDS = [ 0, 1, 2, 3 ].map( function( place ) {
-    var dimension = MakeATenConstants.PAPER_NUMBER_DIMENSIONS[ place ];
-    var offset = MakeATenConstants.IMAGE_OFFSETS[ place ];
+    var dimension = PaperImage.PAPER_NUMBER_DIMENSIONS[ place ];
+    var offset = PaperImage.IMAGE_OFFSETS[ place ];
     return dimension.toBounds( offset.x, offset.y );
   } );
 
@@ -42,10 +42,13 @@ define( function( require ) {
 
     // @public {Vector2} - The offset (relatve to the number origin) for the placement of the upper-left corner of the
     //                     image representing this place value.
-    this.offset = MakeATenConstants.IMAGE_OFFSETS[ this.place ];
+    this.offset = PaperImage.IMAGE_OFFSETS[ this.place ];
 
     // @public {Bounds2} - The bounds (relative to the number origin) that this digit place will take up.
     this.bounds = DIGIT_BOUNDS[ this.place ];
+
+    // @public {number} - The leading digit of the number, e.g. 2 for 200.
+    this.digit = digit;
   }
 
   makeATen.register( 'BaseNumber', BaseNumber );

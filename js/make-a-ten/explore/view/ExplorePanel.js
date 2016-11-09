@@ -14,11 +14,11 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Vector2 = require( 'DOT/Vector2' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var Panel = require( 'SUN/Panel' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  var PaperNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperNumberNode' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
+  var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
+  var PaperImage = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperImage' );
 
   var MAX_SUM = 9999;
 
@@ -43,16 +43,16 @@ define( function( require ) {
     // @private {MakeATenExploreScreenView}
     this.screenView = screenView;
 
-    function createTarget( numberValue ) {
+    function createTarget( place ) {
+      var numberValue = Math.pow( 10, place );
       var node = new Node( {
         cursor: 'pointer',
         // empirically determined stacking
         children: [ new Vector2( -8, -8 ), new Vector2( 0, 0 ) ].map( function( offset ) {
-          // TODO: no need to duplicate these types of images?
-          var image = new Image( PaperNumberNode.getNumberImage( numberValue ) );
-          image.scale( 0.64, 0.55 );
-          image.translation = offset;
-          return image;
+          var paperNode = PaperImage.createNumberImage( new BaseNumber( 1, place ), 1 );
+          paperNode.scale( 0.64, 0.55 );
+          paperNode.translation = offset;
+          return paperNode;
         } )
       } );
 
@@ -84,13 +84,13 @@ define( function( require ) {
     }
 
     // @private {Node}
-    this.hundredTarget = createTarget( 100 );
+    this.hundredTarget = createTarget( 2 );
 
     // @private {Node}
-    this.tenTarget = createTarget( 10 );
+    this.tenTarget = createTarget( 1 );
 
     // @private {Node}
-    this.oneTarget = createTarget( 1 );
+    this.oneTarget = createTarget( 0 );
 
     var box = new HBox( {
       children: [

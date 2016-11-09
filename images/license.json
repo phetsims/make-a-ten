@@ -135,7 +135,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "10.png": {
+  "digit-0.png": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
@@ -143,7 +143,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "100.png": {
+  "digit-1.png": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
@@ -151,7 +151,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "2.png": {
+  "digit-2.png": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
@@ -159,7 +159,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "20.png": {
+  "digit-3.png": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
@@ -167,7 +167,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "200.png": {
+  "digit-4.png": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
@@ -175,7 +175,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "3.png": {
+  "digit-5.png": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
@@ -183,7 +183,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "30.png": {
+  "digit-6.png": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
@@ -191,7 +191,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "300.png": {
+  "digit-7.png": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
@@ -199,7 +199,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "4.png": {
+  "digit-8.png": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
@@ -207,7 +207,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "40.png": {
+  "digit-9.png": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
@@ -215,7 +215,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "400.png": {
+  "paper-background-1.png": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
@@ -223,7 +223,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "5.png": {
+  "paper-background-10.png": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
@@ -231,7 +231,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "50.png": {
+  "paper-background-100.png": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
@@ -239,175 +239,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "500.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "6.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "60.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "600.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "7.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "70.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "700.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "8.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "80.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "800.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "9.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "90.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "900.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "1000.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "2000.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "3000.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "4000.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "5000.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "6000.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "7000.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "8000.png": {
-    "text": [
-      "Copyright 2002-2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
-  },
-  "9000.png": {
+  "paper-background-1000.png": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
