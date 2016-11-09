@@ -20,7 +20,7 @@ define( function( require ) {
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
-  var PaperImage = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperImage' );
+  var BaseNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/BaseNumberNode' );
 
   /**
    * @constructor
@@ -166,7 +166,7 @@ define( function( require ) {
       // Reversing allows easier opacity computation and has the nodes in order for setting children.
       this.numberImageContainer.children = _.map( reversedBaseNumbers, function( baseNumber, index ) {
         // each number has successively less opacity on top
-        return PaperImage.createNumberImage( baseNumber, 0.95 * Math.pow( 0.97, index ) );
+        return new BaseNumberNode( baseNumber, 0.95 * Math.pow( 0.97, index ) );
       } );
 
       // Grab the bounds of the biggest base number for the full bounds
@@ -256,7 +256,7 @@ define( function( require ) {
      * @returns {HTMLImageElement}
      */
     getNumberImage: function( digit, place ) {
-      return PaperImage.createNumberImage( new BaseNumber( digit, place ), 1 );
+      return new BaseNumberNode( new BaseNumber( digit, place ), 1 );
     }
   } );
 } );

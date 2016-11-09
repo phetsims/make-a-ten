@@ -18,7 +18,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
-  var PaperImage = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperImage' );
+  var BaseNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/BaseNumberNode' );
 
   var MAX_SUM = 9999;
 
@@ -49,7 +49,7 @@ define( function( require ) {
         cursor: 'pointer',
         // empirically determined stacking
         children: [ new Vector2( -8, -8 ), new Vector2( 0, 0 ) ].map( function( offset ) {
-          var paperNode = PaperImage.createNumberImage( new BaseNumber( 1, place ), 1 );
+          var paperNode = new BaseNumberNode( new BaseNumber( 1, place ), 1 );
           paperNode.scale( 0.64, 0.55 );
           paperNode.translation = offset;
           return paperNode;

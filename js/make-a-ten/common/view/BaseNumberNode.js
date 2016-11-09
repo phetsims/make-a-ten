@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var Vector2 = require( 'DOT/Vector2' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -135,36 +136,44 @@ define( function( require ) {
 
   var mapScale = 72 / 300;
 
-  var PaperImage = {
-    createNumberImage: function( baseNumber, opacity ) {
-      var digit = baseNumber.digit;
-      var place = baseNumber.place;
-      var x = horizontalOffset[ place ] + digitPlacementOffsets[ place ][ digit ] + overallDigitOffsets[ digit ];
-      var y = verticalOffset[ place ];
-      var digitZeroOffsets = zeroOffsets[ place ];
+  /**
+   * @constructor
+   * @extends Node
+   *
+   * @param {BaseNumber} baseNumber
+   * @param {number} opacity
+   */
+  function BaseNumberNode( baseNumber, opacity ) {
+    Node.call( this, { scale: mapScale } );
 
-      var node = new Node( { scale: mapScale } );
-      node.translation = baseNumber.offset;
+    var digit = baseNumber.digit;
+    var place = baseNumber.place;
+    var x = horizontalOffset[ place ] + digitPlacementOffsets[ place ][ digit ] + overallDigitOffsets[ digit ];
+    var y = verticalOffset[ place ];
+    var digitZeroOffsets = zeroOffsets[ place ];
 
-      node.addChild( new Image( backgroundImages[ place ], {
-        imageOpacity: opacity
-      } ) );
+    this.translation = baseNumber.offset;
 
-      node.addChild( new Image( digitHtmlImages[ digit ], {
-        x: x,
+    this.addChild( new Image( backgroundImages[ place ], {
+      imageOpacity: opacity
+    } ) );
+
+    this.addChild( new Image( digitHtmlImages[ digit ], {
+      x: x,
+      y: y
+    } ) );
+
+    for ( var i = 0; i < digitZeroOffsets.length; i++ ) {
+      this.addChild( new Image( imageDigit0, {
+        x: digitZeroOffsets[ i ],
         y: y
       } ) );
+    }
+  }
 
-      for ( var i = 0; i < digitZeroOffsets.length; i++ ) {
-        node.addChild( new Image( imageDigit0, {
-          x: digitZeroOffsets[ i ],
-          y: y
-        } ) );
-      }
+  makeATen.register( 'BaseNumberNode', BaseNumberNode );
 
-      return node;
-    },
-
+  inherit( Node, BaseNumberNode, {}, {
     PAPER_NUMBER_DIMENSIONS: {
       0: new Dimension2( imagePaperBackground1[ 0 ].width * mapScale, imagePaperBackground1[ 0 ].height * mapScale ),
       1: new Dimension2( imagePaperBackground10[ 0 ].width * mapScale, imagePaperBackground10[ 0 ].height * mapScale ),
@@ -178,9 +187,7 @@ define( function( require ) {
       new Vector2( -70 - ( zeroOffsets[ 2 ][ 0 ] - zeroOffsets[ 1 ][ 0 ] ) * mapScale, -( verticalOffset[ 2 ] - verticalOffset[ 0 ] ) * mapScale ),
       new Vector2( -70 - ( zeroOffsets[ 3 ][ 0 ] - zeroOffsets[ 1 ][ 0 ] ) * mapScale, -( verticalOffset[ 3 ] - verticalOffset[ 0 ] ) * mapScale )
     ]
-  };
+  } );
 
-  makeATen.register( 'PaperImage', PaperImage );
-
-  return PaperImage;
+  return BaseNumberNode;
 } );
