@@ -55,6 +55,10 @@ define( function( require ) {
     step: function( dt ) {
       MakeATenCommonModel.prototype.step.call( this, dt );
 
+      // Cap large dt values, which can occur when the tab containing
+      // the sim had been hidden and then re-shown
+      dt = Math.min( 0.1, dt );
+
       // Animate fading if necessary
       this.moveCue.step( dt );
       this.splitCue.step( dt );

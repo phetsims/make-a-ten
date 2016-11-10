@@ -33,6 +33,10 @@ define( function( require ) {
      * @param {number} dt
      */
     step: function( dt ) {
+      // Cap large dt values, which can occur when the tab containing
+      // the sim had been hidden and then re-shown
+      dt = Math.min( 0.1, dt );
+
       for ( var i = 0; i < this.paperNumbers.length; i++ ) {
         this.paperNumbers.get( i ).step( dt );
       }
