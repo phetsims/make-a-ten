@@ -74,7 +74,7 @@ define( function( require ) {
 
     // View-coordinate offset between our position and the pointer's position, used for keeping drags synced.
     var dragOffset;
-    // @public {SimpleDragHandler} - TODO: Can we add a function for hooking, instead of leaving public?
+    // @private {SimpleDragHandler}
     this.moveDragHandler = new SimpleDragHandler( {
       start: function( event, trail ) {
         paperNumber.userControlledProperty.value = true;
@@ -91,8 +91,6 @@ define( function( require ) {
 
       drag: function( event, trail ) {
         var viewPosition = self.globalToParentPoint( event.pointer.point );
-
-        // TODO: can we do a more direct set, without having to go through the animation bit?
         paperNumber.setConstrainedDestination( availableViewBoundsProperty.value, dragOffset.plus( viewPosition ) );
       },
 
@@ -105,7 +103,7 @@ define( function( require ) {
     } );
     this.moveTarget.addInputListener( this.moveDragHandler );
 
-    // @public {SimpleDragHandler} - TODO: Can we add a function for hooking, instead of leaving public?
+    // @private {Object}
     this.splitDragHandler = {
       down: function( event ) {
         // Ignore non-left mouse buttons
@@ -122,7 +120,6 @@ define( function( require ) {
 
         // it cannot be split - so start moving
         if ( !amountToRemove ) {
-          // TODO: can this actually happen?
           self.startSyntheticDrag( event );
           return;
         }
@@ -216,7 +213,7 @@ define( function( require ) {
      * @param {Event} event - Scenery event from the relevant input handler
      */
     startDrag: function( event ) {
-      if ( this.globalToLocalPoint( event.pointer.point ).y < this.splitTarget.bottom ) {
+      if ( this.globalToLocalPoint( event.pointer.point ).y < this.splitTarget.bottom && this.paperNumber.numberValueProperty.value > 1 ) {
         this.splitDragHandler.down( event );
       }
       else {

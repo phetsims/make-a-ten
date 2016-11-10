@@ -25,7 +25,7 @@ define( function( require ) {
   var makeATenKeypadSubmitString = require( 'string!MAKE_A_TEN/make-a-ten.keypad.submit' );
 
   /**
-   * @param {Function} onSubmit -- TODO: docs?!?
+   * @param {Function} onSubmit - function( numberEntryValue: {number} ), called when the submit button is pressed.
    * @constructor
    */
   function KeyboardPanel( onSubmit, maxDigits ) {
