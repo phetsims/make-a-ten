@@ -82,6 +82,8 @@ define( function( require ) {
       content: contentNode,
       xMargin: buttonXMargin,
       yMargin: buttonYMargin,
+      touchAreaXDilation: 18,
+      touchAreaYDilation: 13,
       baseColor: level.color,
       cornerRadius: 10,
       listener: fireCallback

@@ -41,6 +41,8 @@ define( function( require ) {
     };
 
     var submitNumberButton = new TextPushButton( makeATenKeypadSubmitString, _.extend( {
+      touchAreaXDilation: 20,
+      touchAreaYDilation: 7,
       listener: function() {
         //The number entry panel uses string to show digits, cast it to number
         onSubmit( self.numberEntryControl.getValue() );

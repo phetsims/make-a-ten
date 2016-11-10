@@ -55,6 +55,7 @@ define( function( require ) {
           return paperNode;
         } )
       } );
+      node.touchArea = node.localBounds.dilatedX( 15 ).dilatedY( 5 );
 
       // We need to be disabled if adding this number would increase the sum past the maximum sum.
       new DerivedProperty( [ sumProperty ], function( sum ) {

@@ -60,6 +60,8 @@ define( function( require ) {
 
     // @private {RectangularPushButton} - Shows '?' in the corner that pops up the info dialog when clicked.
     this.infoButton = new RectangularPushButton( {
+      touchAreaXDilation: 7,
+      touchAreaYDilation: 7,
       content: new Text( '?', {
         font: new PhetFont( { size: 20, weight: 'bold' } )
       } ),
@@ -87,6 +89,8 @@ define( function( require ) {
 
     // @private {SoundToggleButton} - Toggle whether audio is enabled
     this.soundToggleButton = new SoundToggleButton( model.soundEnabledProperty, {
+      touchAreaXDilation: 10,
+      touchAreaYDilation: 10,
       x: 20,
       bottom: this.layoutBounds.height - 20
     } );

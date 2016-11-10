@@ -52,6 +52,8 @@ define( function( require ) {
 
     function createEditNumberButton( term ) {
       return new RectangularPushButton( {
+        touchAreaXDilation: 10,
+        touchAreaYDilation: 10,
         content: LevelSelectionButton.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE ),
         listener: function() {
           model.additionTerms.activeTermProperty.value = term;
