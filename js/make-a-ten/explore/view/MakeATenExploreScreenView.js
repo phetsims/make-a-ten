@@ -26,7 +26,7 @@ define( function( require ) {
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
   // strings
-  var makeATenHideTotalString = require( 'string!MAKE_A_TEN/make-a-ten.hide.total' );
+  var hideTotalString = require( 'string!MAKE_A_TEN/hideTotal' );
 
   // constants
   var EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
@@ -80,7 +80,7 @@ define( function( require ) {
     this.addChild( new MoveCueNode( model.moveCue ) );
     this.addChild( new SplitCueNode( model.splitCue ) );
 
-    var hideSumText = new Text( makeATenHideTotalString, {
+    var hideSumText = new Text( hideTotalString, {
       maxWidth: 150,
       font: new PhetFont( {
         size: 25,

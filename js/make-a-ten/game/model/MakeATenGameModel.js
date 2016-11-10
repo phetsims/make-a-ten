@@ -21,16 +21,16 @@ define( function( require ) {
   var AdditionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/AdditionTerms' );
 
   // Level descriptions
-  var gameInfoLevel1String = require( 'string!MAKE_A_TEN/game.info.level1' );
-  var gameInfoLevel2String = require( 'string!MAKE_A_TEN/game.info.level2' );
-  var gameInfoLevel3String = require( 'string!MAKE_A_TEN/game.info.level3' );
-  var gameInfoLevel4String = require( 'string!MAKE_A_TEN/game.info.level4' );
-  var gameInfoLevel5String = require( 'string!MAKE_A_TEN/game.info.level5' );
-  var gameInfoLevel6String = require( 'string!MAKE_A_TEN/game.info.level6' );
-  var gameInfoLevel7String = require( 'string!MAKE_A_TEN/game.info.level7' );
-  var gameInfoLevel8String = require( 'string!MAKE_A_TEN/game.info.level8' );
-  var gameInfoLevel9String = require( 'string!MAKE_A_TEN/game.info.level9' );
-  var gameInfoLevel10String = require( 'string!MAKE_A_TEN/game.info.level10' );
+  var level1DescriptionString = require( 'string!MAKE_A_TEN/level1Description' );
+  var level2DescriptionString = require( 'string!MAKE_A_TEN/level2Description' );
+  var level3DescriptionString = require( 'string!MAKE_A_TEN/level3Description' );
+  var level4DescriptionString = require( 'string!MAKE_A_TEN/level4Description' );
+  var level5DescriptionString = require( 'string!MAKE_A_TEN/level5Description' );
+  var level6DescriptionString = require( 'string!MAKE_A_TEN/level6Description' );
+  var level7DescriptionString = require( 'string!MAKE_A_TEN/level7Description' );
+  var level8DescriptionString = require( 'string!MAKE_A_TEN/level8Description' );
+  var level9DescriptionString = require( 'string!MAKE_A_TEN/level9Description' );
+  var level10DescriptionString = require( 'string!MAKE_A_TEN/level10Description' );
 
   // Level icons
   var levelIcon1 = require( 'image!MAKE_A_TEN/level-1.png' );
@@ -58,16 +58,16 @@ define( function( require ) {
 
     // @public {Array.<Level>} - All of the game levels for this screen.
     this.levels = [
-      new Level( 1, '#FC4280', levelIcon1, gameInfoLevel1String, numberChallengeFactory ),
-      new Level( 2, '#FC4280', levelIcon2, gameInfoLevel2String, numberChallengeFactory ),
-      new Level( 3, '#FC4280', levelIcon3, gameInfoLevel3String, numberChallengeFactory ),
-      new Level( 4, '#06A5AD', levelIcon4, gameInfoLevel4String, numberChallengeFactory ),
-      new Level( 5, '#06A5AD', levelIcon5, gameInfoLevel5String, numberChallengeFactory ),
-      new Level( 6, '#06A5AD', levelIcon6, gameInfoLevel6String, numberChallengeFactory ),
-      new Level( 7, '#06A5AD', levelIcon7, gameInfoLevel7String, numberChallengeFactory ),
-      new Level( 8, '#9778CC', levelIcon8, gameInfoLevel8String, numberChallengeFactory ),
-      new Level( 9, '#9778CC', levelIcon9, gameInfoLevel9String, numberChallengeFactory ),
-      new Level( 10, '#9778CC', levelIcon10, gameInfoLevel10String, numberChallengeFactory )
+      new Level( 1, '#FC4280', levelIcon1, level1DescriptionString, numberChallengeFactory ),
+      new Level( 2, '#FC4280', levelIcon2, level2DescriptionString, numberChallengeFactory ),
+      new Level( 3, '#FC4280', levelIcon3, level3DescriptionString, numberChallengeFactory ),
+      new Level( 4, '#06A5AD', levelIcon4, level4DescriptionString, numberChallengeFactory ),
+      new Level( 5, '#06A5AD', levelIcon5, level5DescriptionString, numberChallengeFactory ),
+      new Level( 6, '#06A5AD', levelIcon6, level6DescriptionString, numberChallengeFactory ),
+      new Level( 7, '#06A5AD', levelIcon7, level7DescriptionString, numberChallengeFactory ),
+      new Level( 8, '#9778CC', levelIcon8, level8DescriptionString, numberChallengeFactory ),
+      new Level( 9, '#9778CC', levelIcon9, level9DescriptionString, numberChallengeFactory ),
+      new Level( 10, '#9778CC', levelIcon10, level10DescriptionString, numberChallengeFactory )
     ];
 
     // @public {BooleanProperty} - Whether sounds will occur on completion of game actions.

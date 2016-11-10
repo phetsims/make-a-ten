@@ -22,7 +22,7 @@ define( function( require ) {
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
 
   // strings
-  var makeATenKeypadSubmitString = require( 'string!MAKE_A_TEN/make-a-ten.keypad.submit' );
+  var submitString = require( 'string!MAKE_A_TEN/submit' );
 
   /**
    * @param {Function} onSubmit - function( numberEntryValue: {number} ), called when the submit button is pressed.
@@ -40,7 +40,7 @@ define( function( require ) {
       maxTextWidth: 100
     };
 
-    var submitNumberButton = new TextPushButton( makeATenKeypadSubmitString, _.extend( {
+    var submitNumberButton = new TextPushButton( submitString, _.extend( {
       touchAreaXDilation: 20,
       touchAreaYDilation: 7,
       listener: function() {

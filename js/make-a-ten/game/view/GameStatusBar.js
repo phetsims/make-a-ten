@@ -22,7 +22,7 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // Template for inserting the level number
-  var gameInfoLevelXString = require( 'string!MAKE_A_TEN/game.info.levelX' );
+  var patternLevel0LevelNumberString = require( 'string!MAKE_A_TEN/pattern.level.0levelNumber' );
 
   // constants
   var BAR_HEIGHT = 60;
@@ -103,7 +103,7 @@ define( function( require ) {
       var level = this.model.currentLevelProperty.value;
 
       this.backgroundRectangle.fill = level.color;
-      this.levelNumberText.text = StringUtils.format( gameInfoLevelXString, '' + level.number );
+      this.levelNumberText.text = StringUtils.format( patternLevel0LevelNumberString, '' + level.number );
       this.levelDescriptionText.text = level.description;
 
       this.layout();

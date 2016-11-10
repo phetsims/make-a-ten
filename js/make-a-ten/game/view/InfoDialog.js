@@ -19,7 +19,7 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // Template for inserting the level number
-  var gameInfoLevelXString = require( 'string!MAKE_A_TEN/game.info.levelX' );
+  var patternLevel0LevelNumberString = require( 'string!MAKE_A_TEN/pattern.level.0levelNumber' );
 
   var LEVEL_NUMBER_FONT = new PhetFont( { size: 14, weight: 'bold' } );
   var LEVEL_DESCRIPTION_FONT = new PhetFont( 14 );
@@ -32,14 +32,14 @@ define( function( require ) {
   function InfoDialog( levels ) {
     var levelMaxWidth = 100;
 
-    var padWidth = new Text( StringUtils.format( gameInfoLevelXString, '10' ), {
+    var padWidth = new Text( StringUtils.format( patternLevel0LevelNumberString, '10' ), {
       font: LEVEL_NUMBER_FONT,
       maxWidth: levelMaxWidth
     } ).width + 20;
     function createLevelNode( level ) {
       return new Node( {
         children: [
-          new Text( StringUtils.format( gameInfoLevelXString, '' + level.number ), {
+          new Text( StringUtils.format( patternLevel0LevelNumberString, '' + level.number ), {
             font: LEVEL_NUMBER_FONT,
             maxWidth: levelMaxWidth
           } ),

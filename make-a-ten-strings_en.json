@@ -11,46 +11,46 @@
   "screen.game":{
     "value":"Game"
   },
-  "make-a-ten.hide.total":{
+  "hideTotal":{
     "value":"Hide Total"
   },
-  "make-a-ten.keypad.submit":{
+  "submit":{
     "value":"Submit"
   },
   "next":{
     "value":"Next"
   },
-  "game.info.levelX":{
+  "pattern.level.0levelNumber":{
     "value":"Level {0}"
   },
-  "game.info.level1":{
+  "level1Description":{
     "value":"Add single digit numbers to get sums of 10 and under."
   },
-  "game.info.level2":{
+  "level2Description":{
     "value":"Add 9 to a single digit number to get sums between 10 and 20."
   },
-  "game.info.level3":{
+  "level3Description":{
     "value":"Add single digit numbers to get sums between 10 and 20."
   },
-  "game.info.level4":{
+  "level4Description":{
     "value":"Add with multiples of 10."
   },
-  "game.info.level5":{
+  "level5Description":{
     "value":"Add double digit numbers and single digit numbers."
   },
-  "game.info.level6":{
+  "level6Description":{
     "value":"Add double digit numbers with sums under 100."
   },
-  "game.info.level7":{
+  "level7Description":{
     "value":"Add double digit numbers with sums over 100."
   },
-  "game.info.level8":{
+  "level8Description":{
     "value":"Add single digit numbers to triple digit numbers."
   },
-  "game.info.level9":{
+  "level9Description":{
     "value":"Add hundreds and multiples of ten."
   },
-  "game.info.level10":{
+  "level10Description":{
     "value":"Add triple digit numbers."
   }
 }
