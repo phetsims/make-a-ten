@@ -13,6 +13,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
+  var MakeATenQueryParameters = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenQueryParameters' );
   var Cue = require( 'MAKE_A_TEN/make-a-ten/explore/model/Cue' );
 
   /**
@@ -84,13 +85,7 @@ define( function( require ) {
       var self = this;
 
       // Check for an array of numbers, e.g. ?exploreNumbers=10,51, where 0 indicates none
-      this.addMultipleNumbers( QueryStringMachine.get( 'exploreNumbers', {
-        type: 'array',
-        elementSchema: {
-          type: 'number'
-        },
-        defaultValue: [ 10 ]
-      } ) );
+      this.addMultipleNumbers( MakeATenQueryParameters.exploreNumbers );
 
       // Attach cues to any available numbers
       this.paperNumbers.forEach( function( paperNumber ) {
