@@ -20,13 +20,13 @@ define( function( require ) {
 
   var simOptions = {
     credits: {
-      //TODO fill in proper credits, all of these fields are optional, see joist.AboutDialog
-      leadDesign: '',
-      softwareDevelopment: '',
-      team: '',
-      qualityAssurance: '',
-      graphicArts: '',
-      thanks: ''
+      leadDesign: 'Beth Stade, Amanda McGarry',
+      softwareDevelopment: 'Jonathan Olson',
+      team: 'Ariel Paul, Kathy Perkins',
+      graphicArts: 'Amanda McGarry',
+      qualityAssurance: 'Steele Dalton, Ethan Johnson',
+      thanks: 'Thanks to Mobile Learner Labs for working with the PhET development team\n' +
+              'to convert this simulation to HTML5.'
     }
   };
 
