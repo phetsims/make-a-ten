@@ -11,9 +11,8 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Path = require( 'SCENERY/nodes/Path' );
   var Image = require( 'SCENERY/nodes/Image' );
-  var CurvedArrowShape = require( 'SCENERY_PHET/CurvedArrowShape' );
+  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var CueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/CueNode' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
@@ -28,16 +27,17 @@ define( function( require ) {
   function SplitCueNode( cue ) {
     CueNode.call( this, cue );
 
-    var arrowShape = new CurvedArrowShape( 30, 1.05 * Math.PI, 1.7 * Math.PI, {
+    var arrowOptions = {
+      fill: MakeATenConstants.CUE_FILL,
+      stroke: null,
       headHeight: 14,
       headWidth: 22,
-      tailWidth: 9
-    } );
-    this.addChild( new Path( arrowShape, {
-      fill: MakeATenConstants.CUE_FILL,
-      x: 35,
-      y: 11
-    } ) );
+      tailWidth: 9,
+      x: 7,
+      y: 3
+    };
+
+    this.addChild( new ArrowNode( 0, 0, 30, -30, arrowOptions ) );
 
     this.addChild( new Image( handImage, {
       scale: 0.3,
@@ -59,8 +59,8 @@ define( function( require ) {
         var position = paperNumber.positionProperty.value;
         var localBounds = paperNumber.getLocalBounds();
         this.setTranslation(
-          position.x + localBounds.right - 20,
-          position.y + localBounds.top + 20
+          position.x + localBounds.right - 22,
+          position.y + localBounds.top + 15
         );
       }
     }
