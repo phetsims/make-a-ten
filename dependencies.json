@@ -1,5 +1,5 @@
 {
-  "comment": "# make-a-ten 1.0.0-dev.10 Tue Nov 22 2016 19:25:18 GMT-0700 (Mountain Standard Time)",
+  "comment": "# make-a-ten 1.0.0-dev.11 Tue Nov 22 2016 23:46:58 GMT-0700 (Mountain Standard Time)",
   "assert": {
     "sha": "47c12d191b9697389f0ad0e9ca7b48e276bfb79f",
     "branch": "master"
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "ecabd26cf48d9f53eb19224e6dc258c28cd4c88b",
+    "sha": "2ad2bcd1464762880b5ccd5041296017fffba5d6",
     "branch": "master"
   },
   "dot": {
@@ -21,7 +21,7 @@
     "branch": "master"
   },
   "joist": {
-    "sha": "636d633c3e4234e2e5c3a328858b7663a06370d2",
+    "sha": "8a5449451b935e6f299fa7b305ddbbafad9d63ed",
     "branch": "master"
   },
   "kite": {
@@ -29,7 +29,7 @@
     "branch": "master"
   },
   "make-a-ten": {
-    "sha": "f4946213b5a35bfd8078db595cd7ee772ae95dbc",
+    "sha": "7f8e1be68c3086cb9282d0f926d935384c83efd8",
     "branch": "master"
   },
   "phet-core": {
