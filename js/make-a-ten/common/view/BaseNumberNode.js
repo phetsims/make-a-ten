@@ -63,10 +63,10 @@ define( function( require ) {
   // place => digit => horizontal offset, customized for each digit's location in a base number
   // TODO: We should be able to get rid of most of these, as they seem to be artifacts of the original layout method.
   var PLACE_DIGIT_X_OFFSET = {
-    0: { 1: -61, 2: -3, 3: -6, 4: 4, 5: 5, 6: 2, 7: 19, 8: 12, 9: 16 },
-    1: { 1: 4, 2: 7, 3: 4, 4: 0, 5: -2, 6: -1, 7: -13, 8: -8, 9: -13 },
-    2: { 1: -4, 2: -1, 3: 0, 4: -3, 5: -2, 6: -2, 7: -3, 8: -1, 9: -1 },
-    3: { 1: -1, 2: -2, 3: 1, 4: -3, 5: -3, 6: -1, 7: -2, 8: -3, 9: -3 }
+    0: { 1: -61, 2: 0, 3: 0, 4: 0, 5: 5, 6: 0, 7: 15, 8: 10, 9: 15 },
+    1: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 },
+    2: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 },
+    3: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 }
   };
 
   // place => horizontal locations of the zeros in the base number
