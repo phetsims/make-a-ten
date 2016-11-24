@@ -18,6 +18,8 @@ define( function( require ) {
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
+  var Property = require( 'AXON/Property' );
+  var Color = require( 'SCENERY/util/Color' );
 
   // images
   var gameHomeScreenImage = require( 'image!MAKE_A_TEN/game-home-screen.png' );
@@ -33,7 +35,7 @@ define( function( require ) {
 
     var options = {
       name: screenGameString,
-      backgroundColor: MakeATenConstants.SCREEN_BACKGROUND_COLOR,
+      backgroundColorProperty: new Property( Color.toColor( MakeATenConstants.SCREEN_BACKGROUND_COLOR ) ),
       homeScreenIcon: MakeATenUtil.createIconWithBackgroundColor( gameHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       navigationBarIcon: MakeATenUtil.createIconWithBackgroundColor( gameNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
     };
