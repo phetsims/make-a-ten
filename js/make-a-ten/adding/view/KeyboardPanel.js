@@ -35,7 +35,7 @@ define( function( require ) {
 
     var buttonOptions = {
       font: new PhetFont( 18 ),
-      baseColor: PhetColorScheme.PHET_YELLOW,
+      baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
       cornerRadius: 4,
       maxTextWidth: 100
     };

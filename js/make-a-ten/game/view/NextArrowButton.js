@@ -47,7 +47,7 @@ define( function( require ) {
     } );
 
     RectangularPushButton.call( this, _.extend( {
-      baseColor: PhetColorScheme.PHET_YELLOW,
+      baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
       xMargin: 12,
       yMargin: 10,
       content: labelArrowBox
