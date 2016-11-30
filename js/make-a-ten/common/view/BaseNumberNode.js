@@ -60,14 +60,8 @@ define( function( require ) {
   // digit => horizontal offset for that digit (applied to all places, includes digit-specific information)
   var DIGIT_X_OFFSET = { 1: 93, 2: -7, 3: -7, 4: -9, 5: -18, 6: -5, 7: -24, 8: -2, 9: -10 };
 
-  // place => digit => horizontal offset, customized for each digit's location in a base number
-  // TODO: We should be able to get rid of most of these, as they seem to be artifacts of the original layout method.
-  var PLACE_DIGIT_X_OFFSET = {
-    0: { 1: -61, 2: 0, 3: 0, 4: 0, 5: 5, 6: 0, 7: 15, 8: 10, 9: 15 },
-    1: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 },
-    2: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 },
-    3: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 }
-  };
+  // digit => horizontal offset, customized for each single digit base number
+  var FIRST_PLACE_DIGIT_X_OFFSET = { 1: -61, 2: 0, 3: 0, 4: 0, 5: 5, 6: 0, 7: 15, 8: 10, 9: 15 };
 
   // place => horizontal locations of the zeros in the base number
   var ZERO_OFFSET = {
@@ -91,8 +85,13 @@ define( function( require ) {
     Node.call( this, { scale: SCALE } );
 
     // Location of the initial digit
-    var x = PLACE_X_OFFSET[ baseNumber.place ] + PLACE_DIGIT_X_OFFSET[ baseNumber.place ][ baseNumber.digit ] + DIGIT_X_OFFSET[ baseNumber.digit ];
+    var x = PLACE_X_OFFSET[ baseNumber.place ] + DIGIT_X_OFFSET[ baseNumber.digit ];
     var y = PLACE_Y_OFFSET[ baseNumber.place ];
+
+    // We need to slightly offset some
+    if ( baseNumber.place === 0 ) {
+      x += FIRST_PLACE_DIGIT_X_OFFSET[ baseNumber.digit ];
+    }
 
     // Translate everything by our offset
     this.translation = baseNumber.offset;
