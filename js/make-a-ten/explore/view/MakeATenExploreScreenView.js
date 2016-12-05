@@ -21,7 +21,6 @@ define( function( require ) {
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var ExplorePanel = require( 'MAKE_A_TEN/make-a-ten/explore/view/ExplorePanel' );
-  var MoveCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/MoveCueNode' );
   var SplitCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/SplitCueNode' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
@@ -37,9 +36,6 @@ define( function( require ) {
    */
   function MakeATenExploreScreenView( model ) {
     var self = this;
-
-    // @private {Function} - Called with function( paperNumberNode ) on number moves
-    this.numberMoveListener = this.onNumberMove.bind( this );
 
     // @private {Function} - Called with function( paperNumberNode ) on number splits
     this.numberSplitListener = this.onNumberSplit.bind( this );
@@ -77,7 +73,6 @@ define( function( require ) {
 
     this.addChild( this.paperNumberLayerNode );
 
-    this.addChild( new MoveCueNode( model.moveCue ) );
     this.addChild( new SplitCueNode( model.splitCue ) );
 
     var hideSumText = new Text( hideTotalString, {
@@ -155,7 +150,6 @@ define( function( require ) {
       var paperNumberNode = MakeATenCommonView.prototype.onPaperNumberAdded.call( this, paperNumber );
 
       // Add listeners
-      paperNumberNode.moveEmitter.addListener( this.numberMoveListener );
       paperNumberNode.splitEmitter.addListener( this.numberSplitListener );
       paperNumberNode.interactionStartedEmitter.addListener( this.numberInteractionListener );
       paperNumber.endAnimationEmitter.addListener( this.numberAnimationFinishedListener );
@@ -173,27 +167,13 @@ define( function( require ) {
       paperNumber.endAnimationEmitter.removeListener( this.numberAnimationFinishedListener );
       paperNumberNode.interactionStartedEmitter.removeListener( this.numberInteractionListener );
       paperNumberNode.splitEmitter.removeListener( this.numberSplitListener );
-      paperNumberNode.moveEmitter.removeListener( this.numberMoveListener );
 
       // Detach any attached cues
-      if ( this.model.moveCue.paperNumberProperty.value === paperNumber ) {
-        this.model.moveCue.detach();
-      }
       if ( this.model.splitCue.paperNumberProperty.value === paperNumber ) {
         this.model.splitCue.detach();
       }
 
       MakeATenCommonView.prototype.onPaperNumberRemoved.call( this, paperNumber );
-    },
-
-    /**
-     * Called when a paper number node drag starts.
-     * @private
-     *
-     * @param {PaperNumberNode} paperNumberNode
-     */
-    onNumberMove: function( paperNumberNode ) {
-      this.model.moveCue.triggerFade();
     },
 
     /**
@@ -214,7 +194,6 @@ define( function( require ) {
      */
     onNumberInteractionStarted: function( paperNumberNode ) {
       var paperNumber = paperNumberNode.paperNumber;
-      this.model.moveCue.attachToNumber( paperNumber );
       if ( paperNumber.numberValueProperty.value > 1 ) {
         this.model.splitCue.attachToNumber( paperNumber );
       }

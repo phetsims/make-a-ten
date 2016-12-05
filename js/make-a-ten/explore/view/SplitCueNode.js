@@ -11,9 +11,9 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Image = require( 'SCENERY/nodes/Image' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var CueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/CueNode' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
   // images
@@ -25,7 +25,29 @@ define( function( require ) {
    * @param {Cue} cue - Our cue model
    */
   function SplitCueNode( cue ) {
-    CueNode.call( this, cue );
+    Node.call( this, {
+      pickable: false,
+      usesOpacity: true
+    } );
+
+    // @private {Cue}
+    this.cue = cue;
+
+    var updatePositionListener = this.updatePosition.bind( this );
+
+    cue.visibilityProperty.linkAttribute( this, 'visible' );
+    cue.opacityProperty.linkAttribute( this, 'opacity' );
+    cue.visibilityProperty.link( updatePositionListener ); // update position when we become visible
+    cue.paperNumberProperty.link( function( newPaperNumber, oldPaperNumber ) {
+      if ( newPaperNumber ) {
+        newPaperNumber.positionProperty.link( updatePositionListener ); // translation
+        newPaperNumber.numberValueProperty.link( updatePositionListener ); // may have changed bounds
+      }
+      if ( oldPaperNumber ) {
+        oldPaperNumber.numberValueProperty.unlink( updatePositionListener );
+        oldPaperNumber.positionProperty.unlink( updatePositionListener );
+      }
+    } );
 
     var arrowOptions = {
       fill: MakeATenConstants.CUE_FILL,
@@ -47,9 +69,10 @@ define( function( require ) {
 
   makeATen.register( 'SplitCueNode', SplitCueNode );
 
-  return inherit( CueNode, SplitCueNode, {
+  return inherit( Node, SplitCueNode, {
     /**
-     * @override
+     * Updates the position of the cue.
+     * @private
      */
     updatePosition: function() {
       var visible = this.cue.visibilityProperty.value;

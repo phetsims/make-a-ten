@@ -25,9 +25,6 @@ define( function( require ) {
 
     MakeATenCommonModel.call( this );
 
-    // @public {Cue} - Visually indicates numbers can be moved
-    this.moveCue = new Cue();
-
     // @public {Cue} - Visually indicates numbers can be split (pulled apart)
     this.splitCue = new Cue();
 
@@ -61,7 +58,6 @@ define( function( require ) {
       dt = Math.min( 0.1, dt );
 
       // Animate fading if necessary
-      this.moveCue.step( dt );
       this.splitCue.step( dt );
     },
 
@@ -89,7 +85,6 @@ define( function( require ) {
 
       // Attach cues to any available numbers
       this.paperNumbers.forEach( function( paperNumber ) {
-        self.moveCue.attachToNumber( paperNumber );
         if ( paperNumber.numberValueProperty.value > 1 ) {
           self.splitCue.attachToNumber( paperNumber );
         }
@@ -103,7 +98,6 @@ define( function( require ) {
       MakeATenCommonModel.prototype.reset.call( this );
 
       this.sumProperty.reset();
-      this.moveCue.reset();
       this.splitCue.reset();
       this.addInitialNumbers();
     }
