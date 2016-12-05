@@ -12,7 +12,9 @@ define( function( require ) {
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Image = require( 'SCENERY/nodes/Image' );
+  var Color = require( 'SCENERY/util/Color' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
@@ -33,22 +35,6 @@ define( function( require ) {
     // @private {Cue}
     this.cue = cue;
 
-    var updatePositionListener = this.updatePosition.bind( this );
-
-    cue.visibilityProperty.linkAttribute( this, 'visible' );
-    cue.opacityProperty.linkAttribute( this, 'opacity' );
-    cue.visibilityProperty.link( updatePositionListener ); // update position when we become visible
-    cue.paperNumberProperty.link( function( newPaperNumber, oldPaperNumber ) {
-      if ( newPaperNumber ) {
-        newPaperNumber.positionProperty.link( updatePositionListener ); // translation
-        newPaperNumber.numberValueProperty.link( updatePositionListener ); // may have changed bounds
-      }
-      if ( oldPaperNumber ) {
-        oldPaperNumber.numberValueProperty.unlink( updatePositionListener );
-        oldPaperNumber.positionProperty.unlink( updatePositionListener );
-      }
-    } );
-
     var arrowOptions = {
       fill: MakeATenConstants.CUE_FILL,
       stroke: null,
@@ -59,12 +45,40 @@ define( function( require ) {
       y: 3
     };
 
-    this.addChild( new ArrowNode( 0, 0, 30, -30, arrowOptions ) );
+    this.seeThroughRectangle = new Rectangle( 0, 0, 100, 100, {
+      fill: new Color( MakeATenConstants.CUE_FILL ).withAlpha( 0.2 )
+    } );
+    this.addChild( this.seeThroughRectangle );
 
-    this.addChild( new Image( handImage, {
-      scale: 0.3,
-      rotation: Math.PI / 6 - Math.PI / 5
-    } ) );
+    this.arrowContainer = new Node( {
+      children: [
+        new ArrowNode( 0, 0, 30, -30, arrowOptions ),
+        new Image( handImage, {
+          scale: 0.3,
+          rotation: Math.PI / 6 - Math.PI / 5
+        } )
+      ]
+    } );
+    this.addChild( this.arrowContainer );
+
+    var updatePositionListener = this.updatePosition.bind( this );
+    var updateRectangleListener = this.updateRectangle.bind( this );
+
+    cue.visibilityProperty.linkAttribute( this, 'visible' );
+    cue.opacityProperty.linkAttribute( this, 'opacity' );
+    cue.visibilityProperty.link( updatePositionListener ); // update position when we become visible
+    cue.paperNumberProperty.link( function( newPaperNumber, oldPaperNumber ) {
+      if ( newPaperNumber ) {
+        newPaperNumber.positionProperty.link( updatePositionListener ); // translation
+        newPaperNumber.numberValueProperty.link( updatePositionListener ); // may have changed bounds
+        newPaperNumber.numberValueProperty.link( updateRectangleListener ); // may have changed bounds
+      }
+      if ( oldPaperNumber ) {
+        oldPaperNumber.numberValueProperty.unlink( updateRectangleListener );
+        oldPaperNumber.numberValueProperty.unlink( updatePositionListener );
+        oldPaperNumber.positionProperty.unlink( updatePositionListener );
+      }
+    } );
   }
 
   makeATen.register( 'SplitCueNode', SplitCueNode );
@@ -81,11 +95,23 @@ define( function( require ) {
       if ( visible && paperNumber ) {
         var position = paperNumber.positionProperty.value;
         var localBounds = paperNumber.getLocalBounds();
-        this.setTranslation(
-          position.x + localBounds.right - 22,
-          position.y + localBounds.top + 15
-        );
+        this.setTranslation( position );
+        this.arrowContainer.setTranslation( localBounds.right - 22, localBounds.top + 15 );
       }
-    }
+    },
+
+    /**
+     * Updates the size of the semi-transparent rectangle.
+     * @private
+     */
+    updateRectangle: function() {
+      var paperNumber = this.cue.paperNumberProperty.value;
+
+      if ( paperNumber ) {
+        var bounds = paperNumber.getLocalBounds();
+        var boundaryY = paperNumber.getBoundaryY();
+        this.seeThroughRectangle.setRectBounds( bounds.withMaxY( boundaryY ) );
+      }
+    },
   } );
 } );

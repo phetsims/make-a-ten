@@ -19,7 +19,6 @@ define( function( require ) {
   var ArithmeticRules = require( 'MAKE_A_TEN/make-a-ten/common/model/ArithmeticRules' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
-  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var BaseNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/BaseNumberNode' );
 
   /**
@@ -180,8 +179,7 @@ define( function( require ) {
         self.splitTarget.visible = true;
 
         // Locate the boundary between the "move" input area and "split" input area.
-        var moveToSplitRatio = MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION;
-        var boundaryY = fullBounds.maxY * ( 1 - moveToSplitRatio ) + fullBounds.minY * moveToSplitRatio;
+        var boundaryY = this.paperNumber.getBoundaryY();
 
         // Modify our move/split targets
         self.moveTarget.mouseArea = self.moveTarget.touchArea = self.moveTarget.rectBounds = fullBounds.withMinY( boundaryY );

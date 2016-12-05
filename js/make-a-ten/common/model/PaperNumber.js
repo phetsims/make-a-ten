@@ -117,6 +117,18 @@ define( function( require ) {
     },
 
     /**
+     * Locate the boundary between the "move" input area and "split" input area, in the number's local bounds.
+     * @public
+     *
+     * @return {Bounds2}
+     */
+    getBoundaryY: function() {
+      var bounds = this.getLocalBounds();
+      var moveToSplitRatio = MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION;
+      return bounds.maxY * ( 1 - moveToSplitRatio ) + bounds.minY * moveToSplitRatio;
+    },
+
+    /**
      * Returns the ideal spot to "drag" a number from (near the center of its move target) relative to its origin.
      * @public
      *
