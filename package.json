@@ -14,7 +14,11 @@
   },
   "phet": {
     "requirejsNamespace": "MAKE_A_TEN",
+    "preload": [
+      "../sherpa/lib/Tween-r12.js"
+    ],
     "phetLibs": [
+      "twixt",
       "vegas",
       "vibe"
     ]

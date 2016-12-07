@@ -26,6 +26,8 @@ define( function( require ) {
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var MoveTo = require( 'TWIXT/MoveTo' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // strings
   var nextString = require( 'string!MAKE_A_TEN/next' );
@@ -38,22 +40,37 @@ define( function( require ) {
   function MakeATenGameScreenView( model ) {
     MakeATenCommonView.call( this, model );
 
-    // @private {Node} - Layer for the paper numbers and expression formula
-    this.challengeLayer = new Node();
-    this.addChild( this.challengeLayer );
+    var self = this;
 
-    // Add the paper number layer from our supertype
-    this.challengeLayer.addChild( this.paperNumberLayerNode );
+    var layerOffset = this.layoutBounds.right + 100; // empirically determined
 
-    // The node that display "12 + 100 = "
-    var additionTermsNode = new AdditionTermsNode( model.additionTerms, false );
-    additionTermsNode.left = this.layoutBounds.left + 38;
-    additionTermsNode.top = this.layoutBounds.top + 75;
-    this.challengeLayer.addChild( additionTermsNode );
+    // @private {Node} - Holds everything that can slide back and forth
+    this.slidingLayer = new Node();
+    this.addChild( this.slidingLayer );
+
+    // @private {Node} - The "left" half of the sliding layer, displayed first
+    this.levelSelectionLayer = new Node();
+    this.slidingLayer.addChild( this.levelSelectionLayer );
+
+    // @private {Node} - The "right" half of the sliding layer, will slide into view when the user selects a level
+    this.challengeLayer = new Node( {
+      x: layerOffset
+    } );
+    this.slidingLayer.addChild( this.challengeLayer );
+
+    // @private {Object}, maps {GameState} to the ideal x position {number} of the slidingLayer
+    this.slidingPositionMap = {};
+    this.slidingPositionMap[ GameState.CHOOSING_LEVEL ] = 0;
+    this.slidingPositionMap[ GameState.PRESENTING_INTERACTIVE_CHALLENGE ] = -layerOffset;
+    this.slidingPositionMap[ GameState.CORRECT_ANSWER ] = -layerOffset;
 
     // @private {StartGameLevelNode} - Shows buttons that allow selecting the level to play
     this.startGameLevelNode = new StartGameLevelNode( model );
-    this.addChild( this.startGameLevelNode );
+    this.levelSelectionLayer.addChild( this.startGameLevelNode );
+
+    // Move our resetAllButton onto our level-selection layer
+    this.resetAllButton.detach();
+    this.levelSelectionLayer.addChild( this.resetAllButton );
 
     // created lazily
     var infoDialog = null;
@@ -75,7 +92,25 @@ define( function( require ) {
       top: this.layoutBounds.top + 20,
       right: this.layoutBounds.right - 20
     } );
-    this.addChild( this.infoButton );
+    this.levelSelectionLayer.addChild( this.infoButton );
+
+    // @private {SoundToggleButton} - Toggle whether audio is enabled
+    this.soundToggleButton = new SoundToggleButton( model.soundEnabledProperty, {
+      touchAreaXDilation: 10,
+      touchAreaYDilation: 10,
+      x: 20,
+      bottom: this.layoutBounds.height - 20
+    } );
+    this.levelSelectionLayer.addChild( this.soundToggleButton );
+
+    // Add the paper number layer from our supertype
+    this.challengeLayer.addChild( this.paperNumberLayerNode );
+
+    // The node that display "12 + 100 = "
+    var additionTermsNode = new AdditionTermsNode( model.additionTerms, false );
+    additionTermsNode.left = this.layoutBounds.left + 38;
+    additionTermsNode.top = this.layoutBounds.top + 75;
+    this.challengeLayer.addChild( additionTermsNode );
 
     // @private {NextArrowButton} - Moves to the next challenge when clicked
     this.nextChallengeButton = new NextArrowButton( nextString, {
@@ -85,45 +120,26 @@ define( function( require ) {
       top: this.layoutBounds.centerY,
       right: this.layoutBounds.right - 20
     } );
-    this.addChild( this.nextChallengeButton );
-
-    // @private {SoundToggleButton} - Toggle whether audio is enabled
-    this.soundToggleButton = new SoundToggleButton( model.soundEnabledProperty, {
-      touchAreaXDilation: 10,
-      touchAreaYDilation: 10,
-      x: 20,
-      bottom: this.layoutBounds.height - 20
+    this.challengeLayer.addChild( this.nextChallengeButton );
+    model.gameStateProperty.link( function( gameState ) {
+      self.nextChallengeButton.visible = gameState === GameState.CORRECT_ANSWER;
     } );
-    this.addChild( this.soundToggleButton );
 
     // @private {GameStatusBar} - Status bar at the top of the screen
     this.gameStatusBar = new GameStatusBar( model );
-    this.addChild( this.gameStatusBar );
+    this.challengeLayer.addChild( this.gameStatusBar );
 
     // Hook up the audio player to the sound settings.
     this.gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
-
-    // @private {Array.<Node>} - All controls that we'll want to potentially toggle visibility on.
-    this.allControls = [ this.startGameLevelNode, this.resetAllButton, this.challengeLayer, this.soundToggleButton,
-                         this.nextChallengeButton, this.infoButton, this.gameStatusBar ];
-
-    // @private {Object} - Maps {GameState} => {Array.<Node>}, for what controls should be visible during that state.
-    this.controlVisibilityMap = {};
-    this.controlVisibilityMap[ GameState.CHOOSING_LEVEL ] = [
-      this.startGameLevelNode, this.resetAllButton, this.soundToggleButton, this.infoButton
-    ];
-    this.controlVisibilityMap[ GameState.PRESENTING_INTERACTIVE_CHALLENGE ] = [
-      this.challengeLayer, this.gameStatusBar
-    ];
-    this.controlVisibilityMap[ GameState.CORRECT_ANSWER ] = [
-      this.challengeLayer, this.nextChallengeButton, this.gameStatusBar
-    ];
 
     // Trigger initial layout
     this.layoutControls();
 
     // Hook up the update function for handling changes to game state.
     model.gameStateProperty.link( this.handleGameStateChange.bind( this ) );
+
+    // @private {MoveTo} - Current animation, if it exists
+    this.moveTo = null;
   }
 
   makeATen.register( 'MakeATenGameScreenView', MakeATenGameScreenView );
@@ -139,12 +155,41 @@ define( function( require ) {
     },
 
     /**
+     * Sets options that depend on whether our view is moving (switching from level selection to challenges or back).
+     * @public
+     */
+    setMoving: function( isMoving ) {
+      var isLevelSelection = this.model.gameStateProperty.value === GameState.CHOOSING_LEVEL;
+
+      this.levelSelectionLayer.visible = isMoving ? true : isLevelSelection;
+      this.challengeLayer.visible = isMoving ? true : !isLevelSelection;
+
+      this.levelSelectionLayer.pickable = !isMoving;
+      this.challengeLayer.pickable = !isMoving;
+    },
+
+    /**
      * When the game state changes, update the view with the appropriate buttons and readouts.
      * @private
      *
      * @param {GameState} gameState
      */
     handleGameStateChange: function( gameState ) {
+      var self = this;
+
+      if ( this.slidingLayer.x !== this.slidingPositionMap[ gameState ] ) {
+        this.setMoving( true );
+        if ( this.moveTo ) {
+          this.moveTo.stop();
+        }
+        this.moveTo = new MoveTo( this.slidingLayer, new Vector2( this.slidingPositionMap[ gameState ], 0 ), {
+          duration: 0.5,
+          onComplete: function() {
+            self.setMoving( false );
+          }
+        } ).start();
+      }
+
       if ( gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) {
         this.model.setupChallenge( this.model.currentChallengeProperty.value );
       }
@@ -152,12 +197,6 @@ define( function( require ) {
         this.model.incrementScore();
         this.gameAudioPlayer.correctAnswer();
       }
-
-      // Toggle visibility on controls as needed, showing the visibleControls and hiding the rest.
-      var visibleControls = this.controlVisibilityMap[ gameState ];
-      this.allControls.forEach( function( node ) {
-        node.visible = _.contains( visibleControls, node );
-      } );
     },
 
     /**
