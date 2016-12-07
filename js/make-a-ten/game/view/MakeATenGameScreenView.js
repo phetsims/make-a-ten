@@ -15,6 +15,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -26,7 +27,10 @@ define( function( require ) {
   var NextArrowButton = require( 'MAKE_A_TEN/make-a-ten/game/view/NextArrowButton' );
   var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
   var SlidingScreen = require( 'MAKE_A_TEN/make-a-ten/game/view/SlidingScreen' );
+  var MakeATenRewardNode = require( 'MAKE_A_TEN/make-a-ten/game/view/MakeATenRewardNode' );
+  var RewardPanel = require( 'MAKE_A_TEN/make-a-ten/game/view/RewardPanel' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
+  var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
 
@@ -129,11 +133,84 @@ define( function( require ) {
 
     // Hook up the update function for handling changes to game state.
     model.gameStateProperty.link( this.onGameStateChange.bind( this ) );
+
+    // @private {RewardNode|null} - see showReward()
+    this.rewardNode = null;
+
+    // @private {function|null} - see showReward()
+    this.rewardNodeBoundsListener = null;
+
+    // @private {Rectangle}
+    this.rewardBarrier = Rectangle.bounds( this.visibleBoundsProperty.value, {
+      fill: 'rgba(128,128,128,0.4)'
+    } );
+    this.visibleBoundsProperty.linkAttribute( this.rewardBarrier, 'rectBounds' );
+    this.rewardBarrier.addInputListener( new ButtonListener( {
+      fire: function( event ) {
+        self.hideReward();
+      }
+    } ) );
+
+    // @private {RewardPanel}
+    this.rewardPanel = new RewardPanel( this.hideReward.bind( this ), function() {
+      self.hideReward();
+      model.moveToChoosingLevel();
+    } );
+    this.visibleBoundsProperty.link( function( bounds ) {
+      self.rewardPanel.center = bounds.center;
+    } );
+
+    model.levels.forEach( function( level ) {
+      level.scoreProperty.link( function( score ) {
+        if ( score === 10 ) {
+          self.showReward();
+        }
+      } );
+    } );
   }
 
   makeATen.register( 'MakeATenGameScreenView', MakeATenGameScreenView );
 
   return inherit( MakeATenCommonView, MakeATenGameScreenView, {
+    /**
+     * @override
+     */
+    step: function( dt ) {
+      if ( this.rewardNode ) {
+        this.rewardNode.step( dt );
+      }
+    },
+
+    /**
+     * Shows the reward node.
+     * @private
+     */
+    showReward: function() {
+      this.gameAudioPlayer.gameOverPerfectScore();
+
+      this.rewardNode = new MakeATenRewardNode();
+      this.addChild( this.rewardBarrier );
+      this.addChild( this.rewardNode );
+      this.addChild( this.rewardPanel );
+      this.rewardNodeBoundsListener = this.visibleBoundsProperty.linkAttribute( this.rewardNode, 'canvasBounds' );
+    },
+
+    /**
+     * Hides the reward node.
+     * @private
+     */
+    hideReward: function() {
+      this.removeChild( this.rewardPanel );
+      this.removeChild( this.rewardNode );
+      this.removeChild( this.rewardBarrier );
+      this.visibleBoundsProperty.unlink( this.rewardNodeBoundsListener );
+      this.rewardNode.dispose();
+
+      // fully release references
+      this.rewardNode = null;
+      this.rewardNodeBoundsListener = null;
+    },
+
     /**
      * @override
      */

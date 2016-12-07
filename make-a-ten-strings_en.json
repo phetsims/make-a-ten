@@ -20,6 +20,12 @@
   "next":{
     "value":"Next"
   },
+  "keepGoing":{
+    "value":"Keep going"
+  },
+  "newLevel":{
+    "value":"New Level!"
+  },
   "pattern.level.0levelNumber":{
     "value":"Level {0}"
   },
