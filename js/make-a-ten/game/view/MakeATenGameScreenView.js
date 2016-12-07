@@ -42,8 +42,6 @@ define( function( require ) {
 
     var self = this;
 
-    var layerOffset = this.layoutBounds.right + 100; // empirically determined
-
     // @private {Node} - Holds everything that can slide back and forth
     this.slidingLayer = new Node();
     this.addChild( this.slidingLayer );
@@ -53,16 +51,8 @@ define( function( require ) {
     this.slidingLayer.addChild( this.levelSelectionLayer );
 
     // @private {Node} - The "right" half of the sliding layer, will slide into view when the user selects a level
-    this.challengeLayer = new Node( {
-      x: layerOffset
-    } );
+    this.challengeLayer = new Node();
     this.slidingLayer.addChild( this.challengeLayer );
-
-    // @private {Object}, maps {GameState} to the ideal x position {number} of the slidingLayer
-    this.slidingPositionMap = {};
-    this.slidingPositionMap[ GameState.CHOOSING_LEVEL ] = 0;
-    this.slidingPositionMap[ GameState.PRESENTING_INTERACTIVE_CHALLENGE ] = -layerOffset;
-    this.slidingPositionMap[ GameState.CORRECT_ANSWER ] = -layerOffset;
 
     // @private {StartGameLevelNode} - Shows buttons that allow selecting the level to play
     this.startGameLevelNode = new StartGameLevelNode( model );
@@ -136,9 +126,12 @@ define( function( require ) {
     this.layoutControls();
 
     // Hook up the update function for handling changes to game state.
-    model.gameStateProperty.link( this.handleGameStateChange.bind( this ) );
+    model.gameStateProperty.link( this.onGameStateChange.bind( this ) );
 
-    // @private {MoveTo} - Current animation, if it exists
+    // We need to update some animation and layout when this happens
+    this.visibleBoundsProperty.link( this.onVisibleBoundsChange.bind( this ) );
+
+    // @private {MoveTo|null} - Current animation, if it exists
     this.moveTo = null;
   }
 
@@ -159,13 +152,48 @@ define( function( require ) {
      * @public
      */
     setMoving: function( isMoving ) {
-      var isLevelSelection = this.model.gameStateProperty.value === GameState.CHOOSING_LEVEL;
-
-      this.levelSelectionLayer.visible = isMoving ? true : isLevelSelection;
-      this.challengeLayer.visible = isMoving ? true : !isLevelSelection;
-
       this.levelSelectionLayer.pickable = !isMoving;
       this.challengeLayer.pickable = !isMoving;
+    },
+
+    /**
+     * The x offset that should be applied to slidingLayer when we are in a particular game state.
+     * @private
+     *
+     * @returns {number}
+     */
+    getIdealSlideOffset: function( gameState ) {
+      var mainOffset = this.visibleBoundsProperty.value.left - this.visibleBoundsProperty.value.right;
+      return ( gameState === GameState.CHOOSING_LEVEL ) ? 0 : mainOffset;
+    },
+
+    /**
+     * Stops animation.
+     * @private
+     */
+    stopAnimation: function() {
+      if ( this.moveTo ) {
+        this.moveTo.stop();
+        this.moveTo = null;
+      }
+    },
+
+    /**
+     * Moves into place immediately, instead of sliding.
+     * @private
+     */
+    moveImmediately: function() {
+      this.slidingLayer.x = this.getIdealSlideOffset( this.model.gameStateProperty.value );
+      this.setMoving( false );
+    },
+
+    /**
+     * Called when the visible bounds change
+     * @private
+     */
+    onVisibleBoundsChange: function() {
+      this.challengeLayer.x = -this.getIdealSlideOffset( GameState.PRESENTING_INTERACTIVE_CHALLENGE );
+      this.moveImmediately();
     },
 
     /**
@@ -174,15 +202,15 @@ define( function( require ) {
      *
      * @param {GameState} gameState
      */
-    handleGameStateChange: function( gameState ) {
+    onGameStateChange: function( gameState ) {
       var self = this;
 
-      if ( this.slidingLayer.x !== this.slidingPositionMap[ gameState ] ) {
+      if ( this.slidingLayer.x !== this.getIdealSlideOffset( gameState ) ) {
         this.setMoving( true );
         if ( this.moveTo ) {
           this.moveTo.stop();
         }
-        this.moveTo = new MoveTo( this.slidingLayer, new Vector2( this.slidingPositionMap[ gameState ], 0 ), {
+        this.moveTo = new MoveTo( this.slidingLayer, new Vector2( this.getIdealSlideOffset( gameState ), 0 ), {
           duration: 0.5,
           onComplete: function() {
             self.setMoving( false );
