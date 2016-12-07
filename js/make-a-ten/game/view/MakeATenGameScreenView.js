@@ -13,6 +13,8 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -23,11 +25,10 @@ define( function( require ) {
   var AdditionTermsNode = require( 'MAKE_A_TEN/make-a-ten/common/view/AdditionTermsNode' );
   var NextArrowButton = require( 'MAKE_A_TEN/make-a-ten/game/view/NextArrowButton' );
   var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
+  var SlidingScreen = require( 'MAKE_A_TEN/make-a-ten/game/view/SlidingScreen' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var MoveTo = require( 'TWIXT/MoveTo' );
-  var Vector2 = require( 'DOT/Vector2' );
 
   // strings
   var nextString = require( 'string!MAKE_A_TEN/next' );
@@ -42,17 +43,18 @@ define( function( require ) {
 
     var self = this;
 
-    // @private {Node} - Holds everything that can slide back and forth
-    this.slidingLayer = new Node();
-    this.addChild( this.slidingLayer );
-
     // @private {Node} - The "left" half of the sliding layer, displayed first
     this.levelSelectionLayer = new Node();
-    this.slidingLayer.addChild( this.levelSelectionLayer );
 
     // @private {Node} - The "right" half of the sliding layer, will slide into view when the user selects a level
     this.challengeLayer = new Node();
-    this.slidingLayer.addChild( this.challengeLayer );
+
+    var showingLeftProperty = DerivedProperty.valueEquals( model.gameStateProperty,
+                                                           new Property( GameState.CHOOSING_LEVEL ) );
+    this.addChild( new SlidingScreen( this.levelSelectionLayer,
+                                      this.challengeLayer,
+                                      this.visibleBoundsProperty,
+                                      showingLeftProperty ) );
 
     // @private {StartGameLevelNode} - Shows buttons that allow selecting the level to play
     this.startGameLevelNode = new StartGameLevelNode( model );
@@ -127,12 +129,6 @@ define( function( require ) {
 
     // Hook up the update function for handling changes to game state.
     model.gameStateProperty.link( this.onGameStateChange.bind( this ) );
-
-    // We need to update some animation and layout when this happens
-    this.visibleBoundsProperty.link( this.onVisibleBoundsChange.bind( this ) );
-
-    // @private {MoveTo|null} - Current animation, if it exists
-    this.moveTo = null;
   }
 
   makeATen.register( 'MakeATenGameScreenView', MakeATenGameScreenView );
@@ -148,76 +144,12 @@ define( function( require ) {
     },
 
     /**
-     * Sets options that depend on whether our view is moving (switching from level selection to challenges or back).
-     * @public
-     */
-    setMoving: function( isMoving ) {
-      this.levelSelectionLayer.pickable = !isMoving;
-      this.challengeLayer.pickable = !isMoving;
-    },
-
-    /**
-     * The x offset that should be applied to slidingLayer when we are in a particular game state.
-     * @private
-     *
-     * @returns {number}
-     */
-    getIdealSlideOffset: function( gameState ) {
-      var mainOffset = this.visibleBoundsProperty.value.left - this.visibleBoundsProperty.value.right;
-      return ( gameState === GameState.CHOOSING_LEVEL ) ? 0 : mainOffset;
-    },
-
-    /**
-     * Stops animation.
-     * @private
-     */
-    stopAnimation: function() {
-      if ( this.moveTo ) {
-        this.moveTo.stop();
-        this.moveTo = null;
-      }
-    },
-
-    /**
-     * Moves into place immediately, instead of sliding.
-     * @private
-     */
-    moveImmediately: function() {
-      this.slidingLayer.x = this.getIdealSlideOffset( this.model.gameStateProperty.value );
-      this.setMoving( false );
-    },
-
-    /**
-     * Called when the visible bounds change
-     * @private
-     */
-    onVisibleBoundsChange: function() {
-      this.challengeLayer.x = -this.getIdealSlideOffset( GameState.PRESENTING_INTERACTIVE_CHALLENGE );
-      this.moveImmediately();
-    },
-
-    /**
      * When the game state changes, update the view with the appropriate buttons and readouts.
      * @private
      *
      * @param {GameState} gameState
      */
     onGameStateChange: function( gameState ) {
-      var self = this;
-
-      if ( this.slidingLayer.x !== this.getIdealSlideOffset( gameState ) ) {
-        this.setMoving( true );
-        if ( this.moveTo ) {
-          this.moveTo.stop();
-        }
-        this.moveTo = new MoveTo( this.slidingLayer, new Vector2( this.getIdealSlideOffset( gameState ), 0 ), {
-          duration: 0.5,
-          onComplete: function() {
-            self.setMoving( false );
-          }
-        } ).start();
-      }
-
       if ( gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) {
         this.model.setupChallenge( this.model.currentChallengeProperty.value );
       }
