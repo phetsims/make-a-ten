@@ -121,6 +121,8 @@ define( function( require ) {
      * @param {Level} level
      */
     startLevel: function( level ) {
+      this.removeAllPaperNumbers();
+
       this.currentLevelProperty.value = level;
 
       // Set up the model for the next challenge
@@ -143,6 +145,8 @@ define( function( require ) {
      * @public
      */
     moveToNextChallenge: function() {
+      this.removeAllPaperNumbers();
+
       this.currentChallengeProperty.value = this.currentLevelProperty.value.generateChallenge();
       this.gameStateProperty.value = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
     },
@@ -153,7 +157,6 @@ define( function( require ) {
      */
     moveToChoosingLevel: function() {
       this.gameStateProperty.value = GameState.CHOOSING_LEVEL;
-      this.removeAllPaperNumbers();
     },
 
     /**
