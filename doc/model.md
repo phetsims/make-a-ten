@@ -27,3 +27,5 @@ Levels 2 and 8 alternate back and forth between the left and right number being 
 - Level 8: Single digit number added to a multiple of 100 (100 to 900), alternating with largest number to left first.
 - Level 9: Random multiples of 10, with 100 <= number <= 990.
 - Level 10: Random numbers with 100 < number < 1000.
+
+
