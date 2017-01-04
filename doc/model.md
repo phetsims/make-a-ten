@@ -28,4 +28,3 @@ Levels 2 and 8 alternate back and forth between the left and right number being 
 - Level 9: Random multiples of 10, with 100 <= number <= 990.
 - Level 10: Random numbers with 100 < number < 1000.
 
-
