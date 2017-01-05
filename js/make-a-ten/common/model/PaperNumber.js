@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var Vector2 = require( 'DOT/Vector2' );
   var Emitter = require( 'AXON/Emitter' );
   var Property = require( 'AXON/Property' );
@@ -184,11 +185,11 @@ define( function( require ) {
     setConstrainedDestination: function( viewBounds, newDestination, animate ) {
       // Determine how our number's origin can be placed in the bounds
       var localBounds = this.getLocalBounds();
-      var center = localBounds.center;
-
-      var extraBottomPadding = 10;
-      var originBounds = viewBounds.withMaxY( viewBounds.maxY - localBounds.height / 2 - extraBottomPadding )
-                                   .shifted( -center.x, -center.y );
+      var padding = 10;
+      var originBounds = new Bounds2( viewBounds.left - localBounds.left,
+                                      viewBounds.top - localBounds.top,
+                                      viewBounds.right - localBounds.right,
+                                      viewBounds.bottom - localBounds.bottom ).eroded( padding );
       this.setDestination( originBounds.closestPointTo( newDestination ), animate );
     },
 
