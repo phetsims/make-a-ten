@@ -250,6 +250,29 @@ define( function( require ) {
       }
 
       return result;
+    },
+
+    /**
+     * Returns whether the two paper numbers are close enough to be "attached" to each other.
+     * @public
+     *
+     * @param {PaperNumber} paperNumber1
+     * @param {PaperNumber} paperNumber2
+     * @returns {boolean}
+     */
+    arePaperNumbersAttachable: function( paperNumber1, paperNumber2 ) {
+      var firstLarger = paperNumber1.numberValueProperty.value > paperNumber2.numberValueProperty.value;
+      var largePaperNumber = firstLarger ? paperNumber1 : paperNumber2;
+      var smallPaperNumber = firstLarger ? paperNumber2 : paperNumber1;
+
+      var smallCenter = smallPaperNumber.positionProperty.value.plus( smallPaperNumber.getLocalBounds().center );
+      var largePosition = largePaperNumber.positionProperty.value;
+      var largeBounds = largePaperNumber.getLocalBounds().shifted( largePosition.x, largePosition.y );
+
+      var unitX = ( smallCenter.x - largeBounds.centerX ) / ( largeBounds.width / 2 );
+      var unitY = ( smallCenter.y - largeBounds.centerY ) / ( largeBounds.height / 2 );
+
+      return unitX * unitX + 2 * unitY * unitY < 1;
     }
   } );
 } );

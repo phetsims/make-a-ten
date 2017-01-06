@@ -264,13 +264,12 @@ define( function( require ) {
      * @returns {Array}
      */
     findAttachableNodes: function( allPaperNumberNodes ) {
+      var self = this;
       var attachableNodeCandidates = allPaperNumberNodes.slice();
       arrayRemove( attachableNodeCandidates, this );
 
-      var currentPosition = this.paperNumber.positionProperty.value;
       return attachableNodeCandidates.filter( function( candidateNode ) {
-        var distance = currentPosition.distance( candidateNode.paperNumber.positionProperty.value );
-        return distance < 70;
+        return PaperNumber.arePaperNumbersAttachable( self.paperNumber, candidateNode.paperNumber );
       } );
     }
 
