@@ -45,7 +45,7 @@ define( function( require ) {
         model.additionTerms.activeTermProperty.value = ActiveTerm.NONE; // this will close the keyboard button
       }
     } );
-    this.addChild( background );
+    this.insertChild( 0, background ); // behind anything else our supertype adds
 
     // Where all of the paper numbers go (from supertype)
     this.addChild( this.paperNumberLayerNode );
