@@ -54,10 +54,20 @@ define( function( require ) {
       var draggedNumberValue = draggedPaperNumber.numberValueProperty.value;
       var newValue = dropTargetNumberValue + draggedNumberValue;
 
-      // The larger number gets changed, the smaller one gets removed.
-      var droppingOnLarger = dropTargetNumberValue > draggedNumberValue;
-      var numberToRemove = droppingOnLarger ? draggedPaperNumber : dropTargetNumber;
-      var numberToChange = droppingOnLarger ? dropTargetNumber : draggedPaperNumber;
+      var numberToRemove;
+      var numberToChange;
+
+      // See https://github.com/phetsims/make-a-ten/issues/260
+      if ( draggedPaperNumber.digitLength === dropTargetNumber.digitLength ) {
+        numberToRemove = draggedPaperNumber;
+        numberToChange = dropTargetNumber;
+      }
+      else {
+        // The larger number gets changed, the smaller one gets removed.
+        var droppingOnLarger = dropTargetNumberValue > draggedNumberValue;
+        numberToRemove = droppingOnLarger ? draggedPaperNumber : dropTargetNumber;
+        numberToChange = droppingOnLarger ? dropTargetNumber : draggedPaperNumber;
+      }
 
       // Apply changes
       this.removePaperNumber( numberToRemove );
