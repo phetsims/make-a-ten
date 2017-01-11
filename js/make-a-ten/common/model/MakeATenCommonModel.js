@@ -46,10 +46,11 @@ define( function( require ) {
      * Given two paper numbers, combine them (set one's value to the sum of their previous values, and remove the
      * other).
      *
+     * @param {Bounds2} availableModelBounds - Constrain the location to be inside these bounds
      * @param {PaperNumber} draggedPaperNumber
      * @param {PaperNumber} dropTargetNumber
      */
-    collapseNumberModels: function( draggedPaperNumber, dropTargetNumber ) {
+    collapseNumberModels: function( availableModelBounds, draggedPaperNumber, dropTargetNumber ) {
       var dropTargetNumberValue = dropTargetNumber.numberValueProperty.value;
       var draggedNumberValue = draggedPaperNumber.numberValueProperty.value;
       var newValue = dropTargetNumberValue + draggedNumberValue;
@@ -72,6 +73,7 @@ define( function( require ) {
       // Apply changes
       this.removePaperNumber( numberToRemove );
       numberToChange.changeNumber( newValue );
+      numberToChange.setConstrainedDestination( availableModelBounds, numberToChange.positionProperty.value, false );
     },
 
     /**

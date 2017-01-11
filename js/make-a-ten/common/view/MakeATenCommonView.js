@@ -173,7 +173,7 @@ define( function( require ) {
         var droppedNumberValue = droppedPaperNumber.numberValueProperty.value;
 
         if ( ArithmeticRules.canAddNumbers( draggedNumberValue, droppedNumberValue ) ) {
-          this.model.collapseNumberModels( draggedPaperNumber, droppedPaperNumber );
+          this.model.collapseNumberModels( this.availableViewBoundsProperty.value, draggedPaperNumber, droppedPaperNumber );
           return; // A bit weird, but no need to relayer or try combining with others?
         }
         else {
