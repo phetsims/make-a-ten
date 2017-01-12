@@ -72,8 +72,7 @@ define( function( require ) {
     this.levelDescriptionText = new Text( 'Blah blah', {
       font: LEVEL_DESCRIPTION_FONT,
       fill: TEXT_COLOR,
-      pickable: false,
-      maxWidth: 700
+      pickable: false
     } );
     this.addChild( this.levelDescriptionText );
 
@@ -139,6 +138,7 @@ define( function( require ) {
       this.levelNumberText.left = this.backButton.right + BAR_PADDING;
       this.levelNumberText.centerY = verticalCenter;
 
+      this.levelDescriptionText.maxWidth = ( this.scoreNode.left - BAR_PADDING ) - ( this.levelNumberText.right + BAR_PADDING );
       this.levelDescriptionText.left = this.levelNumberText.right + BAR_PADDING;
       this.levelDescriptionText.centerY = verticalCenter;
     }
