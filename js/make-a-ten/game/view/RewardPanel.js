@@ -54,11 +54,13 @@ define( function( require ) {
             } ),
             new TextPushButton( keepGoingString, _.extend( {
               baseColor: 'white',
-              listener: keepGoing
+              listener: keepGoing,
+              maxWidth: 500
             }, BUTTON_OPTIONS ) ),
             new TextPushButton( newLevelString, _.extend( {
               baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
-              listener: goToLevelSelection
+              listener: goToLevelSelection,
+              maxWidth: 500
             }, BUTTON_OPTIONS ) )
           ]
         } ),
