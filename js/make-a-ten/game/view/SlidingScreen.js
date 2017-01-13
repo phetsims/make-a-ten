@@ -113,7 +113,8 @@ define( function( require ) {
           onComplete: function() {
             self.setMoving( false );
           }
-        } ).start();
+        } );
+        this.moveTo.start();
         this.setMoving( true );
       }
     },
