@@ -1,11 +1,11 @@
 {
-  "comment": "# make-a-ten 1.0.0-dev.15 Tue Jan 10 2017 00:01:47 GMT-0700 (Mountain Standard Time)",
+  "comment": "# make-a-ten 1.0.0-rc.1 Wed Jan 25 2017 13:52:00 GMT-0600 (CST)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "master"
   },
   "axon": {
-    "sha": "ec87493fcb22648c50de6aa63b3c43f68107ae9b",
+    "sha": "1cf1028125aff542d863c6f40ecd3ee03ceaef74",
     "branch": "master"
   },
   "brand": {
@@ -13,24 +13,24 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "ae15c0936c402f6c208689834dffcde6c4efdc80",
+    "sha": "f4cd39bfd3865b29e8f87da62e39f24d1fb9b335",
     "branch": "master"
   },
   "dot": {
-    "sha": "2b15e064999bb86ae5cf6d22ecf014f4144f13f9",
+    "sha": "75380061a901393db079c24d019e0eb03abe68c2",
     "branch": "master"
   },
   "joist": {
-    "sha": "6b7e99df943c020eb410f1c00e8707839f7bb84d",
+    "sha": "d0bca7428daacf22df1173aa9b707f8599c2c474",
     "branch": "master"
   },
   "kite": {
-    "sha": "197fef793822240fbc3a0e3b1edfb593c4e6050c",
+    "sha": "6059ebb0210f3aeeb4b6863445ed94245e54fef1",
     "branch": "master"
   },
   "make-a-ten": {
-    "sha": "24aa1f7990da814086575f10791aab0e832fda4c",
-    "branch": "master"
+    "sha": "49d319a3a7a2921dc0a83da66549ba2c9d2761e1",
+    "branch": "1.0"
   },
   "phet-core": {
     "sha": "84747dff066a54fc6f6220aabd2b1a2195ebb6e6",
@@ -45,11 +45,11 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "9d165389714b1bacdd221e9a40efee6c8ef9a3ed",
+    "sha": "fbf816a5a159b803846d71d2c6afa3fa481b96b8",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "e8dd9772ffaad21939fe7d60e65d425ffd336308",
+    "sha": "b04d8086939d00a810ba53f53e8f68f5671251ae",
     "branch": "master"
   },
   "sherpa": {
@@ -57,11 +57,11 @@
     "branch": "master"
   },
   "sun": {
-    "sha": "26fa8dc33b824b24e8fed44c7173db0bbaf346ee",
+    "sha": "c98a7f0bffd155876e35aa31d817fbc1cebc9aef",
     "branch": "master"
   },
   "tandem": {
-    "sha": "5b598f04c187b0c8a91da216d1961b584acca7a9",
+    "sha": "d9c124e5a7d30ac8013874e932122085f3477da9",
     "branch": "master"
   },
   "twixt": {
@@ -69,11 +69,11 @@
     "branch": "master"
   },
   "vegas": {
-    "sha": "f67a6f3ed40b1fded80f36a2b85b0fc590c401ef",
+    "sha": "8aa083777029705184541f3991654d348a67818e",
     "branch": "master"
   },
   "vibe": {
-    "sha": "22223265a58ccd406cf60446efad04b5cb4aa842",
+    "sha": "d4b79cf6f70f4a1aaba60d6d20b2beb341263528",
     "branch": "master"
   }
 }
