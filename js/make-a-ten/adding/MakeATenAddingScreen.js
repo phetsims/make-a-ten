@@ -18,7 +18,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
   var Property = require( 'AXON/Property' );
-  var Color = require( 'SCENERY/util/Color' );
 
   // images
   var addingHomeScreenImage = require( 'image!MAKE_A_TEN/adding-home-screen.png' );
@@ -34,7 +33,7 @@ define( function( require ) {
 
     var options = {
       name: screenAddingString,
-      backgroundColorProperty: new Property( Color.toColor( MakeATenConstants.SCREEN_BACKGROUND_COLOR ) ),
+      backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       homeScreenIcon: MakeATenUtil.createIconWithBackgroundColor( addingHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       navigationBarIcon: MakeATenUtil.createIconWithBackgroundColor( addingNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
     };
