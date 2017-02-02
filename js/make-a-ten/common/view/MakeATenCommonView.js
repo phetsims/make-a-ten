@@ -76,7 +76,7 @@ define( function( require ) {
 
     // @protected {ResetAllButton}
     this.resetAllButton = new ResetAllButton( {
-      touchAreaDilation: 13,
+      touchAreaDilation: 8,
       listener: function() {
         model.reset();
         self.reset();
