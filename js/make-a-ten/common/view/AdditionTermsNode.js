@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -85,6 +86,8 @@ define( function( require ) {
       additionTerms.activeTermProperty.link( function( term ) {
         leftNumberDisplayBackground.stroke = ( term === ActiveTerm.LEFT ) ? STROKE_COLOR : null;
         rightNumberDisplayBackground.stroke = ( term === ActiveTerm.RIGHT ) ? STROKE_COLOR : null;
+      } );
+      Property.multilink( [ additionTerms.leftTermProperty, additionTerms.rightTermProperty, additionTerms.activeTermProperty ], function() {
         equalsSignText.visible = additionTerms.hasBothTerms();
       } );
     }
