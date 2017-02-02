@@ -71,10 +71,6 @@ define( function( require ) {
     this.explorePanel = new ExplorePanel( this, model.sumProperty );
     this.addChild( this.explorePanel );
 
-    this.addChild( this.paperNumberLayerNode );
-
-    this.addChild( new SplitCueNode( model.splitCue ) );
-
     var hideSumText = new Text( hideTotalString, {
       maxWidth: 150,
       font: new PhetFont( {
@@ -95,6 +91,10 @@ define( function( require ) {
     this.hideSumProperty.link( function( hideSum ) {
       self.sumNode.visible = !hideSum;
     } );
+
+    this.addChild( this.paperNumberLayerNode );
+
+    this.addChild( new SplitCueNode( model.splitCue ) );
 
     this.layoutControls();
   }

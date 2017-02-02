@@ -47,9 +47,6 @@ define( function( require ) {
     } );
     this.insertChild( 0, background ); // behind anything else our supertype adds
 
-    // Where all of the paper numbers go (from supertype)
-    this.addChild( this.paperNumberLayerNode );
-
     function createEditNumberButton( term ) {
       return new RectangularPushButton( {
         touchAreaXDilation: 10,
@@ -80,6 +77,9 @@ define( function( require ) {
 
     additionTermsNode.left = this.layoutBounds.left + 38;
     additionTermsNode.top = this.layoutBounds.top + 85;
+
+    // Where all of the paper numbers go (from supertype)
+    this.addChild( this.paperNumberLayerNode );
 
     function onNumberSubmit( value ) {
       if ( model.additionTerms.activeTermProperty.value === ActiveTerm.LEFT ) {
