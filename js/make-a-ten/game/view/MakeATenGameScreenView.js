@@ -99,14 +99,14 @@ define( function( require ) {
     } );
     this.levelSelectionLayer.addChild( this.soundToggleButton );
 
-    // Add the paper number layer from our supertype
-    this.challengeLayer.addChild( this.paperNumberLayerNode );
-
     // The node that display "12 + 100 = "
     var additionTermsNode = new AdditionTermsNode( model.additionTerms, false );
     additionTermsNode.left = this.layoutBounds.left + 38;
     additionTermsNode.top = this.layoutBounds.top + 75;
     this.challengeLayer.addChild( additionTermsNode );
+
+    // Add the paper number layer from our supertype
+    this.challengeLayer.addChild( this.paperNumberLayerNode );
 
     // @private {NextArrowButton} - Moves to the next challenge when clicked
     this.nextChallengeButton = new NextArrowButton( nextString, {
