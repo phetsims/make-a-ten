@@ -105,9 +105,6 @@ define( function( require ) {
     additionTermsNode.top = this.layoutBounds.top + 75;
     this.challengeLayer.addChild( additionTermsNode );
 
-    // Add the paper number layer from our supertype
-    this.challengeLayer.addChild( this.paperNumberLayerNode );
-
     // @private {NextArrowButton} - Moves to the next challenge when clicked
     this.nextChallengeButton = new NextArrowButton( nextString, {
       listener: function() {
@@ -120,6 +117,9 @@ define( function( require ) {
     model.gameStateProperty.link( function( gameState ) {
       self.nextChallengeButton.visible = gameState === GameState.CORRECT_ANSWER;
     } );
+
+    // Add the paper number layer from our supertype
+    this.challengeLayer.addChild( this.paperNumberLayerNode );
 
     // @private {GameStatusBar} - Status bar at the top of the screen
     this.gameStatusBar = new GameStatusBar( model );
