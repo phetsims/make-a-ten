@@ -13,7 +13,6 @@ define( function( require ) {
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Dimension2 = require( 'DOT/Dimension2' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
   var Plane = require( 'SCENERY/nodes/Plane' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -59,24 +58,20 @@ define( function( require ) {
       } );
     }
 
-    var editButtonBox = new HBox( {
-      children: [
-        createEditNumberButton( ActiveTerm.LEFT ),
-        createEditNumberButton( ActiveTerm.RIGHT )
-      ],
-      spacing: 45
-    } );
-    this.addChild( editButtonBox );
-
-    editButtonBox.left = this.layoutBounds.left + 75;
-    editButtonBox.top = this.layoutBounds.top + 32;
-
     // The node that display "12 + 100 = "
     var additionTermsNode = new AdditionTermsNode( model.additionTerms, true );
     this.addChild( additionTermsNode );
 
     additionTermsNode.left = this.layoutBounds.left + 38;
     additionTermsNode.top = this.layoutBounds.top + 85;
+
+    var leftEditButton = createEditNumberButton( ActiveTerm.LEFT );
+    var rightEditButton = createEditNumberButton( ActiveTerm.RIGHT );
+    leftEditButton.top = rightEditButton.top = this.layoutBounds.top + 32;
+    leftEditButton.right = additionTermsNode.getLeftAlignment() + additionTermsNode.x;
+    rightEditButton.left = additionTermsNode.getRightAlignment() + additionTermsNode.x;
+    this.addChild( leftEditButton );
+    this.addChild( rightEditButton );
 
     // Where all of the paper numbers go (from supertype)
     this.addChild( this.paperNumberLayerNode );

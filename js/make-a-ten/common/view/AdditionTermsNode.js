@@ -100,6 +100,14 @@ define( function( require ) {
 
     // Unchanging layout position of the right text node
     rightTermText.left = rightNumberDisplayBackground.left + rightNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
+
+    // @public
+    this.getLeftAlignment = function() {
+      return leftTermText.right;
+    };
+    this.getRightAlignment = function() {
+      return rightTermText.left;
+    };
   }
 
   makeATen.register( 'AdditionTermsNode', AdditionTermsNode );
