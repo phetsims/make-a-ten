@@ -14,10 +14,12 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Image = require( 'SCENERY/nodes/Image' );
-  var Plane = require( 'SCENERY/nodes/Plane' );
+  var Color = require( 'SCENERY/util/Color' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
   var KeyboardPanel = require( 'MAKE_A_TEN/make-a-ten/adding/view/KeyboardPanel' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var AdditionTermsNode = require( 'MAKE_A_TEN/make-a-ten/common/view/AdditionTermsNode' );
   var ActiveTerm = require( 'MAKE_A_TEN/make-a-ten/adding/model/ActiveTerm' );
@@ -36,15 +38,6 @@ define( function( require ) {
   function MakeATenAddingScreenView( model ) {
 
     MakeATenCommonView.call( this, model );
-
-    // Dismiss any open keyboard if a click/touch hits the background directly
-    var background = new Plane();
-    background.addInputListener( {
-      down: function( event ) {
-        model.additionTerms.activeTermProperty.value = ActiveTerm.NONE; // this will close the keyboard button
-      }
-    } );
-    this.insertChild( 0, background ); // behind anything else our supertype adds
 
     function createEditNumberButton( term ) {
       return new RectangularPushButton( {
@@ -88,6 +81,19 @@ define( function( require ) {
       model.additionTerms.activeTermProperty.value = ActiveTerm.NONE;
     }
 
+    var dimBackground = new Rectangle( {
+      fill: new Color( MakeATenConstants.SCREEN_BACKGROUND_COLOR ).colorUtilsDarker( 0.4 ).withAlpha( 0.4 )
+    } );
+    dimBackground.addInputListener( {
+      down: function( event ) {
+        model.additionTerms.activeTermProperty.value = ActiveTerm.NONE; // this will close the keyboard button
+      }
+    } );
+    this.visibleBoundsProperty.link( function( visibleBounds ) {
+      dimBackground.rectBounds = visibleBounds.dilated( 5 ); // Extra dilation so anti-aliasing doesn't mess with borders
+    } );
+    this.addChild( dimBackground );
+
     var keyboardPanel = new KeyboardPanel( onNumberSubmit, MAX_DIGITS );
     this.addChild( keyboardPanel );
 
@@ -95,7 +101,7 @@ define( function( require ) {
     keyboardPanel.top = additionTermsNode.top + 120;
 
     model.additionTerms.activeTermProperty.link( function( term ) {
-      keyboardPanel.visible = term !== ActiveTerm.NONE;
+      keyboardPanel.visible = dimBackground.visible = term !== ActiveTerm.NONE;
 
       if ( term === ActiveTerm.LEFT ) {
         keyboardPanel.setValue( model.additionTerms.leftTermProperty.value );
