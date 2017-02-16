@@ -83,10 +83,15 @@ define( function( require ) {
 
     // Add highlights if applicable
     if ( highlightBorders ) {
-      additionTerms.activeTermProperty.link( function( term ) {
-        leftNumberDisplayBackground.stroke = ( term === ActiveTerm.LEFT ) ? STROKE_COLOR : null;
-        rightNumberDisplayBackground.stroke = ( term === ActiveTerm.RIGHT ) ? STROKE_COLOR : null;
+      Property.multilink( [ additionTerms.leftTermProperty, additionTerms.activeTermProperty ], function( leftTerm, activeTerm ) {
+        leftNumberDisplayBackground.stroke = ( leftTerm === 0 ) ? STROKE_COLOR : null;
+        leftNumberDisplayBackground.fill = ( leftTerm === 0 && activeTerm === ActiveTerm.LEFT ) ? 'white' : null;
       } );
+      Property.multilink( [ additionTerms.rightTermProperty, additionTerms.activeTermProperty ], function( rightTerm, activeTerm ) {
+        rightNumberDisplayBackground.stroke = ( rightTerm === 0 ) ? STROKE_COLOR : null;
+        rightNumberDisplayBackground.fill = ( rightTerm === 0 && activeTerm === ActiveTerm.RIGHT ) ? 'white' : null;
+      } );
+
       Property.multilink( [ additionTerms.leftTermProperty, additionTerms.rightTermProperty, additionTerms.activeTermProperty ], function() {
         equalsSignText.visible = additionTerms.hasBothTerms();
       } );
