@@ -57,9 +57,9 @@ define( function( require ) {
     var leftTermText = new Text( '', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
     var rightTermText = new Text( '', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
 
+    this.addChild( numberDisplayBox );
     this.addChild( leftTermText );
     this.addChild( rightTermText );
-    this.addChild( numberDisplayBox );
     this.addChild( equalsSignText );
 
     function layout() {
@@ -84,12 +84,12 @@ define( function( require ) {
     // Add highlights if applicable
     if ( highlightBorders ) {
       Property.multilink( [ additionTerms.leftTermProperty, additionTerms.activeTermProperty ], function( leftTerm, activeTerm ) {
-        leftNumberDisplayBackground.stroke = ( leftTerm === 0 ) ? STROKE_COLOR : null;
-        leftNumberDisplayBackground.fill = ( leftTerm === 0 && activeTerm === ActiveTerm.LEFT ) ? 'white' : null;
+        leftNumberDisplayBackground.stroke = ( leftTerm === 0 || activeTerm === ActiveTerm.LEFT ) ? STROKE_COLOR : null;
+        leftNumberDisplayBackground.fill = activeTerm === ActiveTerm.LEFT ? 'white' : null;
       } );
       Property.multilink( [ additionTerms.rightTermProperty, additionTerms.activeTermProperty ], function( rightTerm, activeTerm ) {
-        rightNumberDisplayBackground.stroke = ( rightTerm === 0 ) ? STROKE_COLOR : null;
-        rightNumberDisplayBackground.fill = ( rightTerm === 0 && activeTerm === ActiveTerm.RIGHT ) ? 'white' : null;
+        rightNumberDisplayBackground.stroke = ( rightTerm === 0 || activeTerm === ActiveTerm.RIGHT ) ? STROKE_COLOR : null;
+        rightNumberDisplayBackground.fill = activeTerm === ActiveTerm.RIGHT ? 'white' : null;
       } );
 
       Property.multilink( [ additionTerms.leftTermProperty, additionTerms.rightTermProperty, additionTerms.activeTermProperty ], function() {
