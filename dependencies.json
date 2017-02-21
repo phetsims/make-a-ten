@@ -1,79 +1,79 @@
 {
-  "comment": "# make-a-ten 1.0.0-rc.1 Wed Jan 25 2017 13:54:06 GMT-0600 (CST)",
+  "comment": "# make-a-ten 1.0.0-rc.1 Tue Feb 21 2017 13:52:27 GMT-0700 (MST)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "axon": {
     "sha": "1cf1028125aff542d863c6f40ecd3ee03ceaef74",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "brand": {
     "sha": "0be722ee4e70a5689a86a246e86651f1b844574d",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "chipper": {
     "sha": "f4cd39bfd3865b29e8f87da62e39f24d1fb9b335",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "dot": {
     "sha": "75380061a901393db079c24d019e0eb03abe68c2",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "joist": {
     "sha": "d0bca7428daacf22df1173aa9b707f8599c2c474",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "kite": {
     "sha": "6059ebb0210f3aeeb4b6863445ed94245e54fef1",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "make-a-ten": {
-    "sha": "5f742dd4297bfb3a230c26a574b509431b0e2345",
+    "sha": "91f08496d13f60e2cbf92e631daa0533afb65131",
     "branch": "1.0"
   },
   "phet-core": {
     "sha": "84747dff066a54fc6f6220aabd2b1a2195ebb6e6",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "phetcommon": {
     "sha": "1cb33196c7b03661a71e82d189e66d95c92cc061",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "query-string-machine": {
     "sha": "d8a4ff18a12aff003e4896213c1dfed5a79c1a30",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "scenery": {
     "sha": "fbf816a5a159b803846d71d2c6afa3fa481b96b8",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "scenery-phet": {
     "sha": "b04d8086939d00a810ba53f53e8f68f5671251ae",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "sherpa": {
     "sha": "785a536c157f34ab1af195b0d40cff3fff023a2b",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "sun": {
     "sha": "c98a7f0bffd155876e35aa31d817fbc1cebc9aef",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "tandem": {
     "sha": "d9c124e5a7d30ac8013874e932122085f3477da9",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "twixt": {
     "sha": "cbe4c1aa78a061d6e7e28af25f1fca9ab2f8eac8",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "vegas": {
     "sha": "8aa083777029705184541f3991654d348a67818e",
-    "branch": "master"
+    "branch": "HEAD"
   },
   "vibe": {
     "sha": "d4b79cf6f70f4a1aaba60d6d20b2beb341263528",
-    "branch": "master"
+    "branch": "HEAD"
   }
 }
