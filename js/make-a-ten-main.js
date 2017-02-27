@@ -24,7 +24,7 @@ define( function( require ) {
       softwareDevelopment: 'Jonathan Olson',
       team: 'Ariel Paul, Kathy Perkins',
       graphicArts: 'Amanda McGarry',
-      qualityAssurance: 'Steele Dalton, Ethan Johnson',
+      qualityAssurance: 'Steele Dalton, Ethan Johnson, Ben Roberts, Bryce Griebenow',
       thanks: 'Thanks to Mobile Learner Labs for working with the PhET development team\n' +
               'to convert this simulation to HTML5.'
     }
