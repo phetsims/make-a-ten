@@ -76,12 +76,15 @@ define( function( require ) {
     step: function( dt ) {
       if ( !this.userControlledProperty.value ) {
         var currentPosition = this.positionProperty.value;
+        assert && assert( currentPosition.isFinite() );
+        assert && assert( this.destination.isFinite() );
 
         // perform any animation
         var distanceToDestination = currentPosition.distance( this.destination );
         if ( distanceToDestination > dt * MakeATenConstants.ANIMATION_VELOCITY ) {
           // Move a step toward the destination.
           var stepVector = this.destination.minus( currentPosition ).setMagnitude( MakeATenConstants.ANIMATION_VELOCITY * dt );
+          assert && assert( stepVector.isFinite() );
           this.positionProperty.value = currentPosition.plus( stepVector );
 
         }
@@ -164,6 +167,8 @@ define( function( require ) {
      *                            immediately set the position to be the same as the destination.
      */
     setDestination: function( destination, animate ) {
+      assert && assert( destination.isFinite() );
+
       this.destination = destination;
 
       if ( animate ) {
