@@ -21,12 +21,10 @@ define( function( require ) {
   var simOptions = {
     credits: {
       leadDesign: 'Beth Stade, Amanda McGarry',
-      softwareDevelopment: 'Jonathan Olson',
+      softwareDevelopment: 'Jonathan Olson, Sharfudeen Ashraf',
       team: 'Ariel Paul, Kathy Perkins',
       graphicArts: 'Amanda McGarry',
-      qualityAssurance: 'Steele Dalton, Ethan Johnson, Ben Roberts, Bryce Griebenow',
-      thanks: 'Thanks to Mobile Learner Labs for working with the PhET development team\n' +
-              'to convert this simulation to HTML5.'
+      qualityAssurance: 'Steele Dalton, Ethan Johnson, Ben Roberts, Bryce Griebenow'
     }
   };
 
