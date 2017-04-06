@@ -124,7 +124,7 @@ define( function( require ) {
      * Locate the boundary between the "move" input area and "split" input area, in the number's local bounds.
      * @public
      *
-     * @return {Bounds2}
+     * @returns {Bounds2}
      */
     getBoundaryY: function() {
       var bounds = this.getLocalBounds();
