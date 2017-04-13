@@ -1,5 +1,5 @@
 {
-  "comment": "# make-a-ten 1.0.2 Fri Apr 07 2017 17:27:17 GMT-0600 (MDT)",
+  "comment": "# make-a-ten 1.0.2 Thu Apr 13 2017 13:15:11 GMT-0600 (MDT)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -9,12 +9,12 @@
     "branch": "HEAD"
   },
   "brand": {
-    "sha": "0be722ee4e70a5689a86a246e86651f1b844574d",
-    "branch": "HEAD"
+    "sha": "555d21cb75cba5185eca9c22eb2a97e08fad8e6e",
+    "branch": "make-a-ten-1.0"
   },
   "chipper": {
-    "sha": "f4cd39bfd3865b29e8f87da62e39f24d1fb9b335",
-    "branch": "HEAD"
+    "sha": "61bdb816f84c3ec2a87ea4df3de3d91f91506f6e",
+    "branch": "make-a-ten-1.0"
   },
   "dot": {
     "sha": "75380061a901393db079c24d019e0eb03abe68c2",
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "make-a-ten": {
-    "sha": "d4a496063258a06adfa55d9efffaa8a7af0cd60b",
+    "sha": "0f7277b533e0770c142f303d4c715ba3c7f6a3d4",
     "branch": "1.0"
   },
   "phet-core": {
@@ -37,8 +37,8 @@
     "branch": "HEAD"
   },
   "phetcommon": {
-    "sha": "1cb33196c7b03661a71e82d189e66d95c92cc061",
-    "branch": "HEAD"
+    "sha": "2df1daf2b5a2515f49b38f4286e8a29b48e86c70",
+    "branch": "make-a-ten-1.0"
   },
   "query-string-machine": {
     "sha": "d8a4ff18a12aff003e4896213c1dfed5a79c1a30",
