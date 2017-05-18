@@ -54,11 +54,11 @@ define( function( require ) {
     this.challengeLayer = new Node();
 
     var showingLeftProperty = DerivedProperty.valueEquals( model.gameStateProperty,
-                                                           new Property( GameState.CHOOSING_LEVEL ) );
+      new Property( GameState.CHOOSING_LEVEL ) );
     this.addChild( new SlidingScreen( this.levelSelectionLayer,
-                                      this.challengeLayer,
-                                      this.visibleBoundsProperty,
-                                      showingLeftProperty ) );
+      this.challengeLayer,
+      this.visibleBoundsProperty,
+      showingLeftProperty ) );
 
     // @private {StartGameLevelNode} - Shows buttons that allow selecting the level to play
     this.startGameLevelNode = new StartGameLevelNode( model );
@@ -67,9 +67,6 @@ define( function( require ) {
     // Move our resetAllButton onto our level-selection layer
     this.resetAllButton.detach();
     this.levelSelectionLayer.addChild( this.resetAllButton );
-
-    // created lazily
-    var infoDialog = null;
 
     // @private {RectangularPushButton} - Shows '?' in the corner that pops up the info dialog when clicked.
     this.infoButton = new RectangularPushButton( {
@@ -80,10 +77,7 @@ define( function( require ) {
       } ),
       baseColor: '#eeeeee',
       listener: function() {
-        if ( !infoDialog ) {
-          infoDialog = new InfoDialog( model.levels );
-        }
-        infoDialog.show();
+        new InfoDialog( model.levels ).show();
       },
       top: this.layoutBounds.top + 20,
       right: this.layoutBounds.right - 20
