@@ -68,6 +68,9 @@ define( function( require ) {
     this.resetAllButton.detach();
     this.levelSelectionLayer.addChild( this.resetAllButton );
 
+    // info dialog, constructed lazily because Dialog requires sim bounds during construction
+    var dialog = null;
+
     // @private {RectangularPushButton} - Shows '?' in the corner that pops up the info dialog when clicked.
     this.infoButton = new RectangularPushButton( {
       touchAreaXDilation: 7,
@@ -77,7 +80,10 @@ define( function( require ) {
       } ),
       baseColor: '#eeeeee',
       listener: function() {
-        new InfoDialog( model.levels ).show();
+        if ( !dialog ) {
+          dialog = new InfoDialog( model.levels );
+        }
+        dialog.show();
       },
       top: this.layoutBounds.top + 20,
       right: this.layoutBounds.right - 20
