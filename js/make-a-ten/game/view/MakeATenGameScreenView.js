@@ -13,7 +13,6 @@ define( function( require ) {
   // modules
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -53,8 +52,9 @@ define( function( require ) {
     // @private {Node} - The "right" half of the sliding layer, will slide into view when the user selects a level
     this.challengeLayer = new Node();
 
-    var showingLeftProperty = DerivedProperty.valueEquals( model.gameStateProperty,
-      new Property( GameState.CHOOSING_LEVEL ) );
+    var showingLeftProperty = new DerivedProperty( [ model.gameStateProperty ], function( gameState ) {
+      return gameState === GameState.CHOOSING_LEVEL;
+    } );
     this.addChild( new SlidingScreen( this.levelSelectionLayer,
       this.challengeLayer,
       this.visibleBoundsProperty,
