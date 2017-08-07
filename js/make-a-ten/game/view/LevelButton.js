@@ -1,7 +1,7 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- * Button that will open a particular game level. Originally from LevelSelectionButton.
+ * Button that will open a particular game level. Originally from LevelSelectionItemNode.
  *
  * @author Sharfudeen Ashraf
  * @author John Blanco
@@ -18,7 +18,7 @@ define( function( require ) {
   var ScoreNode = require( 'MAKE_A_TEN/make-a-ten/game/view/ScoreNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
+  var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
 
   /**
    * @constructor
@@ -60,7 +60,7 @@ define( function( require ) {
     // Icon, scaled and padded to fit and to make the button size correct.
     var iconSize = new Dimension2( maxContentWidth, buttonHeight - scoreNodeBackground.height -
                                                     2 * buttonYMargin - iconScorePadding );
-    var adjustedIcon = LevelSelectionButton.createSizedImageNode( level.iconNode, iconSize );
+    var adjustedIcon = LevelSelectionItemNode.createSizedImageNode( level.iconNode, iconSize );
     adjustedIcon.pickable = false;
 
     // Assemble the content.

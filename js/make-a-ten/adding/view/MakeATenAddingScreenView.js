@@ -17,7 +17,7 @@ define( function( require ) {
   var Color = require( 'SCENERY/util/Color' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
+  var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
   var KeyboardPanel = require( 'MAKE_A_TEN/make-a-ten/adding/view/KeyboardPanel' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
@@ -43,7 +43,7 @@ define( function( require ) {
       return new RectangularPushButton( {
         touchAreaXDilation: 10,
         touchAreaYDilation: 10,
-        content: LevelSelectionButton.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE ),
+        content: LevelSelectionItemNode.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE ),
         listener: function() {
           model.additionTerms.activeTermProperty.value = term;
         },
