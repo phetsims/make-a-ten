@@ -10,17 +10,17 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var Vector2 = require( 'DOT/Vector2' );
-  var Emitter = require( 'AXON/Emitter' );
-  var Property = require( 'AXON/Property' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var Bounds2 = require( 'DOT/Bounds2' );
+  var Emitter = require( 'AXON/Emitter' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
+  var Property = require( 'AXON/Property' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // Incremented for PaperNumber IDs
   var nextPaperNumberId = 1;

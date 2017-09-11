@@ -11,14 +11,14 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var ScoreNode = require( 'MAKE_A_TEN/make-a-ten/game/view/ScoreNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
+  var ScoreNode = require( 'MAKE_A_TEN/make-a-ten/game/view/ScoreNode' );
 
   /**
    * @constructor

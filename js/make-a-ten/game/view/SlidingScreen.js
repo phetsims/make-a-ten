@@ -9,10 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var MoveTo = require( 'TWIXT/MoveTo' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**

@@ -9,14 +9,14 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  var Color = require( 'SCENERY/util/Color' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var Color = require( 'SCENERY/util/Color' );
-  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
 
   // images
   var handImage = require( 'image!SCENERY_PHET/hand.png' );

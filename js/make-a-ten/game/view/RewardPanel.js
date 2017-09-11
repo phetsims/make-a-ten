@@ -9,18 +9,18 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Panel = require( 'SUN/Panel' );
-  var Property = require( 'AXON/Property' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
-  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  var Image = require( 'SCENERY/nodes/Image' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var Panel = require( 'SUN/Panel' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Property = require( 'AXON/Property' );
   var ScoreNode = require( 'MAKE_A_TEN/make-a-ten/game/view/ScoreNode' );
+  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   // images
   var gameRewardImage = require( 'image!MAKE_A_TEN/game-reward.png' );

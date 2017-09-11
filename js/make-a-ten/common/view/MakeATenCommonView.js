@@ -9,17 +9,17 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var Property = require( 'AXON/Property' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Plane = require( 'SCENERY/nodes/Plane' );
-  var PaperNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperNumberNode' );
   var ArithmeticRules = require( 'MAKE_A_TEN/make-a-ten/common/model/ArithmeticRules' );
-  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ClosestDragListener = require( 'SUN/ClosestDragListener' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var PaperNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/PaperNumberNode' );
+  var Plane = require( 'SCENERY/nodes/Plane' );
+  var Property = require( 'AXON/Property' );
+  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  var ScreenView = require( 'JOIST/ScreenView' );
 
   /**
    * @constructor

@@ -12,14 +12,14 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Panel = require( 'SUN/Panel' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var NumberEntryControl = require( 'SCENERY_PHET/NumberEntryControl' );
-  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  var Panel = require( 'SUN/Panel' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
   var submitString = require( 'string!MAKE_A_TEN/submit' );

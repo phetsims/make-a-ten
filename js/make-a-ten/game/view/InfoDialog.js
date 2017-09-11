@@ -9,14 +9,14 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var Dialog = require( 'JOIST/Dialog' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // Template for inserting the level number
   var patternLevel0LevelNumberString = require( 'string!MAKE_A_TEN/pattern.level.0levelNumber' );

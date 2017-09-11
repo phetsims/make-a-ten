@@ -9,10 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
   var AdditionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/AdditionTerms' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
 
   /**
    * @constructor

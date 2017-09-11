@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
 
   var MakeATenConstants = {
     // Initial layout bounds

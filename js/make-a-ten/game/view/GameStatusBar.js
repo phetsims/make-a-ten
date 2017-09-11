@@ -10,16 +10,16 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
+  var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ScoreNode = require( 'MAKE_A_TEN/make-a-ten/game/view/ScoreNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  var ScoreNode = require( 'MAKE_A_TEN/make-a-ten/game/view/ScoreNode' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  var Text = require( 'SCENERY/nodes/Text' );
 
   // Template for inserting the level number
   var patternLevel0LevelNumberString = require( 'string!MAKE_A_TEN/pattern.level.0levelNumber' );

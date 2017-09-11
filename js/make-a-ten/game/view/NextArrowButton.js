@@ -11,15 +11,15 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ArrowShape = require( 'SCENERY_PHET/ArrowShape' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var Path = require( 'SCENERY/nodes/Path' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var Text = require( 'SCENERY/nodes/Text' );
 
   // constants
   var LABEL_FONT = new PhetFont( { size: 20, weight: 'bold' } );

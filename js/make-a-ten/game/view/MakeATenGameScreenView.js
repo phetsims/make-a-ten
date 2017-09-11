@@ -11,27 +11,27 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var StartGameLevelNode = require( 'MAKE_A_TEN/make-a-ten/game/view/StartGameLevelNode' );
-  var InfoDialog = require( 'MAKE_A_TEN/make-a-ten/game/view/InfoDialog' );
-  var GameStatusBar = require( 'MAKE_A_TEN/make-a-ten/game/view/GameStatusBar' );
-  var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var AdditionTermsNode = require( 'MAKE_A_TEN/make-a-ten/common/view/AdditionTermsNode' );
-  var NextArrowButton = require( 'MAKE_A_TEN/make-a-ten/game/view/NextArrowButton' );
-  var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
-  var SlidingScreen = require( 'MAKE_A_TEN/make-a-ten/game/view/SlidingScreen' );
-  var MakeATenRewardNode = require( 'MAKE_A_TEN/make-a-ten/game/view/MakeATenRewardNode' );
-  var RewardPanel = require( 'MAKE_A_TEN/make-a-ten/game/view/RewardPanel' );
-  var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
+  var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
+  var GameStatusBar = require( 'MAKE_A_TEN/make-a-ten/game/view/GameStatusBar' );
+  var InfoDialog = require( 'MAKE_A_TEN/make-a-ten/game/view/InfoDialog' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
+  var MakeATenRewardNode = require( 'MAKE_A_TEN/make-a-ten/game/view/MakeATenRewardNode' );
+  var NextArrowButton = require( 'MAKE_A_TEN/make-a-ten/game/view/NextArrowButton' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var RewardPanel = require( 'MAKE_A_TEN/make-a-ten/game/view/RewardPanel' );
+  var SlidingScreen = require( 'MAKE_A_TEN/make-a-ten/game/view/SlidingScreen' );
+  var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
+  var StartGameLevelNode = require( 'MAKE_A_TEN/make-a-ten/game/view/StartGameLevelNode' );
+  var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
   var nextString = require( 'string!MAKE_A_TEN/next' );

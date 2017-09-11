@@ -10,19 +10,19 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var Vector2 = require( 'DOT/Vector2' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var CheckBox = require( 'SUN/CheckBox' );
-  var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
-  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var ExplorePanel = require( 'MAKE_A_TEN/make-a-ten/explore/view/ExplorePanel' );
-  var SplitCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/SplitCueNode' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
+  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var SplitCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/SplitCueNode' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // strings
   var hideTotalString = require( 'string!MAKE_A_TEN/hideTotal' );

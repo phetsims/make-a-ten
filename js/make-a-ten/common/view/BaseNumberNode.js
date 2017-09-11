@@ -9,12 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Vector2 = require( 'DOT/Vector2' );
   var Dimension2 = require( 'DOT/Dimension2' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var Image = require( 'SCENERY/nodes/Image' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // images
   var imageDigit0 = require( 'mipmap!MAKE_A_TEN/digit-0.png' );

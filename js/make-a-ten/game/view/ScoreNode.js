@@ -12,13 +12,13 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
   var Emitter = require( 'AXON/Emitter' );
-  var StarNode = require( 'SCENERY_PHET/StarNode' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var StarNode = require( 'SCENERY_PHET/StarNode' );
+  var Text = require( 'SCENERY/nodes/Text' );
 
   // constants
   var LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );

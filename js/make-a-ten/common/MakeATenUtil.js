@@ -9,10 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var Image = require( 'SCENERY/nodes/Image' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   var MakeATenUtil = {
     /**

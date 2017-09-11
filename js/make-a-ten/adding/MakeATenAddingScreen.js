@@ -10,14 +10,14 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var inherit = require( 'PHET_CORE/inherit' );
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var MakeATenAddingModel = require( 'MAKE_A_TEN/make-a-ten/adding/model/MakeATenAddingModel' );
   var MakeATenAddingScreenView = require( 'MAKE_A_TEN/make-a-ten/adding/view/MakeATenAddingScreenView' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Screen = require( 'JOIST/Screen' );
   var Property = require( 'AXON/Property' );
+  var Screen = require( 'JOIST/Screen' );
 
   // images
   var addingHomeScreenImage = require( 'image!MAKE_A_TEN/adding-home-screen.png' );

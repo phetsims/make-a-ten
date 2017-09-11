@@ -9,17 +9,17 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var arrayRemove = require( 'PHET_CORE/arrayRemove' );
-  var Emitter = require( 'AXON/Emitter' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var ArithmeticRules = require( 'MAKE_A_TEN/make-a-ten/common/model/ArithmeticRules' );
-  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
+  var arrayRemove = require( 'PHET_CORE/arrayRemove' );
   var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
   var BaseNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/BaseNumberNode' );
+  var Emitter = require( 'AXON/Emitter' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
 
   /**
    * @constructor

@@ -9,13 +9,13 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var FaceNode = require( 'SCENERY_PHET/FaceNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var RewardNode = require( 'VEGAS/RewardNode' );
-  var StarNode = require( 'SCENERY_PHET/StarNode' );
   var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
   var BaseNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/BaseNumberNode' );
+  var FaceNode = require( 'SCENERY_PHET/FaceNode' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var RewardNode = require( 'VEGAS/RewardNode' );
+  var StarNode = require( 'SCENERY_PHET/StarNode' );
 
   function createNumber( digit, place ) {
     var node = new BaseNumberNode( new BaseNumber( digit, place ), 1 );

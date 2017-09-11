@@ -9,18 +9,19 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
-  var NumberChallengeFactory = require( 'MAKE_A_TEN/make-a-ten/game/model/NumberChallengeFactory' );
-  var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
-  var Level = require( 'MAKE_A_TEN/make-a-ten/game/model/Level' );
   var AdditionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/AdditionTerms' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var Level = require( 'MAKE_A_TEN/make-a-ten/game/model/Level' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
+  var NumberChallengeFactory = require( 'MAKE_A_TEN/make-a-ten/game/model/NumberChallengeFactory' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
+  var Property = require( 'AXON/Property' );
 
   // Level descriptions
+  var level10DescriptionString = require( 'string!MAKE_A_TEN/level10Description' );
   var level1DescriptionString = require( 'string!MAKE_A_TEN/level1Description' );
   var level2DescriptionString = require( 'string!MAKE_A_TEN/level2Description' );
   var level3DescriptionString = require( 'string!MAKE_A_TEN/level3Description' );
@@ -30,10 +31,10 @@ define( function( require ) {
   var level7DescriptionString = require( 'string!MAKE_A_TEN/level7Description' );
   var level8DescriptionString = require( 'string!MAKE_A_TEN/level8Description' );
   var level9DescriptionString = require( 'string!MAKE_A_TEN/level9Description' );
-  var level10DescriptionString = require( 'string!MAKE_A_TEN/level10Description' );
 
   // Level icons
   var levelIcon1 = require( 'image!MAKE_A_TEN/level-1.png' );
+  var levelIcon10 = require( 'image!MAKE_A_TEN/level-10.png' );
   var levelIcon2 = require( 'image!MAKE_A_TEN/level-2.png' );
   var levelIcon3 = require( 'image!MAKE_A_TEN/level-3.png' );
   var levelIcon4 = require( 'image!MAKE_A_TEN/level-4.png' );
@@ -42,7 +43,6 @@ define( function( require ) {
   var levelIcon7 = require( 'image!MAKE_A_TEN/level-7.png' );
   var levelIcon8 = require( 'image!MAKE_A_TEN/level-8.png' );
   var levelIcon9 = require( 'image!MAKE_A_TEN/level-9.png' );
-  var levelIcon10 = require( 'image!MAKE_A_TEN/level-10.png' );
 
   /**
    * @constructor

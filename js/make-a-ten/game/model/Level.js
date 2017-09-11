@@ -9,12 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Image = require( 'SCENERY/nodes/Image' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
 
   // constants
   var ICON_SIZE = new Dimension2( 729 / 2, 420 / 2 );

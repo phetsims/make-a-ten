@@ -10,11 +10,11 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var NumberProperty = require( 'AXON/NumberProperty' );
+  var Property = require( 'AXON/Property' );
 
   // constants
   var FADE_SPEED = 0.8;

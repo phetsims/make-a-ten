@@ -11,10 +11,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelButton = require( 'MAKE_A_TEN/make-a-ten/game/view/LevelButton' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Vector2 = require( 'DOT/Vector2' );
 

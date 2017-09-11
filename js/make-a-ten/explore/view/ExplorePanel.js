@@ -9,16 +9,16 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var Vector2 = require( 'DOT/Vector2' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Panel = require( 'SUN/Panel' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
   var BaseNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/BaseNumberNode' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var Panel = require( 'SUN/Panel' );
+  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   var MAX_SUM = 9999;
 

@@ -9,10 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ObservableArray = require( 'AXON/ObservableArray' );
+  var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
+  var ObservableArray = require( 'AXON/ObservableArray' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var Vector2 = require( 'DOT/Vector2' );
 
