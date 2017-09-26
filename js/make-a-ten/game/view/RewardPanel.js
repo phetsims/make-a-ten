@@ -58,7 +58,7 @@ define( function( require ) {
               maxWidth: 500
             }, BUTTON_OPTIONS ) ),
             new TextPushButton( newLevelString, _.extend( {
-              baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
+              baseColor: PhetColorScheme.BUTTON_YELLOW,
               listener: goToLevelSelection,
               maxWidth: 500
             }, BUTTON_OPTIONS ) )
