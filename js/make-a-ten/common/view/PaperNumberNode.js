@@ -13,13 +13,13 @@ define( function( require ) {
   var arrayRemove = require( 'PHET_CORE/arrayRemove' );
   var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
   var BaseNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/BaseNumberNode' );
+  var DragListener = require( 'SCENERY/listeners/DragListener' );
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
 
   /**
    * @constructor
@@ -72,15 +72,12 @@ define( function( require ) {
     this.addChild( this.moveTarget );
 
     // View-coordinate offset between our position and the pointer's position, used for keeping drags synced.
-    var dragOffset;
-    // @private {SimpleDragHandler}
-    this.moveDragHandler = new SimpleDragHandler( {
-      start: function( event, trail ) {
+    // @private {DragListener}
+    this.moveDragHandler = new DragListener( {
+      targetNode: this,
+      allowTouchSnag: true,
+      start: function( event, listener ) {
         paperNumber.userControlledProperty.value = true;
-
-        // Record our initial offset (where on the paper number the pointer is).
-        var viewPosition = self.globalToParentPoint( event.pointer.point );
-        dragOffset = paperNumber.positionProperty.value.minus( viewPosition );
 
         self.interactionStartedEmitter.emit1( self );
         if ( !self.preventMoveEmit ) {
@@ -88,12 +85,11 @@ define( function( require ) {
         }
       },
 
-      drag: function( event, trail ) {
-        var viewPosition = self.globalToParentPoint( event.pointer.point );
-        paperNumber.setConstrainedDestination( availableViewBoundsProperty.value, dragOffset.plus( viewPosition ) );
+      drag: function( event, listener ) {
+        paperNumber.setConstrainedDestination( availableViewBoundsProperty.value, listener.parentPoint );
       },
 
-      end: function( event, trail ) {
+      end: function( event, listener ) {
         paperNumber.userControlledProperty.value = false;
 
         tryToCombineNumbers( self.paperNumber );
@@ -200,7 +196,7 @@ define( function( require ) {
     startSyntheticDrag: function( event ) {
       // Don't emit a move event, as we don't want the cue to disappear.
       this.preventMoveEmit = true;
-      this.moveDragHandler.tryToSnag( event );
+      this.moveDragHandler.press( event );
       this.preventMoveEmit = false;
     },
 
@@ -215,7 +211,7 @@ define( function( require ) {
         this.splitDragHandler.down( event );
       }
       else {
-        this.moveDragHandler.tryToSnag( event );
+        this.moveDragHandler.press( event );
       }
     },
 
