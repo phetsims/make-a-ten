@@ -76,9 +76,8 @@ define( function( require ) {
     this.moveDragHandler = new DragListener( {
       targetNode: this,
       allowTouchSnag: true,
+      isUserControlledProperty: paperNumber.userControlledProperty,
       start: function( event, listener ) {
-        paperNumber.userControlledProperty.value = true;
-
         self.interactionStartedEmitter.emit1( self );
         if ( !self.preventMoveEmit ) {
           self.moveEmitter.emit1( self );
@@ -90,8 +89,6 @@ define( function( require ) {
       },
 
       end: function( event, listener ) {
-        paperNumber.userControlledProperty.value = false;
-
         tryToCombineNumbers( self.paperNumber );
         paperNumber.endDragEmitter.emit1( paperNumber );
       }
