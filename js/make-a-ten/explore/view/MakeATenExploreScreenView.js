@@ -11,7 +11,7 @@ define( function( require ) {
 
   // modules
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var CheckBox = require( 'SUN/CheckBox' );
+  var Checkbox = require( 'SUN/Checkbox' );
   var ExplorePanel = require( 'MAKE_A_TEN/make-a-ten/explore/view/ExplorePanel' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -80,13 +80,13 @@ define( function( require ) {
       fill: 'black'
     } );
 
-    // @private {CheckBox} - When checked, hides the sum in the upper-left
-    this.hideSumCheckBox = new CheckBox( hideSumText, this.hideSumProperty, {
+    // @private {Checkbox} - When checked, hides the sum in the upper-left
+    this.hideSumCheckbox = new Checkbox( hideSumText, this.hideSumProperty, {
       spacing: 10,
       boxWidth: 30
     } );
-    this.hideSumCheckBox.touchArea = this.hideSumCheckBox.localBounds.dilatedXY( 10, 4 );
-    this.addChild( this.hideSumCheckBox );
+    this.hideSumCheckbox.touchArea = this.hideSumCheckbox.localBounds.dilatedXY( 10, 4 );
+    this.addChild( this.hideSumCheckbox );
 
     this.hideSumProperty.link( function( hideSum ) {
       self.sumNode.visible = !hideSum;
@@ -113,8 +113,8 @@ define( function( require ) {
       this.explorePanel.centerX = visibleBounds.centerX;
       this.explorePanel.bottom = visibleBounds.bottom - 10;
 
-      this.hideSumCheckBox.left = this.explorePanel.right + 20;
-      this.hideSumCheckBox.bottom = visibleBounds.bottom - 10;
+      this.hideSumCheckbox.left = this.explorePanel.right + 20;
+      this.hideSumCheckbox.bottom = visibleBounds.bottom - 10;
 
       this.sumNode.left = visibleBounds.left + 30;
       this.sumNode.top = visibleBounds.top + 30;
