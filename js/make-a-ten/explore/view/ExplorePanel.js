@@ -15,6 +15,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var Mouse = require( 'SCENERY/input/Mouse' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
@@ -65,7 +66,7 @@ define( function( require ) {
       node.addInputListener( {
         down: function( event ) {
           // Ignore non-left mouse buttons
-          if ( event.pointer.isMouse && event.domEvent && event.domEvent.button !== 0 ) {
+          if ( event.pointer instanceof Mouse && event.domEvent && event.domEvent.button !== 0 ) {
             return;
           }
 

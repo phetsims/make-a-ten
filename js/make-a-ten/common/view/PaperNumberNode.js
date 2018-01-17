@@ -17,6 +17,7 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  var Mouse = require( 'SCENERY/input/Mouse' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -99,7 +100,7 @@ define( function( require ) {
     this.splitDragHandler = {
       down: function( event ) {
         // Ignore non-left mouse buttons
-        if ( event.pointer.isMouse && event.domEvent && event.domEvent.button !== 0 ) {
+        if ( event.pointer instanceof Mouse && event.domEvent && event.domEvent.button !== 0 ) {
           return;
         }
 
