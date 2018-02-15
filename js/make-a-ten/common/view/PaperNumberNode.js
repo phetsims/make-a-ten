@@ -76,7 +76,6 @@ define( function( require ) {
     // @private {DragListener}
     this.moveDragHandler = new DragListener( {
       targetNode: this,
-      allowTouchSnag: true,
       isUserControlledProperty: paperNumber.userControlledProperty,
       start: function( event, listener ) {
         self.interactionStartedEmitter.emit1( self );
