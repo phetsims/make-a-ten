@@ -65,10 +65,7 @@ define( function( require ) {
 
       node.addInputListener( {
         down: function( event ) {
-          // Ignore non-left mouse buttons
-          if ( event.pointer instanceof Mouse && event.domEvent && event.domEvent.button !== 0 ) {
-            return;
-          }
+          if ( !event.canStartPress() ) { return; }
 
           // We want this relative to the screen view, so it is guaranteed to be the proper view coordinates.
           var viewPosition = screenView.globalToLocalPoint( event.pointer.point );

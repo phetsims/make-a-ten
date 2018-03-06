@@ -98,10 +98,7 @@ define( function( require ) {
     // @private {Object}
     this.splitDragHandler = {
       down: function( event ) {
-        // Ignore non-left mouse buttons
-        if ( event.pointer instanceof Mouse && event.domEvent && event.domEvent.button !== 0 ) {
-          return;
-        }
+        if ( !event.canStartPress() ) { return; }
 
         var viewPosition = self.globalToParentPoint( event.pointer.point );
 
