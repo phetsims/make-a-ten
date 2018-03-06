@@ -17,7 +17,6 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var Mouse = require( 'SCENERY/input/Mouse' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
