@@ -18,6 +18,7 @@ define( function( require ) {
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var SplitCueNode = require( 'MAKE_A_TEN/make-a-ten/explore/view/SplitCueNode' );
@@ -61,7 +62,7 @@ define( function( require ) {
     this.sumNode = new HBox( {
       children: [
         sumText,
-        new Text( '=', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } )
+        new Text( MathSymbols.EQUAL_TO, { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } )
       ], spacing: 15
     } );
 

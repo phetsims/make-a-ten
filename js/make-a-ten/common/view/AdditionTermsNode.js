@@ -15,6 +15,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
@@ -45,8 +46,8 @@ define( function( require ) {
     var leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, backgroundOptions );
     var rightNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, backgroundOptions );
 
-    var plusText = new Text( '+', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
-    var equalsSignText = new Text( '=', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
+    var plusText = new Text( MathSymbols.PLUS, { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
+    var equalsSignText = new Text( MathSymbols.EQUAL_TO, { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
 
     var numberDisplayBox = new HBox( {
       children: [ leftNumberDisplayBackground, plusText, rightNumberDisplayBackground ],
