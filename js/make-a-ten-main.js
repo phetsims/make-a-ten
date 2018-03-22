@@ -23,7 +23,7 @@ define( function( require ) {
       leadDesign: 'Beth Stade, Amanda McGarry',
       softwareDevelopment: 'Jonathan Olson, Sharfudeen Ashraf',
       team: 'Ariel Paul, Kathy Perkins',
-      graphicArts: 'Amanda McGarry',
+      graphicArts: 'Mariah Hermsmeyer, Amanda McGarry',
       qualityAssurance: 'Steele Dalton, Bryce Griebenow, Ethan Johnson, Ben Roberts'
     }
   };
