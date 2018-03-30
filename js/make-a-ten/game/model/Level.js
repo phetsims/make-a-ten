@@ -12,7 +12,7 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
+  var LevelSelectionItemNodeDeprecated = require( 'VEGAS/LevelSelectionItemNodeDeprecated' );
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var NumberProperty = require( 'AXON/NumberProperty' );
 
@@ -37,7 +37,7 @@ define( function( require ) {
     this.color = color;
 
     // @public {Node} - A properly sized node for use as an icon representing the level
-    this.iconNode = LevelSelectionItemNode.createSizedImageNode( new Image( icon ), ICON_SIZE );
+    this.iconNode = LevelSelectionItemNodeDeprecated.createSizedImageNode( new Image( icon ), ICON_SIZE );
 
     // @public {string} - Translated description to be shown in info and the status bar
     this.description = description;
