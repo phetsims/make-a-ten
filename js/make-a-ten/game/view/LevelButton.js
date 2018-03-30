@@ -1,7 +1,7 @@
 // Copyright 2015-2017, University of Colorado Boulder
 
 /**
- * Button that will open a particular game level. Originally from LevelSelectionItemNode.
+ * Button that will open a particular game level. Originally from LevelSelectionItemNodeDeprecated.
  *
  * @author Sharfudeen Ashraf
  * @author John Blanco
@@ -13,7 +13,7 @@ define( function( require ) {
   // modules
   var Dimension2 = require( 'DOT/Dimension2' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
+  var LevelSelectionItemNodeDeprecated = require( 'VEGAS/LevelSelectionItemNodeDeprecated' );
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -60,7 +60,7 @@ define( function( require ) {
     // Icon, scaled and padded to fit and to make the button size correct.
     var iconSize = new Dimension2( maxContentWidth, buttonHeight - scoreNodeBackground.height -
                                                     2 * buttonYMargin - iconScorePadding );
-    var adjustedIcon = LevelSelectionItemNode.createSizedImageNode( level.iconNode, iconSize );
+    var adjustedIcon = LevelSelectionItemNodeDeprecated.createSizedImageNode( level.iconNode, iconSize );
     adjustedIcon.pickable = false;
 
     // Assemble the content.
