@@ -17,7 +17,7 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeyboardPanel = require( 'MAKE_A_TEN/make-a-ten/adding/view/KeyboardPanel' );
-  var LevelSelectionItemNodeDeprecated = require( 'VEGAS/LevelSelectionItemNodeDeprecated' );
+  var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
@@ -43,7 +43,7 @@ define( function( require ) {
       return new RectangularPushButton( {
         touchAreaXDilation: 10,
         touchAreaYDilation: 10,
-        content: LevelSelectionItemNodeDeprecated.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE ),
+        content: LevelSelectionItemNode.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE ),
         listener: function() {
           model.additionTerms.activeTermProperty.value = term;
         },
