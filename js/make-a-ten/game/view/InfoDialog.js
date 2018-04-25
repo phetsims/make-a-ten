@@ -57,10 +57,7 @@ define( function( require ) {
       children: levels.map( createLevelNode )
     } );
 
-    Dialog.call( this, contentNode, {
-      modal: true,
-      hasCloseButton: false
-    } );
+    Dialog.call( this, contentNode );
   }
 
   makeATen.register( 'InfoDialog', InfoDialog );
