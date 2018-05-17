@@ -14,6 +14,7 @@ define( function( require ) {
   var AdditionTermsNode = require( 'MAKE_A_TEN/make-a-ten/common/view/AdditionTermsNode' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var Easing = require( 'TWIXT/Easing' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -29,11 +30,11 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RewardDialog = require( 'VEGAS/RewardDialog' );
-  var SlidingScreen = require( 'MAKE_A_TEN/make-a-ten/game/view/SlidingScreen' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var StartGameLevelNode = require( 'MAKE_A_TEN/make-a-ten/game/view/StartGameLevelNode' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var TransitionNode = require( 'TWIXT/TransitionNode' );
 
   // strings
   var nextString = require( 'string!MAKE_A_TEN/next' );
@@ -58,10 +59,30 @@ define( function( require ) {
     var showingLeftProperty = new DerivedProperty( [ model.gameStateProperty ], function( gameState ) {
       return gameState === GameState.CHOOSING_LEVEL;
     } );
-    this.addChild( new SlidingScreen( this.levelSelectionLayer,
-      this.challengeLayer,
-      this.visibleBoundsProperty,
-      showingLeftProperty ) );
+
+    // @private {TransitionNode}
+    this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
+      content: this.levelSelectionLayer
+    } );
+    showingLeftProperty.lazyLink( function( isLeft ) {
+      if ( isLeft ) {
+        self.transitionNode.slideRightTo( self.levelSelectionLayer, {
+          duration: 0.4,
+          targetOptions: {
+            easing: Easing.QUADRATIC_IN_OUT
+          }
+        } );
+      }
+      else {
+        self.transitionNode.slideLeftTo( self.challengeLayer, {
+          duration: 0.4,
+          targetOptions: {
+            easing: Easing.QUADRATIC_IN_OUT
+          }
+        } );
+      }
+    } );
+    this.addChild( this.transitionNode );
 
     // @private {StartGameLevelNode} - Shows buttons that allow selecting the level to play
     this.startGameLevelNode = new StartGameLevelNode( model );
@@ -192,9 +213,8 @@ define( function( require ) {
      * @override
      */
     step: function( dt ) {
-      if ( this.rewardNode ) {
-        this.rewardNode.step( dt );
-      }
+      this.rewardNode && this.rewardNode.step( dt );
+      this.transitionNode && this.transitionNode.step( dt );
     },
 
     /**
