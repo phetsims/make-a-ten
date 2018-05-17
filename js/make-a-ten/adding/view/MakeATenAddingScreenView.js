@@ -13,11 +13,9 @@ define( function( require ) {
   var ActiveTerm = require( 'MAKE_A_TEN/make-a-ten/adding/model/ActiveTerm' );
   var AdditionTermsNode = require( 'MAKE_A_TEN/make-a-ten/common/view/AdditionTermsNode' );
   var Color = require( 'SCENERY/util/Color' );
-  var Dimension2 = require( 'DOT/Dimension2' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeyboardPanel = require( 'MAKE_A_TEN/make-a-ten/adding/view/KeyboardPanel' );
-  var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
@@ -25,11 +23,10 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
 
   // images
-  var editIcon = require( 'image!MAKE_A_TEN/edit.png' );
+  var editMage = require( 'image!MAKE_A_TEN/edit.png' );
 
   // constants
   var MAX_DIGITS = 3;
-  var EDIT_ICON_SIZE = new Dimension2( 32, 28 );
 
   /**
    * @param {MakeATenAddingModel} model
@@ -43,7 +40,7 @@ define( function( require ) {
       return new RectangularPushButton( {
         touchAreaXDilation: 10,
         touchAreaYDilation: 10,
-        content: LevelSelectionItemNode.createSizedImageNode( new Image( editIcon ), EDIT_ICON_SIZE ),
+        content: new Image( editMage, { scale: 0.5 } ),
         listener: function() {
           model.additionTerms.activeTermProperty.value = term;
         },
