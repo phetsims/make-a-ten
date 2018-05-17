@@ -28,7 +28,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var RewardPanel = require( 'MAKE_A_TEN/make-a-ten/game/view/RewardPanel' );
+  var RewardDialog = require( 'VEGAS/RewardDialog' );
   var SlidingScreen = require( 'MAKE_A_TEN/make-a-ten/game/view/SlidingScreen' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var StartGameLevelNode = require( 'MAKE_A_TEN/make-a-ten/game/view/StartGameLevelNode' );
@@ -176,15 +176,6 @@ define( function( require ) {
       }
     } ) );
 
-    // @private {RewardPanel}
-    this.rewardPanel = new RewardPanel( this.hideReward.bind( this ), function() {
-      self.hideReward();
-      model.moveToChoosingLevel();
-    } );
-    this.visibleBoundsProperty.link( function( bounds ) {
-      self.rewardPanel.center = bounds.center;
-    } );
-
     model.levels.forEach( function( level ) {
       level.scoreProperty.link( function( score ) {
         if ( score === 10 ) {
@@ -211,13 +202,28 @@ define( function( require ) {
      * @private
      */
     showReward: function() {
+      var self = this;
+
       this.gameAudioPlayer.gameOverPerfectScore();
 
       this.rewardNode = new MakeATenRewardNode();
       this.addChild( this.rewardBarrier );
       this.addChild( this.rewardNode );
-      this.addChild( this.rewardPanel );
       this.rewardNodeBoundsListener = this.visibleBoundsProperty.linkAttribute( this.rewardNode, 'canvasBounds' );
+
+      var rewardDialog = new RewardDialog( 10, {
+        keepGoingButtonListener: function() {
+          self.hideReward();
+          rewardDialog.dispose();
+
+        },
+        newLevelButtonListener: function() {
+          self.hideReward();
+          self.model.moveToChoosingLevel();
+          rewardDialog.dispose();
+        }
+      } );
+      rewardDialog.show();
     },
 
     /**
@@ -225,11 +231,9 @@ define( function( require ) {
      * @private
      */
     hideReward: function() {
-      this.removeChild( this.rewardPanel );
       this.removeChild( this.rewardNode );
       this.removeChild( this.rewardBarrier );
       this.visibleBoundsProperty.unlink( this.rewardNodeBoundsListener );
-      this.rewardNode.dispose();
 
       // fully release references
       this.rewardNode = null;
