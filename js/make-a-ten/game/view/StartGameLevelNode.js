@@ -12,10 +12,11 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var LevelButton = require( 'MAKE_A_TEN/make-a-ten/game/view/LevelButton' );
+  var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // Constants
@@ -61,10 +62,14 @@ define( function( require ) {
       var fireCallback = this.model.startLevel.bind( this.model, level );
       var center = MakeATenConstants.LAYOUT_BOUNDS.center.plus( new Vector2( xOffset * X_OFFSET, yOffset * Y_OFFSET ) );
 
-      this.addChild( new LevelButton( level, fireCallback, {
-        scale: 0.9,
-        center: center
-      } ) );
+      var button = new LevelSelectionButton( level.iconNode, level.scoreProperty, {
+        listener: fireCallback,
+        baseColor: level.color,
+        scoreDisplayConstructor: ScoreDisplayNumberAndStar
+      } );
+      button.scale( 0.9 );
+      button.center = center;
+      this.addChild( button );
     }
   } );
 } );
