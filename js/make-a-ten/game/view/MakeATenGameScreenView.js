@@ -16,7 +16,8 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
-  var GameStatusBar = require( 'MAKE_A_TEN/make-a-ten/game/view/GameStatusBar' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
+  var InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
   var InfoDialog = require( 'MAKE_A_TEN/make-a-ten/game/view/InfoDialog' );
   var inherit = require( 'PHET_CORE/inherit' );
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
@@ -31,10 +32,12 @@ define( function( require ) {
   var SlidingScreen = require( 'MAKE_A_TEN/make-a-ten/game/view/SlidingScreen' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var StartGameLevelNode = require( 'MAKE_A_TEN/make-a-ten/game/view/StartGameLevelNode' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
   var nextString = require( 'string!MAKE_A_TEN/next' );
+  var patternLevel0LevelNumberString = require( 'string!MAKE_A_TEN/pattern.level.0levelNumber' );
 
   /**
    * @constructor
@@ -121,8 +124,30 @@ define( function( require ) {
     // Add the paper number layer from our supertype
     this.challengeLayer.addChild( this.paperNumberLayerNode );
 
-    // @private {GameStatusBar} - Status bar at the top of the screen
-    this.gameStatusBar = new GameStatusBar( model );
+    var levelNumberText = new Text( '', {
+      font: new PhetFont( { size: 18, weight: 'bold' } ),
+      pickable: false,
+      maxWidth: 120
+    } );
+    var levelDescriptionText = new Text( '', {
+      font: new PhetFont( 18 ),
+      pickable: false
+    } );
+    model.currentLevelProperty.link( function( level ) {
+      levelNumberText.text = StringUtils.format( patternLevel0LevelNumberString, '' + level.number );
+      levelDescriptionText.text = level.description;
+    } );
+    var statusMessageNode = new HBox( {
+      children: [ levelNumberText, levelDescriptionText ],
+      spacing: 30
+    } );
+
+    // @private {InfiniteStatusBar} - Status bar at the top of the screen
+    this.gameStatusBar = new InfiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, statusMessageNode, model.currentScoreProperty, {
+      floatToTop: true,
+      barFill: new DerivedProperty( [ model.currentLevelProperty ], _.property( 'color' ) ),
+      backButtonListener: model.moveToChoosingLevel.bind( model )
+    } );
     this.challengeLayer.addChild( this.gameStatusBar );
 
     // Hook up the audio player to the sound settings.
@@ -209,15 +234,6 @@ define( function( require ) {
       // fully release references
       this.rewardNode = null;
       this.rewardNodeBoundsListener = null;
-    },
-
-    /**
-     * @override
-     */
-    layoutControls: function() {
-      MakeATenCommonView.prototype.layoutControls.call( this );
-
-      this.gameStatusBar.layout( this.visibleBoundsProperty.value );
     },
 
     /**
