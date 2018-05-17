@@ -19,6 +19,7 @@ define( function( require ) {
   var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
+  var InfoButton = require( 'SCENERY_PHET/buttons/InfoButton' );
   var InfoDialog = require( 'MAKE_A_TEN/make-a-ten/game/view/InfoDialog' );
   var inherit = require( 'PHET_CORE/inherit' );
   var makeATen = require( 'MAKE_A_TEN/makeATen' );
@@ -28,7 +29,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RewardDialog = require( 'VEGAS/RewardDialog' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var StartGameLevelNode = require( 'MAKE_A_TEN/make-a-ten/game/view/StartGameLevelNode' );
@@ -95,14 +95,10 @@ define( function( require ) {
     // info dialog, constructed lazily because Dialog requires sim bounds during construction
     var dialog = null;
 
-    // @private {RectangularPushButton} - Shows '?' in the corner that pops up the info dialog when clicked.
-    this.infoButton = new RectangularPushButton( {
+    // @private {InfoButton} - Shows '?' in the corner that pops up the info dialog when clicked.
+    this.infoButton = new InfoButton( {
       touchAreaXDilation: 7,
       touchAreaYDilation: 7,
-      content: new Text( '?', {
-        font: new PhetFont( { size: 20, weight: 'bold' } )
-      } ),
-      baseColor: '#eeeeee',
       listener: function() {
         if ( !dialog ) {
           dialog = new InfoDialog( model.levels );
