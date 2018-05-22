@@ -105,6 +105,7 @@ define( function( require ) {
         }
         dialog.show();
       },
+      scale: 0.7,
       top: this.layoutBounds.top + 20,
       right: this.layoutBounds.right - 20
     } );
