@@ -112,6 +112,6 @@ define( function( require ) {
         var boundaryY = paperNumber.getBoundaryY();
         this.seeThroughRectangle.setRectBounds( bounds.withMaxY( boundaryY ) );
       }
-    },
+    }
   } );
 } );

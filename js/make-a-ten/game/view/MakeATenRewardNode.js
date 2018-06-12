@@ -56,7 +56,7 @@ define( function( require ) {
         createNumber( 1, 1 ),
         createNumber( 1, 1 ),
         createNumber( 1, 1 ),
-        createNumber( 1, 1 ),
+        createNumber( 1, 1 )
       ], 150 )
     } );
   }
