@@ -1,5 +1,5 @@
 {
-  "comment": "# make-a-ten 1.0.5-rc.1 Wed Jul 25 2018 01:28:42 GMT-0600 (MDT)",
+  "comment": "# make-a-ten 1.0.5-rc.2 Wed Jul 25 2018 04:33:22 GMT-0600 (MDT)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -14,7 +14,7 @@
   },
   "chipper": {
     "sha": "d49a8ba3f06832b88ce3aaeb9f5ec2413bbfaabd",
-    "branch": "make-a-ten-1.0"
+    "branch": "HEAD"
   },
   "dot": {
     "sha": "75380061a901393db079c24d019e0eb03abe68c2",
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "make-a-ten": {
-    "sha": "274d29f06136d4c9b256d7d2140d06f97222a5d4",
+    "sha": "e68994b995120692d4e9d7fabbbd1165008caea4",
     "branch": "1.0"
   },
   "phet-core": {
