@@ -183,7 +183,7 @@ define( function( require ) {
         }
       }
 
-      // if the dragged number is  larger than the the node below it (dropped node), reorder
+      // if the dragged number is  larger than the node below it (dropped node), reorder
       // them in a way to bring small number on the top. see issue #39
       for ( i = 0; i < allPaperNumberNodes.length; i++ ) {
         if ( allPaperNumberNodes[ i ] === draggedNode ) {
