@@ -75,7 +75,6 @@ define( function( require ) {
     // @private {DragListener}
     this.moveDragHandler = new DragListener( {
       targetNode: this,
-      isUserControlledProperty: paperNumber.userControlledProperty,
       start: function( event, listener ) {
         self.interactionStartedEmitter.emit1( self );
         if ( !self.preventMoveEmit ) {
@@ -91,6 +90,9 @@ define( function( require ) {
         tryToCombineNumbers( self.paperNumber );
         paperNumber.endDragEmitter.emit1( paperNumber );
       }
+    } );
+    this.moveDragHandler.isUserControlledProperty.link( function( controlled ) {
+      paperNumber.userControlledProperty.value = controlled;
     } );
     this.moveTarget.addInputListener( this.moveDragHandler );
 
