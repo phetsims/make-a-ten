@@ -1,5 +1,5 @@
 {
-  "comment": "# make-a-ten 1.0.8-rc.1 Tue Oct 30 2018 16:28:38 GMT-0600 (MDT)",
+  "comment": "# make-a-ten 1.0.8 Tue Nov 06 2018 14:09:25 GMT-0700 (MST)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "make-a-ten": {
-    "sha": "25287308a8eea05ba0aecd676881e4d157d23744",
+    "sha": "ea823e353c8cb1d77fb6b5fa950f552ed5abfee8",
     "branch": "1.0"
   },
   "phet-core": {
