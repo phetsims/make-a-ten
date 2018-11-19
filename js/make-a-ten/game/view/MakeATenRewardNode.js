@@ -1,4 +1,4 @@
-// Copyright 2016-2017, University of Colorado Boulder
+// Copyright 2016-2018, University of Colorado Boulder
 
 /**
  * Shows a reward, and allows the user to (a) keep going with the current level, or (b) go back to the level selection.
