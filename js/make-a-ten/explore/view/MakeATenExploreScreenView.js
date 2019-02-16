@@ -232,7 +232,7 @@ define( function( require ) {
 
           // Set its destination to the proper target (with the offset so that it will disappear once centered).
           var targetPosition = this.explorePanel.getOriginLocation( baseNumber.digitLength );
-          var paperCenterOffset = new PaperNumber( baseNumber.numberValue, new Vector2() ).getLocalBounds().center;
+          var paperCenterOffset = new PaperNumber( baseNumber.numberValue, new Vector2( 0, 0 ) ).getLocalBounds().center;
           targetPosition = targetPosition.minus( paperCenterOffset );
           basePaperNumber.setDestination( targetPosition, true );
 

@@ -68,7 +68,7 @@ define( function( require ) {
 
           // We want this relative to the screen view, so it is guaranteed to be the proper view coordinates.
           var viewPosition = screenView.globalToLocalPoint( event.pointer.point );
-          var paperNumber = new PaperNumber( numberValue, new Vector2() );
+          var paperNumber = new PaperNumber( numberValue, new Vector2( 0, 0 ) );
 
           // Once we have the number's bounds, we set the position so that our pointer is in the middle of the drag target.
           paperNumber.setDestination( viewPosition.minus( paperNumber.getDragTargetOffset() ), false );
