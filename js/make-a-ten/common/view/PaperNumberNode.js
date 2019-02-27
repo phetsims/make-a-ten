@@ -38,13 +38,13 @@ define( function( require ) {
     this.paperNumber = paperNumber;
 
     // @public {Emitter} - Triggered with self when this paper number node starts to get dragged
-    this.moveEmitter = new Emitter();
+    this.moveEmitter = new Emitter( { validationEnabled: false } );
 
     // @public {Emitter} - Triggered with self when this paper number node is split
-    this.splitEmitter = new Emitter();
+    this.splitEmitter = new Emitter( { validationEnabled: false } );
 
     // @public {Emitter} - Triggered when user interaction with this paper number begins.
-    this.interactionStartedEmitter = new Emitter();
+    this.interactionStartedEmitter = new Emitter( { validationEnabled: false } );
 
     // @private {boolean} - When true, don't emit from the moveEmitter (synthetic drag)
     this.preventMoveEmit = false;
@@ -76,9 +76,9 @@ define( function( require ) {
     this.moveDragHandler = new DragListener( {
       targetNode: this,
       start: function( event, listener ) {
-        self.interactionStartedEmitter.emit1( self );
+        self.interactionStartedEmitter.emit( self );
         if ( !self.preventMoveEmit ) {
-          self.moveEmitter.emit1( self );
+          self.moveEmitter.emit( self );
         }
       },
 
@@ -88,7 +88,7 @@ define( function( require ) {
 
       end: function( event, listener ) {
         tryToCombineNumbers( self.paperNumber );
-        paperNumber.endDragEmitter.emit1( paperNumber );
+        paperNumber.endDragEmitter.emit( paperNumber );
       }
     } );
     this.moveDragHandler.isUserControlledProperty.link( function( controlled ) {
@@ -116,8 +116,8 @@ define( function( require ) {
 
         paperNumber.changeNumber( amountRemaining );
 
-        self.interactionStartedEmitter.emit1( self );
-        self.splitEmitter.emit1( self );
+        self.interactionStartedEmitter.emit( self );
+        self.splitEmitter.emit( self );
 
         var newPaperNumber = new PaperNumber( amountToRemove, paperNumber.positionProperty.value );
         addAndDragNumber( event, newPaperNumber );
@@ -178,7 +178,7 @@ define( function( require ) {
       }
 
       // Changing the number must have happened from an interaction. If combined, we want to put cues on this.
-      this.interactionStartedEmitter.emit1( this );
+      this.interactionStartedEmitter.emit( this );
     },
 
     /**

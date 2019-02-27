@@ -58,10 +58,10 @@ define( function( require ) {
     this.baseNumbers = PaperNumber.getBaseNumbers( this.numberValueProperty.value );
 
     // @public {Emitter} - Fires when the user stops dragging a paper number.
-    this.endDragEmitter = new Emitter();
+    this.endDragEmitter = new Emitter( { validationEnabled: false } );
 
     // @public {Emitter} - Fires when the animation towards our destination ends (we hit our destination).
-    this.endAnimationEmitter = new Emitter();
+    this.endAnimationEmitter = new Emitter( { validationEnabled: false } );
   }
 
   makeATen.register( 'PaperNumber', PaperNumber );
@@ -92,7 +92,7 @@ define( function( require ) {
           // Less than one time step away, so just go to the destination.
           this.positionProperty.value = this.destination;
           this.animating = false;
-          this.endAnimationEmitter.emit1( this );
+          this.endAnimationEmitter.emit( this );
         }
       }
     },
