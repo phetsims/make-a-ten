@@ -19,8 +19,8 @@ define( function( require ) {
   var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
   var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
+  var Vector2Property = require( 'DOT/Vector2Property' );
 
   // Incremented for PaperNumber IDs
   var nextPaperNumberId = 1;
@@ -38,10 +38,9 @@ define( function( require ) {
     // @public {NumberProperty} - The number that this model represents, e.g. 324
     this.numberValueProperty = new NumberProperty( numberValue );
 
-    // @public {Property.<Vector2>} - Property that indicates where in model space the upper left corner of this shape
-    //                                is. In general, this should not be set directly outside of this type, and should
-    //                                only be manipulated through the methods defined below.
-    this.positionProperty = new Property( initialPosition.copy() );
+    // @public Property that indicates where in model space the upper left corner of this shape is. In general, this
+    // should not be set directly outside of this type, and should be manipulated through the methods defined below.
+    this.positionProperty = new Vector2Property( initialPosition.copy() );
 
     // @public {BooleanProperty} - Flag that tracks whether the user is dragging this number around. Should be set
     //                             externally, generally by the view node.
