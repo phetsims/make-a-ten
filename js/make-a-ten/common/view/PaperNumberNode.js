@@ -38,13 +38,13 @@ define( function( require ) {
     this.paperNumber = paperNumber;
 
     // @public {Emitter} - Triggered with self when this paper number node starts to get dragged
-    this.moveEmitter = new Emitter( { validationEnabled: false } );
+    this.moveEmitter = new Emitter( { validators: [ { valueType: PaperNumberNode } ] } );
 
     // @public {Emitter} - Triggered with self when this paper number node is split
-    this.splitEmitter = new Emitter( { validationEnabled: false } );
+    this.splitEmitter = new Emitter( { validators: [ { valueType: PaperNumberNode } ] } );
 
     // @public {Emitter} - Triggered when user interaction with this paper number begins.
-    this.interactionStartedEmitter = new Emitter( { validationEnabled: false } );
+    this.interactionStartedEmitter = new Emitter( { validators: [ { valueType: PaperNumberNode } ] } );
 
     // @private {boolean} - When true, don't emit from the moveEmitter (synthetic drag)
     this.preventMoveEmit = false;
