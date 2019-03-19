@@ -1,5 +1,5 @@
 {
-  "comment": "# make-a-ten 1.0.8 Tue Nov 06 2018 14:09:25 GMT-0700 (MST)",
+  "comment": "# make-a-ten 1.0.8 Tue Mar 19 2019 15:04:35 GMT-0400 (EDT)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -9,8 +9,8 @@
     "branch": "HEAD"
   },
   "brand": {
-    "sha": "555d21cb75cba5185eca9c22eb2a97e08fad8e6e",
-    "branch": "HEAD"
+    "sha": "1758ed460af9e3caf942a6313353a19da487bb43",
+    "branch": "make-a-ten-1.0"
   },
   "chipper": {
     "sha": "2f6cece3b25bbcdbf40b1d58384f42d23b3d595d",
@@ -21,15 +21,15 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "ad533d2b3ac155ba6bdb6d646a21f4002d66526b",
-    "branch": "HEAD"
+    "sha": "7de582d22ca84c3384eddf231c3ee41f96c4ca31",
+    "branch": "make-a-ten-1.0"
   },
   "kite": {
     "sha": "6059ebb0210f3aeeb4b6863445ed94245e54fef1",
     "branch": "HEAD"
   },
   "make-a-ten": {
-    "sha": "ea823e353c8cb1d77fb6b5fa950f552ed5abfee8",
+    "sha": "6e908cc3df4ff79a5b9be92b0df33495fecbcef6",
     "branch": "1.0"
   },
   "phet-core": {
@@ -75,9 +75,5 @@
   "vibe": {
     "sha": "d77c46aaa3cde728a2bfe5bfa81a56a3e09b99af",
     "branch": "HEAD"
-  },
-  "phetmarks": {
-    "branch": "master",
-    "sha": "1460b1e3f251d2150fc169a6a63a6ae5bc5ce420"
   }
 }
