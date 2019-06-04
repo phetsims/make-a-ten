@@ -15,7 +15,7 @@ define( function( require ) {
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Easing = require( 'TWIXT/Easing' );
-  var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
+  var GameAudioPlayerOld = require( 'VEGAS/GameAudioPlayerOld' );
   var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
@@ -169,7 +169,7 @@ define( function( require ) {
     this.challengeLayer.addChild( this.gameStatusBar );
 
     // Hook up the audio player to the sound settings.
-    this.gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
+    this.gameAudioPlayer = new GameAudioPlayerOld( model.soundEnabledProperty );
 
     // Trigger initial layout
     this.layoutControls();
