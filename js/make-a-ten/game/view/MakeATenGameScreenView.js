@@ -15,7 +15,7 @@ define( function( require ) {
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Easing = require( 'TWIXT/Easing' );
-  var GameAudioPlayerOld = require( 'VEGAS/GameAudioPlayerOld' );
+  var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
@@ -30,7 +30,6 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RewardDialog = require( 'VEGAS/RewardDialog' );
-  var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var StartGameLevelNode = require( 'MAKE_A_TEN/make-a-ten/game/view/StartGameLevelNode' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -111,15 +110,6 @@ define( function( require ) {
     } );
     this.levelSelectionLayer.addChild( this.infoButton );
 
-    // @private {SoundToggleButton} - Toggle whether audio is enabled
-    this.soundToggleButton = new SoundToggleButton( model.soundEnabledProperty, {
-      touchAreaXDilation: 10,
-      touchAreaYDilation: 10,
-      x: 20,
-      bottom: this.layoutBounds.height - 20
-    } );
-    this.levelSelectionLayer.addChild( this.soundToggleButton );
-
     // The node that display "12 + 100 = "
     var additionTermsNode = new AdditionTermsNode( model.additionTerms, false );
     additionTermsNode.left = this.layoutBounds.left + 38;
@@ -169,7 +159,7 @@ define( function( require ) {
     this.challengeLayer.addChild( this.gameStatusBar );
 
     // Hook up the audio player to the sound settings.
-    this.gameAudioPlayer = new GameAudioPlayerOld( model.soundEnabledProperty );
+    this.gameAudioPlayer = new GameAudioPlayer();
 
     // Trigger initial layout
     this.layoutControls();

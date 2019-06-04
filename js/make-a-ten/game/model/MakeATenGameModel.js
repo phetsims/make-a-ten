@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var AdditionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/AdditionTerms' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Level = require( 'MAKE_A_TEN/make-a-ten/game/model/Level' );
@@ -69,9 +68,6 @@ define( function( require ) {
       new Level( 9, '#9778CC', levelIcon9, level9DescriptionString, numberChallengeFactory ),
       new Level( 10, '#9778CC', levelIcon10, level10DescriptionString, numberChallengeFactory )
     ];
-
-    // @public {BooleanProperty} - Whether sounds will occur on completion of game actions.
-    this.soundEnabledProperty = new BooleanProperty( true );
 
     // @public {Property.<Level>} - The current level
     this.currentLevelProperty = new Property( this.levels[ 0 ] );
@@ -179,7 +175,6 @@ define( function( require ) {
     reset: function() {
       MakeATenCommonModel.prototype.reset.call( this );
 
-      this.soundEnabledProperty.reset();
       this.currentLevelProperty.reset();
       this.currentScoreProperty.reset();
       this.currentChallengeProperty.reset();
