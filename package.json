@@ -16,8 +16,7 @@
     ],
     "phetLibs": [
       "twixt",
-      "vegas",
-      "vibe"
+      "vegas"
     ],
     "runnable": true,
     "supportedBrands": [
