@@ -57,10 +57,10 @@ define( function( require ) {
     this.baseNumbers = PaperNumber.getBaseNumbers( this.numberValueProperty.value );
 
     // @public {Emitter} - Fires when the user stops dragging a paper number.
-    this.endDragEmitter = new Emitter( { validators: [ { valueType: PaperNumber } ] } );
+    this.endDragEmitter = new Emitter( { parameters: [ { valueType: PaperNumber } ] } );
 
     // @public {Emitter} - Fires when the animation towards our destination ends (we hit our destination).
-    this.endAnimationEmitter = new Emitter( { validators: [ { valueType: PaperNumber } ] } );
+    this.endAnimationEmitter = new Emitter( { parameters: [ { valueType: PaperNumber } ] } );
   }
 
   makeATen.register( 'PaperNumber', PaperNumber );
