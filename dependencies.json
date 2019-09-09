@@ -1,5 +1,5 @@
 {
-  "comment": "# make-a-ten 1.0.13 Fri Aug 23 2019 13:59:29 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# make-a-ten 1.0.13 Mon Sep 09 2019 12:29:58 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -21,15 +21,15 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "a0bd9a8cd84b1db4f29e1ce9e05e75e5e5b5c99d",
-    "branch": "HEAD"
+    "sha": "dd9d795f29570a0b3818eba011527776c777bd17",
+    "branch": "make-a-ten-1.0"
   },
   "kite": {
     "sha": "6059ebb0210f3aeeb4b6863445ed94245e54fef1",
     "branch": "HEAD"
   },
   "make-a-ten": {
-    "sha": "d9d86b7ee31b3cdcaf5bd6a7a1784a33dcea4ac2",
+    "sha": "f3ed185143da4dd00dd3c36a26db1a2ce3672f54",
     "branch": "1.0"
   },
   "phet-core": {
