@@ -5,11 +5,11 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
 
   var MakeATenQueryParameters = QueryStringMachine.getAll( {
 

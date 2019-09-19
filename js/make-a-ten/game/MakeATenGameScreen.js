@@ -7,25 +7,25 @@
  *
  * @author Sharfudeen Ashraf
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
-  var MakeATenGameModel = require( 'MAKE_A_TEN/make-a-ten/game/model/MakeATenGameModel' );
-  var MakeATenGameScreenView = require( 'MAKE_A_TEN/make-a-ten/game/view/MakeATenGameScreenView' );
-  var MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
-  var Property = require( 'AXON/Property' );
-  var Screen = require( 'JOIST/Screen' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
+  const MakeATenGameModel = require( 'MAKE_A_TEN/make-a-ten/game/model/MakeATenGameModel' );
+  const MakeATenGameScreenView = require( 'MAKE_A_TEN/make-a-ten/game/view/MakeATenGameScreenView' );
+  const MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
+  const Property = require( 'AXON/Property' );
+  const Screen = require( 'JOIST/Screen' );
 
   // images
-  var gameHomeScreenImage = require( 'image!MAKE_A_TEN/game-home-screen.png' );
-  var gameNavBarImage = require( 'image!MAKE_A_TEN/game-nav-bar.png' );
+  const gameHomeScreenImage = require( 'image!MAKE_A_TEN/game-home-screen.png' );
+  const gameNavBarImage = require( 'image!MAKE_A_TEN/game-nav-bar.png' );
 
   // strings
-  var screenGameString = require( 'string!MAKE_A_TEN/screen.game' );
+  const screenGameString = require( 'string!MAKE_A_TEN/screen.game' );
 
   /**
    * @constructor

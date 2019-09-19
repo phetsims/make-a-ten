@@ -7,19 +7,19 @@
  * @author John Blanco
  * @author Sam Reid
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ArrowShape = require( 'SCENERY_PHET/ArrowShape' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  const ArrowShape = require( 'SCENERY_PHET/ArrowShape' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const Path = require( 'SCENERY/nodes/Path' );
+  const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
   var LABEL_FONT = new PhetFont( { size: 20, weight: 'bold' } );

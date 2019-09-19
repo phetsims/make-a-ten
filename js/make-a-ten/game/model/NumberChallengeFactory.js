@@ -6,13 +6,13 @@
  * @author Sharfudeen Ashraf
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var NumberChallenge = require( 'MAKE_A_TEN/make-a-ten/game/model/NumberChallenge' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const NumberChallenge = require( 'MAKE_A_TEN/make-a-ten/game/model/NumberChallenge' );
 
   /**
    * @constructor

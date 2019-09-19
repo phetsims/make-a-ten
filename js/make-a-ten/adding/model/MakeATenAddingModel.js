@@ -5,14 +5,14 @@
  *
  * @author Sharfudeen Ashraf
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AdditionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/AdditionTerms' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
+  const AdditionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/AdditionTerms' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
 
   /**
    * @constructor

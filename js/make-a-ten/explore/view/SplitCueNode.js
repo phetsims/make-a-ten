@@ -5,21 +5,21 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var Color = require( 'SCENERY/util/Color' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  const Color = require( 'SCENERY/util/Color' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // images
-  var handImage = require( 'image!SCENERY_PHET/hand.png' );
+  const handImage = require( 'image!SCENERY_PHET/hand.png' );
 
   /**
    * @constructor

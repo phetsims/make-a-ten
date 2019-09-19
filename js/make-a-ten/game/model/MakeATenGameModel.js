@@ -5,43 +5,43 @@
  *
  * @author Sharfudeen Ashraf
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AdditionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/AdditionTerms' );
-  var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Level = require( 'MAKE_A_TEN/make-a-ten/game/model/Level' );
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
-  var NumberChallengeFactory = require( 'MAKE_A_TEN/make-a-ten/game/model/NumberChallengeFactory' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var Property = require( 'AXON/Property' );
+  const AdditionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/AdditionTerms' );
+  const GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Level = require( 'MAKE_A_TEN/make-a-ten/game/model/Level' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
+  const NumberChallengeFactory = require( 'MAKE_A_TEN/make-a-ten/game/model/NumberChallengeFactory' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
+  const Property = require( 'AXON/Property' );
 
   // Level descriptions
-  var level10DescriptionString = require( 'string!MAKE_A_TEN/level10Description' );
-  var level1DescriptionString = require( 'string!MAKE_A_TEN/level1Description' );
-  var level2DescriptionString = require( 'string!MAKE_A_TEN/level2Description' );
-  var level3DescriptionString = require( 'string!MAKE_A_TEN/level3Description' );
-  var level4DescriptionString = require( 'string!MAKE_A_TEN/level4Description' );
-  var level5DescriptionString = require( 'string!MAKE_A_TEN/level5Description' );
-  var level6DescriptionString = require( 'string!MAKE_A_TEN/level6Description' );
-  var level7DescriptionString = require( 'string!MAKE_A_TEN/level7Description' );
-  var level8DescriptionString = require( 'string!MAKE_A_TEN/level8Description' );
-  var level9DescriptionString = require( 'string!MAKE_A_TEN/level9Description' );
+  const level10DescriptionString = require( 'string!MAKE_A_TEN/level10Description' );
+  const level1DescriptionString = require( 'string!MAKE_A_TEN/level1Description' );
+  const level2DescriptionString = require( 'string!MAKE_A_TEN/level2Description' );
+  const level3DescriptionString = require( 'string!MAKE_A_TEN/level3Description' );
+  const level4DescriptionString = require( 'string!MAKE_A_TEN/level4Description' );
+  const level5DescriptionString = require( 'string!MAKE_A_TEN/level5Description' );
+  const level6DescriptionString = require( 'string!MAKE_A_TEN/level6Description' );
+  const level7DescriptionString = require( 'string!MAKE_A_TEN/level7Description' );
+  const level8DescriptionString = require( 'string!MAKE_A_TEN/level8Description' );
+  const level9DescriptionString = require( 'string!MAKE_A_TEN/level9Description' );
 
   // Level icons
-  var levelIcon1 = require( 'image!MAKE_A_TEN/level-1.png' );
-  var levelIcon10 = require( 'image!MAKE_A_TEN/level-10.png' );
-  var levelIcon2 = require( 'image!MAKE_A_TEN/level-2.png' );
-  var levelIcon3 = require( 'image!MAKE_A_TEN/level-3.png' );
-  var levelIcon4 = require( 'image!MAKE_A_TEN/level-4.png' );
-  var levelIcon5 = require( 'image!MAKE_A_TEN/level-5.png' );
-  var levelIcon6 = require( 'image!MAKE_A_TEN/level-6.png' );
-  var levelIcon7 = require( 'image!MAKE_A_TEN/level-7.png' );
-  var levelIcon8 = require( 'image!MAKE_A_TEN/level-8.png' );
-  var levelIcon9 = require( 'image!MAKE_A_TEN/level-9.png' );
+  const levelIcon1 = require( 'image!MAKE_A_TEN/level-1.png' );
+  const levelIcon10 = require( 'image!MAKE_A_TEN/level-10.png' );
+  const levelIcon2 = require( 'image!MAKE_A_TEN/level-2.png' );
+  const levelIcon3 = require( 'image!MAKE_A_TEN/level-3.png' );
+  const levelIcon4 = require( 'image!MAKE_A_TEN/level-4.png' );
+  const levelIcon5 = require( 'image!MAKE_A_TEN/level-5.png' );
+  const levelIcon6 = require( 'image!MAKE_A_TEN/level-6.png' );
+  const levelIcon7 = require( 'image!MAKE_A_TEN/level-7.png' );
+  const levelIcon8 = require( 'image!MAKE_A_TEN/level-8.png' );
+  const levelIcon9 = require( 'image!MAKE_A_TEN/level-9.png' );
 
   /**
    * @constructor

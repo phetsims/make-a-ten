@@ -5,21 +5,21 @@
  *
  * @author Sharfudeen Ashraf
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ArithmeticRules = require( 'MAKE_A_TEN/make-a-ten/common/model/ArithmeticRules' );
-  var arrayRemove = require( 'PHET_CORE/arrayRemove' );
-  var BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
-  var BaseNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/BaseNumberNode' );
-  var DragListener = require( 'SCENERY/listeners/DragListener' );
-  var Emitter = require( 'AXON/Emitter' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const ArithmeticRules = require( 'MAKE_A_TEN/make-a-ten/common/model/ArithmeticRules' );
+  const arrayRemove = require( 'PHET_CORE/arrayRemove' );
+  const BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
+  const BaseNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/BaseNumberNode' );
+  const DragListener = require( 'SCENERY/listeners/DragListener' );
+  const Emitter = require( 'AXON/Emitter' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   /**
    * @constructor

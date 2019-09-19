@@ -5,32 +5,32 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // images
-  var imageDigit0 = require( 'mipmap!MAKE_A_TEN/digit-0.png' );
-  var imageDigit1 = require( 'mipmap!MAKE_A_TEN/digit-1.png' );
-  var imageDigit2 = require( 'mipmap!MAKE_A_TEN/digit-2.png' );
-  var imageDigit3 = require( 'mipmap!MAKE_A_TEN/digit-3.png' );
-  var imageDigit4 = require( 'mipmap!MAKE_A_TEN/digit-4.png' );
-  var imageDigit5 = require( 'mipmap!MAKE_A_TEN/digit-5.png' );
-  var imageDigit6 = require( 'mipmap!MAKE_A_TEN/digit-6.png' );
-  var imageDigit7 = require( 'mipmap!MAKE_A_TEN/digit-7.png' );
-  var imageDigit8 = require( 'mipmap!MAKE_A_TEN/digit-8.png' );
-  var imageDigit9 = require( 'mipmap!MAKE_A_TEN/digit-9.png' );
-  var imagePaperBackground1 = require( 'mipmap!MAKE_A_TEN/paper-background-1.png' );
-  var imagePaperBackground10 = require( 'mipmap!MAKE_A_TEN/paper-background-10.png' );
-  var imagePaperBackground100 = require( 'mipmap!MAKE_A_TEN/paper-background-100.png' );
-  var imagePaperBackground1000 = require( 'mipmap!MAKE_A_TEN/paper-background-1000.png' );
+  const imageDigit0 = require( 'mipmap!MAKE_A_TEN/digit-0.png' );
+  const imageDigit1 = require( 'mipmap!MAKE_A_TEN/digit-1.png' );
+  const imageDigit2 = require( 'mipmap!MAKE_A_TEN/digit-2.png' );
+  const imageDigit3 = require( 'mipmap!MAKE_A_TEN/digit-3.png' );
+  const imageDigit4 = require( 'mipmap!MAKE_A_TEN/digit-4.png' );
+  const imageDigit5 = require( 'mipmap!MAKE_A_TEN/digit-5.png' );
+  const imageDigit6 = require( 'mipmap!MAKE_A_TEN/digit-6.png' );
+  const imageDigit7 = require( 'mipmap!MAKE_A_TEN/digit-7.png' );
+  const imageDigit8 = require( 'mipmap!MAKE_A_TEN/digit-8.png' );
+  const imageDigit9 = require( 'mipmap!MAKE_A_TEN/digit-9.png' );
+  const imagePaperBackground1 = require( 'mipmap!MAKE_A_TEN/paper-background-1.png' );
+  const imagePaperBackground10 = require( 'mipmap!MAKE_A_TEN/paper-background-10.png' );
+  const imagePaperBackground100 = require( 'mipmap!MAKE_A_TEN/paper-background-100.png' );
+  const imagePaperBackground1000 = require( 'mipmap!MAKE_A_TEN/paper-background-1000.png' );
 
   // place => mipmap info
   var BACKGROUND_IMAGE_MAP = {

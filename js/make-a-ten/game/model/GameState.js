@@ -3,11 +3,11 @@
 /**
  * Possible game states.
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
 
   var GameState = Object.freeze( {
     // Shows level selection buttons

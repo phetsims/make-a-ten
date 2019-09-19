@@ -5,12 +5,12 @@
  *
  * @author Sharfudeen Ashraf
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
 
   var MakeATenConstants = {
     // Initial layout bounds

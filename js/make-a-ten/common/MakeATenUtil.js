@@ -5,14 +5,14 @@
  *
  * @author Sharfudeen Ashraf
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Image = require( 'SCENERY/nodes/Image' );
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   var MakeATenUtil = {
     /**

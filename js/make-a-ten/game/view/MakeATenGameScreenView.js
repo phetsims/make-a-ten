@@ -7,37 +7,37 @@
  *
  * @author Sharfudeen Ashraf
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AdditionTermsNode = require( 'MAKE_A_TEN/make-a-ten/common/view/AdditionTermsNode' );
-  var ButtonListener = require( 'SCENERY/input/ButtonListener' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var Easing = require( 'TWIXT/Easing' );
-  var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
-  var GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
-  var InfoButton = require( 'SCENERY_PHET/buttons/InfoButton' );
-  var InfoDialog = require( 'MAKE_A_TEN/make-a-ten/game/view/InfoDialog' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
-  var MakeATenRewardNode = require( 'MAKE_A_TEN/make-a-ten/game/view/MakeATenRewardNode' );
-  var NextArrowButton = require( 'MAKE_A_TEN/make-a-ten/game/view/NextArrowButton' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var RewardDialog = require( 'VEGAS/RewardDialog' );
-  var StartGameLevelNode = require( 'MAKE_A_TEN/make-a-ten/game/view/StartGameLevelNode' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var TransitionNode = require( 'TWIXT/TransitionNode' );
+  const AdditionTermsNode = require( 'MAKE_A_TEN/make-a-ten/common/view/AdditionTermsNode' );
+  const ButtonListener = require( 'SCENERY/input/ButtonListener' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const Easing = require( 'TWIXT/Easing' );
+  const GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
+  const GameState = require( 'MAKE_A_TEN/make-a-ten/game/model/GameState' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
+  const InfoButton = require( 'SCENERY_PHET/buttons/InfoButton' );
+  const InfoDialog = require( 'MAKE_A_TEN/make-a-ten/game/view/InfoDialog' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const MakeATenCommonView = require( 'MAKE_A_TEN/make-a-ten/common/view/MakeATenCommonView' );
+  const MakeATenRewardNode = require( 'MAKE_A_TEN/make-a-ten/game/view/MakeATenRewardNode' );
+  const NextArrowButton = require( 'MAKE_A_TEN/make-a-ten/game/view/NextArrowButton' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const RewardDialog = require( 'VEGAS/RewardDialog' );
+  const StartGameLevelNode = require( 'MAKE_A_TEN/make-a-ten/game/view/StartGameLevelNode' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const TransitionNode = require( 'TWIXT/TransitionNode' );
 
   // strings
-  var nextString = require( 'string!MAKE_A_TEN/next' );
-  var patternLevel0LevelNumberString = require( 'string!MAKE_A_TEN/pattern.level.0levelNumber' );
+  const nextString = require( 'string!MAKE_A_TEN/next' );
+  const patternLevel0LevelNumberString = require( 'string!MAKE_A_TEN/pattern.level.0levelNumber' );
 
   /**
    * @constructor

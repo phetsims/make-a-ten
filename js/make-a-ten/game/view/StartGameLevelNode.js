@@ -7,17 +7,17 @@
  * @author John Blanco
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // Constants
   var X_OFFSET = 170;

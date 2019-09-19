@@ -8,21 +8,21 @@
  * @author John Blanco
  * @author Andrey Zelenkov (MLearner)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var makeATen = require( 'MAKE_A_TEN/makeATen' );
-  var NumberEntryControl = require( 'SCENERY_PHET/NumberEntryControl' );
-  var Panel = require( 'SUN/Panel' );
-  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const NumberEntryControl = require( 'SCENERY_PHET/NumberEntryControl' );
+  const Panel = require( 'SUN/Panel' );
+  const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var submitString = require( 'string!MAKE_A_TEN/submit' );
+  const submitString = require( 'string!MAKE_A_TEN/submit' );
 
   /**
    * @param {Function} onSubmit - function( numberEntryValue: {number} ), called when the submit button is pressed.
