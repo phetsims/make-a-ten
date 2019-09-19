@@ -17,9 +17,9 @@ define( require => {
   const MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
 
   // Precompute bounds for each digit
-  var DIGIT_BOUNDS = [ 0, 1, 2, 3 ].map( function( place ) {
-    var dimension = BaseNumberNode.PAPER_NUMBER_DIMENSIONS[ place ];
-    var offset = BaseNumberNode.IMAGE_OFFSETS[ place ];
+  const DIGIT_BOUNDS = [ 0, 1, 2, 3 ].map( function( place ) {
+    const dimension = BaseNumberNode.PAPER_NUMBER_DIMENSIONS[ place ];
+    const offset = BaseNumberNode.IMAGE_OFFSETS[ place ];
     return dimension.toBounds( offset.x, offset.y );
   } );
 

@@ -12,7 +12,7 @@ define( require => {
   const Bounds2 = require( 'DOT/Bounds2' );
   const makeATen = require( 'MAKE_A_TEN/makeATen' );
 
-  var MakeATenConstants = {
+  const MakeATenConstants = {
     // Initial layout bounds
     LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
 

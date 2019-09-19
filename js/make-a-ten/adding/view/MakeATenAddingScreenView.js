@@ -26,7 +26,7 @@ define( require => {
   const editMage = require( 'image!MAKE_A_TEN/edit.png' );
 
   // constants
-  var MAX_DIGITS = 3;
+  const MAX_DIGITS = 3;
 
   /**
    * @param {MakeATenAddingModel} model
@@ -49,14 +49,14 @@ define( require => {
     }
 
     // The node that display "12 + 100 = "
-    var additionTermsNode = new AdditionTermsNode( model.additionTerms, true );
+    const additionTermsNode = new AdditionTermsNode( model.additionTerms, true );
     this.addChild( additionTermsNode );
 
     additionTermsNode.left = this.layoutBounds.left + 38;
     additionTermsNode.top = this.layoutBounds.top + 85;
 
-    var leftEditButton = createEditNumberButton( ActiveTerm.LEFT );
-    var rightEditButton = createEditNumberButton( ActiveTerm.RIGHT );
+    const leftEditButton = createEditNumberButton( ActiveTerm.LEFT );
+    const rightEditButton = createEditNumberButton( ActiveTerm.RIGHT );
     leftEditButton.top = rightEditButton.top = this.layoutBounds.top + 32;
     leftEditButton.right = additionTermsNode.getLeftAlignment() + additionTermsNode.x;
     rightEditButton.left = additionTermsNode.getRightAlignment() + additionTermsNode.x;
@@ -78,7 +78,7 @@ define( require => {
       model.additionTerms.activeTermProperty.value = ActiveTerm.NONE;
     }
 
-    var dimBackground = new Rectangle( {
+    const dimBackground = new Rectangle( {
       fill: new Color( MakeATenConstants.SCREEN_BACKGROUND_COLOR ).colorUtilsDarker( 0.4 ).withAlpha( 0.4 )
     } );
     dimBackground.addInputListener( {
@@ -91,7 +91,7 @@ define( require => {
     } );
     this.addChild( dimBackground );
 
-    var keyboardPanel = new KeyboardPanel( onNumberSubmit, MAX_DIGITS );
+    const keyboardPanel = new KeyboardPanel( onNumberSubmit, MAX_DIGITS );
     this.addChild( keyboardPanel );
 
     keyboardPanel.centerX = additionTermsNode.centerX - 25;

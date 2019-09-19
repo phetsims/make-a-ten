@@ -23,9 +23,9 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
-  var EQUATION_FONT = new PhetFont( { size: 45, weight: 'bold' } );
-  var STROKE_COLOR = '#000';
-  var LAYOUT_MULTIPLIER = 1 / 8; // Fraction offset of the text from the background's border
+  const EQUATION_FONT = new PhetFont( { size: 45, weight: 'bold' } );
+  const STROKE_COLOR = '#000';
+  const LAYOUT_MULTIPLIER = 1 / 8; // Fraction offset of the text from the background's border
 
   /**
    * @constructor
@@ -36,27 +36,27 @@ define( require => {
   function AdditionTermsNode( additionTerms, highlightBorders ) {
     Node.call( this );
 
-    var backgroundOptions = {
+    const backgroundOptions = {
       stroke: STROKE_COLOR,
       lineDash: [ 5, 5 ],
       lineWidth: 2,
       visible: highlightBorders
     };
 
-    var leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, backgroundOptions );
-    var rightNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, backgroundOptions );
+    const leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, backgroundOptions );
+    const rightNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, backgroundOptions );
 
-    var plusText = new Text( MathSymbols.PLUS, { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
-    var equalsSignText = new Text( MathSymbols.EQUAL_TO, { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
+    const plusText = new Text( MathSymbols.PLUS, { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
+    const equalsSignText = new Text( MathSymbols.EQUAL_TO, { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
 
-    var numberDisplayBox = new HBox( {
+    const numberDisplayBox = new HBox( {
       children: [ leftNumberDisplayBackground, plusText, rightNumberDisplayBackground ],
       spacing: 5,
       resize: false // since we toggle the stroke
     } );
 
-    var leftTermText = new Text( '', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
-    var rightTermText = new Text( '', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
+    const leftTermText = new Text( '', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
+    const rightTermText = new Text( '', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
 
     this.addChild( numberDisplayBox );
     this.addChild( leftTermText );
@@ -99,7 +99,7 @@ define( require => {
     }
 
     // Center everything vertically
-    var centerY = numberDisplayBox.centerY;
+    const centerY = numberDisplayBox.centerY;
     leftTermText.centerY = centerY;
     rightTermText.centerY = centerY;
     equalsSignText.centerY = centerY;

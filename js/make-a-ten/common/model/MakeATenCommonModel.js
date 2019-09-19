@@ -37,7 +37,7 @@ define( require => {
       // the sim had been hidden and then re-shown
       dt = Math.min( 0.1, dt );
 
-      for ( var i = 0; i < this.paperNumbers.length; i++ ) {
+      for ( let i = 0; i < this.paperNumbers.length; i++ ) {
         this.paperNumbers.get( i ).step( dt );
       }
     },
@@ -51,12 +51,12 @@ define( require => {
      * @param {PaperNumber} dropTargetNumber
      */
     collapseNumberModels: function( availableModelBounds, draggedPaperNumber, dropTargetNumber ) {
-      var dropTargetNumberValue = dropTargetNumber.numberValueProperty.value;
-      var draggedNumberValue = draggedPaperNumber.numberValueProperty.value;
-      var newValue = dropTargetNumberValue + draggedNumberValue;
+      const dropTargetNumberValue = dropTargetNumber.numberValueProperty.value;
+      const draggedNumberValue = draggedPaperNumber.numberValueProperty.value;
+      const newValue = dropTargetNumberValue + draggedNumberValue;
 
-      var numberToRemove;
-      var numberToChange;
+      let numberToRemove;
+      let numberToChange;
 
       // See https://github.com/phetsims/make-a-ten/issues/260
       if ( draggedPaperNumber.digitLength === dropTargetNumber.digitLength ) {
@@ -65,7 +65,7 @@ define( require => {
       }
       else {
         // The larger number gets changed, the smaller one gets removed.
-        var droppingOnLarger = dropTargetNumberValue > draggedNumberValue;
+        const droppingOnLarger = dropTargetNumberValue > draggedNumberValue;
         numberToRemove = droppingOnLarger ? draggedPaperNumber : dropTargetNumber;
         numberToChange = droppingOnLarger ? dropTargetNumber : draggedPaperNumber;
       }
@@ -113,16 +113,16 @@ define( require => {
      * @param {Array.<number>} numbers
      */
     addMultipleNumbers: function( numbers ) {
-      for ( var i = 0; i < numbers.length; i++ ) {
-        var number = numbers[ i ];
+      for ( let i = 0; i < numbers.length; i++ ) {
+        const number = numbers[ i ];
 
         // Ingore 0s
         if ( !number ) { continue; }
 
         // evenly distribute across the screen
-        var x = MakeATenConstants.LAYOUT_BOUNDS.width * ( 1 + i ) / ( numbers.length + 1 );
-        var initialNumberPosition = new Vector2( x, MakeATenConstants.LAYOUT_BOUNDS.height / 2.5 );
-        var paperNumber = new PaperNumber( number, initialNumberPosition );
+        const x = MakeATenConstants.LAYOUT_BOUNDS.width * ( 1 + i ) / ( numbers.length + 1 );
+        const initialNumberPosition = new Vector2( x, MakeATenConstants.LAYOUT_BOUNDS.height / 2.5 );
+        const paperNumber = new PaperNumber( number, initialNumberPosition );
         this.addPaperNumber( paperNumber );
       }
     },
@@ -134,18 +134,18 @@ define( require => {
      */
     repelAway: function( availableModelBounds, paperNumber1, paperNumber2 ) {
       // Determine which are 'left' and 'right'
-      var isPaper1Left = paperNumber1.positionProperty.value.x < paperNumber2.positionProperty.value.x;
-      var leftPaperNumber = isPaper1Left ? paperNumber1 : paperNumber2;
-      var rightPaperNumber = isPaper1Left ? paperNumber2 : paperNumber1;
+      const isPaper1Left = paperNumber1.positionProperty.value.x < paperNumber2.positionProperty.value.x;
+      const leftPaperNumber = isPaper1Left ? paperNumber1 : paperNumber2;
+      const rightPaperNumber = isPaper1Left ? paperNumber2 : paperNumber1;
 
       // Determine offsets
-      var repelLeftOffset = -MakeATenConstants.MOVE_AWAY_DISTANCE[ leftPaperNumber.digitLength ];
-      var repelRightOffset = MakeATenConstants.MOVE_AWAY_DISTANCE[ rightPaperNumber.digitLength ];
-      var leftPosition = leftPaperNumber.positionProperty.value.plusXY( repelLeftOffset, 0 );
-      var rightPosition = rightPaperNumber.positionProperty.value.plusXY( repelRightOffset, 0 );
+      const repelLeftOffset = -MakeATenConstants.MOVE_AWAY_DISTANCE[ leftPaperNumber.digitLength ];
+      const repelRightOffset = MakeATenConstants.MOVE_AWAY_DISTANCE[ rightPaperNumber.digitLength ];
+      const leftPosition = leftPaperNumber.positionProperty.value.plusXY( repelLeftOffset, 0 );
+      const rightPosition = rightPaperNumber.positionProperty.value.plusXY( repelRightOffset, 0 );
 
       // Kick off the animation to the destination
-      var animateToDestination = true;
+      const animateToDestination = true;
       leftPaperNumber.setConstrainedDestination( availableModelBounds, leftPosition, animateToDestination );
       rightPaperNumber.setConstrainedDestination( availableModelBounds, rightPosition, animateToDestination );
     },

@@ -20,7 +20,7 @@ define( require => {
   const PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
   const Vector2 = require( 'DOT/Vector2' );
 
-  var MAX_SUM = 9999;
+  const MAX_SUM = 9999;
 
   /**
    * @constructor
@@ -44,12 +44,12 @@ define( require => {
     this.screenView = screenView;
 
     function createTarget( place ) {
-      var numberValue = Math.pow( 10, place );
-      var node = new Node( {
+      const numberValue = Math.pow( 10, place );
+      const node = new Node( {
         cursor: 'pointer',
         // empirically determined stacking
         children: [ new Vector2( -8, -8 ), new Vector2( 0, 0 ) ].map( function( offset ) {
-          var paperNode = new BaseNumberNode( new BaseNumber( 1, place ), 1 );
+          const paperNode = new BaseNumberNode( new BaseNumber( 1, place ), 1 );
           paperNode.scale( 0.64, 0.55 );
           paperNode.translation = offset;
           return paperNode;
@@ -67,8 +67,8 @@ define( require => {
           if ( !event.canStartPress() ) { return; }
 
           // We want this relative to the screen view, so it is guaranteed to be the proper view coordinates.
-          var viewPosition = screenView.globalToLocalPoint( event.pointer.point );
-          var paperNumber = new PaperNumber( numberValue, new Vector2( 0, 0 ) );
+          const viewPosition = screenView.globalToLocalPoint( event.pointer.point );
+          const paperNumber = new PaperNumber( numberValue, new Vector2( 0, 0 ) );
 
           // Once we have the number's bounds, we set the position so that our pointer is in the middle of the drag target.
           paperNumber.setDestination( viewPosition.minus( paperNumber.getDragTargetOffset() ), false );
@@ -90,7 +90,7 @@ define( require => {
     // @private {Node}
     this.oneTarget = createTarget( 0 );
 
-    var box = new HBox( {
+    const box = new HBox( {
       children: [
         this.hundredTarget,
         this.tenTarget,
@@ -114,7 +114,7 @@ define( require => {
      * @returns {Vector2}
      */
     getOriginLocation: function( digits ) {
-      var target;
+      let target;
       switch ( digits ) {
         case 1:
           target = this.oneTarget; break;
@@ -128,7 +128,7 @@ define( require => {
       }
 
       // Trail to screenView, not including the screenView
-      var trail = this.screenView.getUniqueLeafTrailTo( target );
+      let trail = this.screenView.getUniqueLeafTrailTo( target );
       trail = trail.slice( 1, trail.length );
 
       // Transformed to view coordinates

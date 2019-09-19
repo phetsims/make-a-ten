@@ -23,7 +23,7 @@ define( require => {
   const Vector2Property = require( 'DOT/Vector2Property' );
 
   // Incremented for PaperNumber IDs
-  var nextPaperNumberId = 1;
+  let nextPaperNumberId = 1;
 
   /**
    * @constructor
@@ -74,15 +74,15 @@ define( require => {
      */
     step: function( dt ) {
       if ( !this.userControlledProperty.value ) {
-        var currentPosition = this.positionProperty.value;
+        const currentPosition = this.positionProperty.value;
         assert && assert( currentPosition.isFinite() );
         assert && assert( this.destination.isFinite() );
 
         // perform any animation
-        var distanceToDestination = currentPosition.distance( this.destination );
+        const distanceToDestination = currentPosition.distance( this.destination );
         if ( distanceToDestination > dt * MakeATenConstants.ANIMATION_VELOCITY ) {
           // Move a step toward the destination.
-          var stepVector = this.destination.minus( currentPosition ).setMagnitude( MakeATenConstants.ANIMATION_VELOCITY * dt );
+          const stepVector = this.destination.minus( currentPosition ).setMagnitude( MakeATenConstants.ANIMATION_VELOCITY * dt );
           assert && assert( stepVector.isFinite() );
           this.positionProperty.value = currentPosition.plus( stepVector );
 
@@ -126,8 +126,8 @@ define( require => {
      * @returns {Bounds2}
      */
     getBoundaryY: function() {
-      var bounds = this.getLocalBounds();
-      var moveToSplitRatio = MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION;
+      const bounds = this.getLocalBounds();
+      const moveToSplitRatio = MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION;
       return bounds.maxY * ( 1 - moveToSplitRatio ) + bounds.minY * moveToSplitRatio;
     },
 
@@ -138,9 +138,9 @@ define( require => {
      * @returns {Vector2}
      */
     getDragTargetOffset: function() {
-      var bounds = this.getLocalBounds();
+      const bounds = this.getLocalBounds();
 
-      var ratio = MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION / 2;
+      const ratio = MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION / 2;
       return new Vector2( bounds.centerX, bounds.minY * ratio + bounds.maxY * ( 1 - ratio ) );
     },
 
@@ -188,9 +188,9 @@ define( require => {
      */
     setConstrainedDestination: function( viewBounds, newDestination, animate ) {
       // Determine how our number's origin can be placed in the bounds
-      var localBounds = this.getLocalBounds();
-      var padding = 10;
-      var originBounds = new Bounds2( viewBounds.left - localBounds.left,
+      const localBounds = this.getLocalBounds();
+      const padding = 10;
+      const originBounds = new Bounds2( viewBounds.left - localBounds.left,
                                       viewBounds.top - localBounds.top,
                                       viewBounds.right - localBounds.right,
                                       viewBounds.bottom - localBounds.bottom ).eroded( padding );
@@ -238,13 +238,13 @@ define( require => {
     getBaseNumbers: function( number ) {
       assert && assert( number > 0 && number % 1 === 0 );
 
-      var result = [];
+      const result = [];
 
       // Divide by 10 each loop, using the remainder and place location to create the place numbers.
-      var remainder = number;
-      var place = 0;
+      let remainder = number;
+      let place = 0;
       while ( remainder ) {
-        var digit = remainder % 10;
+        const digit = remainder % 10;
         if ( digit ) {
           result.push( new BaseNumber( digit, place ) );
         }
@@ -265,16 +265,16 @@ define( require => {
      * @returns {boolean}
      */
     arePaperNumbersAttachable: function( paperNumber1, paperNumber2 ) {
-      var firstLarger = paperNumber1.numberValueProperty.value > paperNumber2.numberValueProperty.value;
-      var largePaperNumber = firstLarger ? paperNumber1 : paperNumber2;
-      var smallPaperNumber = firstLarger ? paperNumber2 : paperNumber1;
+      const firstLarger = paperNumber1.numberValueProperty.value > paperNumber2.numberValueProperty.value;
+      const largePaperNumber = firstLarger ? paperNumber1 : paperNumber2;
+      const smallPaperNumber = firstLarger ? paperNumber2 : paperNumber1;
 
-      var smallCenter = smallPaperNumber.positionProperty.value.plus( smallPaperNumber.getLocalBounds().center );
-      var largePosition = largePaperNumber.positionProperty.value;
-      var largeBounds = largePaperNumber.getLocalBounds().shifted( largePosition.x, largePosition.y );
+      const smallCenter = smallPaperNumber.positionProperty.value.plus( smallPaperNumber.getLocalBounds().center );
+      const largePosition = largePaperNumber.positionProperty.value;
+      const largeBounds = largePaperNumber.getLocalBounds().shifted( largePosition.x, largePosition.y );
 
-      var unitX = ( smallCenter.x - largeBounds.centerX ) / ( largeBounds.width / 2 );
-      var unitY = ( smallCenter.y - largeBounds.centerY ) / ( largeBounds.height / 2 );
+      const unitX = ( smallCenter.x - largeBounds.centerX ) / ( largeBounds.width / 2 );
+      const unitY = ( smallCenter.y - largeBounds.centerY ) / ( largeBounds.height / 2 );
 
       return unitX * unitX + 2 * unitY * unitY < 1;
     }

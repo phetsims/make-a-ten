@@ -30,17 +30,17 @@ define( require => {
    */
   function KeyboardPanel( onSubmit, maxDigits ) {
 
-    var self = this;
+    const self = this;
     this.numberEntryControl = new NumberEntryControl( { maxDigits: maxDigits, readoutFont: new PhetFont( 25 ) } );
 
-    var buttonOptions = {
+    const buttonOptions = {
       font: new PhetFont( 18 ),
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       cornerRadius: 4,
       maxTextWidth: 100
     };
 
-    var submitNumberButton = new TextPushButton( submitString, _.extend( {
+    const submitNumberButton = new TextPushButton( submitString, _.extend( {
       touchAreaXDilation: 20,
       touchAreaYDilation: 7,
       listener: function() {
@@ -50,7 +50,7 @@ define( require => {
     }, buttonOptions ) );
 
 
-    var numberControlGroup = new VBox( {
+    const numberControlGroup = new VBox( {
       children: [ this.numberEntryControl, submitNumberButton ],
       spacing: 12
     } );

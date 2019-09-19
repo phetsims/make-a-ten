@@ -18,7 +18,7 @@ define( require => {
    * @constructor
    */
   function NumberChallengeFactory() {
-    var self = this;
+    const self = this;
 
     // @private {Random} - Stored here because we can't grab a reference until after the sim has launched (and after we
     //                     have defined the NumberChallengeFactory type).
@@ -56,7 +56,7 @@ define( require => {
     // @private {Array.<NumberChallenge>} - All possible challenges for the "Add with Singles" challenge.
     this.addWithSinglesChallenges = [];
     this.underTwentyChallenges.forEach( function( challenge ) {
-      for ( var decade = 10; decade <= 80; decade += 10 ) {
+      for ( let decade = 10; decade <= 80; decade += 10 ) {
         // Only add to the left, since underTwentyChallenges includes both [a,b] and [b,a].
         self.addWithSinglesChallenges.push( new NumberChallenge( challenge.leftTerm + decade, challenge.rightTerm ) );
         self.addWithSinglesChallenges.push( new NumberChallenge( challenge.rightTerm, challenge.leftTerm + decade ) );
@@ -133,9 +133,9 @@ define( require => {
      * @returns {Array.<NumberChallenge>}
      */
     sumsOverTenChallenges: function( bigNumber, includeLeftBiggest, includeRightBiggest ) {
-      var challenges = [];
+      const challenges = [];
 
-      for ( var i = 11 - bigNumber; i < bigNumber; i++ ) {
+      for ( let i = 11 - bigNumber; i < bigNumber; i++ ) {
         if ( includeLeftBiggest ) {
           challenges.push( new NumberChallenge( bigNumber, i ) );
         }
@@ -157,10 +157,10 @@ define( require => {
      * @returns {Array.<NumberChallenge>}
      */
     sumsUpTo: function( minimumNumber, maximumSum ) {
-      var challenges = [];
+      const challenges = [];
 
-      for ( var left = minimumNumber; left < maximumSum; left++ ) {
-        for ( var right = minimumNumber; left + right <= maximumSum; right++ ) {
+      for ( let left = minimumNumber; left < maximumSum; left++ ) {
+        for ( let right = minimumNumber; left + right <= maximumSum; right++ ) {
           challenges.push( new NumberChallenge( left, right ) );
         }
       }
@@ -176,11 +176,11 @@ define( require => {
      * @returns {Array.<NumberChallenge>}
      */
     sumsDownTo: function( minimumNumber, maximumNumber, minimumSum ) {
-      var challenges = [];
+      const challenges = [];
 
-      for ( var left = minimumNumber; left <= maximumNumber; left++ ) {
+      for ( let left = minimumNumber; left <= maximumNumber; left++ ) {
         // Start with minimumNumber, OR if that would result in an invalid sum, the number that would add up to the sum
-        for ( var right = Math.max( minimumNumber, minimumSum - left ); right <= maximumNumber; right++ ) {
+        for ( let right = Math.max( minimumNumber, minimumSum - left ); right <= maximumNumber; right++ ) {
           challenges.push( new NumberChallenge( left, right ) );
         }
       }
@@ -195,10 +195,10 @@ define( require => {
      * @returns {Array.<NumberChallenge>}
      */
     addWithSinglesThreeDigitChallenges: function( isLeftBiggest ) {
-      var challenges = [];
+      const challenges = [];
 
-      for ( var left = 100; left <= 900; left += 100 ) {
-        for ( var right = 1; right <= 9; right++ ) {
+      for ( let left = 100; left <= 900; left += 100 ) {
+        for ( let right = 1; right <= 9; right++ ) {
           challenges.push( isLeftBiggest ? new NumberChallenge( left, right ) : new NumberChallenge( right, left ) );
         }
       }

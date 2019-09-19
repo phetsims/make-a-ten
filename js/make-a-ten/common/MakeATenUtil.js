@@ -14,7 +14,7 @@ define( require => {
   const Node = require( 'SCENERY/nodes/Node' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
-  var MakeATenUtil = {
+  const MakeATenUtil = {
     /**
      * Common way of determining number of digits in a number.
      * @public
@@ -37,7 +37,7 @@ define( require => {
      * @returns {Node}
      */
     createIconWithBackgroundColor: function( image, backgroundFill ) {
-      var imageNode = new Image( image );
+      const imageNode = new Image( image );
 
       return new Node( {
         children: [

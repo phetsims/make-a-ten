@@ -35,7 +35,7 @@ define( require => {
     // @private {Cue}
     this.cue = cue;
 
-    var arrowOptions = {
+    const arrowOptions = {
       fill: MakeATenConstants.CUE_FILL,
       stroke: null,
       headHeight: 14,
@@ -61,8 +61,8 @@ define( require => {
     } );
     this.addChild( this.arrowContainer );
 
-    var updatePositionListener = this.updatePosition.bind( this );
-    var updateRectangleListener = this.updateRectangle.bind( this );
+    const updatePositionListener = this.updatePosition.bind( this );
+    const updateRectangleListener = this.updateRectangle.bind( this );
 
     cue.visibilityProperty.linkAttribute( this, 'visible' );
     cue.opacityProperty.linkAttribute( this, 'opacity' );
@@ -89,12 +89,12 @@ define( require => {
      * @private
      */
     updatePosition: function() {
-      var visible = this.cue.visibilityProperty.value;
-      var paperNumber = this.cue.paperNumberProperty.value;
+      const visible = this.cue.visibilityProperty.value;
+      const paperNumber = this.cue.paperNumberProperty.value;
 
       if ( visible && paperNumber ) {
-        var position = paperNumber.positionProperty.value;
-        var localBounds = paperNumber.getLocalBounds();
+        const position = paperNumber.positionProperty.value;
+        const localBounds = paperNumber.getLocalBounds();
         this.setTranslation( position );
         this.arrowContainer.setTranslation( localBounds.right - 22, localBounds.top + 15 );
       }
@@ -105,11 +105,11 @@ define( require => {
      * @private
      */
     updateRectangle: function() {
-      var paperNumber = this.cue.paperNumberProperty.value;
+      const paperNumber = this.cue.paperNumberProperty.value;
 
       if ( paperNumber ) {
-        var bounds = paperNumber.getLocalBounds();
-        var boundaryY = paperNumber.getBoundaryY();
+        const bounds = paperNumber.getLocalBounds();
+        const boundaryY = paperNumber.getBoundaryY();
         this.seeThroughRectangle.setRectBounds( bounds.withMaxY( boundaryY ) );
       }
     }

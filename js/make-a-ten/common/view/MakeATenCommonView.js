@@ -27,7 +27,7 @@ define( require => {
    * @param {MakeATenModel} model
    */
   function MakeATenCommonView( model ) {
-    var self = this;
+    const self = this;
 
     ScreenView.call( this, { layoutBounds: MakeATenConstants.LAYOUT_BOUNDS } );
 
@@ -53,12 +53,12 @@ define( require => {
 
     // @private {ClosestDragListener} - Handle touches nearby to the numbers, and interpret those as the proper drag.
     this.closestDragListener = new ClosestDragListener( 30, 0 );
-    var backgroundDragTarget = new Plane();
+    const backgroundDragTarget = new Plane();
     backgroundDragTarget.addInputListener( this.closestDragListener );
     this.addChild( backgroundDragTarget );
 
-    var paperNumberAddedListener = this.onPaperNumberAdded.bind( this );
-    var paperNumberRemovedListener = this.onPaperNumberRemoved.bind( this );
+    const paperNumberAddedListener = this.onPaperNumberAdded.bind( this );
+    const paperNumberRemovedListener = this.onPaperNumberRemoved.bind( this );
 
     // Add nodes for every already-existing paper number
     model.paperNumbers.forEach( paperNumberAddedListener );
@@ -98,7 +98,7 @@ define( require => {
       // Add it and lookup the related node.
       this.model.addPaperNumber( paperNumber );
 
-      var paperNumberNode = this.findPaperNumberNode( paperNumber );
+      const paperNumberNode = this.findPaperNumberNode( paperNumber );
       paperNumberNode.startSyntheticDrag( event );
     },
 
@@ -110,7 +110,7 @@ define( require => {
      * @returns {PaperNumberNode} - The created node
      */
     onPaperNumberAdded: function( paperNumber ) {
-      var paperNumberNode = new PaperNumberNode( paperNumber, this.availableViewBoundsProperty,
+      const paperNumberNode = new PaperNumberNode( paperNumber, this.availableViewBoundsProperty,
                                                  this.addAndDragNumberCallback, this.tryToCombineNumbersCallback );
 
       this.paperNumberNodeMap[ paperNumberNode.paperNumber.id ] = paperNumberNode;
@@ -129,7 +129,7 @@ define( require => {
      * @param {PaperNumber} paperNumber
      */
     onPaperNumberRemoved: function( paperNumber ) {
-      var paperNumberNode = this.findPaperNumberNode( paperNumber );
+      const paperNumberNode = this.findPaperNumberNode( paperNumber );
 
       delete this.paperNumberNodeMap[ paperNumberNode.paperNumber.id ];
       this.paperNumberLayerNode.removeChild( paperNumberNode );
@@ -146,7 +146,7 @@ define( require => {
      * @returns {PaperNumberNode}
      */
     findPaperNumberNode: function( paperNumber ) {
-      var result = this.paperNumberNodeMap[ paperNumber.id ];
+      const result = this.paperNumberNodeMap[ paperNumber.id ];
       assert && assert( result, 'Did not find matching Node' );
       return result;
     },
@@ -158,18 +158,18 @@ define( require => {
      * @param {PaperNumber} draggedPaperNumber
      */
     tryToCombineNumbers: function( draggedPaperNumber ) {
-      var draggedNode = this.findPaperNumberNode( draggedPaperNumber );
-      var draggedNumberValue = draggedPaperNumber.numberValueProperty.value;
-      var allPaperNumberNodes = this.paperNumberLayerNode.children;
-      var droppedNodes = draggedNode.findAttachableNodes( allPaperNumberNodes );
+      const draggedNode = this.findPaperNumberNode( draggedPaperNumber );
+      const draggedNumberValue = draggedPaperNumber.numberValueProperty.value;
+      const allPaperNumberNodes = this.paperNumberLayerNode.children;
+      const droppedNodes = draggedNode.findAttachableNodes( allPaperNumberNodes );
 
       // Check them in reverse order (the one on the top should get more priority)
       droppedNodes.reverse();
 
       for ( var i = 0; i < droppedNodes.length; i++ ) {
-        var droppedNode = droppedNodes[ i ];
-        var droppedPaperNumber = droppedNode.paperNumber;
-        var droppedNumberValue = droppedPaperNumber.numberValueProperty.value;
+        const droppedNode = droppedNodes[ i ];
+        const droppedPaperNumber = droppedNode.paperNumber;
+        const droppedNumberValue = droppedPaperNumber.numberValueProperty.value;
 
         if ( ArithmeticRules.canAddNumbers( draggedNumberValue, droppedNumberValue ) ) {
           this.model.collapseNumberModels( this.availableViewBoundsProperty.value, draggedPaperNumber, droppedPaperNumber );
@@ -225,7 +225,7 @@ define( require => {
       ScreenView.prototype.layout.call( this, width, height );
 
       // Some views may need to make extra room for a status bar
-      var top = this.visibleBoundsProperty.value.minY + this.getTopBoundsOffset();
+      const top = this.visibleBoundsProperty.value.minY + this.getTopBoundsOffset();
       this.availableViewBoundsProperty.value = this.visibleBoundsProperty.value.withMinY( top );
 
       this.layoutControls();

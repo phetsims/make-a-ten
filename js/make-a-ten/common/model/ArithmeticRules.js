@@ -61,21 +61,21 @@ define( require => {
       }
 
       // Find the minimum place (0: singles, 1: doubles, etc.) where we can pull off from
-      var minimumPlace = 0;
-      for ( var i = 1; i < 3; i++ ) {
-        var power = Math.pow( 10, i );
+      let minimumPlace = 0;
+      for ( let i = 1; i < 3; i++ ) {
+        const power = Math.pow( 10, i );
         if ( numberValue % power === 0 && numberValue > power ) {
           minimumPlace = i;
         }
       }
 
       // How many places are on the number?
-      var maximumPlace = MakeATenUtil.digitsInNumber( numberValue ) - 1;
+      const maximumPlace = MakeATenUtil.digitsInNumber( numberValue ) - 1;
 
       // Grab the place we'll try to remove from.
-      var place = Math.max( minimumPlace, pulledPlace );
+      const place = Math.max( minimumPlace, pulledPlace );
 
-      var amountToRemove;
+      let amountToRemove;
       if ( place === maximumPlace ) {
         amountToRemove = Math.pow( 10, place );
       }

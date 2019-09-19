@@ -32,7 +32,7 @@ define( require => {
    */
   function MakeATenGameScreen() {
 
-    var options = {
+    const options = {
       name: screenGameString,
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       homeScreenIcon: MakeATenUtil.createIconWithBackgroundColor( gameHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),

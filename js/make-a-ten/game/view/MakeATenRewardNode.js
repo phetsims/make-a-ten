@@ -18,7 +18,7 @@ define( require => {
   const StarNode = require( 'SCENERY_PHET/StarNode' );
 
   function createNumber( digit, place ) {
-    var node = new BaseNumberNode( new BaseNumber( digit, place ), 1 );
+    const node = new BaseNumberNode( new BaseNumber( digit, place ), 1 );
     node.scale( 0.5 );
     return node;
   }

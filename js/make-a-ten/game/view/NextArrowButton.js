@@ -22,7 +22,7 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
-  var LABEL_FONT = new PhetFont( { size: 20, weight: 'bold' } );
+  const LABEL_FONT = new PhetFont( { size: 20, weight: 'bold' } );
 
   /**
    * @constructor
@@ -32,13 +32,13 @@ define( require => {
    */
   function NextArrowButton( buttonText, options ) {
 
-    var arrowShape = new ArrowShape( 0, 0, 28.5, 0, {
+    const arrowShape = new ArrowShape( 0, 0, 28.5, 0, {
       tailWidth: 2,
       headWidth: 8,
       headHeight: 8
     } );
 
-    var labelArrowBox = new HBox( {
+    const labelArrowBox = new HBox( {
       children: [
         new Text( buttonText, { font: LABEL_FONT, fill: 'black', maxWidth: 150 } ),
         new Path( arrowShape, { fill: 'black' } )

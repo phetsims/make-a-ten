@@ -47,13 +47,13 @@ define( require => {
    * @constructor
    */
   function MakeATenGameModel() {
-    var self = this;
+    const self = this;
 
     MakeATenCommonModel.call( this );
 
     // Created here, since due to the initialization of phet.joist.random we need to delay until the model is created
     // (can't do at require.js load time), thus we have a separate challenge factory.
-    var numberChallengeFactory = new NumberChallengeFactory();
+    const numberChallengeFactory = new NumberChallengeFactory();
 
     // @public {Array.<Level>} - All of the game levels for this screen.
     this.levels = [
@@ -180,7 +180,7 @@ define( require => {
       this.currentChallengeProperty.reset();
       this.gameStateProperty.reset();
 
-      for ( var i = 0; i < this.levels.length; i++ ) {
+      for ( let i = 0; i < this.levels.length; i++ ) {
         this.levels[ i ].reset();
       }
     }

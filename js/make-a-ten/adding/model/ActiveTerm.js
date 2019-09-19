@@ -11,7 +11,7 @@ define( require => {
   // modules
   const makeATen = require( 'MAKE_A_TEN/makeATen' );
 
-  var ActiveTerm = Object.freeze( {
+  const ActiveTerm = Object.freeze( {
     LEFT: 'LEFT',
     RIGHT: 'RIGHT',
     NONE: 'NONE'

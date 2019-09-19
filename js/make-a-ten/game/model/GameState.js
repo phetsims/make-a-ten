@@ -9,7 +9,7 @@ define( require => {
   // modules
   const makeATen = require( 'MAKE_A_TEN/makeATen' );
 
-  var GameState = Object.freeze( {
+  const GameState = Object.freeze( {
     // Shows level selection buttons
     CHOOSING_LEVEL: 'CHOOSING_LEVEL',
 

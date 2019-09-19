@@ -17,10 +17,10 @@ define( require => {
   const Property = require( 'AXON/Property' );
 
   // constants
-  var FADE_SPEED = 0.8;
+  const FADE_SPEED = 0.8;
 
   // state enumeration for the cue
-  var CueState = Object.freeze( {
+  const CueState = Object.freeze( {
     UNATTACHED: 'UNATTACHED', // "not faded, but not visible"
     ATTACHED: 'ATTACHED', // "on a number, but not fading"
     FADING: 'FADING', // "on a number, but fading"

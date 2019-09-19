@@ -31,7 +31,7 @@ define( require => {
    */
   function MakeATenExploreScreen() {
 
-    var options = {
+    const options = {
       name: screenExploreString,
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       homeScreenIcon: MakeATenUtil.createIconWithBackgroundColor( exploreHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),

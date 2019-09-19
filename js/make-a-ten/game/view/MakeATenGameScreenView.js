@@ -47,7 +47,7 @@ define( require => {
   function MakeATenGameScreenView( model ) {
     MakeATenCommonView.call( this, model );
 
-    var self = this;
+    const self = this;
 
     // @private {Node} - The "left" half of the sliding layer, displayed first
     this.levelSelectionLayer = new Node();
@@ -55,7 +55,7 @@ define( require => {
     // @private {Node} - The "right" half of the sliding layer, will slide into view when the user selects a level
     this.challengeLayer = new Node();
 
-    var showingLeftProperty = new DerivedProperty( [ model.gameStateProperty ], function( gameState ) {
+    const showingLeftProperty = new DerivedProperty( [ model.gameStateProperty ], function( gameState ) {
       return gameState === GameState.CHOOSING_LEVEL;
     } );
 
@@ -92,7 +92,7 @@ define( require => {
     this.levelSelectionLayer.addChild( this.resetAllButton );
 
     // info dialog, constructed lazily because Dialog requires sim bounds during construction
-    var dialog = null;
+    let dialog = null;
 
     // @private {InfoButton} - Shows '?' in the corner that pops up the info dialog when clicked.
     this.infoButton = new InfoButton( {
@@ -111,7 +111,7 @@ define( require => {
     this.levelSelectionLayer.addChild( this.infoButton );
 
     // The node that display "12 + 100 = "
-    var additionTermsNode = new AdditionTermsNode( model.additionTerms, false );
+    const additionTermsNode = new AdditionTermsNode( model.additionTerms, false );
     additionTermsNode.left = this.layoutBounds.left + 38;
     additionTermsNode.top = this.layoutBounds.top + 75;
     this.challengeLayer.addChild( additionTermsNode );
@@ -132,12 +132,12 @@ define( require => {
     // Add the paper number layer from our supertype
     this.challengeLayer.addChild( this.paperNumberLayerNode );
 
-    var levelNumberText = new Text( '', {
+    const levelNumberText = new Text( '', {
       font: new PhetFont( { size: 18, weight: 'bold' } ),
       pickable: false,
       maxWidth: 120
     } );
-    var levelDescriptionText = new Text( '', {
+    const levelDescriptionText = new Text( '', {
       font: new PhetFont( 18 ),
       pickable: false
     } );
@@ -145,7 +145,7 @@ define( require => {
       levelNumberText.text = StringUtils.format( patternLevel0LevelNumberString, '' + level.number );
       levelDescriptionText.text = level.description;
     } );
-    var statusMessageNode = new HBox( {
+    const statusMessageNode = new HBox( {
       children: [ levelNumberText, levelDescriptionText ],
       spacing: 30
     } );
@@ -209,7 +209,7 @@ define( require => {
      * @private
      */
     showReward: function() {
-      var self = this;
+      const self = this;
 
       this.gameAudioPlayer.gameOverPerfectScore();
 

@@ -18,7 +18,7 @@ define( require => {
   // strings
   const makeATenTitleString = require( 'string!MAKE_A_TEN/make-a-ten.title' );
 
-  var simOptions = {
+  const simOptions = {
     credits: {
       leadDesign: 'Beth Stade, Amanda McGarry',
       softwareDevelopment: 'Jonathan Olson, Sharfudeen Ashraf',
@@ -30,7 +30,7 @@ define( require => {
   };
 
   SimLauncher.launch( function() {
-    var sim = new Sim( makeATenTitleString, [ new MakeATenExploreScreen(), new MakeATenAddingScreen(), new MakeATenGameScreen() ], simOptions );
+    const sim = new Sim( makeATenTitleString, [ new MakeATenExploreScreen(), new MakeATenAddingScreen(), new MakeATenGameScreen() ], simOptions );
     sim.start();
   } );
 } );

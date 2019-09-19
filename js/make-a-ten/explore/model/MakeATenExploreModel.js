@@ -29,7 +29,7 @@ define( require => {
     this.splitCue = new Cue();
 
     // @private {Function} - To be called when we need to recalculate the total
-    var calculateTotalListener = this.calculateTotal.bind( this );
+    const calculateTotalListener = this.calculateTotal.bind( this );
 
     this.paperNumbers.lengthProperty.link( calculateTotalListener );
 
@@ -66,7 +66,7 @@ define( require => {
      * @private
      */
     calculateTotal: function() {
-      var total = 0;
+      let total = 0;
       this.paperNumbers.forEach( function( paperNumber ) {
         total += paperNumber.numberValueProperty.value;
       } );
@@ -78,7 +78,7 @@ define( require => {
      * @private
      */
     addInitialNumbers: function() {
-      var self = this;
+      const self = this;
 
       // Check for an array of numbers, e.g. ?exploreNumbers=10,51, where 0 indicates none
       this.addMultipleNumbers( MakeATenQueryParameters.exploreNumbers );

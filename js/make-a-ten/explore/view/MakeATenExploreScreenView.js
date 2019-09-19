@@ -29,14 +29,14 @@ define( require => {
   const hideTotalString = require( 'string!MAKE_A_TEN/hideTotal' );
 
   // constants
-  var EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
+  const EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
 
   /**
    * @param {MakeATenExploreModel} model
    * @constructor
    */
   function MakeATenExploreScreenView( model ) {
-    var self = this;
+    const self = this;
 
     // @private {Function} - Called with function( paperNumberNode ) on number splits
     this.numberSplitListener = this.onNumberSplit.bind( this );
@@ -55,7 +55,7 @@ define( require => {
     // @private {BooleanProperty} - Whether the total (sum) is hidden
     this.hideSumProperty = new BooleanProperty( false );
 
-    var sumText = new Text( '0', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
+    const sumText = new Text( '0', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
     model.sumProperty.linkAttribute( sumText, 'text' );
 
     // @private {HBox} - Displays the sum of our numbers and an equals sign, e.g. "256 ="
@@ -72,7 +72,7 @@ define( require => {
     this.explorePanel = new ExplorePanel( this, model.sumProperty );
     this.addChild( this.explorePanel );
 
-    var hideSumText = new Text( hideTotalString, {
+    const hideSumText = new Text( hideTotalString, {
       maxWidth: 150,
       font: new PhetFont( {
         size: 25,
@@ -109,7 +109,7 @@ define( require => {
     layoutControls: function() {
       MakeATenCommonView.prototype.layoutControls.call( this );
 
-      var visibleBounds = this.visibleBoundsProperty.value;
+      const visibleBounds = this.visibleBoundsProperty.value;
 
       this.explorePanel.centerX = visibleBounds.centerX;
       this.explorePanel.bottom = visibleBounds.bottom - 10;
@@ -132,14 +132,14 @@ define( require => {
       // Compute the local point on the number that would need to go into the return zone.
       // This point is a bit farther down than the exact center, as it was annoying to "miss" the return zone
       // slightly by being too high (while the mouse WAS in the return zone).
-      var localBounds = paperNumber.getLocalBounds();
-      var localReturnPoint = localBounds.center.plus( localBounds.centerBottom ).dividedScalar( 2 );
+      const localBounds = paperNumber.getLocalBounds();
+      const localReturnPoint = localBounds.center.plus( localBounds.centerBottom ).dividedScalar( 2 );
 
       // And the bounds of our panel
-      var panelBounds = this.explorePanel.bounds.withMaxY( this.visibleBoundsProperty.value.bottom );
+      const panelBounds = this.explorePanel.bounds.withMaxY( this.visibleBoundsProperty.value.bottom );
 
       // View coordinate of our return point
-      var paperCenter = paperNumber.positionProperty.value.plus( localReturnPoint );
+      const paperCenter = paperNumber.positionProperty.value.plus( localReturnPoint );
 
       return panelBounds.containsPoint( paperCenter );
     },
@@ -148,7 +148,7 @@ define( require => {
      * @override
      */
     onPaperNumberAdded: function( paperNumber ) {
-      var paperNumberNode = MakeATenCommonView.prototype.onPaperNumberAdded.call( this, paperNumber );
+      const paperNumberNode = MakeATenCommonView.prototype.onPaperNumberAdded.call( this, paperNumber );
 
       // Add listeners
       paperNumberNode.splitEmitter.addListener( this.numberSplitListener );
@@ -161,7 +161,7 @@ define( require => {
      * @override
      */
     onPaperNumberRemoved: function( paperNumber ) {
-      var paperNumberNode = this.findPaperNumberNode( paperNumber );
+      const paperNumberNode = this.findPaperNumberNode( paperNumber );
 
       // Remove listeners
       paperNumber.endDragEmitter.removeListener( this.numberDragFinishedListener );
@@ -194,7 +194,7 @@ define( require => {
      * @param {PaperNumberNode} paperNumberNode
      */
     onNumberInteractionStarted: function( paperNumberNode ) {
-      var paperNumber = paperNumberNode.paperNumber;
+      const paperNumber = paperNumberNode.paperNumber;
       if ( paperNumber.numberValueProperty.value > 1 ) {
         this.model.splitCue.attachToNumber( paperNumber );
       }
@@ -222,17 +222,17 @@ define( require => {
     onNumberDragFinished: function( paperNumber ) {
       // Return it to the panel if it's been dropped in the panel.
       if ( this.isNumberInReturnZone( paperNumber ) ) {
-        var baseNumbers = paperNumber.baseNumbers;
+        const baseNumbers = paperNumber.baseNumbers;
 
         // Split it into a PaperNumber for each of its base numbers, and animate them to their targets in the
         // explore panel.
-        for ( var i = baseNumbers.length - 1; i >= 0; i-- ) {
-          var baseNumber = baseNumbers[ i ];
-          var basePaperNumber = new PaperNumber( baseNumber.numberValue, paperNumber.positionProperty.value );
+        for ( let i = baseNumbers.length - 1; i >= 0; i-- ) {
+          const baseNumber = baseNumbers[ i ];
+          const basePaperNumber = new PaperNumber( baseNumber.numberValue, paperNumber.positionProperty.value );
 
           // Set its destination to the proper target (with the offset so that it will disappear once centered).
-          var targetPosition = this.explorePanel.getOriginLocation( baseNumber.digitLength );
-          var paperCenterOffset = new PaperNumber( baseNumber.numberValue, new Vector2( 0, 0 ) ).getLocalBounds().center;
+          let targetPosition = this.explorePanel.getOriginLocation( baseNumber.digitLength );
+          const paperCenterOffset = new PaperNumber( baseNumber.numberValue, new Vector2( 0, 0 ) ).getLocalBounds().center;
           targetPosition = targetPosition.minus( paperCenterOffset );
           basePaperNumber.setDestination( targetPosition, true );
 

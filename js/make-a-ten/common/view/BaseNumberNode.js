@@ -33,7 +33,7 @@ define( require => {
   const imagePaperBackground1000 = require( 'mipmap!MAKE_A_TEN/paper-background-1000.png' );
 
   // place => mipmap info
-  var BACKGROUND_IMAGE_MAP = {
+  const BACKGROUND_IMAGE_MAP = {
     0: imagePaperBackground1,
     1: imagePaperBackground10,
     2: imagePaperBackground100,
@@ -41,7 +41,7 @@ define( require => {
   };
 
   // digit => mipmap info
-  var DIGIT_IMAGE_MAP = {
+  const DIGIT_IMAGE_MAP = {
     1: imageDigit1,
     2: imageDigit2,
     3: imageDigit3,
@@ -54,17 +54,17 @@ define( require => {
   };
 
   // place => x/y offsets for the first digit in each place
-  var PLACE_X_OFFSET = { 0: 48, 1: 108, 2: 70, 3: 94 };
-  var PLACE_Y_OFFSET = { 0: 65, 1: 85, 2: 163, 3: 197 };
+  const PLACE_X_OFFSET = { 0: 48, 1: 108, 2: 70, 3: 94 };
+  const PLACE_Y_OFFSET = { 0: 65, 1: 85, 2: 163, 3: 197 };
 
   // digit => horizontal offset for that digit (applied to all places, includes digit-specific information)
-  var DIGIT_X_OFFSET = { 1: 93, 2: -7, 3: -7, 4: -9, 5: -18, 6: -5, 7: -24, 8: -2, 9: -10 };
+  const DIGIT_X_OFFSET = { 1: 93, 2: -7, 3: -7, 4: -9, 5: -18, 6: -5, 7: -24, 8: -2, 9: -10 };
 
   // digit => horizontal offset, customized for each single digit base number
-  var FIRST_PLACE_DIGIT_X_OFFSET = { 1: -61, 2: 0, 3: 0, 4: 0, 5: 5, 6: 0, 7: 15, 8: 10, 9: 15 };
+  const FIRST_PLACE_DIGIT_X_OFFSET = { 1: -61, 2: 0, 3: 0, 4: 0, 5: 5, 6: 0, 7: 15, 8: 10, 9: 15 };
 
   // place => horizontal locations of the zeros in the base number
-  var ZERO_OFFSET = {
+  const ZERO_OFFSET = {
     0: [],
     1: [ 335 ],
     2: [ 560, 314 ],
@@ -72,7 +72,7 @@ define( require => {
   };
 
   // Scale was increased from 72dpi (pixels) to 300dpi, so that we can have crisper graphics.
-  var SCALE = 72 / 300;
+  const SCALE = 72 / 300;
 
   /**
    * @constructor
@@ -85,8 +85,8 @@ define( require => {
     Node.call( this, { scale: SCALE } );
 
     // Location of the initial digit
-    var x = PLACE_X_OFFSET[ baseNumber.place ] + DIGIT_X_OFFSET[ baseNumber.digit ];
-    var y = PLACE_Y_OFFSET[ baseNumber.place ];
+    let x = PLACE_X_OFFSET[ baseNumber.place ] + DIGIT_X_OFFSET[ baseNumber.digit ];
+    const y = PLACE_Y_OFFSET[ baseNumber.place ];
 
     // We need to slightly offset some
     if ( baseNumber.place === 0 ) {
@@ -108,8 +108,8 @@ define( require => {
     } ) );
 
     // Add the zeros
-    var digitZeroOffsets = ZERO_OFFSET[ baseNumber.place ];
-    for ( var i = 0; i < digitZeroOffsets.length; i++ ) {
+    const digitZeroOffsets = ZERO_OFFSET[ baseNumber.place ];
+    for ( let i = 0; i < digitZeroOffsets.length; i++ ) {
       this.addChild( new Image( imageDigit0, {
         x: digitZeroOffsets[ i ],
         y: y

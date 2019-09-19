@@ -21,8 +21,8 @@ define( require => {
   // Template for inserting the level number
   const patternLevel0LevelNumberString = require( 'string!MAKE_A_TEN/pattern.level.0levelNumber' );
 
-  var LEVEL_NUMBER_FONT = new PhetFont( { size: 14, weight: 'bold' } );
-  var LEVEL_DESCRIPTION_FONT = new PhetFont( 14 );
+  const LEVEL_NUMBER_FONT = new PhetFont( { size: 14, weight: 'bold' } );
+  const LEVEL_DESCRIPTION_FONT = new PhetFont( 14 );
 
   /**
    * @constructor
@@ -30,9 +30,9 @@ define( require => {
    * @param {Array.<Level>} levels - All game levels
    */
   function InfoDialog( levels ) {
-    var levelMaxWidth = 100;
+    const levelMaxWidth = 100;
 
-    var padWidth = new Text( StringUtils.format( patternLevel0LevelNumberString, '10' ), {
+    const padWidth = new Text( StringUtils.format( patternLevel0LevelNumberString, '10' ), {
       font: LEVEL_NUMBER_FONT,
       maxWidth: levelMaxWidth
     } ).width + 20;
@@ -51,7 +51,7 @@ define( require => {
         ]
       } );
     }
-    var contentNode = new VBox( {
+    const contentNode = new VBox( {
       align: 'left',
       spacing: 14,
       children: levels.map( createLevelNode )

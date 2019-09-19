@@ -31,7 +31,7 @@ define( require => {
    */
   function MakeATenAddingScreen() {
 
-    var options = {
+    const options = {
       name: screenAddingString,
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       homeScreenIcon: MakeATenUtil.createIconWithBackgroundColor( addingHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),

@@ -30,7 +30,7 @@ define( require => {
    * @param {Function} tryToCombineNumbers - function( paperNumber ), called to combine our paper number
    */
   function PaperNumberNode( paperNumber, availableViewBoundsProperty, addAndDragNumber, tryToCombineNumbers ) {
-    var self = this;
+    const self = this;
 
     Node.call( this );
 
@@ -101,12 +101,12 @@ define( require => {
       down: function( event ) {
         if ( !event.canStartPress() ) { return; }
 
-        var viewPosition = self.globalToParentPoint( event.pointer.point );
+        const viewPosition = self.globalToParentPoint( event.pointer.point );
 
         // Determine how much (if any) gets moved off
-        var pulledPlace = paperNumber.getBaseNumberAt( self.parentToLocalPoint( viewPosition ) ).place;
-        var amountToRemove = ArithmeticRules.pullApartNumbers( paperNumber.numberValueProperty.value, pulledPlace );
-        var amountRemaining = paperNumber.numberValueProperty.value - amountToRemove;
+        const pulledPlace = paperNumber.getBaseNumberAt( self.parentToLocalPoint( viewPosition ) ).place;
+        const amountToRemove = ArithmeticRules.pullApartNumbers( paperNumber.numberValueProperty.value, pulledPlace );
+        const amountRemaining = paperNumber.numberValueProperty.value - amountToRemove;
 
         // it cannot be split - so start moving
         if ( !amountToRemove ) {
@@ -119,7 +119,7 @@ define( require => {
         self.interactionStartedEmitter.emit( self );
         self.splitEmitter.emit( self );
 
-        var newPaperNumber = new PaperNumber( amountToRemove, paperNumber.positionProperty.value );
+        const newPaperNumber = new PaperNumber( amountToRemove, paperNumber.positionProperty.value );
         addAndDragNumber( event, newPaperNumber );
       }
     };
@@ -149,9 +149,9 @@ define( require => {
      * @private
      */
     updateNumber: function() {
-      var self = this;
+      const self = this;
 
-      var reversedBaseNumbers = this.paperNumber.baseNumbers.slice().reverse();
+      const reversedBaseNumbers = this.paperNumber.baseNumbers.slice().reverse();
       // Reversing allows easier opacity computation and has the nodes in order for setting children.
       this.numberImageContainer.children = _.map( reversedBaseNumbers, function( baseNumber, index ) {
         // each number has successively less opacity on top
@@ -159,7 +159,7 @@ define( require => {
       } );
 
       // Grab the bounds of the biggest base number for the full bounds
-      var fullBounds = this.paperNumber.baseNumbers[ this.paperNumber.baseNumbers.length - 1 ].bounds;
+      const fullBounds = this.paperNumber.baseNumbers[ this.paperNumber.baseNumbers.length - 1 ].bounds;
 
       // Split target only visible if our number is > 1. Move target can resize as needed.
       if ( this.paperNumber.numberValueProperty.value === 1 ) {
@@ -170,7 +170,7 @@ define( require => {
         self.splitTarget.visible = true;
 
         // Locate the boundary between the "move" input area and "split" input area.
-        var boundaryY = this.paperNumber.getBoundaryY();
+        const boundaryY = this.paperNumber.getBoundaryY();
 
         // Modify our move/split targets
         self.moveTarget.mouseArea = self.moveTarget.touchArea = self.moveTarget.rectBounds = fullBounds.withMinY( boundaryY );
@@ -221,7 +221,7 @@ define( require => {
         return Number.POSITIVE_INFINITY;
       }
       else {
-        var globalBounds = this.localToGlobalBounds( this.paperNumber.getLocalBounds() );
+        const globalBounds = this.localToGlobalBounds( this.paperNumber.getLocalBounds() );
         return Math.sqrt( globalBounds.minimumDistanceToPointSquared( globalPoint ) );
       }
     },
@@ -255,8 +255,8 @@ define( require => {
      * @returns {Array}
      */
     findAttachableNodes: function( allPaperNumberNodes ) {
-      var self = this;
-      var attachableNodeCandidates = allPaperNumberNodes.slice();
+      const self = this;
+      const attachableNodeCandidates = allPaperNumberNodes.slice();
       arrayRemove( attachableNodeCandidates, this );
 
       return attachableNodeCandidates.filter( function( candidateNode ) {

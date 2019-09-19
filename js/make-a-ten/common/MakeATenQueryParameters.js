@@ -11,7 +11,7 @@ define( require => {
   // modules
   const makeATen = require( 'MAKE_A_TEN/makeATen' );
 
-  var MakeATenQueryParameters = QueryStringMachine.getAll( {
+  const MakeATenQueryParameters = QueryStringMachine.getAll( {
 
     // Initializes the Explore screen with specific numbers, spaced horizontally,
     // e.g. ?exploreNumbers=10,51, where 0 indicates none.

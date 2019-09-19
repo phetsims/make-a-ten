@@ -20,8 +20,8 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // Constants
-  var X_OFFSET = 170;
-  var Y_OFFSET = 160;
+  const X_OFFSET = 170;
+  const Y_OFFSET = 160;
 
   /**
    * @constructor
@@ -59,10 +59,10 @@ define( require => {
      * @param {number} yOffset - How many buttons to the bottom of the vertical center should we be?
      */
     addLevelButton: function( level, xOffset, yOffset ) {
-      var fireCallback = this.model.startLevel.bind( this.model, level );
-      var center = MakeATenConstants.LAYOUT_BOUNDS.center.plus( new Vector2( xOffset * X_OFFSET, yOffset * Y_OFFSET ) );
+      const fireCallback = this.model.startLevel.bind( this.model, level );
+      const center = MakeATenConstants.LAYOUT_BOUNDS.center.plus( new Vector2( xOffset * X_OFFSET, yOffset * Y_OFFSET ) );
 
-      var button = new LevelSelectionButton( level.iconNode, level.scoreProperty, {
+      const button = new LevelSelectionButton( level.iconNode, level.scoreProperty, {
         listener: fireCallback,
         baseColor: level.color,
         scoreDisplayConstructor: ScoreDisplayNumberAndStar
