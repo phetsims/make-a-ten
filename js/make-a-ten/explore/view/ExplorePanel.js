@@ -15,6 +15,7 @@ define( require => {
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
   const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Panel = require( 'SUN/Panel' );
   const PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
@@ -31,7 +32,7 @@ define( require => {
    */
   function ExplorePanel( screenView, sumProperty, options ) {
 
-    options = _.extend( {
+    options = merge( {
       fill: 'rgb(208,222,239)',
       stroke: 'black',
       lineWidth: 1.5,

@@ -15,6 +15,7 @@ define( require => {
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
   const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const merge = require( 'PHET_CORE/merge' );
   const Path = require( 'SCENERY/nodes/Path' );
   const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -46,7 +47,7 @@ define( require => {
       spacing: 15
     } );
 
-    RectangularPushButton.call( this, _.extend( {
+    RectangularPushButton.call( this, merge( {
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 12,
       yMargin: 10,

@@ -14,6 +14,7 @@ define( require => {
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
   const makeATen = require( 'MAKE_A_TEN/makeATen' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberEntryControl = require( 'SCENERY_PHET/NumberEntryControl' );
   const Panel = require( 'SUN/Panel' );
   const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
@@ -40,7 +41,7 @@ define( require => {
       maxTextWidth: 100
     };
 
-    const submitNumberButton = new TextPushButton( submitString, _.extend( {
+    const submitNumberButton = new TextPushButton( submitString, merge( {
       touchAreaXDilation: 20,
       touchAreaYDilation: 7,
       listener: function() {
