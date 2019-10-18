@@ -13,6 +13,7 @@ define( require => {
   const arrayRemove = require( 'PHET_CORE/arrayRemove' );
   const BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
   const BaseNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/BaseNumberNode' );
+  const Bounds2 = require( 'DOT/Bounds2' );
   const DragListener = require( 'SCENERY/listeners/DragListener' );
   const Emitter = require( 'AXON/Emitter' );
   const inherit = require( 'PHET_CORE/inherit' );
@@ -60,7 +61,7 @@ define( require => {
 
     // @private {Rectangle} - Hit target for the "split" behavior, where one number would be pulled off from the
     //                        existing number.
-    this.splitTarget = new Rectangle( 0, 0, 100, 100, {
+    this.splitTarget = new Rectangle( 0, 0, 0, 0, {
       cursor: 'pointer'
     } );
     this.addChild( this.splitTarget );
@@ -165,6 +166,7 @@ define( require => {
       if ( this.paperNumber.numberValueProperty.value === 1 ) {
         self.splitTarget.visible = false;
         self.moveTarget.mouseArea = self.moveTarget.touchArea = self.moveTarget.rectBounds = fullBounds;
+        self.splitTarget.mouseArea = self.moveTarget.touchArea = self.moveTarget.rectBounds = new Bounds2( 0, 0, 0, 0 );
       }
       else {
         self.splitTarget.visible = true;
