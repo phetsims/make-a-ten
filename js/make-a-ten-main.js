@@ -25,8 +25,7 @@ define( require => {
       team: 'Ariel Paul, Kathy Perkins',
       graphicArts: 'Mariah Hermsmeyer, Amanda McGarry',
       qualityAssurance: 'Steele Dalton, Bryce Griebenow, Ethan Johnson, Ben Roberts'
-    },
-    supportsSound: true
+    }
   };
 
   SimLauncher.launch( function() {
