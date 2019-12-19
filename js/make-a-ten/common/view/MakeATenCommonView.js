@@ -91,7 +91,7 @@ define( require => {
      * Add a paper number to the model and immediately start dragging it with the provided event.
      * @public
      *
-     * @param {Event} event - The Scenery event that triggered this.
+     * @param {SceneryEvent} event - The Scenery event that triggered this.
      * @param {PaperNumber} paperNumber - The paper number to add and then drag
      */
     addAndDragNumber: function( event, paperNumber ) {
