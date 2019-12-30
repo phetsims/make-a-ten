@@ -24,7 +24,7 @@ define( require => {
     digitsInNumber: function( number ) {
       assert && assert( number % 1 === 0, 'Should be an integer' );
 
-      // Not using log10, since phet.dot.Util.log10( 1000 ) => 2.9999999999999996, which behaved badly with floor.
+      // Not using log10, since phet.dot.Utils.log10( 1000 ) => 2.9999999999999996, which behaved badly with floor.
       return ( '' + number ).length;
     },
 
