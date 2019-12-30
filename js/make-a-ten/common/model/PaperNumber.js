@@ -17,7 +17,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const makeATen = require( 'MAKE_A_TEN/makeATen' );
   const MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
-  const MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
+  const MakeATenUtils = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtils' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Vector2 = require( 'DOT/Vector2' );
   const Vector2Property = require( 'DOT/Vector2Property' );
@@ -105,7 +105,7 @@ define( require => {
     get digitLength() {
       assert && assert( this.numberValueProperty.value > 0 );
 
-      return MakeATenUtil.digitsInNumber( this.numberValueProperty.value );
+      return MakeATenUtils.digitsInNumber( this.numberValueProperty.value );
     },
 
     /**

@@ -14,7 +14,7 @@ define( require => {
   const BaseNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/BaseNumberNode' );
   const inherit = require( 'PHET_CORE/inherit' );
   const makeATen = require( 'MAKE_A_TEN/makeATen' );
-  const MakeATenUtil = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtil' );
+  const MakeATenUtils = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtils' );
 
   // Precompute bounds for each digit
   const DIGIT_BOUNDS = [ 0, 1, 2, 3 ].map( function( place ) {
@@ -34,7 +34,7 @@ define( require => {
     this.numberValue = digit * Math.pow( 10, place );
 
     // @public {number} - Number of digits in our numeric value
-    this.digitLength = MakeATenUtil.digitsInNumber( this.numberValue );
+    this.digitLength = MakeATenUtils.digitsInNumber( this.numberValue );
 
     // @public {number} - The place in the number (power of 10) that our digit would be multiplied by to sum, e.g.
     //                    place 2 with a digit 3 has a numberValue = 300, i.e. 3 * 10^2.

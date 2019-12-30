@@ -14,7 +14,7 @@ define( require => {
   const Node = require( 'SCENERY/nodes/Node' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
-  const MakeATenUtil = {
+  const MakeATenUtils = {
     /**
      * Common way of determining number of digits in a number.
      * @public
@@ -50,7 +50,7 @@ define( require => {
     }
   };
 
-  makeATen.register( 'MakeATenUtil', MakeATenUtil );
+  makeATen.register( 'MakeATenUtils', MakeATenUtils );
 
-  return MakeATenUtil;
+  return MakeATenUtils;
 } );
