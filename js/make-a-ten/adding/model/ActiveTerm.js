@@ -5,19 +5,15 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const makeATen = require( 'MAKE_A_TEN/makeATen' );
+import makeATen from '../../../makeATen.js';
 
-  const ActiveTerm = Object.freeze( {
-    LEFT: 'LEFT',
-    RIGHT: 'RIGHT',
-    NONE: 'NONE'
-  } );
-
-  makeATen.register( 'ActiveTerm', ActiveTerm );
-
-  return ActiveTerm;
+const ActiveTerm = Object.freeze( {
+  LEFT: 'LEFT',
+  RIGHT: 'RIGHT',
+  NONE: 'NONE'
 } );
+
+makeATen.register( 'ActiveTerm', ActiveTerm );
+
+export default ActiveTerm;

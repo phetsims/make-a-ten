@@ -7,45 +7,40 @@
  *
  * @author Sharfudeen Ashraf
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inherit = require( 'PHET_CORE/inherit' );
-  const makeATen = require( 'MAKE_A_TEN/makeATen' );
-  const MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
-  const MakeATenGameModel = require( 'MAKE_A_TEN/make-a-ten/game/model/MakeATenGameModel' );
-  const MakeATenGameScreenView = require( 'MAKE_A_TEN/make-a-ten/game/view/MakeATenGameScreenView' );
-  const MakeATenUtils = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtils' );
-  const Property = require( 'AXON/Property' );
-  const Screen = require( 'JOIST/Screen' );
+import Property from '../../../../axon/js/Property.js';
+import Screen from '../../../../joist/js/Screen.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import gameHomeScreenImage from '../../../images/game-home-screen_png.js';
+import gameNavBarImage from '../../../images/game-nav-bar_png.js';
+import makeATenStrings from '../../make-a-ten-strings.js';
+import makeATen from '../../makeATen.js';
+import MakeATenConstants from '../common/MakeATenConstants.js';
+import MakeATenUtils from '../common/MakeATenUtils.js';
+import MakeATenGameModel from './model/MakeATenGameModel.js';
+import MakeATenGameScreenView from './view/MakeATenGameScreenView.js';
 
-  // images
-  const gameHomeScreenImage = require( 'image!MAKE_A_TEN/game-home-screen.png' );
-  const gameNavBarImage = require( 'image!MAKE_A_TEN/game-nav-bar.png' );
+const screenGameString = makeATenStrings.screen.game;
 
-  // strings
-  const screenGameString = require( 'string!MAKE_A_TEN/screen.game' );
+/**
+ * @constructor
+ */
+function MakeATenGameScreen() {
 
-  /**
-   * @constructor
-   */
-  function MakeATenGameScreen() {
+  const options = {
+    name: screenGameString,
+    backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+    homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( gameHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+    navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( gameNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
+  };
 
-    const options = {
-      name: screenGameString,
-      backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( gameHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( gameNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
-    };
+  Screen.call( this,
+    function() { return new MakeATenGameModel(); },
+    function( model ) { return new MakeATenGameScreenView( model ); },
+    options );
+}
 
-    Screen.call( this,
-      function() { return new MakeATenGameModel(); },
-      function( model ) { return new MakeATenGameScreenView( model ); },
-      options );
-  }
+makeATen.register( 'MakeATenGameScreen', MakeATenGameScreen );
 
-  makeATen.register( 'MakeATenGameScreen', MakeATenGameScreen );
-
-  return inherit( Screen, MakeATenGameScreen );
-} );
+inherit( Screen, MakeATenGameScreen );
+export default MakeATenGameScreen;

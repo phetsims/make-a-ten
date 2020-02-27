@@ -5,135 +5,134 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
-  const BaseNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/BaseNumberNode' );
-  const DerivedProperty = require( 'AXON/DerivedProperty' );
-  const HBox = require( 'SCENERY/nodes/HBox' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const makeATen = require( 'MAKE_A_TEN/makeATen' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Node = require( 'SCENERY/nodes/Node' );
-  const Panel = require( 'SUN/Panel' );
-  const PaperNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/PaperNumber' );
-  const Vector2 = require( 'DOT/Vector2' );
+import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
+import Vector2 from '../../../../../dot/js/Vector2.js';
+import inherit from '../../../../../phet-core/js/inherit.js';
+import merge from '../../../../../phet-core/js/merge.js';
+import HBox from '../../../../../scenery/js/nodes/HBox.js';
+import Node from '../../../../../scenery/js/nodes/Node.js';
+import Panel from '../../../../../sun/js/Panel.js';
+import makeATen from '../../../makeATen.js';
+import BaseNumber from '../../common/model/BaseNumber.js';
+import PaperNumber from '../../common/model/PaperNumber.js';
+import BaseNumberNode from '../../common/view/BaseNumberNode.js';
 
-  const MAX_SUM = 9999;
+const MAX_SUM = 9999;
 
-  /**
-   * @constructor
-   *
-   * @param {MakeATenExploreScreenView} screenView
-   * @param {NumberProperty} sumProperty
-   * @param {Object} [options] - Passed to Node
-   */
-  function ExplorePanel( screenView, sumProperty, options ) {
+/**
+ * @constructor
+ *
+ * @param {MakeATenExploreScreenView} screenView
+ * @param {NumberProperty} sumProperty
+ * @param {Object} [options] - Passed to Node
+ */
+function ExplorePanel( screenView, sumProperty, options ) {
 
-    options = merge( {
-      fill: 'rgb(208,222,239)',
-      stroke: 'black',
-      lineWidth: 1.5,
-      xMargin: 30,
-      yMargin: 5,
-      resize: false
-    }, options );
+  options = merge( {
+    fill: 'rgb(208,222,239)',
+    stroke: 'black',
+    lineWidth: 1.5,
+    xMargin: 30,
+    yMargin: 5,
+    resize: false
+  }, options );
 
-    // @private {MakeATenExploreScreenView}
-    this.screenView = screenView;
+  // @private {MakeATenExploreScreenView}
+  this.screenView = screenView;
 
-    function createTarget( place ) {
-      const numberValue = Math.pow( 10, place );
-      const node = new Node( {
-        cursor: 'pointer',
-        // empirically determined stacking
-        children: [ new Vector2( -8, -8 ), new Vector2( 0, 0 ) ].map( function( offset ) {
-          const paperNode = new BaseNumberNode( new BaseNumber( 1, place ), 1 );
-          paperNode.scale( 0.64, 0.55 );
-          paperNode.translation = offset;
-          return paperNode;
-        } )
-      } );
-      node.touchArea = node.localBounds.dilatedX( 15 ).dilatedY( 5 );
+  function createTarget( place ) {
+    const numberValue = Math.pow( 10, place );
+    const node = new Node( {
+      cursor: 'pointer',
+      // empirically determined stacking
+      children: [ new Vector2( -8, -8 ), new Vector2( 0, 0 ) ].map( function( offset ) {
+        const paperNode = new BaseNumberNode( new BaseNumber( 1, place ), 1 );
+        paperNode.scale( 0.64, 0.55 );
+        paperNode.translation = offset;
+        return paperNode;
+      } )
+    } );
+    node.touchArea = node.localBounds.dilatedX( 15 ).dilatedY( 5 );
 
-      // We need to be disabled if adding this number would increase the sum past the maximum sum.
-      new DerivedProperty( [ sumProperty ], function( sum ) {
-        return sum + numberValue <= MAX_SUM;
-      } ).linkAttribute( node, 'visible' );
+    // We need to be disabled if adding this number would increase the sum past the maximum sum.
+    new DerivedProperty( [ sumProperty ], function( sum ) {
+      return sum + numberValue <= MAX_SUM;
+    } ).linkAttribute( node, 'visible' );
 
-      node.addInputListener( {
-        down: function( event ) {
-          if ( !event.canStartPress() ) { return; }
+    node.addInputListener( {
+      down: function( event ) {
+        if ( !event.canStartPress() ) { return; }
 
-          // We want this relative to the screen view, so it is guaranteed to be the proper view coordinates.
-          const viewPosition = screenView.globalToLocalPoint( event.pointer.point );
-          const paperNumber = new PaperNumber( numberValue, new Vector2( 0, 0 ) );
+        // We want this relative to the screen view, so it is guaranteed to be the proper view coordinates.
+        const viewPosition = screenView.globalToLocalPoint( event.pointer.point );
+        const paperNumber = new PaperNumber( numberValue, new Vector2( 0, 0 ) );
 
-          // Once we have the number's bounds, we set the position so that our pointer is in the middle of the drag target.
-          paperNumber.setDestination( viewPosition.minus( paperNumber.getDragTargetOffset() ), false );
+        // Once we have the number's bounds, we set the position so that our pointer is in the middle of the drag target.
+        paperNumber.setDestination( viewPosition.minus( paperNumber.getDragTargetOffset() ), false );
 
-          // Create and start dragging the new paper number node
-          screenView.addAndDragNumber( event, paperNumber );
-        }
-      } );
-
-      return node;
-    }
-
-    // @private {Node}
-    this.hundredTarget = createTarget( 2 );
-
-    // @private {Node}
-    this.tenTarget = createTarget( 1 );
-
-    // @private {Node}
-    this.oneTarget = createTarget( 0 );
-
-    const box = new HBox( {
-      children: [
-        this.hundredTarget,
-        this.tenTarget,
-        this.oneTarget
-      ],
-      spacing: 30
+        // Create and start dragging the new paper number node
+        screenView.addAndDragNumber( event, paperNumber );
+      }
     } );
 
-    Panel.call( this, box, options );
+    return node;
   }
 
-  makeATen.register( 'ExplorePanel', ExplorePanel );
+  // @private {Node}
+  this.hundredTarget = createTarget( 2 );
 
-  return inherit( Panel, ExplorePanel, {
-    /**
-     * Given a specified number of digits for a paper number, return the view coordinates of the closest matching
-     * target, so that it can animate back to this location.
-     * @public
-     *
-     * @param {number} digits
-     * @returns {Vector2}
-     */
-    getOriginLocation: function( digits ) {
-      let target;
-      switch ( digits ) {
-        case 1:
-          target = this.oneTarget; break;
-        case 2:
-          target = this.tenTarget; break;
-        case 3:
-          target = this.hundredTarget; break;
-        default:
-          // Probably something big, no better place to send it
-          target = this.hundredTarget;
-      }
+  // @private {Node}
+  this.tenTarget = createTarget( 1 );
 
-      // Trail to screenView, not including the screenView
-      let trail = this.screenView.getUniqueLeafTrailTo( target );
-      trail = trail.slice( 1, trail.length );
+  // @private {Node}
+  this.oneTarget = createTarget( 0 );
 
-      // Transformed to view coordinates
-      return trail.localToGlobalPoint( target.localBounds.center );
-    }
+  const box = new HBox( {
+    children: [
+      this.hundredTarget,
+      this.tenTarget,
+      this.oneTarget
+    ],
+    spacing: 30
   } );
+
+  Panel.call( this, box, options );
+}
+
+makeATen.register( 'ExplorePanel', ExplorePanel );
+
+export default inherit( Panel, ExplorePanel, {
+  /**
+   * Given a specified number of digits for a paper number, return the view coordinates of the closest matching
+   * target, so that it can animate back to this location.
+   * @public
+   *
+   * @param {number} digits
+   * @returns {Vector2}
+   */
+  getOriginLocation: function( digits ) {
+    let target;
+    switch( digits ) {
+      case 1:
+        target = this.oneTarget;
+        break;
+      case 2:
+        target = this.tenTarget;
+        break;
+      case 3:
+        target = this.hundredTarget;
+        break;
+      default:
+        // Probably something big, no better place to send it
+        target = this.hundredTarget;
+    }
+
+    // Trail to screenView, not including the screenView
+    let trail = this.screenView.getUniqueLeafTrailTo( target );
+    trail = trail.slice( 1, trail.length );
+
+    // Transformed to view coordinates
+    return trail.localToGlobalPoint( target.localBounds.center );
+  }
 } );

@@ -5,63 +5,60 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const BaseNumber = require( 'MAKE_A_TEN/make-a-ten/common/model/BaseNumber' );
-  const BaseNumberNode = require( 'MAKE_A_TEN/make-a-ten/common/view/BaseNumberNode' );
-  const FaceNode = require( 'SCENERY_PHET/FaceNode' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const makeATen = require( 'MAKE_A_TEN/makeATen' );
-  const RewardNode = require( 'VEGAS/RewardNode' );
-  const StarNode = require( 'SCENERY_PHET/StarNode' );
+import inherit from '../../../../../phet-core/js/inherit.js';
+import FaceNode from '../../../../../scenery-phet/js/FaceNode.js';
+import StarNode from '../../../../../scenery-phet/js/StarNode.js';
+import RewardNode from '../../../../../vegas/js/RewardNode.js';
+import makeATen from '../../../makeATen.js';
+import BaseNumber from '../../common/model/BaseNumber.js';
+import BaseNumberNode from '../../common/view/BaseNumberNode.js';
 
-  function createNumber( digit, place ) {
-    const node = new BaseNumberNode( new BaseNumber( digit, place ), 1 );
-    node.scale( 0.5 );
-    return node;
-  }
+function createNumber( digit, place ) {
+  const node = new BaseNumberNode( new BaseNumber( digit, place ), 1 );
+  node.scale( 0.5 );
+  return node;
+}
 
-  /**
-   * @constructor
-   */
-  function MakeATenRewardNode() {
-    RewardNode.call( this, {
-      nodes: RewardNode.createRandomNodes( [
-        new StarNode(),
-        new StarNode(),
-        new StarNode(),
-        new StarNode(),
-        new StarNode(),
-        new StarNode(),
-        new StarNode(),
-        new FaceNode( 40, { headStroke: 'black' } ),
-        new FaceNode( 40, { headStroke: 'black' } ),
-        new FaceNode( 40, { headStroke: 'black' } ),
-        new FaceNode( 40, { headStroke: 'black' } ),
-        new FaceNode( 40, { headStroke: 'black' } ),
-        new FaceNode( 40, { headStroke: 'black' } ),
-        new FaceNode( 40, { headStroke: 'black' } ),
-        createNumber( 1, 0 ),
-        createNumber( 2, 0 ),
-        createNumber( 3, 0 ),
-        createNumber( 4, 0 ),
-        createNumber( 5, 0 ),
-        createNumber( 6, 0 ),
-        createNumber( 7, 0 ),
-        createNumber( 8, 0 ),
-        createNumber( 9, 0 ),
-        createNumber( 1, 1 ),
-        createNumber( 1, 1 ),
-        createNumber( 1, 1 ),
-        createNumber( 1, 1 ),
-        createNumber( 1, 1 )
-      ], 150 )
-    } );
-  }
+/**
+ * @constructor
+ */
+function MakeATenRewardNode() {
+  RewardNode.call( this, {
+    nodes: RewardNode.createRandomNodes( [
+      new StarNode(),
+      new StarNode(),
+      new StarNode(),
+      new StarNode(),
+      new StarNode(),
+      new StarNode(),
+      new StarNode(),
+      new FaceNode( 40, { headStroke: 'black' } ),
+      new FaceNode( 40, { headStroke: 'black' } ),
+      new FaceNode( 40, { headStroke: 'black' } ),
+      new FaceNode( 40, { headStroke: 'black' } ),
+      new FaceNode( 40, { headStroke: 'black' } ),
+      new FaceNode( 40, { headStroke: 'black' } ),
+      new FaceNode( 40, { headStroke: 'black' } ),
+      createNumber( 1, 0 ),
+      createNumber( 2, 0 ),
+      createNumber( 3, 0 ),
+      createNumber( 4, 0 ),
+      createNumber( 5, 0 ),
+      createNumber( 6, 0 ),
+      createNumber( 7, 0 ),
+      createNumber( 8, 0 ),
+      createNumber( 9, 0 ),
+      createNumber( 1, 1 ),
+      createNumber( 1, 1 ),
+      createNumber( 1, 1 ),
+      createNumber( 1, 1 ),
+      createNumber( 1, 1 )
+    ], 150 )
+  } );
+}
 
-  makeATen.register( 'MakeATenRewardNode', MakeATenRewardNode );
+makeATen.register( 'MakeATenRewardNode', MakeATenRewardNode );
 
-  return inherit( RewardNode, MakeATenRewardNode );
-} );
+inherit( RewardNode, MakeATenRewardNode );
+export default MakeATenRewardNode;

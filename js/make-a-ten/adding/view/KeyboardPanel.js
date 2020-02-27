@@ -8,81 +8,76 @@
  * @author John Blanco
  * @author Andrey Zelenkov (MLearner)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inherit = require( 'PHET_CORE/inherit' );
-  const makeATen = require( 'MAKE_A_TEN/makeATen' );
-  const merge = require( 'PHET_CORE/merge' );
-  const NumberEntryControl = require( 'SCENERY_PHET/NumberEntryControl' );
-  const Panel = require( 'SUN/Panel' );
-  const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const TextPushButton = require( 'SUN/buttons/TextPushButton' );
-  const VBox = require( 'SCENERY/nodes/VBox' );
+import inherit from '../../../../../phet-core/js/inherit.js';
+import merge from '../../../../../phet-core/js/merge.js';
+import NumberEntryControl from '../../../../../scenery-phet/js/NumberEntryControl.js';
+import PhetColorScheme from '../../../../../scenery-phet/js/PhetColorScheme.js';
+import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
+import VBox from '../../../../../scenery/js/nodes/VBox.js';
+import TextPushButton from '../../../../../sun/js/buttons/TextPushButton.js';
+import Panel from '../../../../../sun/js/Panel.js';
+import makeATenStrings from '../../../make-a-ten-strings.js';
+import makeATen from '../../../makeATen.js';
 
-  // strings
-  const submitString = require( 'string!MAKE_A_TEN/submit' );
+const submitString = makeATenStrings.submit;
 
-  /**
-   * @param {Function} onSubmit - function( numberEntryValue: {number} ), called when the submit button is pressed.
-   * @constructor
-   */
-  function KeyboardPanel( onSubmit, maxDigits ) {
+/**
+ * @param {Function} onSubmit - function( numberEntryValue: {number} ), called when the submit button is pressed.
+ * @constructor
+ */
+function KeyboardPanel( onSubmit, maxDigits ) {
 
-    const self = this;
-    this.numberEntryControl = new NumberEntryControl( { maxDigits: maxDigits, readoutFont: new PhetFont( 25 ) } );
+  const self = this;
+  this.numberEntryControl = new NumberEntryControl( { maxDigits: maxDigits, readoutFont: new PhetFont( 25 ) } );
 
-    const buttonOptions = {
-      font: new PhetFont( 18 ),
-      baseColor: PhetColorScheme.BUTTON_YELLOW,
-      cornerRadius: 4,
-      maxTextWidth: 100
-    };
+  const buttonOptions = {
+    font: new PhetFont( 18 ),
+    baseColor: PhetColorScheme.BUTTON_YELLOW,
+    cornerRadius: 4,
+    maxTextWidth: 100
+  };
 
-    const submitNumberButton = new TextPushButton( submitString, merge( {
-      touchAreaXDilation: 20,
-      touchAreaYDilation: 7,
-      listener: function() {
-        //The number entry panel uses string to show digits, cast it to number
-        onSubmit( self.numberEntryControl.getValue() );
-      }
-    }, buttonOptions ) );
-
-
-    const numberControlGroup = new VBox( {
-      children: [ this.numberEntryControl, submitNumberButton ],
-      spacing: 12
-    } );
-
-    Panel.call( this, numberControlGroup, {
-      xMargin: 15,
-      yMargin: 10,
-      fill: 'lightgray',
-      stroke: 'black',
-      lineWidth: 1,
-      scale: 1.3,
-      resize: false,
-      backgroundPickable: true
-    } );
-  }
-
-  makeATen.register( 'KeyboardPanel', KeyboardPanel );
-
-  return inherit( Panel, KeyboardPanel, {
-    /**
-     * Sets the readout value of the keypad
-     * @public
-     *
-     * @param {number} value
-     */
-    setValue: function( value ) {
-      assert && assert( typeof value === 'number' );
-
-      this.numberEntryControl.setValue( value );
+  const submitNumberButton = new TextPushButton( submitString, merge( {
+    touchAreaXDilation: 20,
+    touchAreaYDilation: 7,
+    listener: function() {
+      //The number entry panel uses string to show digits, cast it to number
+      onSubmit( self.numberEntryControl.getValue() );
     }
+  }, buttonOptions ) );
 
+
+  const numberControlGroup = new VBox( {
+    children: [ this.numberEntryControl, submitNumberButton ],
+    spacing: 12
   } );
+
+  Panel.call( this, numberControlGroup, {
+    xMargin: 15,
+    yMargin: 10,
+    fill: 'lightgray',
+    stroke: 'black',
+    lineWidth: 1,
+    scale: 1.3,
+    resize: false,
+    backgroundPickable: true
+  } );
+}
+
+makeATen.register( 'KeyboardPanel', KeyboardPanel );
+
+export default inherit( Panel, KeyboardPanel, {
+  /**
+   * Sets the readout value of the keypad
+   * @public
+   *
+   * @param {number} value
+   */
+  setValue: function( value ) {
+    assert && assert( typeof value === 'number' );
+
+    this.numberEntryControl.setValue( value );
+  }
 
 } );

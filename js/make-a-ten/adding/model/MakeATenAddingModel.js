@@ -5,47 +5,43 @@
  *
  * @author Sharfudeen Ashraf
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const AdditionTerms = require( 'MAKE_A_TEN/make-a-ten/common/model/AdditionTerms' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const makeATen = require( 'MAKE_A_TEN/makeATen' );
-  const MakeATenCommonModel = require( 'MAKE_A_TEN/make-a-ten/common/model/MakeATenCommonModel' );
+import inherit from '../../../../../phet-core/js/inherit.js';
+import makeATen from '../../../makeATen.js';
+import AdditionTerms from '../../common/model/AdditionTerms.js';
+import MakeATenCommonModel from '../../common/model/MakeATenCommonModel.js';
+
+/**
+ * @constructor
+ */
+function MakeATenAddingModel() {
+  // @public {AdditionTerms}
+  this.additionTerms = new AdditionTerms();
+
+  MakeATenCommonModel.call( this );
+}
+
+makeATen.register( 'MakeATenAddingModel', MakeATenAddingModel );
+
+export default inherit( MakeATenCommonModel, MakeATenAddingModel, {
+  /**
+   * Clears the play area and places paper numbers corresponding to the additionTerms.
+   * @public
+   */
+  setupTerms: function() {
+    this.removeAllPaperNumbers();
+    this.addMultipleNumbers( [
+      this.additionTerms.leftTermProperty.value,
+      this.additionTerms.rightTermProperty.value
+    ] );
+  },
 
   /**
-   * @constructor
+   * @override
    */
-  function MakeATenAddingModel() {
-    // @public {AdditionTerms}
-    this.additionTerms = new AdditionTerms();
+  reset: function() {
+    MakeATenCommonModel.prototype.reset.call( this );
 
-    MakeATenCommonModel.call( this );
+    this.additionTerms.reset();
   }
-
-  makeATen.register( 'MakeATenAddingModel', MakeATenAddingModel );
-
-  return inherit( MakeATenCommonModel, MakeATenAddingModel, {
-    /**
-     * Clears the play area and places paper numbers corresponding to the additionTerms.
-     * @public
-     */
-    setupTerms: function() {
-      this.removeAllPaperNumbers();
-      this.addMultipleNumbers( [
-        this.additionTerms.leftTermProperty.value,
-        this.additionTerms.rightTermProperty.value
-      ] );
-    },
-
-    /**
-     * @override
-     */
-    reset: function() {
-      MakeATenCommonModel.prototype.reset.call( this );
-
-      this.additionTerms.reset();
-    }
-  } );
 } );

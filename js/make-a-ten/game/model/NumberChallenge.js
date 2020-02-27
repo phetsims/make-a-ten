@@ -6,31 +6,28 @@
  *
  * @author Sharfudeen Ashraf
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inherit = require( 'PHET_CORE/inherit' );
-  const makeATen = require( 'MAKE_A_TEN/makeATen' );
+import inherit from '../../../../../phet-core/js/inherit.js';
+import makeATen from '../../../makeATen.js';
 
-  /**
-   * @constructor
-   *
-   * @param {number} leftTerm
-   * @param {number} rightTerm
-   */
-  function NumberChallenge( leftTerm, rightTerm ) {
-    // @public {number} - The left-hand term for addition
-    this.leftTerm = leftTerm;
+/**
+ * @constructor
+ *
+ * @param {number} leftTerm
+ * @param {number} rightTerm
+ */
+function NumberChallenge( leftTerm, rightTerm ) {
+  // @public {number} - The left-hand term for addition
+  this.leftTerm = leftTerm;
 
-    // @public {number} - The right-hand term for addition
-    this.rightTerm = rightTerm;
+  // @public {number} - The right-hand term for addition
+  this.rightTerm = rightTerm;
 
-    // This object is immutable
-    Object.freeze( this );
-  }
+  // This object is immutable
+  Object.freeze( this );
+}
 
-  makeATen.register( 'NumberChallenge', NumberChallenge );
+makeATen.register( 'NumberChallenge', NumberChallenge );
 
-  return inherit( Object, NumberChallenge );
-} );
+inherit( Object, NumberChallenge );
+export default NumberChallenge;

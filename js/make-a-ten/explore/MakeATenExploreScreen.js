@@ -6,45 +6,40 @@
  *
  * @author Sharfudeen Ashraf
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inherit = require( 'PHET_CORE/inherit' );
-  const makeATen = require( 'MAKE_A_TEN/makeATen' );
-  const MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
-  const MakeATenExploreModel = require( 'MAKE_A_TEN/make-a-ten/explore/model/MakeATenExploreModel' );
-  const MakeATenExploreScreenView = require( 'MAKE_A_TEN/make-a-ten/explore/view/MakeATenExploreScreenView' );
-  const MakeATenUtils = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtils' );
-  const Property = require( 'AXON/Property' );
-  const Screen = require( 'JOIST/Screen' );
+import Property from '../../../../axon/js/Property.js';
+import Screen from '../../../../joist/js/Screen.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import exploreHomeScreenImage from '../../../images/explore-home-screen_png.js';
+import exploreNavBarImage from '../../../images/explore-nav-bar_png.js';
+import makeATenStrings from '../../make-a-ten-strings.js';
+import makeATen from '../../makeATen.js';
+import MakeATenConstants from '../common/MakeATenConstants.js';
+import MakeATenUtils from '../common/MakeATenUtils.js';
+import MakeATenExploreModel from './model/MakeATenExploreModel.js';
+import MakeATenExploreScreenView from './view/MakeATenExploreScreenView.js';
 
-  // images
-  const exploreHomeScreenImage = require( 'image!MAKE_A_TEN/explore-home-screen.png' );
-  const exploreNavBarImage = require( 'image!MAKE_A_TEN/explore-nav-bar.png' );
+const screenExploreString = makeATenStrings.screen.explore;
 
-  // strings
-  const screenExploreString = require( 'string!MAKE_A_TEN/screen.explore' );
+/**
+ * @constructor
+ */
+function MakeATenExploreScreen() {
 
-  /**
-   * @constructor
-   */
-  function MakeATenExploreScreen() {
+  const options = {
+    name: screenExploreString,
+    backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+    homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( exploreHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+    navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( exploreNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
+  };
 
-    const options = {
-      name: screenExploreString,
-      backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( exploreHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( exploreNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
-    };
+  Screen.call( this,
+    function() { return new MakeATenExploreModel(); },
+    function( model ) { return new MakeATenExploreScreenView( model ); },
+    options );
+}
 
-    Screen.call( this,
-      function() { return new MakeATenExploreModel(); },
-      function( model ) { return new MakeATenExploreScreenView( model ); },
-      options );
-  }
+makeATen.register( 'MakeATenExploreScreen', MakeATenExploreScreen );
 
-  makeATen.register( 'MakeATenExploreScreen', MakeATenExploreScreen );
-
-  return inherit( Screen, MakeATenExploreScreen );
-} );
+inherit( Screen, MakeATenExploreScreen );
+export default MakeATenExploreScreen;

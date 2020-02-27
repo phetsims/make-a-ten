@@ -6,45 +6,40 @@
  *
  * @author Sharfudeen Ashraf
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inherit = require( 'PHET_CORE/inherit' );
-  const makeATen = require( 'MAKE_A_TEN/makeATen' );
-  const MakeATenAddingModel = require( 'MAKE_A_TEN/make-a-ten/adding/model/MakeATenAddingModel' );
-  const MakeATenAddingScreenView = require( 'MAKE_A_TEN/make-a-ten/adding/view/MakeATenAddingScreenView' );
-  const MakeATenConstants = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenConstants' );
-  const MakeATenUtils = require( 'MAKE_A_TEN/make-a-ten/common/MakeATenUtils' );
-  const Property = require( 'AXON/Property' );
-  const Screen = require( 'JOIST/Screen' );
+import Property from '../../../../axon/js/Property.js';
+import Screen from '../../../../joist/js/Screen.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import addingHomeScreenImage from '../../../images/adding-home-screen_png.js';
+import addingNavBarImage from '../../../images/adding-nav-bar_png.js';
+import makeATenStrings from '../../make-a-ten-strings.js';
+import makeATen from '../../makeATen.js';
+import MakeATenConstants from '../common/MakeATenConstants.js';
+import MakeATenUtils from '../common/MakeATenUtils.js';
+import MakeATenAddingModel from './model/MakeATenAddingModel.js';
+import MakeATenAddingScreenView from './view/MakeATenAddingScreenView.js';
 
-  // images
-  const addingHomeScreenImage = require( 'image!MAKE_A_TEN/adding-home-screen.png' );
-  const addingNavBarImage = require( 'image!MAKE_A_TEN/adding-nav-bar.png' );
+const screenAddingString = makeATenStrings.screen.adding;
 
-  // strings
-  const screenAddingString = require( 'string!MAKE_A_TEN/screen.adding' );
+/**
+ * @constructor
+ */
+function MakeATenAddingScreen() {
 
-  /**
-   * @constructor
-   */
-  function MakeATenAddingScreen() {
+  const options = {
+    name: screenAddingString,
+    backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+    homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( addingHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+    navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( addingNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
+  };
 
-    const options = {
-      name: screenAddingString,
-      backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( addingHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( addingNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
-    };
+  Screen.call( this,
+    function() { return new MakeATenAddingModel(); },
+    function( model ) { return new MakeATenAddingScreenView( model ); },
+    options );
+}
 
-    Screen.call( this,
-      function() { return new MakeATenAddingModel(); },
-      function( model ) { return new MakeATenAddingScreenView( model ); },
-      options );
-  }
+makeATen.register( 'MakeATenAddingScreen', MakeATenAddingScreen );
 
-  makeATen.register( 'MakeATenAddingScreen', MakeATenAddingScreen );
-
-  return inherit( Screen, MakeATenAddingScreen );
-} );
+inherit( Screen, MakeATenAddingScreen );
+export default MakeATenAddingScreen;

@@ -5,31 +5,27 @@
  *
  * @author Sharfudeen Ashraf
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const MakeATenAddingScreen = require( 'MAKE_A_TEN/make-a-ten/adding/MakeATenAddingScreen' );
-  const MakeATenExploreScreen = require( 'MAKE_A_TEN/make-a-ten/explore/MakeATenExploreScreen' );
-  const MakeATenGameScreen = require( 'MAKE_A_TEN/make-a-ten/game/MakeATenGameScreen' );
-  const Sim = require( 'JOIST/Sim' );
-  const SimLauncher = require( 'JOIST/SimLauncher' );
+import Sim from '../../joist/js/Sim.js';
+import SimLauncher from '../../joist/js/SimLauncher.js';
+import makeATenStrings from './make-a-ten-strings.js';
+import MakeATenAddingScreen from './make-a-ten/adding/MakeATenAddingScreen.js';
+import MakeATenExploreScreen from './make-a-ten/explore/MakeATenExploreScreen.js';
+import MakeATenGameScreen from './make-a-ten/game/MakeATenGameScreen.js';
 
-  // strings
-  const makeATenTitleString = require( 'string!MAKE_A_TEN/make-a-ten.title' );
+const makeATenTitleString = makeATenStrings[ 'make-a-ten' ].title;
 
-  const simOptions = {
-    credits: {
-      leadDesign: 'Beth Stade, Amanda McGarry',
-      softwareDevelopment: 'Jonathan Olson, Sharfudeen Ashraf',
-      team: 'Ariel Paul, Kathy Perkins',
-      graphicArts: 'Mariah Hermsmeyer, Amanda McGarry',
-      qualityAssurance: 'Steele Dalton, Bryce Griebenow, Ethan Johnson, Ben Roberts'
-    }
-  };
+const simOptions = {
+  credits: {
+    leadDesign: 'Beth Stade, Amanda McGarry',
+    softwareDevelopment: 'Jonathan Olson, Sharfudeen Ashraf',
+    team: 'Ariel Paul, Kathy Perkins',
+    graphicArts: 'Mariah Hermsmeyer, Amanda McGarry',
+    qualityAssurance: 'Steele Dalton, Bryce Griebenow, Ethan Johnson, Ben Roberts'
+  }
+};
 
-  SimLauncher.launch( function() {
-    const sim = new Sim( makeATenTitleString, [ new MakeATenExploreScreen(), new MakeATenAddingScreen(), new MakeATenGameScreen() ], simOptions );
-    sim.start();
-  } );
+SimLauncher.launch( function() {
+  const sim = new Sim( makeATenTitleString, [ new MakeATenExploreScreen(), new MakeATenAddingScreen(), new MakeATenGameScreen() ], simOptions );
+  sim.start();
 } );

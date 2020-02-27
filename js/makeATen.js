@@ -3,11 +3,7 @@
 /**
  * Creates the namespace for this simulation.
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const Namespace = require( 'PHET_CORE/Namespace' );
+import Namespace from '../../phet-core/js/Namespace.js';
 
-  return new Namespace( 'makeATen' );
-} );
+export default new Namespace( 'makeATen' );
