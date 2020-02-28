@@ -1,4 +1,4 @@
-// Copyright 2015-2019, University of Colorado Boulder
+// Copyright 2015-2020, University of Colorado Boulder
 
 /**
  * Displays a partial addition formula (or fragments), like "7 + 2 =", where parts can be filled in, and layout

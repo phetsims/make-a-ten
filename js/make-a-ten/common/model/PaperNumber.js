@@ -1,4 +1,4 @@
-// Copyright 2015-2019, University of Colorado Boulder
+// Copyright 2015-2020, University of Colorado Boulder
 
 /**
  * Represents a number ranging from 1 to 9999, that the user can interact with. Contains multiple "base numbers"
