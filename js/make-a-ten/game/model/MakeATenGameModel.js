@@ -19,7 +19,7 @@ import levelIcon6 from '../../../../images/level-6_png.js';
 import levelIcon7 from '../../../../images/level-7_png.js';
 import levelIcon8 from '../../../../images/level-8_png.js';
 import levelIcon9 from '../../../../images/level-9_png.js';
-import makeATenStrings from '../../../make-a-ten-strings.js';
+import makeATenStrings from '../../../makeATenStrings.js';
 import makeATen from '../../../makeATen.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
 import MakeATenCommonModel from '../../common/model/MakeATenCommonModel.js';

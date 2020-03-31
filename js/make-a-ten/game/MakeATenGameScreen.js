@@ -13,7 +13,7 @@ import Screen from '../../../../joist/js/Screen.js';
 import inherit from '../../../../phet-core/js/inherit.js';
 import gameHomeScreenImage from '../../../images/game-home-screen_png.js';
 import gameNavBarImage from '../../../images/game-nav-bar_png.js';
-import makeATenStrings from '../../make-a-ten-strings.js';
+import makeATenStrings from '../../makeATenStrings.js';
 import makeATen from '../../makeATen.js';
 import MakeATenConstants from '../common/MakeATenConstants.js';
 import MakeATenUtils from '../common/MakeATenUtils.js';

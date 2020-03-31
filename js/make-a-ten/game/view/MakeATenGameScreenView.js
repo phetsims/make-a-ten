@@ -23,7 +23,7 @@ import TransitionNode from '../../../../../twixt/js/TransitionNode.js';
 import GameAudioPlayer from '../../../../../vegas/js/GameAudioPlayer.js';
 import InfiniteStatusBar from '../../../../../vegas/js/InfiniteStatusBar.js';
 import RewardDialog from '../../../../../vegas/js/RewardDialog.js';
-import makeATenStrings from '../../../make-a-ten-strings.js';
+import makeATenStrings from '../../../makeATenStrings.js';
 import makeATen from '../../../makeATen.js';
 import AdditionTermsNode from '../../common/view/AdditionTermsNode.js';
 import MakeATenCommonView from '../../common/view/MakeATenCommonView.js';

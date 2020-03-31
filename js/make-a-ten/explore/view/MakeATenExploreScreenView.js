@@ -15,7 +15,7 @@ import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import HBox from '../../../../../scenery/js/nodes/HBox.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import Checkbox from '../../../../../sun/js/Checkbox.js';
-import makeATenStrings from '../../../make-a-ten-strings.js';
+import makeATenStrings from '../../../makeATenStrings.js';
 import makeATen from '../../../makeATen.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import PaperNumber from '../../common/model/PaperNumber.js';

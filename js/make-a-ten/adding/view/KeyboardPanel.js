@@ -17,7 +17,7 @@ import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import VBox from '../../../../../scenery/js/nodes/VBox.js';
 import TextPushButton from '../../../../../sun/js/buttons/TextPushButton.js';
 import Panel from '../../../../../sun/js/Panel.js';
-import makeATenStrings from '../../../make-a-ten-strings.js';
+import makeATenStrings from '../../../makeATenStrings.js';
 import makeATen from '../../../makeATen.js';
 
 const submitString = makeATenStrings.submit;

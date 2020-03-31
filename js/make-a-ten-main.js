@@ -8,7 +8,7 @@
 
 import Sim from '../../joist/js/Sim.js';
 import SimLauncher from '../../joist/js/SimLauncher.js';
-import makeATenStrings from './make-a-ten-strings.js';
+import makeATenStrings from './makeATenStrings.js';
 import MakeATenAddingScreen from './make-a-ten/adding/MakeATenAddingScreen.js';
 import MakeATenExploreScreen from './make-a-ten/explore/MakeATenExploreScreen.js';
 import MakeATenGameScreen from './make-a-ten/game/MakeATenGameScreen.js';

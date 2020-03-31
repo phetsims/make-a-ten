@@ -13,7 +13,7 @@ import Node from '../../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../../scenery/js/nodes/VBox.js';
 import Dialog from '../../../../../sun/js/Dialog.js';
-import makeATenStrings from '../../../make-a-ten-strings.js';
+import makeATenStrings from '../../../makeATenStrings.js';
 import makeATen from '../../../makeATen.js';
 
 // Template for inserting the level number
