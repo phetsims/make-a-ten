@@ -1,5 +1,5 @@
 /* eslint-disable */
-var mipmaps = [
+const mipmaps = [
   {
     "width": 173,
     "height": 315,
@@ -26,14 +26,14 @@ var mipmaps = [
     "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAUCAYAAABbLMdoAAAAAklEQVR4AewaftIAAADlSURBVIXBMSuEARgA4Mfb6dBdipQyYmAxYDFgYZHyA/wBl0HdKP/gBoNB2RhvtmFjkFGkblGmS1cWdTe5+tSdu+87zzOECqbwjAZGMIsiipjHAt5yOETe/yZzuEUBLbTwjSa+UEMZM3jMYUe2NYyjjlIY7BgFVFEP2VaxiXeUtYVsRxjFFZraQrpF7OEVJ36FdCWM4VqXkG4bDVR0Cf1KmMMD6rqEfvsSVT3CX1tYxgsu9Qh/HWAY51KEjmls4ANnUoSOMiZwL0PoWEcLFzKExAqWUMOdDCGxizxuDBASn3jCqQF+AGMwKWlqPOtsAAAAAElFTkSuQmCC"
   }
 ];
-mipmaps.forEach( function( mipmap ) {
+mipmaps.forEach( mipmap => {
   mipmap.img = new Image();
   window.phetImages.push( mipmap.img ); // make sure it's loaded before the sim launches
   mipmap.img.src = mipmap.url; // trigger the loading of the image for its level
   mipmap.canvas = document.createElement( 'canvas' );
   mipmap.canvas.width = mipmap.width;
   mipmap.canvas.height = mipmap.height;
-  var context = mipmap.canvas.getContext( '2d' );
+  const context = mipmap.canvas.getContext( '2d' );
   mipmap.updateCanvas = function() {
     if ( mipmap.img.complete && ( typeof mipmap.img.naturalWidth === 'undefined' || mipmap.img.naturalWidth > 0 ) ) {
       context.drawImage( mipmap.img, 0, 0 );
