@@ -67,7 +67,7 @@ function KeyboardPanel( onSubmit, maxDigits ) {
 
 makeATen.register( 'KeyboardPanel', KeyboardPanel );
 
-export default inherit( Panel, KeyboardPanel, {
+inherit( Panel, KeyboardPanel, {
   /**
    * Sets the readout value of the keypad
    * @public
@@ -81,3 +81,5 @@ export default inherit( Panel, KeyboardPanel, {
   }
 
 } );
+
+export default KeyboardPanel;

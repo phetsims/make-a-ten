@@ -28,7 +28,7 @@ function AdditionTerms() {
 
 makeATen.register( 'AdditionTerms', AdditionTerms );
 
-export default inherit( Object, AdditionTerms, {
+inherit( Object, AdditionTerms, {
   /**
    * Returns whether both of the terms have non-zero values (and are not being edited).
    * @public
@@ -49,3 +49,5 @@ export default inherit( Object, AdditionTerms, {
     this.activeTermProperty.reset();
   }
 } );
+
+export default AdditionTerms;

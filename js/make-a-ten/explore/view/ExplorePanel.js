@@ -102,7 +102,7 @@ function ExplorePanel( screenView, sumProperty, options ) {
 
 makeATen.register( 'ExplorePanel', ExplorePanel );
 
-export default inherit( Panel, ExplorePanel, {
+inherit( Panel, ExplorePanel, {
   /**
    * Given a specified number of digits for a paper number, return the view coordinates of the closest matching
    * target, so that it can animate back to this location.
@@ -136,3 +136,5 @@ export default inherit( Panel, ExplorePanel, {
     return trail.localToGlobalPoint( target.localBounds.center );
   }
 } );
+
+export default ExplorePanel;

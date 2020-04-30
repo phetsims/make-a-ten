@@ -43,7 +43,7 @@ function MakeATenExploreModel() {
 
 makeATen.register( 'MakeATenExploreModel', MakeATenExploreModel );
 
-export default inherit( MakeATenCommonModel, MakeATenExploreModel, {
+inherit( MakeATenCommonModel, MakeATenExploreModel, {
   /**
    * @override
    */
@@ -99,3 +99,5 @@ export default inherit( MakeATenCommonModel, MakeATenExploreModel, {
     this.addInitialNumbers();
   }
 } );
+
+export default MakeATenExploreModel;

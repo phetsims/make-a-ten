@@ -192,7 +192,7 @@ function MakeATenGameScreenView( model ) {
 
 makeATen.register( 'MakeATenGameScreenView', MakeATenGameScreenView );
 
-export default inherit( MakeATenCommonView, MakeATenGameScreenView, {
+inherit( MakeATenCommonView, MakeATenGameScreenView, {
   /**
    * @override
    */
@@ -268,3 +268,5 @@ export default inherit( MakeATenCommonView, MakeATenGameScreenView, {
     return this.gameStatusBar.height;
   }
 } );
+
+export default MakeATenGameScreenView;

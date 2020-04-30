@@ -78,7 +78,7 @@ function SplitCueNode( cue ) {
 
 makeATen.register( 'SplitCueNode', SplitCueNode );
 
-export default inherit( Node, SplitCueNode, {
+inherit( Node, SplitCueNode, {
   /**
    * Updates the position of the cue.
    * @private
@@ -109,3 +109,5 @@ export default inherit( Node, SplitCueNode, {
     }
   }
 } );
+
+export default SplitCueNode;

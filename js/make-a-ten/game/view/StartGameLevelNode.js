@@ -46,7 +46,7 @@ function StartGameLevelNode( model ) {
 
 makeATen.register( 'StartGameLevelNode', StartGameLevelNode );
 
-export default inherit( Node, StartGameLevelNode, {
+inherit( Node, StartGameLevelNode, {
   /**
    * Adds a level button at a specified x/y offset (in relation to the center, in button offsets)
    * @private
@@ -69,3 +69,5 @@ export default inherit( Node, StartGameLevelNode, {
     this.addChild( button );
   }
 } );
+
+export default StartGameLevelNode;

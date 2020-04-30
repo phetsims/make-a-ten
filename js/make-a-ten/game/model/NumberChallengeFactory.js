@@ -79,7 +79,7 @@ function NumberChallengeFactory() {
 
 makeATen.register( 'NumberChallengeFactory', NumberChallengeFactory );
 
-export default inherit( Object, NumberChallengeFactory, {
+inherit( Object, NumberChallengeFactory, {
   /**
    * Creates a random challenge for a specific level.
    * @public
@@ -203,3 +203,5 @@ export default inherit( Object, NumberChallengeFactory, {
     return challenges;
   }
 } );
+
+export default NumberChallengeFactory;

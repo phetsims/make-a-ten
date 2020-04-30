@@ -83,7 +83,7 @@ function MakeATenCommonView( model ) {
 
 makeATen.register( 'MakeATenCommonView', MakeATenCommonView );
 
-export default inherit( ScreenView, MakeATenCommonView, {
+inherit( ScreenView, MakeATenCommonView, {
   /**
    * Add a paper number to the model and immediately start dragging it with the provided event.
    * @public
@@ -236,3 +236,5 @@ export default inherit( ScreenView, MakeATenCommonView, {
     // Meant to be overridden
   }
 } );
+
+export default MakeATenCommonView;

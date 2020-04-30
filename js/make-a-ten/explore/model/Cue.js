@@ -43,7 +43,7 @@ function Cue() {
 
 makeATen.register( 'Cue', Cue );
 
-export default inherit( Object, Cue, {
+inherit( Object, Cue, {
   /**
    * Step the cue (handle opacity if fading).
    * @public
@@ -135,3 +135,5 @@ export default inherit( Object, Cue, {
     this.paperNumberProperty.value = null;
   }
 } );
+
+export default Cue;

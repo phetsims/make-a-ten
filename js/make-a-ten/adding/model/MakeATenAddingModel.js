@@ -23,7 +23,7 @@ function MakeATenAddingModel() {
 
 makeATen.register( 'MakeATenAddingModel', MakeATenAddingModel );
 
-export default inherit( MakeATenCommonModel, MakeATenAddingModel, {
+inherit( MakeATenCommonModel, MakeATenAddingModel, {
   /**
    * Clears the play area and places paper numbers corresponding to the additionTerms.
    * @public
@@ -45,3 +45,5 @@ export default inherit( MakeATenCommonModel, MakeATenAddingModel, {
     this.additionTerms.reset();
   }
 } );
+
+export default MakeATenAddingModel;

@@ -62,7 +62,7 @@ function PaperNumber( numberValue, initialPosition ) {
 
 makeATen.register( 'PaperNumber', PaperNumber );
 
-export default inherit( Object, PaperNumber, {
+inherit( Object, PaperNumber, {
   /**
    * Animates the number towards its destination.
    * @public
@@ -276,3 +276,5 @@ export default inherit( Object, PaperNumber, {
     return unitX * unitX + 2 * unitY * unitY < 1;
   }
 } );
+
+export default PaperNumber;

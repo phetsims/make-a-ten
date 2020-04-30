@@ -23,7 +23,7 @@ function MakeATenCommonModel() {
 
 makeATen.register( 'MakeATenCommonModel', MakeATenCommonModel );
 
-export default inherit( Object, MakeATenCommonModel, {
+inherit( Object, MakeATenCommonModel, {
   /**
    * Steps the model forward by a unit of time.
    *
@@ -155,3 +155,5 @@ export default inherit( Object, MakeATenCommonModel, {
     this.removeAllPaperNumbers();
   }
 } );
+
+export default MakeATenCommonModel;

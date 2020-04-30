@@ -19,7 +19,7 @@ function ArithmeticRules() {
 
 makeATen.register( 'ArithmeticRules', ArithmeticRules );
 
-export default inherit( Object, ArithmeticRules, {}, {
+inherit( Object, ArithmeticRules, {}, {
   /**
    * Whether the two numbers can be added together.
    * @public
@@ -89,3 +89,5 @@ export default inherit( Object, ArithmeticRules, {}, {
     return amountToRemove;
   }
 } );
+
+export default ArithmeticRules;

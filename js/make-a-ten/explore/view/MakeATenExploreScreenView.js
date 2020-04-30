@@ -99,7 +99,7 @@ function MakeATenExploreScreenView( model ) {
 
 makeATen.register( 'MakeATenExploreScreenView', MakeATenExploreScreenView );
 
-export default inherit( MakeATenCommonView, MakeATenExploreScreenView, {
+inherit( MakeATenCommonView, MakeATenExploreScreenView, {
   /**
    * @override
    */
@@ -251,3 +251,5 @@ export default inherit( MakeATenCommonView, MakeATenExploreScreenView, {
     this.hideSumProperty.reset();
   }
 } );
+
+export default MakeATenExploreScreenView;

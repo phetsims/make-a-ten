@@ -107,7 +107,7 @@ function MakeATenGameModel() {
 
 makeATen.register( 'MakeATenGameModel', MakeATenGameModel );
 
-export default inherit( MakeATenCommonModel, MakeATenGameModel, {
+inherit( MakeATenCommonModel, MakeATenGameModel, {
   /**
    * Starts a new challenge with the level specified
    * @public
@@ -183,3 +183,5 @@ export default inherit( MakeATenCommonModel, MakeATenGameModel, {
     }
   }
 } );
+
+export default MakeATenGameModel;
