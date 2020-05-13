@@ -111,7 +111,7 @@ inherit( Panel, ExplorePanel, {
    * @param {number} digits
    * @returns {Vector2}
    */
-  getOriginPosition: function(digits ) {
+  getOriginPosition: function( digits ) {
     let target;
     switch( digits ) {
       case 1:

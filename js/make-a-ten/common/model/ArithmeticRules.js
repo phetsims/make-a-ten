@@ -48,7 +48,7 @@ inherit( Object, ArithmeticRules, {}, {
    * - If our number is 102, and our pulledPlace is 2 (mouse at the 1), it will pull 100 off.
    *
    * @param {number} numberValue - Numeric value that could potentially be pulled apart.
-   * @param {number} pulledPlace - Position in number where the user dragged. 0 is the 1s place, 1 is the 10s place, 2
+   * @param {number} pulledPlace - Index in number where the user dragged. 0 is the 1s place, 1 is the 10s place, 2
    *                 is the 100s place, and 3 is the 1000s place.
    * @returns {number} - How much to remove from numberValue (0 indicates can't be pulled off)
    */
