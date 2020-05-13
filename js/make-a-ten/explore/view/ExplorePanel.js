@@ -105,13 +105,13 @@ makeATen.register( 'ExplorePanel', ExplorePanel );
 inherit( Panel, ExplorePanel, {
   /**
    * Given a specified number of digits for a paper number, return the view coordinates of the closest matching
-   * target, so that it can animate back to this location.
+   * target, so that it can animate back to this position.
    * @public
    *
    * @param {number} digits
    * @returns {Vector2}
    */
-  getOriginLocation: function( digits ) {
+  getOriginPosition: function(digits ) {
     let target;
     switch( digits ) {
       case 1:

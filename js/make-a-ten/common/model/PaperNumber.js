@@ -46,7 +46,7 @@ function PaperNumber( numberValue, initialPosition ) {
   // @public {Vector2} - Destination is used for animation, and should be set through accessor methods only.
   this.destination = initialPosition.copy(); // @private
 
-  // @public {boolean} - Whether this element is animating from one location to another, do not set externally.
+  // @public {boolean} - Whether this element is animating from one position to another, do not set externally.
   this.animating = false;
 
   // @public {Array.<BaseNumber>} - Represents the non-zero place values in this number. 1034 will have three place
@@ -237,7 +237,7 @@ inherit( Object, PaperNumber, {
 
     const result = [];
 
-    // Divide by 10 each loop, using the remainder and place location to create the place numbers.
+    // Divide by 10 each loop, using the remainder and place index to create the place numbers.
     let remainder = number;
     let place = 0;
     while ( remainder ) {
