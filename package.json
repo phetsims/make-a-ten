@@ -7,7 +7,7 @@
     "url": "https://github.com/phetsims/make-a-ten.git"
   },
   "devDependencies": {
-    "grunt": "~1.0.0"
+    "grunt": "~1.1.0"
   },
   "phet": {
     "requirejsNamespace": "MAKE_A_TEN",
