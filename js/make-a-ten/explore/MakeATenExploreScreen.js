@@ -9,37 +9,31 @@
 
 import Property from '../../../../axon/js/Property.js';
 import Screen from '../../../../joist/js/Screen.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import exploreHomeScreenImage from '../../../images/explore-home-screen_png.js';
 import exploreNavBarImage from '../../../images/explore-nav-bar_png.js';
-import makeATenStrings from '../../makeATenStrings.js';
 import makeATen from '../../makeATen.js';
+import makeATenStrings from '../../makeATenStrings.js';
 import MakeATenConstants from '../common/MakeATenConstants.js';
 import MakeATenUtils from '../common/MakeATenUtils.js';
 import MakeATenExploreModel from './model/MakeATenExploreModel.js';
 import MakeATenExploreScreenView from './view/MakeATenExploreScreenView.js';
 
-const screenExploreString = makeATenStrings.screen.explore;
+class MakeATenExploreScreen extends Screen {
+  constructor() {
 
-/**
- * @constructor
- */
-function MakeATenExploreScreen() {
+    const options = {
+      name: makeATenStrings.screen.explore,
+      backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( exploreHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( exploreNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
+    };
 
-  const options = {
-    name: screenExploreString,
-    backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-    homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( exploreHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-    navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( exploreNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
-  };
-
-  Screen.call( this,
-    function() { return new MakeATenExploreModel(); },
-    function( model ) { return new MakeATenExploreScreenView( model ); },
-    options );
+    super(
+      function() { return new MakeATenExploreModel(); },
+      function( model ) { return new MakeATenExploreScreenView( model ); },
+      options );
+  }
 }
 
 makeATen.register( 'MakeATenExploreScreen', MakeATenExploreScreen );
-
-inherit( Screen, MakeATenExploreScreen );
 export default MakeATenExploreScreen;

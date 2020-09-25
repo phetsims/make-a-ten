@@ -10,37 +10,31 @@
 
 import Property from '../../../../axon/js/Property.js';
 import Screen from '../../../../joist/js/Screen.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import gameHomeScreenImage from '../../../images/game-home-screen_png.js';
 import gameNavBarImage from '../../../images/game-nav-bar_png.js';
-import makeATenStrings from '../../makeATenStrings.js';
 import makeATen from '../../makeATen.js';
+import makeATenStrings from '../../makeATenStrings.js';
 import MakeATenConstants from '../common/MakeATenConstants.js';
 import MakeATenUtils from '../common/MakeATenUtils.js';
 import MakeATenGameModel from './model/MakeATenGameModel.js';
 import MakeATenGameScreenView from './view/MakeATenGameScreenView.js';
 
-const screenGameString = makeATenStrings.screen.game;
+class MakeATenGameScreen extends Screen {
+  constructor() {
 
-/**
- * @constructor
- */
-function MakeATenGameScreen() {
+    const options = {
+      name: makeATenStrings.screen.game,
+      backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( gameHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( gameNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
+    };
 
-  const options = {
-    name: screenGameString,
-    backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-    homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( gameHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-    navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( gameNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
-  };
-
-  Screen.call( this,
-    function() { return new MakeATenGameModel(); },
-    function( model ) { return new MakeATenGameScreenView( model ); },
-    options );
+    super(
+      function() { return new MakeATenGameModel(); },
+      function( model ) { return new MakeATenGameScreenView( model ); },
+      options );
+  }
 }
 
 makeATen.register( 'MakeATenGameScreen', MakeATenGameScreen );
-
-inherit( Screen, MakeATenGameScreen );
 export default MakeATenGameScreen;
