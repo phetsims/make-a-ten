@@ -8,7 +8,6 @@
  * @author Sam Reid
  */
 
-import inherit from '../../../../../phet-core/js/inherit.js';
 import merge from '../../../../../phet-core/js/merge.js';
 import ArrowShape from '../../../../../scenery-phet/js/ArrowShape.js';
 import PhetColorScheme from '../../../../../scenery-phet/js/PhetColorScheme.js';
@@ -22,37 +21,36 @@ import makeATen from '../../../makeATen.js';
 // constants
 const LABEL_FONT = new PhetFont( { size: 20, weight: 'bold' } );
 
-/**
- * @constructor
- *
- * @param {string} buttonText
- * @param {Object} [options]
- */
-function NextArrowButton( buttonText, options ) {
+class NextArrowButton extends RectangularPushButton {
 
-  const arrowShape = new ArrowShape( 0, 0, 28.5, 0, {
-    tailWidth: 2,
-    headWidth: 8,
-    headHeight: 8
-  } );
+  /**
+   * @param {string} buttonText
+   * @param {Object} [options]
+   */
+  constructor( buttonText, options ) {
 
-  const labelArrowBox = new HBox( {
-    children: [
-      new Text( buttonText, { font: LABEL_FONT, fill: 'black', maxWidth: 150 } ),
-      new Path( arrowShape, { fill: 'black' } )
-    ],
-    spacing: 15
-  } );
+    const arrowShape = new ArrowShape( 0, 0, 28.5, 0, {
+      tailWidth: 2,
+      headWidth: 8,
+      headHeight: 8
+    } );
 
-  RectangularPushButton.call( this, merge( {
-    baseColor: PhetColorScheme.BUTTON_YELLOW,
-    xMargin: 12,
-    yMargin: 10,
-    content: labelArrowBox
-  }, options ) );
+    const labelArrowBox = new HBox( {
+      children: [
+        new Text( buttonText, { font: LABEL_FONT, fill: 'black', maxWidth: 150 } ),
+        new Path( arrowShape, { fill: 'black' } )
+      ],
+      spacing: 15
+    } );
+
+    super( merge( {
+      baseColor: PhetColorScheme.BUTTON_YELLOW,
+      xMargin: 12,
+      yMargin: 10,
+      content: labelArrowBox
+    }, options ) );
+  }
 }
 
 makeATen.register( 'NextArrowButton', NextArrowButton );
-
-inherit( RectangularPushButton, NextArrowButton );
 export default NextArrowButton;
