@@ -17,7 +17,7 @@ import PaperNumber from './PaperNumber.js';
  * @constructor
  */
 function MakeATenCommonModel() {
-  // @public {ObservableArray.<PaperNumber>} - Numbers in play that can be interacted with.
+  // @public {ObservableArrayDef.<PaperNumber>} - Numbers in play that can be interacted with.
   this.paperNumbers = createObservableArray();
 }
 
