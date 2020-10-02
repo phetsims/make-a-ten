@@ -8,7 +8,6 @@
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import merge from '../../../../../phet-core/js/merge.js';
 import HBox from '../../../../../scenery/js/nodes/HBox.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
@@ -20,89 +19,76 @@ import BaseNumberNode from '../../common/view/BaseNumberNode.js';
 
 const MAX_SUM = 9999;
 
-/**
- * @constructor
- *
- * @param {MakeATenExploreScreenView} screenView
- * @param {NumberProperty} sumProperty
- * @param {Object} [options] - Passed to Node
- */
-function ExplorePanel( screenView, sumProperty, options ) {
+class ExplorePanel extends Panel {
+  /**
+   * @param {MakeATenExploreScreenView} screenView
+   * @param {NumberProperty} sumProperty
+   * @param {Object} [options] - Passed to Node
+   */
+  constructor( screenView, sumProperty, options ) {
 
-  options = merge( {
-    fill: 'rgb(208,222,239)',
-    stroke: 'black',
-    lineWidth: 1.5,
-    xMargin: 30,
-    yMargin: 5,
-    resize: false
-  }, options );
+    options = merge( {
+      fill: 'rgb(208,222,239)',
+      stroke: 'black',
+      lineWidth: 1.5,
+      xMargin: 30,
+      yMargin: 5,
+      resize: false
+    }, options );
 
-  // @private {MakeATenExploreScreenView}
-  this.screenView = screenView;
+    function createTarget( place ) {
+      const numberValue = Math.pow( 10, place );
+      const node = new Node( {
+        cursor: 'pointer',
+        // empirically determined stacking
+        children: [ new Vector2( -8, -8 ), new Vector2( 0, 0 ) ].map( function( offset ) {
+          const paperNode = new BaseNumberNode( new BaseNumber( 1, place ), 1 );
+          paperNode.scale( 0.64, 0.55 );
+          paperNode.translation = offset;
+          return paperNode;
+        } )
+      } );
+      node.touchArea = node.localBounds.dilatedX( 15 ).dilatedY( 5 );
 
-  function createTarget( place ) {
-    const numberValue = Math.pow( 10, place );
-    const node = new Node( {
-      cursor: 'pointer',
-      // empirically determined stacking
-      children: [ new Vector2( -8, -8 ), new Vector2( 0, 0 ) ].map( function( offset ) {
-        const paperNode = new BaseNumberNode( new BaseNumber( 1, place ), 1 );
-        paperNode.scale( 0.64, 0.55 );
-        paperNode.translation = offset;
-        return paperNode;
-      } )
+      // We need to be disabled if adding this number would increase the sum past the maximum sum.
+      new DerivedProperty( [ sumProperty ], function( sum ) {
+        return sum + numberValue <= MAX_SUM;
+      } ).linkAttribute( node, 'visible' );
+
+      node.addInputListener( {
+        down: function( event ) {
+          if ( !event.canStartPress() ) { return; }
+
+          // We want this relative to the screen view, so it is guaranteed to be the proper view coordinates.
+          const viewPosition = screenView.globalToLocalPoint( event.pointer.point );
+          const paperNumber = new PaperNumber( numberValue, new Vector2( 0, 0 ) );
+
+          // Once we have the number's bounds, we set the position so that our pointer is in the middle of the drag target.
+          paperNumber.setDestination( viewPosition.minus( paperNumber.getDragTargetOffset() ), false );
+
+          // Create and start dragging the new paper number node
+          screenView.addAndDragNumber( event, paperNumber );
+        }
+      } );
+
+      return node;
+    }
+
+    const hundredTarget = createTarget( 2 );
+    const tenTarget = createTarget( 1 );
+    const oneTarget = createTarget( 0 );
+
+    const box = new HBox( {
+      children: [ hundredTarget, tenTarget, oneTarget ],
+      spacing: 30
     } );
-    node.touchArea = node.localBounds.dilatedX( 15 ).dilatedY( 5 );
 
-    // We need to be disabled if adding this number would increase the sum past the maximum sum.
-    new DerivedProperty( [ sumProperty ], function( sum ) {
-      return sum + numberValue <= MAX_SUM;
-    } ).linkAttribute( node, 'visible' );
+    super( box, options );
 
-    node.addInputListener( {
-      down: function( event ) {
-        if ( !event.canStartPress() ) { return; }
-
-        // We want this relative to the screen view, so it is guaranteed to be the proper view coordinates.
-        const viewPosition = screenView.globalToLocalPoint( event.pointer.point );
-        const paperNumber = new PaperNumber( numberValue, new Vector2( 0, 0 ) );
-
-        // Once we have the number's bounds, we set the position so that our pointer is in the middle of the drag target.
-        paperNumber.setDestination( viewPosition.minus( paperNumber.getDragTargetOffset() ), false );
-
-        // Create and start dragging the new paper number node
-        screenView.addAndDragNumber( event, paperNumber );
-      }
-    } );
-
-    return node;
+    // @private {MakeATenExploreScreenView}
+    this.screenView = screenView;
   }
 
-  // @private {Node}
-  this.hundredTarget = createTarget( 2 );
-
-  // @private {Node}
-  this.tenTarget = createTarget( 1 );
-
-  // @private {Node}
-  this.oneTarget = createTarget( 0 );
-
-  const box = new HBox( {
-    children: [
-      this.hundredTarget,
-      this.tenTarget,
-      this.oneTarget
-    ],
-    spacing: 30
-  } );
-
-  Panel.call( this, box, options );
-}
-
-makeATen.register( 'ExplorePanel', ExplorePanel );
-
-inherit( Panel, ExplorePanel, {
   /**
    * Given a specified number of digits for a paper number, return the view coordinates of the closest matching
    * target, so that it can animate back to this position.
@@ -111,7 +97,7 @@ inherit( Panel, ExplorePanel, {
    * @param {number} digits
    * @returns {Vector2}
    */
-  getOriginPosition: function( digits ) {
+  getOriginPosition( digits ) {
     let target;
     switch( digits ) {
       case 1:
@@ -135,6 +121,7 @@ inherit( Panel, ExplorePanel, {
     // Transformed to view coordinates
     return trail.localToGlobalPoint( target.localBounds.center );
   }
-} );
+}
 
+makeATen.register( 'ExplorePanel', ExplorePanel );
 export default ExplorePanel;
