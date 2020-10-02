@@ -87,6 +87,9 @@ class ExplorePanel extends Panel {
 
     // @private {MakeATenExploreScreenView}
     this.screenView = screenView;
+    this.hundredTarget = hundredTarget;
+    this.tenTarget = tenTarget;
+    this.oneTarget = oneTarget;
   }
 
   /**
