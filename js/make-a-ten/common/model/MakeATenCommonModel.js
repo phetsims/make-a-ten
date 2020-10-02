@@ -6,7 +6,7 @@
  * @author Sharfudeen Ashraf
  */
 
-import ObservableArray from '../../../../../axon/js/ObservableArray.js';
+import createObservableArray from '../../../../../axon/js/createObservableArray.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import inherit from '../../../../../phet-core/js/inherit.js';
 import makeATen from '../../../makeATen.js';
@@ -18,7 +18,7 @@ import PaperNumber from './PaperNumber.js';
  */
 function MakeATenCommonModel() {
   // @public {ObservableArray.<PaperNumber>} - Numbers in play that can be interacted with.
-  this.paperNumbers = new ObservableArray();
+  this.paperNumbers = createObservableArray();
 }
 
 makeATen.register( 'MakeATenCommonModel', MakeATenCommonModel );
