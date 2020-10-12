@@ -9,14 +9,13 @@
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import HBox from '../../../../../scenery/js/nodes/HBox.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import Checkbox from '../../../../../sun/js/Checkbox.js';
-import makeATenStrings from '../../../makeATenStrings.js';
 import makeATen from '../../../makeATen.js';
+import makeATenStrings from '../../../makeATenStrings.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import PaperNumber from '../../common/model/PaperNumber.js';
 import MakeATenCommonView from '../../common/view/MakeATenCommonView.js';
@@ -28,83 +27,82 @@ const hideTotalString = makeATenStrings.hideTotal;
 // constants
 const EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
 
-/**
- * @param {MakeATenExploreModel} model
- * @constructor
- */
-function MakeATenExploreScreenView( model ) {
-  const self = this;
+class MakeATenExploreScreenView extends MakeATenCommonView {
 
-  // @private {Function} - Called with function( paperNumberNode ) on number splits
-  this.numberSplitListener = this.onNumberSplit.bind( this );
+  /**
+   * @param {MakeATenExploreModel} model
+   */
+  constructor( model ) {
 
-  // @private {Function} - Called with function( paperNumberNode ) when a number begins to be interacted with.
-  this.numberInteractionListener = this.onNumberInteractionStarted.bind( this );
+    super( model );
+    const self = this;
 
-  // @private {Function} - Called with function( paperNumber ) when a number finishes animation
-  this.numberAnimationFinishedListener = this.onNumberAnimationFinished.bind( this );
+    // @private {Function} - Called with function( paperNumberNode ) on number splits
+    this.numberSplitListener = this.onNumberSplit.bind( this );
 
-  // @private {Function} - Called with function( paperNumber ) when a number finishes being dragged
-  this.numberDragFinishedListener = this.onNumberDragFinished.bind( this );
+    // @private {Function} - Called with function( paperNumberNode ) when a number begins to be interacted with.
+    this.numberInteractionListener = this.onNumberInteractionStarted.bind( this );
 
-  MakeATenCommonView.call( this, model );
+    // @private {Function} - Called with function( paperNumber ) when a number finishes animation
+    this.numberAnimationFinishedListener = this.onNumberAnimationFinished.bind( this );
 
-  // @private {BooleanProperty} - Whether the total (sum) is hidden
-  this.hideSumProperty = new BooleanProperty( false );
+    // @private {Function} - Called with function( paperNumber ) when a number finishes being dragged
+    this.numberDragFinishedListener = this.onNumberDragFinished.bind( this );
 
-  const sumText = new Text( '0', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
-  model.sumProperty.linkAttribute( sumText, 'text' );
+    // @private {BooleanProperty} - Whether the total (sum) is hidden
+    this.hideSumProperty = new BooleanProperty( false );
 
-  // @private {HBox} - Displays the sum of our numbers and an equals sign, e.g. "256 ="
-  this.sumNode = new HBox( {
-    children: [
-      sumText,
-      new Text( MathSymbols.EQUAL_TO, { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } )
-    ], spacing: 15
-  } );
+    const sumText = new Text( '0', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
+    model.sumProperty.linkAttribute( sumText, 'text' );
 
-  this.addChild( this.sumNode );
+    // @private {HBox} - Displays the sum of our numbers and an equals sign, e.g. "256 ="
+    this.sumNode = new HBox( {
+      children: [
+        sumText,
+        new Text( MathSymbols.EQUAL_TO, { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } )
+      ], spacing: 15
+    } );
 
-  // @private {ExplorePanel} - Shows 100,10,1 that can be dragged.
-  this.explorePanel = new ExplorePanel( this, model.sumProperty );
-  this.addChild( this.explorePanel );
+    this.addChild( this.sumNode );
 
-  const hideSumText = new Text( hideTotalString, {
-    maxWidth: 150,
-    font: new PhetFont( {
-      size: 25,
-      weight: 'bold'
-    } ),
-    fill: 'black'
-  } );
+    // @private {ExplorePanel} - Shows 100,10,1 that can be dragged.
+    this.explorePanel = new ExplorePanel( this, model.sumProperty );
+    this.addChild( this.explorePanel );
 
-  // @private {Checkbox} - When checked, hides the sum in the upper-left
-  this.hideSumCheckbox = new Checkbox( hideSumText, this.hideSumProperty, {
-    spacing: 10,
-    boxWidth: 30
-  } );
-  this.hideSumCheckbox.touchArea = this.hideSumCheckbox.localBounds.dilatedXY( 10, 4 );
-  this.addChild( this.hideSumCheckbox );
+    const hideSumText = new Text( hideTotalString, {
+      maxWidth: 150,
+      font: new PhetFont( {
+        size: 25,
+        weight: 'bold'
+      } ),
+      fill: 'black'
+    } );
 
-  this.hideSumProperty.link( function( hideSum ) {
-    self.sumNode.visible = !hideSum;
-  } );
+    // @private {Checkbox} - When checked, hides the sum in the upper-left
+    this.hideSumCheckbox = new Checkbox( hideSumText, this.hideSumProperty, {
+      spacing: 10,
+      boxWidth: 30
+    } );
+    this.hideSumCheckbox.touchArea = this.hideSumCheckbox.localBounds.dilatedXY( 10, 4 );
+    this.addChild( this.hideSumCheckbox );
 
-  this.addChild( this.paperNumberLayerNode );
+    this.hideSumProperty.link( function( hideSum ) {
+      self.sumNode.visible = !hideSum;
+    } );
 
-  this.addChild( new SplitCueNode( model.splitCue ) );
+    this.addChild( this.paperNumberLayerNode );
 
-  this.layoutControls();
-}
+    this.addChild( new SplitCueNode( model.splitCue ) );
 
-makeATen.register( 'MakeATenExploreScreenView', MakeATenExploreScreenView );
+    this.layoutControls();
+  }
 
-inherit( MakeATenCommonView, MakeATenExploreScreenView, {
   /**
    * @override
+   * @protected
    */
-  layoutControls: function() {
-    MakeATenCommonView.prototype.layoutControls.call( this );
+  layoutControls() {
+    super.layoutControls();
 
     const visibleBounds = this.visibleBoundsProperty.value;
 
@@ -116,7 +114,7 @@ inherit( MakeATenCommonView, MakeATenExploreScreenView, {
 
     this.sumNode.left = visibleBounds.left + 30;
     this.sumNode.top = visibleBounds.top + 30;
-  },
+  }
 
   /**
    * Whether the paper number is predominantly over the explore panel (should be collected).
@@ -125,7 +123,7 @@ inherit( MakeATenCommonView, MakeATenExploreScreenView, {
    * @param {PaperNumber} paperNumber
    * @returns {boolean}
    */
-  isNumberInReturnZone: function( paperNumber ) {
+  isNumberInReturnZone( paperNumber ) {
     // Compute the local point on the number that would need to go into the return zone.
     // This point is a bit farther down than the exact center, as it was annoying to "miss" the return zone
     // slightly by being too high (while the mouse WAS in the return zone).
@@ -139,25 +137,27 @@ inherit( MakeATenCommonView, MakeATenExploreScreenView, {
     const paperCenter = paperNumber.positionProperty.value.plus( localReturnPoint );
 
     return panelBounds.containsPoint( paperCenter );
-  },
+  }
 
   /**
+   * @public
    * @override
    */
-  onPaperNumberAdded: function( paperNumber ) {
-    const paperNumberNode = MakeATenCommonView.prototype.onPaperNumberAdded.call( this, paperNumber );
+  onPaperNumberAdded( paperNumber ) {
+    const paperNumberNode = super.onPaperNumberAdded( paperNumber );
 
     // Add listeners
     paperNumberNode.splitEmitter.addListener( this.numberSplitListener );
     paperNumberNode.interactionStartedEmitter.addListener( this.numberInteractionListener );
     paperNumber.endAnimationEmitter.addListener( this.numberAnimationFinishedListener );
     paperNumber.endDragEmitter.addListener( this.numberDragFinishedListener );
-  },
+  }
 
   /**
+   * @public
    * @override
    */
-  onPaperNumberRemoved: function( paperNumber ) {
+  onPaperNumberRemoved( paperNumber ) {
     const paperNumberNode = this.findPaperNumberNode( paperNumber );
 
     // Remove listeners
@@ -171,8 +171,8 @@ inherit( MakeATenCommonView, MakeATenExploreScreenView, {
       this.model.splitCue.detach();
     }
 
-    MakeATenCommonView.prototype.onPaperNumberRemoved.call( this, paperNumber );
-  },
+    super.onPaperNumberRemoved( paperNumber );
+  }
 
   /**
    * Called when a paper number node is split.
@@ -180,9 +180,9 @@ inherit( MakeATenCommonView, MakeATenExploreScreenView, {
    *
    * @param {PaperNumberNode} paperNumberNode
    */
-  onNumberSplit: function( paperNumberNode ) {
+  onNumberSplit( paperNumberNode ) {
     this.model.splitCue.triggerFade();
-  },
+  }
 
   /**
    * Called when a paper number node starts being interacted with.
@@ -190,12 +190,12 @@ inherit( MakeATenCommonView, MakeATenExploreScreenView, {
    *
    * @param {PaperNumberNode} paperNumberNode
    */
-  onNumberInteractionStarted: function( paperNumberNode ) {
+  onNumberInteractionStarted( paperNumberNode ) {
     const paperNumber = paperNumberNode.paperNumber;
     if ( paperNumber.numberValueProperty.value > 1 ) {
       this.model.splitCue.attachToNumber( paperNumber );
     }
-  },
+  }
 
   /**
    * Called when a paper number has finished animating to its destination.
@@ -203,12 +203,12 @@ inherit( MakeATenCommonView, MakeATenExploreScreenView, {
    *
    * @param {PaperNumber} paperNumber
    */
-  onNumberAnimationFinished: function( paperNumber ) {
+  onNumberAnimationFinished( paperNumber ) {
     // If it animated to the return zone, it's probably split and meant to be returned.
     if ( this.isNumberInReturnZone( paperNumber ) ) {
       this.model.removePaperNumber( paperNumber );
     }
-  },
+  }
 
   /**
    * Called when a paper number has finished being dragged.
@@ -216,7 +216,7 @@ inherit( MakeATenCommonView, MakeATenExploreScreenView, {
    *
    * @param {PaperNumber} paperNumber
    */
-  onNumberDragFinished: function( paperNumber ) {
+  onNumberDragFinished( paperNumber ) {
     // Return it to the panel if it's been dropped in the panel.
     if ( this.isNumberInReturnZone( paperNumber ) ) {
       const baseNumbers = paperNumber.baseNumbers;
@@ -240,16 +240,17 @@ inherit( MakeATenCommonView, MakeATenExploreScreenView, {
       // Remove the original paper number (as we have added its components).
       this.model.removePaperNumber( paperNumber );
     }
-  },
+  }
 
   /**
    * @override
+   * @public
    */
-  reset: function() {
-    MakeATenCommonView.prototype.reset.call( this );
-
+  reset() {
+    super.reset();
     this.hideSumProperty.reset();
   }
-} );
+}
 
+makeATen.register( 'MakeATenExploreScreenView', MakeATenExploreScreenView );
 export default MakeATenExploreScreenView;

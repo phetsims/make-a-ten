@@ -9,7 +9,6 @@
  */
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import InfoButton from '../../../../../scenery-phet/js/buttons/InfoButton.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
@@ -23,8 +22,8 @@ import TransitionNode from '../../../../../twixt/js/TransitionNode.js';
 import GameAudioPlayer from '../../../../../vegas/js/GameAudioPlayer.js';
 import InfiniteStatusBar from '../../../../../vegas/js/InfiniteStatusBar.js';
 import RewardDialog from '../../../../../vegas/js/RewardDialog.js';
-import makeATenStrings from '../../../makeATenStrings.js';
 import makeATen from '../../../makeATen.js';
+import makeATenStrings from '../../../makeATenStrings.js';
 import AdditionTermsNode from '../../common/view/AdditionTermsNode.js';
 import MakeATenCommonView from '../../common/view/MakeATenCommonView.js';
 import GameState from '../model/GameState.js';
@@ -36,176 +35,173 @@ import StartGameLevelNode from './StartGameLevelNode.js';
 const nextString = makeATenStrings.next;
 const patternLevel0LevelNumberString = makeATenStrings.pattern.level[ '0levelNumber' ];
 
-/**
- * @constructor
- *
- * @param {MakeATenGameModel} model
- */
-function MakeATenGameScreenView( model ) {
-  MakeATenCommonView.call( this, model );
+class MakeATenGameScreenView extends MakeATenCommonView {
 
-  const self = this;
+  /**
+   * @param {MakeATenGameModel} model
+   */
+  constructor( model ) {
+    super( model );
 
-  // @private {Node} - The "left" half of the sliding layer, displayed first
-  this.levelSelectionLayer = new Node();
+    const self = this;
 
-  // @private {Node} - The "right" half of the sliding layer, will slide into view when the user selects a level
-  this.challengeLayer = new Node();
+    // @private {Node} - The "left" half of the sliding layer, displayed first
+    this.levelSelectionLayer = new Node();
 
-  const showingLeftProperty = new DerivedProperty( [ model.gameStateProperty ], function( gameState ) {
-    return gameState === GameState.CHOOSING_LEVEL;
-  } );
+    // @private {Node} - The "right" half of the sliding layer, will slide into view when the user selects a level
+    this.challengeLayer = new Node();
 
-  // @private {TransitionNode}
-  this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
-    content: this.levelSelectionLayer
-  } );
-  showingLeftProperty.lazyLink( function( isLeft ) {
-    if ( isLeft ) {
-      self.transitionNode.slideRightTo( self.levelSelectionLayer, {
-        duration: 0.4,
-        targetOptions: {
-          easing: Easing.QUADRATIC_IN_OUT
-        }
-      } );
-    }
-    else {
-      self.transitionNode.slideLeftTo( self.challengeLayer, {
-        duration: 0.4,
-        targetOptions: {
-          easing: Easing.QUADRATIC_IN_OUT
-        }
-      } );
-    }
-  } );
-  this.addChild( this.transitionNode );
+    const showingLeftProperty = new DerivedProperty( [ model.gameStateProperty ], function( gameState ) {
+      return gameState === GameState.CHOOSING_LEVEL;
+    } );
 
-  // @private {StartGameLevelNode} - Shows buttons that allow selecting the level to play
-  this.startGameLevelNode = new StartGameLevelNode( model );
-  this.levelSelectionLayer.addChild( this.startGameLevelNode );
-
-  // Move our resetAllButton onto our level-selection layer
-  this.resetAllButton.detach();
-  this.levelSelectionLayer.addChild( this.resetAllButton );
-
-  // info dialog, constructed lazily because Dialog requires sim bounds during construction
-  let dialog = null;
-
-  // @private {InfoButton} - Shows '?' in the corner that pops up the info dialog when clicked.
-  this.infoButton = new InfoButton( {
-    touchAreaXDilation: 7,
-    touchAreaYDilation: 7,
-    listener: function() {
-      if ( !dialog ) {
-        dialog = new InfoDialog( model.levels );
+    // @private {TransitionNode}
+    this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
+      content: this.levelSelectionLayer
+    } );
+    showingLeftProperty.lazyLink( function( isLeft ) {
+      if ( isLeft ) {
+        self.transitionNode.slideRightTo( self.levelSelectionLayer, {
+          duration: 0.4,
+          targetOptions: {
+            easing: Easing.QUADRATIC_IN_OUT
+          }
+        } );
       }
-      dialog.show();
-    },
-    scale: 0.7,
-    top: this.layoutBounds.top + 20,
-    right: this.layoutBounds.right - 20
-  } );
-  this.levelSelectionLayer.addChild( this.infoButton );
-
-  // The node that display "12 + 100 = "
-  const additionTermsNode = new AdditionTermsNode( model.additionTerms, false );
-  additionTermsNode.left = this.layoutBounds.left + 38;
-  additionTermsNode.top = this.layoutBounds.top + 75;
-  this.challengeLayer.addChild( additionTermsNode );
-
-  // @private {NextArrowButton} - Moves to the next challenge when clicked
-  this.nextChallengeButton = new NextArrowButton( nextString, {
-    listener: function() {
-      model.moveToNextChallenge();
-    },
-    top: this.layoutBounds.centerY,
-    right: this.layoutBounds.right - 20
-  } );
-  this.challengeLayer.addChild( this.nextChallengeButton );
-  model.gameStateProperty.link( function( gameState ) {
-    self.nextChallengeButton.visible = gameState === GameState.CORRECT_ANSWER;
-  } );
-
-  // Add the paper number layer from our supertype
-  this.challengeLayer.addChild( this.paperNumberLayerNode );
-
-  const levelNumberText = new Text( '', {
-    font: new PhetFont( { size: 18, weight: 'bold' } ),
-    pickable: false,
-    maxWidth: 120
-  } );
-  const levelDescriptionText = new Text( '', {
-    font: new PhetFont( 18 ),
-    pickable: false
-  } );
-  model.currentLevelProperty.link( function( level ) {
-    levelNumberText.text = StringUtils.format( patternLevel0LevelNumberString, '' + level.number );
-    levelDescriptionText.text = level.description;
-  } );
-  const statusMessageNode = new HBox( {
-    children: [ levelNumberText, levelDescriptionText ],
-    spacing: 30
-  } );
-
-  // @private {InfiniteStatusBar} - Status bar at the top of the screen
-  this.gameStatusBar = new InfiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, statusMessageNode, model.currentScoreProperty, {
-    floatToTop: true,
-    barFill: new DerivedProperty( [ model.currentLevelProperty ], _.property( 'color' ) ),
-    backButtonListener: model.moveToChoosingLevel.bind( model )
-  } );
-  this.challengeLayer.addChild( this.gameStatusBar );
-
-  // Hook up the audio player to the sound settings.
-  this.gameAudioPlayer = new GameAudioPlayer();
-
-  // Trigger initial layout
-  this.layoutControls();
-
-  // Hook up the update function for handling changes to game state.
-  model.gameStateProperty.link( this.onGameStateChange.bind( this ) );
-
-  // @private {RewardNode|null} - see showReward()
-  this.rewardNode = null;
-
-  // @private {function|null} - see showReward()
-  this.rewardNodeBoundsListener = null;
-
-  // @private {Rectangle}
-  this.rewardBarrier = Rectangle.bounds( this.visibleBoundsProperty.value, {
-    fill: 'rgba(128,128,128,0.4)'
-  } );
-  this.visibleBoundsProperty.linkAttribute( this.rewardBarrier, 'rectBounds' );
-  this.rewardBarrier.addInputListener( new ButtonListener( {
-    fire: function( event ) {
-      self.hideReward();
-    }
-  } ) );
-
-  model.levels.forEach( function( level ) {
-    level.scoreProperty.link( function( score ) {
-      if ( score === 10 ) {
-        self.showReward();
+      else {
+        self.transitionNode.slideLeftTo( self.challengeLayer, {
+          duration: 0.4,
+          targetOptions: {
+            easing: Easing.QUADRATIC_IN_OUT
+          }
+        } );
       }
     } );
-  } );
-}
+    this.addChild( this.transitionNode );
 
-makeATen.register( 'MakeATenGameScreenView', MakeATenGameScreenView );
+    // @private {StartGameLevelNode} - Shows buttons that allow selecting the level to play
+    this.startGameLevelNode = new StartGameLevelNode( model );
+    this.levelSelectionLayer.addChild( this.startGameLevelNode );
 
-inherit( MakeATenCommonView, MakeATenGameScreenView, {
+    // Move our resetAllButton onto our level-selection layer
+    this.resetAllButton.detach();
+    this.levelSelectionLayer.addChild( this.resetAllButton );
+
+    // info dialog, constructed lazily because Dialog requires sim bounds during construction
+    let dialog = null;
+
+    // @private {InfoButton} - Shows '?' in the corner that pops up the info dialog when clicked.
+    this.infoButton = new InfoButton( {
+      touchAreaXDilation: 7,
+      touchAreaYDilation: 7,
+      listener: function() {
+        if ( !dialog ) {
+          dialog = new InfoDialog( model.levels );
+        }
+        dialog.show();
+      },
+      scale: 0.7,
+      top: this.layoutBounds.top + 20,
+      right: this.layoutBounds.right - 20
+    } );
+    this.levelSelectionLayer.addChild( this.infoButton );
+
+    // The node that display "12 + 100 = "
+    const additionTermsNode = new AdditionTermsNode( model.additionTerms, false );
+    additionTermsNode.left = this.layoutBounds.left + 38;
+    additionTermsNode.top = this.layoutBounds.top + 75;
+    this.challengeLayer.addChild( additionTermsNode );
+
+    // @private {NextArrowButton} - Moves to the next challenge when clicked
+    this.nextChallengeButton = new NextArrowButton( nextString, {
+      listener: function() {
+        model.moveToNextChallenge();
+      },
+      top: this.layoutBounds.centerY,
+      right: this.layoutBounds.right - 20
+    } );
+    this.challengeLayer.addChild( this.nextChallengeButton );
+    model.gameStateProperty.link( function( gameState ) {
+      self.nextChallengeButton.visible = gameState === GameState.CORRECT_ANSWER;
+    } );
+
+    // Add the paper number layer from our supertype
+    this.challengeLayer.addChild( this.paperNumberLayerNode );
+
+    const levelNumberText = new Text( '', {
+      font: new PhetFont( { size: 18, weight: 'bold' } ),
+      pickable: false,
+      maxWidth: 120
+    } );
+    const levelDescriptionText = new Text( '', {
+      font: new PhetFont( 18 ),
+      pickable: false
+    } );
+    model.currentLevelProperty.link( function( level ) {
+      levelNumberText.text = StringUtils.format( patternLevel0LevelNumberString, '' + level.number );
+      levelDescriptionText.text = level.description;
+    } );
+    const statusMessageNode = new HBox( {
+      children: [ levelNumberText, levelDescriptionText ],
+      spacing: 30
+    } );
+
+    // @private {InfiniteStatusBar} - Status bar at the top of the screen
+    this.gameStatusBar = new InfiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, statusMessageNode, model.currentScoreProperty, {
+      floatToTop: true,
+      barFill: new DerivedProperty( [ model.currentLevelProperty ], _.property( 'color' ) ),
+      backButtonListener: model.moveToChoosingLevel.bind( model )
+    } );
+    this.challengeLayer.addChild( this.gameStatusBar );
+
+    // Hook up the audio player to the sound settings.
+    this.gameAudioPlayer = new GameAudioPlayer();
+
+    // Trigger initial layout
+    this.layoutControls();
+
+    // Hook up the update function for handling changes to game state.
+    model.gameStateProperty.link( this.onGameStateChange.bind( this ) );
+
+    // @private {RewardNode|null} - see showReward()
+    this.rewardNode = null;
+
+    // @private {function|null} - see showReward()
+    this.rewardNodeBoundsListener = null;
+
+    // @private {Rectangle}
+    this.rewardBarrier = Rectangle.bounds( this.visibleBoundsProperty.value, {
+      fill: 'rgba(128,128,128,0.4)'
+    } );
+    this.visibleBoundsProperty.linkAttribute( this.rewardBarrier, 'rectBounds' );
+    this.rewardBarrier.addInputListener( new ButtonListener( {
+      fire: function( event ) {
+        self.hideReward();
+      }
+    } ) );
+
+    model.levels.forEach( function( level ) {
+      level.scoreProperty.link( function( score ) {
+        if ( score === 10 ) {
+          self.showReward();
+        }
+      } );
+    } );
+  }
+
   /**
-   * @override
+   * @public
    */
-  step: function( dt ) {
+  step( dt ) {
     this.rewardNode && this.rewardNode.step( dt );
     this.transitionNode && this.transitionNode.step( dt );
-  },
+  }
 
   /**
    * Shows the reward node.
    * @private
    */
-  showReward: function() {
+  showReward() {
     const self = this;
 
     this.gameAudioPlayer.gameOverPerfectScore();
@@ -228,13 +224,13 @@ inherit( MakeATenCommonView, MakeATenGameScreenView, {
       }
     } );
     rewardDialog.show();
-  },
+  }
 
   /**
    * Hides the reward node.
    * @private
    */
-  hideReward: function() {
+  hideReward() {
     this.removeChild( this.rewardNode );
     this.removeChild( this.rewardBarrier );
     this.visibleBoundsProperty.unlink( this.rewardNodeBoundsListener );
@@ -242,7 +238,7 @@ inherit( MakeATenCommonView, MakeATenGameScreenView, {
     // fully release references
     this.rewardNode = null;
     this.rewardNodeBoundsListener = null;
-  },
+  }
 
   /**
    * When the game state changes, update the view with the appropriate buttons and readouts.
@@ -250,7 +246,7 @@ inherit( MakeATenCommonView, MakeATenGameScreenView, {
    *
    * @param {GameState} gameState
    */
-  onGameStateChange: function( gameState ) {
+  onGameStateChange( gameState ) {
     if ( gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) {
       this.model.setupChallenge( this.model.currentChallengeProperty.value );
     }
@@ -258,15 +254,17 @@ inherit( MakeATenCommonView, MakeATenGameScreenView, {
       this.model.incrementScore();
       this.gameAudioPlayer.correctAnswer();
     }
-  },
+  }
 
   /**
+   * @public
    * @override
    * @returns {number} - Amount in view coordinates to leave at the top of the screen.
    */
-  getTopBoundsOffset: function() {
+  getTopBoundsOffset() {
     return this.gameStatusBar.height;
   }
-} );
+}
 
+makeATen.register( 'MakeATenGameScreenView', MakeATenGameScreenView );
 export default MakeATenGameScreenView;
