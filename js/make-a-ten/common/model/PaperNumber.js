@@ -13,7 +13,6 @@ import NumberProperty from '../../../../../axon/js/NumberProperty.js';
 import Bounds2 from '../../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../../dot/js/Vector2Property.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import makeATen from '../../../makeATen.js';
 import MakeATenConstants from '../MakeATenConstants.js';
 import MakeATenUtils from '../MakeATenUtils.js';
@@ -22,54 +21,50 @@ import BaseNumber from './BaseNumber.js';
 // Incremented for PaperNumber IDs
 let nextPaperNumberId = 1;
 
-/**
- * @constructor
- *
- * @param {number} numberValue - Numeric value, e.g. 123
- * @param {Vector2} initialPosition
- */
-function PaperNumber( numberValue, initialPosition ) {
-  // @public {number} - IDs required for map-like lookup, see https://github.com/phetsims/make-a-ten/issues/199
-  this.id = nextPaperNumberId++;
+class PaperNumber {
+  /**
+   * @param {number} numberValue - Numeric value, e.g. 123
+   * @param {Vector2} initialPosition
+   */
+  constructor( numberValue, initialPosition ) {
+    // @public {number} - IDs required for map-like lookup, see https://github.com/phetsims/make-a-ten/issues/199
+    this.id = nextPaperNumberId++;
 
-  // @public {NumberProperty} - The number that this model represents, e.g. 324
-  this.numberValueProperty = new NumberProperty( numberValue );
+    // @public {NumberProperty} - The number that this model represents, e.g. 324
+    this.numberValueProperty = new NumberProperty( numberValue );
 
-  // @public Property that indicates where in model space the upper left corner of this shape is. In general, this
-  // should not be set directly outside of this type, and should be manipulated through the methods defined below.
-  this.positionProperty = new Vector2Property( initialPosition.copy() );
+    // @public Property that indicates where in model space the upper left corner of this shape is. In general, this
+    // should not be set directly outside of this type, and should be manipulated through the methods defined below.
+    this.positionProperty = new Vector2Property( initialPosition.copy() );
 
-  // @public {BooleanProperty} - Flag that tracks whether the user is dragging this number around. Should be set
-  //                             externally, generally by the view node.
-  this.userControlledProperty = new BooleanProperty( false );
+    // @public {BooleanProperty} - Flag that tracks whether the user is dragging this number around. Should be set
+    //                             externally, generally by the view node.
+    this.userControlledProperty = new BooleanProperty( false );
 
-  // @public {Vector2} - Destination is used for animation, and should be set through accessor methods only.
-  this.destination = initialPosition.copy(); // @private
+    // @public {Vector2} - Destination is used for animation, and should be set through accessor methods only.
+    this.destination = initialPosition.copy(); // @private
 
-  // @public {boolean} - Whether this element is animating from one position to another, do not set externally.
-  this.animating = false;
+    // @public {boolean} - Whether this element is animating from one position to another, do not set externally.
+    this.animating = false;
 
-  // @public {Array.<BaseNumber>} - Represents the non-zero place values in this number. 1034 will have three place
-  //                                values, 4, 30 and 1000, which when summed will equal our number.
-  this.baseNumbers = PaperNumber.getBaseNumbers( this.numberValueProperty.value );
+    // @public {Array.<BaseNumber>} - Represents the non-zero place values in this number. 1034 will have three place
+    //                                values, 4, 30 and 1000, which when summed will equal our number.
+    this.baseNumbers = PaperNumber.getBaseNumbers( this.numberValueProperty.value );
 
-  // @public {Emitter} - Fires when the user stops dragging a paper number.
-  this.endDragEmitter = new Emitter( { parameters: [ { valueType: PaperNumber } ] } );
+    // @public {Emitter} - Fires when the user stops dragging a paper number.
+    this.endDragEmitter = new Emitter( { parameters: [ { valueType: PaperNumber } ] } );
 
-  // @public {Emitter} - Fires when the animation towards our destination ends (we hit our destination).
-  this.endAnimationEmitter = new Emitter( { parameters: [ { valueType: PaperNumber } ] } );
-}
+    // @public {Emitter} - Fires when the animation towards our destination ends (we hit our destination).
+    this.endAnimationEmitter = new Emitter( { parameters: [ { valueType: PaperNumber } ] } );
+  }
 
-makeATen.register( 'PaperNumber', PaperNumber );
-
-inherit( Object, PaperNumber, {
   /**
    * Animates the number towards its destination.
    * @public
    *
    * @param {number} dt
    */
-  step: function( dt ) {
+  step( dt ) {
     if ( !this.userControlledProperty.value ) {
       const currentPosition = this.positionProperty.value;
       assert && assert( currentPosition.isFinite() );
@@ -91,7 +86,7 @@ inherit( Object, PaperNumber, {
         this.endAnimationEmitter.emit( this );
       }
     }
-  },
+  }
 
   /**
    * The number of digits in the number, including zeros, e.g. 1204 has 4 digits.
@@ -103,7 +98,7 @@ inherit( Object, PaperNumber, {
     assert && assert( this.numberValueProperty.value > 0 );
 
     return MakeATenUtils.digitsInNumber( this.numberValueProperty.value );
-  },
+  }
 
   /**
    * Returns the bounds of the paper number relative to the paper number's origin.
@@ -111,10 +106,10 @@ inherit( Object, PaperNumber, {
    *
    * @returns {Bounds2}
    */
-  getLocalBounds: function() {
+  getLocalBounds() {
     // Use the largest base number
     return this.baseNumbers[ this.baseNumbers.length - 1 ].bounds;
-  },
+  }
 
   /**
    * Locate the boundary between the "move" input area and "split" input area, in the number's local bounds.
@@ -122,11 +117,11 @@ inherit( Object, PaperNumber, {
    *
    * @returns {Bounds2}
    */
-  getBoundaryY: function() {
+  getBoundaryY() {
     const bounds = this.getLocalBounds();
     const moveToSplitRatio = MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION;
     return bounds.maxY * ( 1 - moveToSplitRatio ) + bounds.minY * moveToSplitRatio;
-  },
+  }
 
   /**
    * Returns the ideal spot to "drag" a number from (near the center of its move target) relative to its origin.
@@ -134,12 +129,12 @@ inherit( Object, PaperNumber, {
    *
    * @returns {Vector2}
    */
-  getDragTargetOffset: function() {
+  getDragTargetOffset() {
     const bounds = this.getLocalBounds();
 
     const ratio = MakeATenConstants.SPLIT_BOUNDARY_HEIGHT_PROPORTION / 2;
     return new Vector2( bounds.centerX, bounds.minY * ratio + bounds.maxY * ( 1 - ratio ) );
-  },
+  }
 
   /**
    * Changes the number that this paper number represents.
@@ -147,12 +142,12 @@ inherit( Object, PaperNumber, {
    *
    * @param {number} numberValue
    */
-  changeNumber: function( numberValue ) {
+  changeNumber( numberValue ) {
     assert && assert( typeof numberValue === 'number' );
 
     this.baseNumbers = PaperNumber.getBaseNumbers( numberValue );
     this.numberValueProperty.value = numberValue;
-  },
+  }
 
   /**
    * Sets the destination of the number. If animate is false, it also sets the position.
@@ -162,7 +157,7 @@ inherit( Object, PaperNumber, {
    * @param {boolean} animate - Whether to animate. If true, it will slide towards the destination. If false, it will
    *                            immediately set the position to be the same as the destination.
    */
-  setDestination: function( destination, animate ) {
+  setDestination( destination, animate ) {
     assert && assert( destination.isFinite() );
 
     this.destination = destination;
@@ -173,7 +168,7 @@ inherit( Object, PaperNumber, {
     else {
       this.positionProperty.value = destination;
     }
-  },
+  }
 
   /**
    * If our paper number is outside of the available view bounds, move in inside those bounds.
@@ -183,7 +178,7 @@ inherit( Object, PaperNumber, {
    * @param {Vector2} position
    * @param {boolean} [animate] - Indicates if the new constrained position should be directly set or animated
    */
-  setConstrainedDestination: function( viewBounds, newDestination, animate ) {
+  setConstrainedDestination( viewBounds, newDestination, animate ) {
     // Determine how our number's origin can be placed in the bounds
     const localBounds = this.getLocalBounds();
     const padding = 10;
@@ -192,7 +187,7 @@ inherit( Object, PaperNumber, {
       viewBounds.right - localBounds.right,
       viewBounds.bottom - localBounds.bottom ).eroded( padding );
     this.setDestination( originBounds.closestPointTo( newDestination ), animate );
-  },
+  }
 
   /**
    * Returns the lowest place number whose bounds include the position.
@@ -201,7 +196,7 @@ inherit( Object, PaperNumber, {
    * @param {Vector2} position - Position relative to this number's origin.
    * @returns {BaseNumber}
    */
-  getBaseNumberAt: function( position ) {
+  getBaseNumberAt( position ) {
     for ( var i = 0; i < this.baseNumbers.length; i++ ) {
       assert && assert( i === 0 || this.baseNumbers[ i ].place > this.baseNumbers[ i - 1 ].place,
         'Ensure that we start at lower places, required for this to work properly' );
@@ -224,7 +219,7 @@ inherit( Object, PaperNumber, {
     // Default the largest one.
     return this.baseNumbers[ this.baseNumbers.length - 1 ];
   }
-}, {
+
   /**
    * Given a number, returns an array of BaseNumbers that will represent the digit places.
    * @public
@@ -232,7 +227,7 @@ inherit( Object, PaperNumber, {
    * @param {number} number - The number we want to break into digit places.
    * @returns {Array.<BaseNumber>}
    */
-  getBaseNumbers: function( number ) {
+  static getBaseNumbers( number ) {
     assert && assert( number > 0 && number % 1 === 0 );
 
     const result = [];
@@ -251,7 +246,7 @@ inherit( Object, PaperNumber, {
     }
 
     return result;
-  },
+  }
 
   /**
    * Returns whether the two paper numbers are close enough to be "attached" to each other.
@@ -261,7 +256,7 @@ inherit( Object, PaperNumber, {
    * @param {PaperNumber} paperNumber2
    * @returns {boolean}
    */
-  arePaperNumbersAttachable: function( paperNumber1, paperNumber2 ) {
+  static arePaperNumbersAttachable( paperNumber1, paperNumber2 ) {
     const firstLarger = paperNumber1.numberValueProperty.value > paperNumber2.numberValueProperty.value;
     const largePaperNumber = firstLarger ? paperNumber1 : paperNumber2;
     const smallPaperNumber = firstLarger ? paperNumber2 : paperNumber1;
@@ -275,6 +270,8 @@ inherit( Object, PaperNumber, {
 
     return unitX * unitX + 2 * unitY * unitY < 1;
   }
-} );
+}
+
+makeATen.register( 'PaperNumber', PaperNumber );
 
 export default PaperNumber;

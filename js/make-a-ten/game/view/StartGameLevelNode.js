@@ -9,7 +9,6 @@
  */
 
 import Vector2 from '../../../../../dot/js/Vector2.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import LevelSelectionButton from '../../../../../vegas/js/LevelSelectionButton.js';
 import ScoreDisplayNumberAndStar from '../../../../../vegas/js/ScoreDisplayNumberAndStar.js';
@@ -20,33 +19,29 @@ import MakeATenConstants from '../../common/MakeATenConstants.js';
 const X_OFFSET = 170;
 const Y_OFFSET = 160;
 
-/**
- * @constructor
- *
- * @param {MakeATenGameModel} model - Our model
- */
-function StartGameLevelNode( model ) {
-  Node.call( this );
+class StartGameLevelNode extends Node {
+  /**
+   * @param {MakeATenGameModel} model - Our model
+   */
+  constructor( model ) {
+    super();
 
-  // @private {MakeATenGameModel}
-  this.model = model;
+    // @private {MakeATenGameModel}
+    this.model = model;
 
-  // Add the level buttons
-  this.addLevelButton( model.levels[ 0 ], -1, -1 );
-  this.addLevelButton( model.levels[ 1 ], 0, -1 );
-  this.addLevelButton( model.levels[ 2 ], 1, -1 );
-  this.addLevelButton( model.levels[ 3 ], -1.5, 0 );
-  this.addLevelButton( model.levels[ 4 ], -0.5, 0 );
-  this.addLevelButton( model.levels[ 5 ], 0.5, 0 );
-  this.addLevelButton( model.levels[ 6 ], 1.5, 0 );
-  this.addLevelButton( model.levels[ 7 ], -1, 1 );
-  this.addLevelButton( model.levels[ 8 ], 0, 1 );
-  this.addLevelButton( model.levels[ 9 ], 1, 1 );
-}
+    // Add the level buttons
+    this.addLevelButton( model.levels[ 0 ], -1, -1 );
+    this.addLevelButton( model.levels[ 1 ], 0, -1 );
+    this.addLevelButton( model.levels[ 2 ], 1, -1 );
+    this.addLevelButton( model.levels[ 3 ], -1.5, 0 );
+    this.addLevelButton( model.levels[ 4 ], -0.5, 0 );
+    this.addLevelButton( model.levels[ 5 ], 0.5, 0 );
+    this.addLevelButton( model.levels[ 6 ], 1.5, 0 );
+    this.addLevelButton( model.levels[ 7 ], -1, 1 );
+    this.addLevelButton( model.levels[ 8 ], 0, 1 );
+    this.addLevelButton( model.levels[ 9 ], 1, 1 );
+  }
 
-makeATen.register( 'StartGameLevelNode', StartGameLevelNode );
-
-inherit( Node, StartGameLevelNode, {
   /**
    * Adds a level button at a specified x/y offset (in relation to the center, in button offsets)
    * @private
@@ -55,7 +50,7 @@ inherit( Node, StartGameLevelNode, {
    * @param {number} xOffset - How many buttons to the right of the horizontal center should we be?
    * @param {number} yOffset - How many buttons to the bottom of the vertical center should we be?
    */
-  addLevelButton: function( level, xOffset, yOffset ) {
+  addLevelButton( level, xOffset, yOffset ) {
     const fireCallback = this.model.startLevel.bind( this.model, level );
     const center = MakeATenConstants.LAYOUT_BOUNDS.center.plus( new Vector2( xOffset * X_OFFSET, yOffset * Y_OFFSET ) );
 
@@ -68,6 +63,8 @@ inherit( Node, StartGameLevelNode, {
     button.center = center;
     this.addChild( button );
   }
-} );
+}
+
+makeATen.register( 'StartGameLevelNode', StartGameLevelNode );
 
 export default StartGameLevelNode;

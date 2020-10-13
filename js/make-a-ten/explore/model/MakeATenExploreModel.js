@@ -7,48 +7,46 @@
  */
 
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import makeATen from '../../../makeATen.js';
 import MakeATenQueryParameters from '../../common/MakeATenQueryParameters.js';
 import MakeATenCommonModel from '../../common/model/MakeATenCommonModel.js';
 import Cue from './Cue.js';
 
-/**
- * @constructor
- */
-function MakeATenExploreModel() {
-  // @public {NumberProperty} - The total sum of the current numbers
-  this.sumProperty = new NumberProperty( 0 );
+class MakeATenExploreModel extends MakeATenCommonModel {
+  constructor() {
 
-  MakeATenCommonModel.call( this );
+    super();
 
-  // @public {Cue} - Visually indicates numbers can be split (pulled apart)
-  this.splitCue = new Cue();
+    // @public {NumberProperty} - The total sum of the current numbers
+    this.sumProperty = new NumberProperty( 0 );
 
-  // @private {Function} - To be called when we need to recalculate the total
-  const calculateTotalListener = this.calculateTotal.bind( this );
+    // @public {Cue} - Visually indicates numbers can be split (pulled apart)
+    this.splitCue = new Cue();
 
-  this.paperNumbers.lengthProperty.link( calculateTotalListener );
+    // @private {Function} - To be called when we need to recalculate the total
+    const calculateTotalListener = this.calculateTotal.bind( this );
 
-  // Listen to number changes of paper numbers
-  this.paperNumbers.addItemAddedListener( function( paperNumber ) {
-    paperNumber.numberValueProperty.link( calculateTotalListener );
-  } );
-  this.paperNumbers.addItemRemovedListener( function( paperNumber ) {
-    paperNumber.numberValueProperty.unlink( calculateTotalListener );
-  } );
+    this.paperNumbers.lengthProperty.link( calculateTotalListener );
 
-  this.addInitialNumbers();
-}
+    // Listen to number changes of paper numbers
+    this.paperNumbers.addItemAddedListener( paperNumber => {
+      paperNumber.numberValueProperty.link( calculateTotalListener );
+    } );
+    this.paperNumbers.addItemRemovedListener( paperNumber => {
+      paperNumber.numberValueProperty.unlink( calculateTotalListener );
+    } );
 
-makeATen.register( 'MakeATenExploreModel', MakeATenExploreModel );
+    this.addInitialNumbers();
+  }
 
-inherit( MakeATenCommonModel, MakeATenExploreModel, {
   /**
-   * @override
+   * Steps forward in time
+   * @public
+   *
+   * @param {number} dt
    */
-  step: function( dt ) {
-    MakeATenCommonModel.prototype.step.call( this, dt );
+  step( dt ) {
+    super.step( dt );
 
     // Cap large dt values, which can occur when the tab containing
     // the sim had been hidden and then re-shown
@@ -56,48 +54,50 @@ inherit( MakeATenCommonModel, MakeATenExploreModel, {
 
     // Animate fading if necessary
     this.splitCue.step( dt );
-  },
+  }
 
   /**
    * Updates the total sum of the paper numbers.
    * @private
    */
-  calculateTotal: function() {
+  calculateTotal() {
     let total = 0;
-    this.paperNumbers.forEach( function( paperNumber ) {
+    this.paperNumbers.forEach( paperNumber => {
       total += paperNumber.numberValueProperty.value;
     } );
     this.sumProperty.value = total;
-  },
+  }
 
   /**
    * Adds any required initial numbers.
    * @private
    */
-  addInitialNumbers: function() {
-    const self = this;
-
+  addInitialNumbers() {
     // Check for an array of numbers, e.g. ?exploreNumbers=10,51, where 0 indicates none
     this.addMultipleNumbers( MakeATenQueryParameters.exploreNumbers );
 
     // Attach cues to any available numbers
-    this.paperNumbers.forEach( function( paperNumber ) {
+    this.paperNumbers.forEach( paperNumber => {
       if ( paperNumber.numberValueProperty.value > 1 ) {
-        self.splitCue.attachToNumber( paperNumber );
+        this.splitCue.attachToNumber( paperNumber );
       }
     } );
-  },
+  }
 
   /**
+   * Resets values to their original state
+   * @public
    * @override
    */
-  reset: function() {
-    MakeATenCommonModel.prototype.reset.call( this );
+  reset() {
+    super.reset();
 
     this.sumProperty.reset();
     this.splitCue.reset();
     this.addInitialNumbers();
   }
-} );
+}
+
+makeATen.register( 'MakeATenExploreModel', MakeATenExploreModel );
 
 export default MakeATenExploreModel;

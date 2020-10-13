@@ -8,7 +8,6 @@
 
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';
 import Property from '../../../../../axon/js/Property.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import levelIcon10 from '../../../../images/level-10_png.js';
 import levelIcon1 from '../../../../images/level-1_png.js';
 import levelIcon2 from '../../../../images/level-2_png.js';
@@ -19,8 +18,8 @@ import levelIcon6 from '../../../../images/level-6_png.js';
 import levelIcon7 from '../../../../images/level-7_png.js';
 import levelIcon8 from '../../../../images/level-8_png.js';
 import levelIcon9 from '../../../../images/level-9_png.js';
-import makeATenStrings from '../../../makeATenStrings.js';
 import makeATen from '../../../makeATen.js';
+import makeATenStrings from '../../../makeATenStrings.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
 import MakeATenCommonModel from '../../common/model/MakeATenCommonModel.js';
 import GameState from './GameState.js';
@@ -41,80 +40,73 @@ const level9DescriptionString = makeATenStrings.level9Description;
 
 // Level icons
 
-/**
- * @constructor
- */
-function MakeATenGameModel() {
-  const self = this;
+class MakeATenGameModel extends MakeATenCommonModel {
+  constructor() {
+    super();
 
-  MakeATenCommonModel.call( this );
+    // Created here, since due to the initialization of phet.joist.random we need to delay until the model is created
+    // (can't do at require.js load time), thus we have a separate challenge factory.
+    const numberChallengeFactory = new NumberChallengeFactory();
 
-  // Created here, since due to the initialization of phet.joist.random we need to delay until the model is created
-  // (can't do at require.js load time), thus we have a separate challenge factory.
-  const numberChallengeFactory = new NumberChallengeFactory();
+    // @public {Array.<Level>} - All of the game levels for this screen.
+    this.levels = [
+      new Level( 1, '#FC4280', levelIcon1, level1DescriptionString, numberChallengeFactory ),
+      new Level( 2, '#FC4280', levelIcon2, level2DescriptionString, numberChallengeFactory ),
+      new Level( 3, '#FC4280', levelIcon3, level3DescriptionString, numberChallengeFactory ),
+      new Level( 4, '#06A5AD', levelIcon4, level4DescriptionString, numberChallengeFactory ),
+      new Level( 5, '#06A5AD', levelIcon5, level5DescriptionString, numberChallengeFactory ),
+      new Level( 6, '#06A5AD', levelIcon6, level6DescriptionString, numberChallengeFactory ),
+      new Level( 7, '#06A5AD', levelIcon7, level7DescriptionString, numberChallengeFactory ),
+      new Level( 8, '#9778CC', levelIcon8, level8DescriptionString, numberChallengeFactory ),
+      new Level( 9, '#9778CC', levelIcon9, level9DescriptionString, numberChallengeFactory ),
+      new Level( 10, '#9778CC', levelIcon10, level10DescriptionString, numberChallengeFactory )
+    ];
 
-  // @public {Array.<Level>} - All of the game levels for this screen.
-  this.levels = [
-    new Level( 1, '#FC4280', levelIcon1, level1DescriptionString, numberChallengeFactory ),
-    new Level( 2, '#FC4280', levelIcon2, level2DescriptionString, numberChallengeFactory ),
-    new Level( 3, '#FC4280', levelIcon3, level3DescriptionString, numberChallengeFactory ),
-    new Level( 4, '#06A5AD', levelIcon4, level4DescriptionString, numberChallengeFactory ),
-    new Level( 5, '#06A5AD', levelIcon5, level5DescriptionString, numberChallengeFactory ),
-    new Level( 6, '#06A5AD', levelIcon6, level6DescriptionString, numberChallengeFactory ),
-    new Level( 7, '#06A5AD', levelIcon7, level7DescriptionString, numberChallengeFactory ),
-    new Level( 8, '#9778CC', levelIcon8, level8DescriptionString, numberChallengeFactory ),
-    new Level( 9, '#9778CC', levelIcon9, level9DescriptionString, numberChallengeFactory ),
-    new Level( 10, '#9778CC', levelIcon10, level10DescriptionString, numberChallengeFactory )
-  ];
+    // @public {Property.<Level>} - The current level
+    this.currentLevelProperty = new Property( this.levels[ 0 ] );
 
-  // @public {Property.<Level>} - The current level
-  this.currentLevelProperty = new Property( this.levels[ 0 ] );
+    // @public {NumberProperty} - The score for whatever the current level is.
+    this.currentScoreProperty = new NumberProperty( 0 );
 
-  // @public {NumberProperty} - The score for whatever the current level is.
-  this.currentScoreProperty = new NumberProperty( 0 );
+    // @public {Property.<NumberChallenge|null>} - The current challenge when in a level
+    this.currentChallengeProperty = new Property( null );
 
-  // @public {Property.<NumberChallenge|null>} - The current challenge when in a level
-  this.currentChallengeProperty = new Property( null );
+    // @public {Property.<GameState>} - Current game state
+    this.gameStateProperty = new Property( GameState.CHOOSING_LEVEL );
 
-  // @public {Property.<GameState>} - Current game state
-  this.gameStateProperty = new Property( GameState.CHOOSING_LEVEL );
+    // @public {AdditionTerms} - Our left and right terms to be added.
+    this.additionTerms = new AdditionTerms();
 
-  // @public {AdditionTerms} - Our left and right terms to be added.
-  this.additionTerms = new AdditionTerms();
-
-  // Check for when the challenge is completed
-  this.paperNumbers.lengthProperty.link( function( newLength, oldLength ) {
-    // Check oldLength to make sure it's not from the paper numbers just added.
-    if ( newLength === 1 && oldLength === 2 && self.gameStateProperty.value === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
-      self.gameStateProperty.value = GameState.CORRECT_ANSWER;
-    }
-  } );
-
-  // Keep our currentScore updated when the level changes.
-  this.currentLevelProperty.link( function( level ) {
-    self.currentScoreProperty.value = level.scoreProperty.value;
-  } );
-
-  // Keep our currentScore updated when our current level's score changes.
-  this.levels.forEach( function( level ) {
-    level.scoreProperty.link( function( score ) {
-      if ( level === self.currentLevelProperty.value ) {
-        self.currentScoreProperty.value = score;
+    // Check for when the challenge is completed
+    this.paperNumbers.lengthProperty.link( ( newLength, oldLength ) => {
+      // Check oldLength to make sure it's not from the paper numbers just added.
+      if ( newLength === 1 && oldLength === 2 && this.gameStateProperty.value === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
+        this.gameStateProperty.value = GameState.CORRECT_ANSWER;
       }
     } );
-  } );
-}
 
-makeATen.register( 'MakeATenGameModel', MakeATenGameModel );
+    // Keep our currentScore updated when the level changes.
+    this.currentLevelProperty.link( level => {
+      this.currentScoreProperty.value = level.scoreProperty.value;
+    } );
 
-inherit( MakeATenCommonModel, MakeATenGameModel, {
+    // Keep our currentScore updated when our current level's score changes.
+    this.levels.forEach( level => {
+      level.scoreProperty.link( score => {
+        if ( level === this.currentLevelProperty.value ) {
+          this.currentScoreProperty.value = score;
+        }
+      } );
+    } );
+  }
+
   /**
    * Starts a new challenge with the level specified
    * @public
    *
    * @param {Level} level
    */
-  startLevel: function( level ) {
+  startLevel( level ) {
     this.removeAllPaperNumbers();
 
     this.currentLevelProperty.value = level;
@@ -124,34 +116,34 @@ inherit( MakeATenCommonModel, MakeATenGameModel, {
 
     // Change to new game state.
     this.gameStateProperty.value = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
-  },
+  }
 
   /**
    * Increments the score of the current level.
    * @public
    */
-  incrementScore: function() {
+  incrementScore() {
     this.currentLevelProperty.value.scoreProperty.value++;
-  },
+  }
 
   /**
    * Moves to the next challenge (the current challenge's solution was correct).
    * @public
    */
-  moveToNextChallenge: function() {
+  moveToNextChallenge() {
     this.removeAllPaperNumbers();
 
     this.currentChallengeProperty.value = this.currentLevelProperty.value.generateChallenge();
     this.gameStateProperty.value = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
-  },
+  }
 
   /**
    * Moves back to the level selection.
    * @public
    */
-  moveToChoosingLevel: function() {
+  moveToChoosingLevel() {
     this.gameStateProperty.value = GameState.CHOOSING_LEVEL;
-  },
+  }
 
   /**
    * Creates paper numbers for the specified challenge.
@@ -159,19 +151,19 @@ inherit( MakeATenCommonModel, MakeATenGameModel, {
    *
    * @param {NumberChallenge} numberChallenge
    */
-  setupChallenge: function( numberChallenge ) {
+  setupChallenge( numberChallenge ) {
     this.removeAllPaperNumbers();
     this.additionTerms.leftTermProperty.value = numberChallenge.leftTerm;
     this.additionTerms.rightTermProperty.value = numberChallenge.rightTerm;
     this.addMultipleNumbers( [ numberChallenge.leftTerm, numberChallenge.rightTerm ] );
-  },
+  }
 
   /**
    * Resets our game model.
    * @public
    */
-  reset: function() {
-    MakeATenCommonModel.prototype.reset.call( this );
+  reset() {
+    super.reset();
 
     this.currentLevelProperty.reset();
     this.currentScoreProperty.reset();
@@ -182,6 +174,8 @@ inherit( MakeATenCommonModel, MakeATenGameModel, {
       this.levels[ i ].reset();
     }
   }
-} );
+}
+
+makeATen.register( 'MakeATenGameModel', MakeATenGameModel );
 
 export default MakeATenGameModel;

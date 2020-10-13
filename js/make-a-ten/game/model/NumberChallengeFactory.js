@@ -7,86 +7,77 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import inherit from '../../../../../phet-core/js/inherit.js';
 import makeATen from '../../../makeATen.js';
 import NumberChallenge from './NumberChallenge.js';
 
-/**
- * @constructor
- */
-function NumberChallengeFactory() {
-  const self = this;
+class NumberChallengeFactory {
+  constructor() {
 
-  // @private {Random} - Stored here because we can't grab a reference until after the sim has launched (and after we
-  //                     have defined the NumberChallengeFactory type).
-  this.random = phet.joist.random;
+    // @private {Random} - Stored here because we can't grab a reference until after the sim has launched (and after we
+    //                     have defined the NumberChallengeFactory type).
+    this.random = phet.joist.random;
 
-  // Level 1. Single digits that add up to <= 10.
-  // @private {Array.<NumberChallenge>} - Enumeration of all possibilities, randomly selected.
-  this.tenAndUnderChallenges = this.sumsUpTo( 1, 10 );
+    // Level 1. Single digits that add up to <= 10.
+    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities, randomly selected.
+    this.tenAndUnderChallenges = this.sumsUpTo( 1, 10 );
 
-  // Level 2. Single digits that add up to >= 11, where one of them is 9
-  // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is even, randomly selected.
-  this.withNineLeftChallenges = this.sumsOverTenChallenges( 9, true, false );
-  // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is odd, randomly selected.
-  this.withNineRightChallenges = this.sumsOverTenChallenges( 9, false, true );
-  // @private {number} - Used for alternation between the 'left' and 'right' varieties.
-  this.withNineCount = 0;
+    // Level 2. Single digits that add up to >= 11, where one of them is 9
+    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is even, randomly selected.
+    this.withNineLeftChallenges = this.sumsOverTenChallenges( 9, true, false );
+    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is odd, randomly selected.
+    this.withNineRightChallenges = this.sumsOverTenChallenges( 9, false, true );
+    // @private {number} - Used for alternation between the 'left' and 'right' varieties.
+    this.withNineCount = 0;
 
-  // Level 3. Single digits such that 10 < sum < 20.
-  // @private {Array.<NumberChallenge>} - All possible challenges for the "Under Twenty" challenge, and also used for
-  //                                      generating many of the other terms lists.
-  this.underTwentyChallenges = [].concat(
-    this.sumsOverTenChallenges( 9, true, true ),
-    this.sumsOverTenChallenges( 8, true, true ),
-    this.sumsOverTenChallenges( 7, true, true ),
-    this.sumsOverTenChallenges( 6, true, true )
-  );
+    // Level 3. Single digits such that 10 < sum < 20.
+    // @private {Array.<NumberChallenge>} - All possible challenges for the "Under Twenty" challenge, and also used for
+    //                                      generating many of the other terms lists.
+    this.underTwentyChallenges = [].concat(
+      this.sumsOverTenChallenges( 9, true, true ),
+      this.sumsOverTenChallenges( 8, true, true ),
+      this.sumsOverTenChallenges( 7, true, true ),
+      this.sumsOverTenChallenges( 6, true, true )
+    );
 
-  // Level 4. Like level 3 with each number multiplied by 10.
-  // @private {Array.<NumberChallenge>} - All possible challenges for the "Add with Tens" challenge.
-  this.addWithTensChallenges = this.underTwentyChallenges.map( function( challenge ) {
-    return new NumberChallenge( challenge.leftTerm * 10, challenge.rightTerm * 10 );
-  } );
+    // Level 4. Like level 3 with each number multiplied by 10.
+    // @private {Array.<NumberChallenge>} - All possible challenges for the "Add with Tens" challenge.
+    this.addWithTensChallenges = this.underTwentyChallenges.map( challenge => new NumberChallenge( challenge.leftTerm * 10, challenge.rightTerm * 10 ) );
 
-  // Level 5. Like level 3, but one number has a random "decade" added to it.
-  // @private {Array.<NumberChallenge>} - All possible challenges for the "Add with Singles" challenge.
-  this.addWithSinglesChallenges = [];
-  this.underTwentyChallenges.forEach( function( challenge ) {
-    for ( let decade = 10; decade <= 80; decade += 10 ) {
-      // Only add to the left, since underTwentyChallenges includes both [a,b] and [b,a].
-      self.addWithSinglesChallenges.push( new NumberChallenge( challenge.leftTerm + decade, challenge.rightTerm ) );
-      self.addWithSinglesChallenges.push( new NumberChallenge( challenge.rightTerm, challenge.leftTerm + decade ) );
-    }
-  } );
+    // Level 5. Like level 3, but one number has a random "decade" added to it.
+    // @private {Array.<NumberChallenge>} - All possible challenges for the "Add with Singles" challenge.
+    this.addWithSinglesChallenges = [];
+    this.underTwentyChallenges.forEach( challenge => {
+      for ( let decade = 10; decade <= 80; decade += 10 ) {
+        // Only add to the left, since underTwentyChallenges includes both [a,b] and [b,a].
+        this.addWithSinglesChallenges.push( new NumberChallenge( challenge.leftTerm + decade, challenge.rightTerm ) );
+        this.addWithSinglesChallenges.push( new NumberChallenge( challenge.rightTerm, challenge.leftTerm + decade ) );
+      }
+    } );
 
-  // Level 6. Double digit numbers with sum < 100.
-  // @private {Array.<NumberChallenge>} - All possible challenges for the "Under Hundreds" challenge.
-  this.underHundredsChallenges = this.sumsUpTo( 11, 99 );
+    // Level 6. Double digit numbers with sum < 100.
+    // @private {Array.<NumberChallenge>} - All possible challenges for the "Under Hundreds" challenge.
+    this.underHundredsChallenges = this.sumsUpTo( 11, 99 );
 
-  // Level 7. Double digit numbers with sum >= 100
-  // @private {Array.<NumberChallenge>} - All possible challenges for the "Over Hundreds" challenge.
-  this.overHundredsChallenges = this.sumsDownTo( 11, 99, 100 );
+    // Level 7. Double digit numbers with sum >= 100
+    // @private {Array.<NumberChallenge>} - All possible challenges for the "Over Hundreds" challenge.
+    this.overHundredsChallenges = this.sumsDownTo( 11, 99, 100 );
 
-  // Level 8. Single digit numbers added to multiples of 100.
-  // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is even, randomly selected.
-  this.singlesToHundredsLeftChallenges = this.addWithSinglesThreeDigitChallenges( true );
-  // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is odd, randomly selected.
-  this.singlesToHundredsRightChallenges = this.addWithSinglesThreeDigitChallenges( false );
-  // @private {number} - Used for alternation between the 'left' and 'right' varieties.
-  this.singlesToHundredsCount = 0;
-}
+    // Level 8. Single digit numbers added to multiples of 100.
+    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is even, randomly selected.
+    this.singlesToHundredsLeftChallenges = this.addWithSinglesThreeDigitChallenges( true );
+    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is odd, randomly selected.
+    this.singlesToHundredsRightChallenges = this.addWithSinglesThreeDigitChallenges( false );
+    // @private {number} - Used for alternation between the 'left' and 'right' varieties.
+    this.singlesToHundredsCount = 0;
+  }
 
-makeATen.register( 'NumberChallengeFactory', NumberChallengeFactory );
-
-inherit( Object, NumberChallengeFactory, {
   /**
    * Creates a random challenge for a specific level.
    * @public
    *
    * @returns {NumberChallenge}
    */
-  generateChallenge: function( level ) {
+  generateChallenge( level ) {
     switch( level ) {
       case 0:
         return this.random.sample( this.tenAndUnderChallenges );
@@ -113,7 +104,7 @@ inherit( Object, NumberChallengeFactory, {
       default:
         throw new Error( 'Invalid level: ' + level );
     }
-  },
+  }
 
   /**
    * Generates an array of challenges whose sum >= 11, where one of the numbers is the bigNumber, and the other is
@@ -129,7 +120,7 @@ inherit( Object, NumberChallengeFactory, {
    *                             term for every challenge.
    * @returns {Array.<NumberChallenge>}
    */
-  sumsOverTenChallenges: function( bigNumber, includeLeftBiggest, includeRightBiggest ) {
+  sumsOverTenChallenges( bigNumber, includeLeftBiggest, includeRightBiggest ) {
     const challenges = [];
 
     for ( let i = 11 - bigNumber; i < bigNumber; i++ ) {
@@ -145,7 +136,7 @@ inherit( Object, NumberChallengeFactory, {
     challenges.push( new NumberChallenge( bigNumber, bigNumber ) );
 
     return challenges;
-  },
+  }
 
   /**
    * Generates an array of challenges where terms are at least minimumNumber, with a combined maximum sum.
@@ -153,7 +144,7 @@ inherit( Object, NumberChallengeFactory, {
    *
    * @returns {Array.<NumberChallenge>}
    */
-  sumsUpTo: function( minimumNumber, maximumSum ) {
+  sumsUpTo( minimumNumber, maximumSum ) {
     const challenges = [];
 
     for ( let left = minimumNumber; left < maximumSum; left++ ) {
@@ -163,7 +154,7 @@ inherit( Object, NumberChallengeFactory, {
     }
 
     return challenges;
-  },
+  }
 
   /**
    * Generates an array of challenges where terms satisfy minimumNumber <= term <= maximumNumber, and the sum is
@@ -172,7 +163,7 @@ inherit( Object, NumberChallengeFactory, {
    *
    * @returns {Array.<NumberChallenge>}
    */
-  sumsDownTo: function( minimumNumber, maximumNumber, minimumSum ) {
+  sumsDownTo( minimumNumber, maximumNumber, minimumSum ) {
     const challenges = [];
 
     for ( let left = minimumNumber; left <= maximumNumber; left++ ) {
@@ -183,7 +174,7 @@ inherit( Object, NumberChallengeFactory, {
     }
 
     return challenges;
-  },
+  }
 
   /**
    * For level 8, adding single digit numbers to multiples of 100.
@@ -191,7 +182,7 @@ inherit( Object, NumberChallengeFactory, {
    *
    * @returns {Array.<NumberChallenge>}
    */
-  addWithSinglesThreeDigitChallenges: function( isLeftBiggest ) {
+  addWithSinglesThreeDigitChallenges( isLeftBiggest ) {
     const challenges = [];
 
     for ( let left = 100; left <= 900; left += 100 ) {
@@ -202,6 +193,8 @@ inherit( Object, NumberChallengeFactory, {
 
     return challenges;
   }
-} );
+}
+
+makeATen.register( 'NumberChallengeFactory', NumberChallengeFactory );
 
 export default NumberChallengeFactory;

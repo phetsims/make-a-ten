@@ -7,19 +7,10 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import inherit from '../../../../../phet-core/js/inherit.js';
 import makeATen from '../../../makeATen.js';
 import MakeATenUtils from '../MakeATenUtils.js';
 
-/**
- * @constructor
- */
-function ArithmeticRules() {
-}
-
-makeATen.register( 'ArithmeticRules', ArithmeticRules );
-
-inherit( Object, ArithmeticRules, {}, {
+class ArithmeticRules {
   /**
    * Whether the two numbers can be added together.
    * @public
@@ -28,7 +19,7 @@ inherit( Object, ArithmeticRules, {}, {
    * @param {number} b
    * @returns {boolean}
    */
-  canAddNumbers: function( a, b ) {
+  static canAddNumbers( a, b ) {
     assert && assert( typeof a === 'number' );
     assert && assert( typeof b === 'number' );
 
@@ -37,7 +28,7 @@ inherit( Object, ArithmeticRules, {}, {
            ( a % 100 ) + ( b % 100 ) <= 100 &&
            ( a % 10 ) + ( b % 10 ) <= 10 &&
            ( a <= 10 || b <= 10 || a + b >= 100 || a % 10 === 0 || b % 10 === 0 || ( a + b ) % 10 !== 0 );
-  },
+  }
 
   /**
    * Determines how much of a number can be pulled off at a specific place in the number.
@@ -52,7 +43,7 @@ inherit( Object, ArithmeticRules, {}, {
    *                 is the 100s place, and 3 is the 1000s place.
    * @returns {number} - How much to remove from numberValue (0 indicates can't be pulled off)
    */
-  pullApartNumbers: function( numberValue, pulledPlace ) {
+  static pullApartNumbers( numberValue, pulledPlace ) {
     if ( numberValue <= 1 ) {
       return null;
     }
@@ -88,6 +79,8 @@ inherit( Object, ArithmeticRules, {}, {
 
     return amountToRemove;
   }
-} );
+}
+
+makeATen.register( 'ArithmeticRules', ArithmeticRules );
 
 export default ArithmeticRules;

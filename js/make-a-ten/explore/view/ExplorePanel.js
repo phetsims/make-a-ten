@@ -41,7 +41,7 @@ class ExplorePanel extends Panel {
       const node = new Node( {
         cursor: 'pointer',
         // empirically determined stacking
-        children: [ new Vector2( -8, -8 ), new Vector2( 0, 0 ) ].map( function( offset ) {
+        children: [ new Vector2( -8, -8 ), new Vector2( 0, 0 ) ].map( offset => {
           const paperNode = new BaseNumberNode( new BaseNumber( 1, place ), 1 );
           paperNode.scale( 0.64, 0.55 );
           paperNode.translation = offset;
@@ -51,12 +51,10 @@ class ExplorePanel extends Panel {
       node.touchArea = node.localBounds.dilatedX( 15 ).dilatedY( 5 );
 
       // We need to be disabled if adding this number would increase the sum past the maximum sum.
-      new DerivedProperty( [ sumProperty ], function( sum ) {
-        return sum + numberValue <= MAX_SUM;
-      } ).linkAttribute( node, 'visible' );
+      new DerivedProperty( [ sumProperty ], sum => sum + numberValue <= MAX_SUM ).linkAttribute( node, 'visible' );
 
       node.addInputListener( {
-        down: function( event ) {
+        down: event => {
           if ( !event.canStartPress() ) { return; }
 
           // We want this relative to the screen view, so it is guaranteed to be the proper view coordinates.

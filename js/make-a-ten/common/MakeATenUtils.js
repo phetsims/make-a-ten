@@ -19,7 +19,7 @@ const MakeATenUtils = {
    *
    * @param {number} number - Should be an integer.
    */
-  digitsInNumber: function( number ) {
+  digitsInNumber( number ) {
     assert && assert( number % 1 === 0, 'Should be an integer' );
 
     // Not using log10, since phet.dot.Utils.log10( 1000 ) => 2.9999999999999996, which behaved badly with floor.
@@ -34,7 +34,7 @@ const MakeATenUtils = {
    * @param {scenery.fill} backgroundFill
    * @returns {Node}
    */
-  createIconWithBackgroundColor: function( image, backgroundFill ) {
+  createIconWithBackgroundColor( image, backgroundFill ) {
     const imageNode = new Image( image );
 
     return new ScreenIcon( new Node( {

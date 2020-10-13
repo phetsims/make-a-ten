@@ -10,8 +10,8 @@
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
-import InfoButton from '../../../../../scenery-phet/js/buttons/InfoButton.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
+import InfoButton from '../../../../../scenery-phet/js/buttons/InfoButton.js';
 import ButtonListener from '../../../../../scenery/js/input/ButtonListener.js';
 import HBox from '../../../../../scenery/js/nodes/HBox.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
@@ -45,25 +45,21 @@ class MakeATenGameScreenView extends MakeATenCommonView {
 
     this.finishInitialization();
 
-    const self = this;
-
     // @private {Node} - The "left" half of the sliding layer, displayed first
     this.levelSelectionLayer = new Node();
 
     // @private {Node} - The "right" half of the sliding layer, will slide into view when the user selects a level
     this.challengeLayer = new Node();
 
-    const showingLeftProperty = new DerivedProperty( [ model.gameStateProperty ], function( gameState ) {
-      return gameState === GameState.CHOOSING_LEVEL;
-    } );
+    const showingLeftProperty = new DerivedProperty( [ model.gameStateProperty ], gameState => gameState === GameState.CHOOSING_LEVEL );
 
     // @private {TransitionNode}
     this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
       content: this.levelSelectionLayer
     } );
-    showingLeftProperty.lazyLink( function( isLeft ) {
+    showingLeftProperty.lazyLink( isLeft => {
       if ( isLeft ) {
-        self.transitionNode.slideRightTo( self.levelSelectionLayer, {
+        this.transitionNode.slideRightTo( this.levelSelectionLayer, {
           duration: 0.4,
           targetOptions: {
             easing: Easing.QUADRATIC_IN_OUT
@@ -71,7 +67,7 @@ class MakeATenGameScreenView extends MakeATenCommonView {
         } );
       }
       else {
-        self.transitionNode.slideLeftTo( self.challengeLayer, {
+        this.transitionNode.slideLeftTo( this.challengeLayer, {
           duration: 0.4,
           targetOptions: {
             easing: Easing.QUADRATIC_IN_OUT
@@ -96,7 +92,7 @@ class MakeATenGameScreenView extends MakeATenCommonView {
     this.infoButton = new InfoButton( {
       touchAreaXDilation: 7,
       touchAreaYDilation: 7,
-      listener: function() {
+      listener: () => {
         if ( !dialog ) {
           dialog = new InfoDialog( model.levels );
         }
@@ -116,15 +112,15 @@ class MakeATenGameScreenView extends MakeATenCommonView {
 
     // @private {NextArrowButton} - Moves to the next challenge when clicked
     this.nextChallengeButton = new NextArrowButton( nextString, {
-      listener: function() {
+      listener: () => {
         model.moveToNextChallenge();
       },
       top: this.layoutBounds.centerY,
       right: this.layoutBounds.right - 20
     } );
     this.challengeLayer.addChild( this.nextChallengeButton );
-    model.gameStateProperty.link( function( gameState ) {
-      self.nextChallengeButton.visible = gameState === GameState.CORRECT_ANSWER;
+    model.gameStateProperty.link( gameState => {
+      this.nextChallengeButton.visible = gameState === GameState.CORRECT_ANSWER;
     } );
 
     // Add the paper number layer from our supertype
@@ -139,7 +135,7 @@ class MakeATenGameScreenView extends MakeATenCommonView {
       font: new PhetFont( 18 ),
       pickable: false
     } );
-    model.currentLevelProperty.link( function( level ) {
+    model.currentLevelProperty.link( level => {
       levelNumberText.text = StringUtils.format( patternLevel0LevelNumberString, '' + level.number );
       levelDescriptionText.text = level.description;
     } );
@@ -177,15 +173,15 @@ class MakeATenGameScreenView extends MakeATenCommonView {
     } );
     this.visibleBoundsProperty.linkAttribute( this.rewardBarrier, 'rectBounds' );
     this.rewardBarrier.addInputListener( new ButtonListener( {
-      fire: function( event ) {
-        self.hideReward();
+      fire: event => {
+        this.hideReward();
       }
     } ) );
 
-    model.levels.forEach( function( level ) {
-      level.scoreProperty.link( function( score ) {
+    model.levels.forEach( level => {
+      level.scoreProperty.link( score => {
         if ( score === 10 ) {
-          self.showReward();
+          this.showReward();
         }
       } );
     } );
@@ -204,8 +200,6 @@ class MakeATenGameScreenView extends MakeATenCommonView {
    * @private
    */
   showReward() {
-    const self = this;
-
     this.gameAudioPlayer.gameOverPerfectScore();
 
     this.rewardNode = new MakeATenRewardNode();
@@ -214,14 +208,14 @@ class MakeATenGameScreenView extends MakeATenCommonView {
     this.rewardNodeBoundsListener = this.visibleBoundsProperty.linkAttribute( this.rewardNode, 'canvasBounds' );
 
     var rewardDialog = new RewardDialog( 10, {
-      keepGoingButtonListener: function() {
-        self.hideReward();
+      keepGoingButtonListener: () => {
+        this.hideReward();
         rewardDialog.dispose();
 
       },
-      newLevelButtonListener: function() {
-        self.hideReward();
-        self.model.moveToChoosingLevel();
+      newLevelButtonListener: () => {
+        this.hideReward();
+        this.model.moveToChoosingLevel();
         rewardDialog.dispose();
       }
     } );

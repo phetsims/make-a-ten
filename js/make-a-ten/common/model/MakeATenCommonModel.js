@@ -8,28 +8,23 @@
 
 import createObservableArray from '../../../../../axon/js/createObservableArray.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import makeATen from '../../../makeATen.js';
 import MakeATenConstants from '../MakeATenConstants.js';
 import PaperNumber from './PaperNumber.js';
 
-/**
- * @constructor
- */
-function MakeATenCommonModel() {
-  // @public {ObservableArrayDef.<PaperNumber>} - Numbers in play that can be interacted with.
-  this.paperNumbers = createObservableArray();
-}
+class MakeATenCommonModel {
+  constructor() {
+    // @public {ObservableArrayDef.<PaperNumber>} - Numbers in play that can be interacted with.
+    this.paperNumbers = createObservableArray();
+  }
 
-makeATen.register( 'MakeATenCommonModel', MakeATenCommonModel );
-
-inherit( Object, MakeATenCommonModel, {
   /**
    * Steps the model forward by a unit of time.
+   * @public
    *
    * @param {number} dt
    */
-  step: function( dt ) {
+  step( dt ) {
     // Cap large dt values, which can occur when the tab containing
     // the sim had been hidden and then re-shown
     dt = Math.min( 0.1, dt );
@@ -37,17 +32,18 @@ inherit( Object, MakeATenCommonModel, {
     for ( let i = 0; i < this.paperNumbers.length; i++ ) {
       this.paperNumbers.get( i ).step( dt );
     }
-  },
+  }
 
   /**
    * Given two paper numbers, combine them (set one's value to the sum of their previous values, and remove the
    * other).
+   * @public
    *
    * @param {Bounds2} availableModelBounds - Constrain the position to be inside these bounds
    * @param {PaperNumber} draggedPaperNumber
    * @param {PaperNumber} dropTargetNumber
    */
-  collapseNumberModels: function( availableModelBounds, draggedPaperNumber, dropTargetNumber ) {
+  collapseNumberModels( availableModelBounds, draggedPaperNumber, dropTargetNumber ) {
     const dropTargetNumberValue = dropTargetNumber.numberValueProperty.value;
     const draggedNumberValue = draggedPaperNumber.numberValueProperty.value;
     const newValue = dropTargetNumberValue + draggedNumberValue;
@@ -71,7 +67,7 @@ inherit( Object, MakeATenCommonModel, {
     this.removePaperNumber( numberToRemove );
     numberToChange.changeNumber( newValue );
     numberToChange.setConstrainedDestination( availableModelBounds, numberToChange.positionProperty.value, false );
-  },
+  }
 
   /**
    * Add a PaperNumber to the model
@@ -79,9 +75,9 @@ inherit( Object, MakeATenCommonModel, {
    *
    * @param {PaperNumber} paperNumber
    */
-  addPaperNumber: function( paperNumber ) {
+  addPaperNumber( paperNumber ) {
     this.paperNumbers.push( paperNumber );
-  },
+  }
 
   /**
    * Remove a PaperNumber from the model
@@ -89,9 +85,9 @@ inherit( Object, MakeATenCommonModel, {
    *
    * @param {PaperNumber} paperNumber
    */
-  removePaperNumber: function( paperNumber ) {
+  removePaperNumber( paperNumber ) {
     this.paperNumbers.remove( paperNumber );
-  },
+  }
 
   /**
    * Remove all PaperNumbers from the model.
@@ -99,9 +95,9 @@ inherit( Object, MakeATenCommonModel, {
    *
    * @param {PaperNumber} paperNumber
    */
-  removeAllPaperNumbers: function() {
+  removeAllPaperNumbers() {
     this.paperNumbers.clear();
-  },
+  }
 
   /**
    * Given an array of integers, create and add paper numbers for each that are evenly distributed across the screen.
@@ -109,7 +105,7 @@ inherit( Object, MakeATenCommonModel, {
    *
    * @param {Array.<number>} numbers
    */
-  addMultipleNumbers: function( numbers ) {
+  addMultipleNumbers( numbers ) {
     for ( let i = 0; i < numbers.length; i++ ) {
       const number = numbers[ i ];
 
@@ -122,14 +118,16 @@ inherit( Object, MakeATenCommonModel, {
       const paperNumber = new PaperNumber( number, initialNumberPosition );
       this.addPaperNumber( paperNumber );
     }
-  },
+  }
 
   /**
+   * @public
+   *
    * @param {Bounds2} availableModelBounds - Constrain the position to be inside these bounds
    * @param {PaperNumber} paperNumber1
    * @param {PaperNumber} paperNumber2
    */
-  repelAway: function( availableModelBounds, paperNumber1, paperNumber2 ) {
+  repelAway( availableModelBounds, paperNumber1, paperNumber2 ) {
     // Determine which are 'left' and 'right'
     const isPaper1Left = paperNumber1.positionProperty.value.x < paperNumber2.positionProperty.value.x;
     const leftPaperNumber = isPaper1Left ? paperNumber1 : paperNumber2;
@@ -145,15 +143,17 @@ inherit( Object, MakeATenCommonModel, {
     const animateToDestination = true;
     leftPaperNumber.setConstrainedDestination( availableModelBounds, leftPosition, animateToDestination );
     rightPaperNumber.setConstrainedDestination( availableModelBounds, rightPosition, animateToDestination );
-  },
+  }
 
   /**
    * Reset the model
    * @public
    */
-  reset: function() {
+  reset() {
     this.removeAllPaperNumbers();
   }
-} );
+}
+
+makeATen.register( 'MakeATenCommonModel', MakeATenCommonModel );
 
 export default MakeATenCommonModel;

@@ -6,7 +6,6 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import inherit from '../../../../../phet-core/js/inherit.js';
 import handImage from '../../../../../scenery-phet/images/hand_png.js';
 import ArrowNode from '../../../../../scenery-phet/js/ArrowNode.js';
 import Image from '../../../../../scenery/js/nodes/Image.js';
@@ -16,74 +15,70 @@ import Color from '../../../../../scenery/js/util/Color.js';
 import makeATen from '../../../makeATen.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 
-/**
- * @constructor
- *
- * @param {Cue} cue - Our cue model
- */
-function SplitCueNode( cue ) {
-  Node.call( this, {
-    pickable: false,
-    usesOpacity: true
-  } );
+class SplitCueNode extends Node {
+  /**
+   * @param {Cue} cue - Our cue model
+   */
+  constructor( cue ) {
+    super( {
+      pickable: false,
+      usesOpacity: true
+    } );
 
-  // @private {Cue}
-  this.cue = cue;
+    // @private {Cue}
+    this.cue = cue;
 
-  const arrowOptions = {
-    fill: MakeATenConstants.CUE_FILL,
-    stroke: null,
-    headHeight: 14,
-    headWidth: 22,
-    tailWidth: 9,
-    x: 7,
-    y: 3
-  };
+    const arrowOptions = {
+      fill: MakeATenConstants.CUE_FILL,
+      stroke: null,
+      headHeight: 14,
+      headWidth: 22,
+      tailWidth: 9,
+      x: 7,
+      y: 3
+    };
 
-  this.seeThroughRectangle = new Rectangle( 0, 0, 100, 100, {
-    fill: new Color( MakeATenConstants.CUE_FILL ).withAlpha( 0.2 )
-  } );
-  this.addChild( this.seeThroughRectangle );
+    this.seeThroughRectangle = new Rectangle( 0, 0, 100, 100, {
+      fill: new Color( MakeATenConstants.CUE_FILL ).withAlpha( 0.2 )
+    } );
+    this.addChild( this.seeThroughRectangle );
 
-  this.arrowContainer = new Node( {
-    children: [
-      new ArrowNode( 0, 0, 30, -30, arrowOptions ),
-      new Image( handImage, {
-        scale: 0.3,
-        rotation: Math.PI / 6 - Math.PI / 5
-      } )
-    ]
-  } );
-  this.addChild( this.arrowContainer );
+    this.arrowContainer = new Node( {
+      children: [
+        new ArrowNode( 0, 0, 30, -30, arrowOptions ),
+        new Image( handImage, {
+          scale: 0.3,
+          rotation: Math.PI / 6 - Math.PI / 5
+        } )
+      ]
+    } );
+    this.addChild( this.arrowContainer );
 
-  const updatePositionListener = this.updatePosition.bind( this );
-  const updateRectangleListener = this.updateRectangle.bind( this );
+    const updatePositionListener = this.updatePosition.bind( this );
+    const updateRectangleListener = this.updateRectangle.bind( this );
 
-  cue.visibilityProperty.linkAttribute( this, 'visible' );
-  cue.opacityProperty.linkAttribute( this, 'opacity' );
-  cue.visibilityProperty.link( updatePositionListener ); // update position when we become visible
-  cue.paperNumberProperty.link( function( newPaperNumber, oldPaperNumber ) {
-    if ( newPaperNumber ) {
-      newPaperNumber.positionProperty.link( updatePositionListener ); // translation
-      newPaperNumber.numberValueProperty.link( updatePositionListener ); // may have changed bounds
-      newPaperNumber.numberValueProperty.link( updateRectangleListener ); // may have changed bounds
-    }
-    if ( oldPaperNumber ) {
-      oldPaperNumber.numberValueProperty.unlink( updateRectangleListener );
-      oldPaperNumber.numberValueProperty.unlink( updatePositionListener );
-      oldPaperNumber.positionProperty.unlink( updatePositionListener );
-    }
-  } );
-}
+    cue.visibilityProperty.linkAttribute( this, 'visible' );
+    cue.opacityProperty.linkAttribute( this, 'opacity' );
+    cue.visibilityProperty.link( updatePositionListener ); // update position when we become visible
+    cue.paperNumberProperty.link( ( newPaperNumber, oldPaperNumber ) => {
+      if ( newPaperNumber ) {
+        newPaperNumber.positionProperty.link( updatePositionListener ); // translation
+        newPaperNumber.numberValueProperty.link( updatePositionListener ); // may have changed bounds
+        newPaperNumber.numberValueProperty.link( updateRectangleListener ); // may have changed bounds
+      }
+      if ( oldPaperNumber ) {
+        oldPaperNumber.numberValueProperty.unlink( updateRectangleListener );
+        oldPaperNumber.numberValueProperty.unlink( updatePositionListener );
+        oldPaperNumber.positionProperty.unlink( updatePositionListener );
+      }
+    } );
+  }
 
-makeATen.register( 'SplitCueNode', SplitCueNode );
-
-inherit( Node, SplitCueNode, {
   /**
    * Updates the position of the cue.
    * @private
    */
-  updatePosition: function() {
+  updatePosition() {
     const visible = this.cue.visibilityProperty.value;
     const paperNumber = this.cue.paperNumberProperty.value;
 
@@ -93,13 +88,13 @@ inherit( Node, SplitCueNode, {
       this.setTranslation( position );
       this.arrowContainer.setTranslation( localBounds.right - 22, localBounds.top + 15 );
     }
-  },
+  }
 
   /**
    * Updates the size of the semi-transparent rectangle.
    * @private
    */
-  updateRectangle: function() {
+  updateRectangle() {
     const paperNumber = this.cue.paperNumberProperty.value;
 
     if ( paperNumber ) {
@@ -108,6 +103,8 @@ inherit( Node, SplitCueNode, {
       this.seeThroughRectangle.setRectBounds( bounds.withMaxY( boundaryY ) );
     }
   }
-} );
+}
+
+makeATen.register( 'SplitCueNode', SplitCueNode );
 
 export default SplitCueNode;

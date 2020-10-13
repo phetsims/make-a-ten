@@ -38,7 +38,7 @@ class MakeATenAddingScreenView extends MakeATenCommonView {
         touchAreaXDilation: 10,
         touchAreaYDilation: 10,
         content: new Image( editMage, { scale: 0.5 } ),
-        listener: function() {
+        listener: () => {
           model.additionTerms.activeTermProperty.value = term;
         },
         baseColor: 'white'
@@ -79,11 +79,11 @@ class MakeATenAddingScreenView extends MakeATenCommonView {
       fill: new Color( MakeATenConstants.SCREEN_BACKGROUND_COLOR ).colorUtilsDarker( 0.4 ).withAlpha( 0.4 )
     } );
     dimBackground.addInputListener( {
-      down: function( event ) {
+      down: event => {
         model.additionTerms.activeTermProperty.value = ActiveTerm.NONE; // this will close the keyboard button
       }
     } );
-    this.visibleBoundsProperty.link( function( visibleBounds ) {
+    this.visibleBoundsProperty.link( visibleBounds => {
       dimBackground.rectBounds = visibleBounds.dilated( 5 ); // Extra dilation so anti-aliasing doesn't mess with borders
     } );
     this.addChild( dimBackground );
@@ -94,7 +94,7 @@ class MakeATenAddingScreenView extends MakeATenCommonView {
     keyboardPanel.centerX = additionTermsNode.centerX - 25;
     keyboardPanel.top = additionTermsNode.top + 120;
 
-    model.additionTerms.activeTermProperty.link( function( term ) {
+    model.additionTerms.activeTermProperty.link( term => {
       keyboardPanel.visible = dimBackground.visible = term !== ActiveTerm.NONE;
 
       if ( term === ActiveTerm.LEFT ) {

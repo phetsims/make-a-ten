@@ -7,27 +7,25 @@
  * @author Sharfudeen Ashraf
  */
 
-import inherit from '../../../../../phet-core/js/inherit.js';
 import makeATen from '../../../makeATen.js';
 
-/**
- * @constructor
- *
- * @param {number} leftTerm
- * @param {number} rightTerm
- */
-function NumberChallenge( leftTerm, rightTerm ) {
-  // @public {number} - The left-hand term for addition
-  this.leftTerm = leftTerm;
+class NumberChallenge {
+  /**
+   * @param {number} leftTerm
+   * @param {number} rightTerm
+   */
+  constructor( leftTerm, rightTerm ) {
+    // @public {number} - The left-hand term for addition
+    this.leftTerm = leftTerm;
 
-  // @public {number} - The right-hand term for addition
-  this.rightTerm = rightTerm;
+    // @public {number} - The right-hand term for addition
+    this.rightTerm = rightTerm;
 
-  // This object is immutable
-  Object.freeze( this );
+    // This object is immutable
+    Object.freeze( this );
+  }
 }
 
 makeATen.register( 'NumberChallenge', NumberChallenge );
 
-inherit( Object, NumberChallenge );
 export default NumberChallenge;

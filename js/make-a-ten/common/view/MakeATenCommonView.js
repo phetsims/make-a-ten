@@ -19,7 +19,6 @@ import PaperNumberNode from './PaperNumberNode.js';
 
 class MakeATenCommonView extends ScreenView {
   /**
-   *
    * @param {MakeATenModel} model
    */
   constructor( model ) {

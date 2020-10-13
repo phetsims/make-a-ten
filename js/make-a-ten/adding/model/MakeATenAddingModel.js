@@ -6,44 +6,42 @@
  * @author Sharfudeen Ashraf
  */
 
-import inherit from '../../../../../phet-core/js/inherit.js';
 import makeATen from '../../../makeATen.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
 import MakeATenCommonModel from '../../common/model/MakeATenCommonModel.js';
 
-/**
- * @constructor
- */
-function MakeATenAddingModel() {
-  // @public {AdditionTerms}
-  this.additionTerms = new AdditionTerms();
+class MakeATenAddingModel extends MakeATenCommonModel {
+  constructor() {
+    super();
 
-  MakeATenCommonModel.call( this );
-}
+    // @public {AdditionTerms}
+    this.additionTerms = new AdditionTerms();
+  }
 
-makeATen.register( 'MakeATenAddingModel', MakeATenAddingModel );
-
-inherit( MakeATenCommonModel, MakeATenAddingModel, {
   /**
    * Clears the play area and places paper numbers corresponding to the additionTerms.
    * @public
    */
-  setupTerms: function() {
+  setupTerms() {
     this.removeAllPaperNumbers();
     this.addMultipleNumbers( [
       this.additionTerms.leftTermProperty.value,
       this.additionTerms.rightTermProperty.value
     ] );
-  },
+  }
 
   /**
+   * Resets values to their original state
+   * @public
    * @override
    */
-  reset: function() {
-    MakeATenCommonModel.prototype.reset.call( this );
+  reset() {
+    super.reset();
 
     this.additionTerms.reset();
   }
-} );
+}
+
+makeATen.register( 'MakeATenAddingModel', MakeATenAddingModel );
 
 export default MakeATenAddingModel;

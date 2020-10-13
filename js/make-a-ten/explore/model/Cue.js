@@ -10,7 +10,6 @@
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';
 import Property from '../../../../../axon/js/Property.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import makeATen from '../../../makeATen.js';
 
 // constants
@@ -24,33 +23,28 @@ const CueState = Object.freeze( {
   FADED: 'FADED' // "faded, will not return until reset all"
 } );
 
-/**
- * @constructor
- */
-function Cue() {
-  // @public {Property.<PaperNumber|null>} - What PaperNumber the cue is attached to.
-  this.paperNumberProperty = new Property( null );
+class Cue {
+  constructor() {
+    // @public {Property.<PaperNumber|null>} - What PaperNumber the cue is attached to.
+    this.paperNumberProperty = new Property( null );
 
-  // @public {BooleanProperty} - Whether the cue should be visible at all
-  this.visibilityProperty = new BooleanProperty( false );
+    // @public {BooleanProperty} - Whether the cue should be visible at all
+    this.visibilityProperty = new BooleanProperty( false );
 
-  // @public {NumberProperty} - What the visibility of the cue shoudl be.
-  this.opacityProperty = new NumberProperty( 1 );
+    // @public {NumberProperty} - What the visibility of the cue shoudl be.
+    this.opacityProperty = new NumberProperty( 1 );
 
-  // @private {Property.<CueState>}
-  this.stateProperty = new Property( CueState.UNATTACHED );
-}
+    // @private {Property.<CueState>}
+    this.stateProperty = new Property( CueState.UNATTACHED );
+  }
 
-makeATen.register( 'Cue', Cue );
-
-inherit( Object, Cue, {
   /**
    * Step the cue (handle opacity if fading).
    * @public
    *
    * @param {number} dt - Changed model time
    */
-  step: function( dt ) {
+  step( dt ) {
     if ( this.stateProperty.value === CueState.FADING ) {
       // Fade
       this.opacityProperty.value = Math.max( 0, this.opacityProperty.value - FADE_SPEED * dt );
@@ -60,7 +54,7 @@ inherit( Object, Cue, {
         this.changeToFaded();
       }
     }
-  },
+  }
 
   /**
    * Attaches the cue to the number (if it hasn't faded fully).
@@ -68,19 +62,19 @@ inherit( Object, Cue, {
    *
    * @param {PaperNumber} paperNumber
    */
-  attachToNumber: function( paperNumber ) {
+  attachToNumber( paperNumber ) {
     if ( this.stateProperty.value === CueState.FADED ) { return; }
 
     this.stateProperty.value = ( this.stateProperty.value === CueState.FADING ) ? this.stateProperty.value : CueState.ATTACHED;
     this.paperNumberProperty.value = paperNumber;
     this.visibilityProperty.value = true;
-  },
+  }
 
   /**
    * Detach from the current paper number, without fading.
    * @public
    */
-  detach: function() {
+  detach() {
     if ( this.stateProperty.value === CueState.FADED ) { return; }
 
     if ( this.stateProperty.value === CueState.FADING ) {
@@ -89,13 +83,13 @@ inherit( Object, Cue, {
     else {
       this.changeToUnattached();
     }
-  },
+  }
 
   /**
    * The cue will start fading if it hasn't started (or completed) fading already.
    * @public
    */
-  triggerFade: function() {
+  triggerFade() {
     if ( this.stateProperty.value === CueState.ATTACHED ) {
       this.stateProperty.value = CueState.FADING;
     }
@@ -103,37 +97,39 @@ inherit( Object, Cue, {
       // If we're not attached, just immediately switch to fully faded.
       this.changeToFaded();
     }
-  },
+  }
 
   /**
    * Resets the cue to the intial state.
    * @public
    */
-  reset: function() {
+  reset() {
     this.changeToUnattached();
-  },
+  }
 
   /**
    * Changes to an unattached state
    * @private
    */
-  changeToUnattached: function() {
+  changeToUnattached() {
     this.stateProperty.value = CueState.UNATTACHED;
     this.visibilityProperty.value = false;
     this.opacityProperty.value = 1;
     this.paperNumberProperty.value = null;
-  },
+  }
 
   /**
    * Changes to a fully-faded state
    * @private
    */
-  changeToFaded: function() {
+  changeToFaded() {
     this.stateProperty.value = CueState.FADED;
     this.visibilityProperty.value = false;
     this.opacityProperty.value = 1;
     this.paperNumberProperty.value = null;
   }
-} );
+}
+
+makeATen.register( 'Cue', Cue );
 
 export default Cue;

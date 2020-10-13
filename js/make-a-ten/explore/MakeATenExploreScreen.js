@@ -29,8 +29,8 @@ class MakeATenExploreScreen extends Screen {
     };
 
     super(
-      function() { return new MakeATenExploreModel(); },
-      function( model ) { return new MakeATenExploreScreenView( model ); },
+      () => new MakeATenExploreModel(),
+      model => new MakeATenExploreScreenView( model ),
       options );
   }
 }

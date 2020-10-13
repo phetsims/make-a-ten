@@ -29,8 +29,8 @@ class MakeATenAddingScreen extends Screen {
     };
 
     super(
-      function() { return new MakeATenAddingModel(); },
-      function( model ) { return new MakeATenAddingScreenView( model ); },
+      () => new MakeATenAddingModel(),
+      model => new MakeATenAddingScreenView( model ),
       options );
   }
 }

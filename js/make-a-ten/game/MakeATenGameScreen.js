@@ -30,8 +30,8 @@ class MakeATenGameScreen extends Screen {
     };
 
     super(
-      function() { return new MakeATenGameModel(); },
-      function( model ) { return new MakeATenGameScreenView( model ); },
+      () => new MakeATenGameModel(),
+      model => new MakeATenGameScreenView( model ),
       options );
   }
 }

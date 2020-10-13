@@ -22,7 +22,6 @@ const LEVEL_NUMBER_FONT = new PhetFont( { size: 14, weight: 'bold' } );
 const LEVEL_DESCRIPTION_FONT = new PhetFont( 14 );
 
 class InfoDialog extends Dialog {
-  
   /**
    * @param {Array.<Level>} levels - All game levels
    */
