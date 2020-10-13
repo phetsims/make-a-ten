@@ -31,6 +31,8 @@ class MakeATenAddingScreenView extends MakeATenCommonView {
 
     super( model );
 
+    this.finishInitialization();
+
     function createEditNumberButton( term ) {
       return new RectangularPushButton( {
         touchAreaXDilation: 10,

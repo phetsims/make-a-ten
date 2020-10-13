@@ -43,6 +43,8 @@ class MakeATenGameScreenView extends MakeATenCommonView {
   constructor( model ) {
     super( model );
 
+    this.finishInitialization();
+
     const self = this;
 
     // @private {Node} - The "left" half of the sliding layer, displayed first
