@@ -7,6 +7,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import dotRandom from '../../../../../dot/js/dotRandom.js';
 import makeATen from '../../../makeATen.js';
 import NumberChallenge from './NumberChallenge.js';
 
@@ -15,7 +16,7 @@ class NumberChallengeFactory {
 
     // @private {Random} - Stored here because we can't grab a reference until after the sim has launched (and after we
     //                     have defined the NumberChallengeFactory type).
-    this.random = phet.joist.random;
+    this.random = dotRandom;
 
     // Level 1. Single digits that add up to <= 10.
     // @private {Array.<NumberChallenge>} - Enumeration of all possibilities, randomly selected.

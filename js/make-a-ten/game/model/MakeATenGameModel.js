@@ -44,8 +44,8 @@ class MakeATenGameModel extends MakeATenCommonModel {
   constructor() {
     super();
 
-    // Created here, since due to the initialization of phet.joist.random we need to delay until the model is created
-    // (can't do at require.js load time), thus we have a separate challenge factory.
+    // Created here, since due to the initialization of dotRandom to support PhET-iO, we need to delay until the model
+    // is created (can't do at static load time), thus we have a separate challenge factory.
     const numberChallengeFactory = new NumberChallengeFactory();
 
     // @public {Array.<Level>} - All of the game levels for this screen.
