@@ -263,7 +263,7 @@ class PaperNumber {
 
     const smallCenter = smallPaperNumber.positionProperty.value.plus( smallPaperNumber.getLocalBounds().center );
     const largePosition = largePaperNumber.positionProperty.value;
-    const largeBounds = largePaperNumber.getLocalBounds().shifted( largePosition.x, largePosition.y );
+    const largeBounds = largePaperNumber.getLocalBounds().shiftedXY( largePosition.x, largePosition.y );
 
     const unitX = ( smallCenter.x - largeBounds.centerX ) / ( largeBounds.width / 2 );
     const unitY = ( smallCenter.y - largeBounds.centerY ) / ( largeBounds.height / 2 );
