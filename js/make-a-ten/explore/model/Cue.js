@@ -100,7 +100,7 @@ class Cue {
   }
 
   /**
-   * Resets the cue to the intial state.
+   * Resets the cue to the initial state.
    * @public
    */
   reset() {
