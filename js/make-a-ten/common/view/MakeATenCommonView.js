@@ -163,7 +163,7 @@ class MakeATenCommonView extends ScreenView {
     // Check them in reverse order (the one on the top should get more priority)
     droppedNodes.reverse();
 
-    for ( var i = 0; i < droppedNodes.length; i++ ) {
+    for ( var i = 0; i < droppedNodes.length; i++ ) { // eslint-disable-line no-unreachable-loop
       const droppedNode = droppedNodes[ i ];
       const droppedPaperNumber = droppedNode.paperNumber;
       const droppedNumberValue = droppedPaperNumber.numberValueProperty.value;
