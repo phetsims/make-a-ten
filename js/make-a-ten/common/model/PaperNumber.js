@@ -197,11 +197,11 @@ class PaperNumber {
    * @returns {BaseNumber}
    */
   getBaseNumberAt( position ) {
-    for ( var i = 0; i < this.baseNumbers.length; i++ ) {
+    for ( let i = 0; i < this.baseNumbers.length; i++ ) {
       assert && assert( i === 0 || this.baseNumbers[ i ].place > this.baseNumbers[ i - 1 ].place,
         'Ensure that we start at lower places, required for this to work properly' );
 
-      var baseNumber = this.baseNumbers[ i ];
+      const baseNumber = this.baseNumbers[ i ];
 
       if ( baseNumber.bounds.containsPoint( position ) ) {
         return baseNumber;
@@ -209,8 +209,8 @@ class PaperNumber {
     }
 
     // Outside of the bounds, so we need to check each and determine the closest.
-    for ( i = 0; i < this.baseNumbers.length; i++ ) {
-      baseNumber = this.baseNumbers[ i ];
+    for ( let i = 0; i < this.baseNumbers.length; i++ ) {
+      const baseNumber = this.baseNumbers[ i ];
       if ( position.x > baseNumber.bounds.left ) {
         return baseNumber;
       }

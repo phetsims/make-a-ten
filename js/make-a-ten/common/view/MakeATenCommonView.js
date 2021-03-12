@@ -163,7 +163,7 @@ class MakeATenCommonView extends ScreenView {
     // Check them in reverse order (the one on the top should get more priority)
     droppedNodes.reverse();
 
-    for ( var i = 0; i < droppedNodes.length; i++ ) { // eslint-disable-line no-unreachable-loop
+    for ( let i = 0; i < droppedNodes.length; i++ ) { // eslint-disable-line no-unreachable-loop
       const droppedNode = droppedNodes[ i ];
       const droppedPaperNumber = droppedNode.paperNumber;
       const droppedNumberValue = droppedPaperNumber.numberValueProperty.value;
@@ -181,7 +181,7 @@ class MakeATenCommonView extends ScreenView {
 
     // if the dragged number is  larger than the node below it (dropped node), reorder
     // them in a way to bring small number on the top. see issue #39
-    for ( i = 0; i < allPaperNumberNodes.length; i++ ) {
+    for ( let i = 0; i < allPaperNumberNodes.length; i++ ) {
       if ( allPaperNumberNodes[ i ] === draggedNode ) {
         continue;
       }

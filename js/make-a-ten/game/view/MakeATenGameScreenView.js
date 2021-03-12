@@ -207,7 +207,7 @@ class MakeATenGameScreenView extends MakeATenCommonView {
     this.addChild( this.rewardNode );
     this.rewardNodeBoundsListener = this.visibleBoundsProperty.linkAttribute( this.rewardNode, 'canvasBounds' );
 
-    var rewardDialog = new RewardDialog( 10, {
+    const rewardDialog = new RewardDialog( 10, {
       keepGoingButtonListener: () => {
         this.hideReward();
         rewardDialog.dispose();
