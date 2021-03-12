@@ -136,7 +136,7 @@ class MakeATenGameScreenView extends MakeATenCommonView {
       pickable: false
     } );
     model.currentLevelProperty.link( level => {
-      levelNumberText.text = StringUtils.format( patternLevel0LevelNumberString, '' + level.number );
+      levelNumberText.text = StringUtils.format( patternLevel0LevelNumberString, `${level.number}` );
       levelDescriptionText.text = level.description;
     } );
     const statusMessageNode = new HBox( {

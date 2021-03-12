@@ -103,7 +103,7 @@ class NumberChallengeFactory {
       case 9:
         return new NumberChallenge( this.random.nextIntBetween( 101, 999 ), this.random.nextIntBetween( 101, 999 ) );
       default:
-        throw new Error( 'Invalid level: ' + level );
+        throw new Error( `Invalid level: ${level}` );
     }
   }
 

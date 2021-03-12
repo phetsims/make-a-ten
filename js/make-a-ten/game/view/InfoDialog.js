@@ -36,7 +36,7 @@ class InfoDialog extends Dialog {
     function createLevelNode( level ) {
       return new Node( {
         children: [
-          new Text( StringUtils.format( patternLevel0LevelNumberString, '' + level.number ), {
+          new Text( StringUtils.format( patternLevel0LevelNumberString, `${level.number}` ), {
             font: LEVEL_NUMBER_FONT,
             maxWidth: levelMaxWidth
           } ),
