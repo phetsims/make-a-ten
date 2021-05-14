@@ -1,5 +1,5 @@
 {
-  "comment": "# make-a-ten 1.0.16 Mon May 10 2021 15:43:05 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# make-a-ten 1.0.17-rc.1 Fri May 14 2021 06:07:09 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "make-a-ten": {
-    "sha": "10b1a7d778b058109460735cc13f31a4bbaee3d8",
+    "sha": "378cb394fc3a053c499171dbcb225bfc5ef337d6",
     "branch": "1.0"
   },
   "phet-core": {
@@ -50,7 +50,7 @@
   },
   "scenery": {
     "sha": "4e92d3158218739996563dd5b624a2d0491d0b7f",
-    "branch": "make-a-ten-1.0"
+    "branch": "HEAD"
   },
   "scenery-phet": {
     "sha": "c09ca38fe1692cf5b21763486217916fca4e9b8c",
