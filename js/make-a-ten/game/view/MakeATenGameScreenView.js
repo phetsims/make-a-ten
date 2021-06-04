@@ -9,6 +9,7 @@
  */
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
+import CountingCommonView from '../../../../../counting-common/js/common/view/CountingCommonView.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import InfoButton from '../../../../../scenery-phet/js/buttons/InfoButton.js';
@@ -25,7 +26,6 @@ import RewardDialog from '../../../../../vegas/js/RewardDialog.js';
 import makeATen from '../../../makeATen.js';
 import makeATenStrings from '../../../makeATenStrings.js';
 import AdditionTermsNode from '../../common/view/AdditionTermsNode.js';
-import MakeATenCommonView from '../../common/view/MakeATenCommonView.js';
 import GameState from '../model/GameState.js';
 import InfoDialog from './InfoDialog.js';
 import MakeATenRewardNode from './MakeATenRewardNode.js';
@@ -35,7 +35,7 @@ import StartGameLevelNode from './StartGameLevelNode.js';
 const nextString = makeATenStrings.next;
 const patternLevel0LevelNumberString = makeATenStrings.pattern.level[ '0levelNumber' ];
 
-class MakeATenGameScreenView extends MakeATenCommonView {
+class MakeATenGameScreenView extends CountingCommonView {
 
   /**
    * @param {MakeATenGameModel} model

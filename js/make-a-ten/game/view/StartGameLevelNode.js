@@ -9,11 +9,11 @@
  */
 
 import Vector2 from '../../../../../dot/js/Vector2.js';
+import ScreenView from '../../../../../joist/js/ScreenView.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import LevelSelectionButton from '../../../../../vegas/js/LevelSelectionButton.js';
 import ScoreDisplayNumberAndStar from '../../../../../vegas/js/ScoreDisplayNumberAndStar.js';
 import makeATen from '../../../makeATen.js';
-import MakeATenConstants from '../../common/MakeATenConstants.js';
 
 // Constants
 const X_OFFSET = 170;
@@ -52,7 +52,7 @@ class StartGameLevelNode extends Node {
    */
   addLevelButton( level, xOffset, yOffset ) {
     const fireCallback = this.model.startLevel.bind( this.model, level );
-    const center = MakeATenConstants.LAYOUT_BOUNDS.center.plus( new Vector2( xOffset * X_OFFSET, yOffset * Y_OFFSET ) );
+    const center = ScreenView.DEFAULT_LAYOUT_BOUNDS.center.plus( new Vector2( xOffset * X_OFFSET, yOffset * Y_OFFSET ) );
 
     const button = new LevelSelectionButton( level.iconNode, level.scoreProperty, {
       listener: fireCallback,

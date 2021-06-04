@@ -8,6 +8,7 @@
  */
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
+import CountingCommonView from '../../../../../counting-common/js/common/view/CountingCommonView.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
@@ -17,8 +18,7 @@ import Checkbox from '../../../../../sun/js/Checkbox.js';
 import makeATen from '../../../makeATen.js';
 import makeATenStrings from '../../../makeATenStrings.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
-import PaperNumber from '../../common/model/PaperNumber.js';
-import MakeATenCommonView from '../../common/view/MakeATenCommonView.js';
+import PaperNumber from '../../../../../counting-common/js/common/model/PaperNumber.js';
 import ExplorePanel from './ExplorePanel.js';
 import SplitCueNode from './SplitCueNode.js';
 
@@ -27,7 +27,7 @@ const hideTotalString = makeATenStrings.hideTotal;
 // constants
 const EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
 
-class MakeATenExploreScreenView extends MakeATenCommonView {
+class MakeATenExploreScreenView extends CountingCommonView {
   /**
    * @param {MakeATenExploreModel} model
    */

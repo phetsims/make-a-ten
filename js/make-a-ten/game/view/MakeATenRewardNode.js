@@ -6,12 +6,12 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import BaseNumber from '../../../../../counting-common/js/common/model/BaseNumber.js';
+import BaseNumberNode from '../../../../../counting-common/js/common/view/BaseNumberNode.js';
 import FaceNode from '../../../../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../../../../scenery-phet/js/StarNode.js';
 import RewardNode from '../../../../../vegas/js/RewardNode.js';
 import makeATen from '../../../makeATen.js';
-import BaseNumber from '../../common/model/BaseNumber.js';
-import BaseNumberNode from '../../common/view/BaseNumberNode.js';
 
 class MakeATenRewardNode extends RewardNode {
   constructor() {

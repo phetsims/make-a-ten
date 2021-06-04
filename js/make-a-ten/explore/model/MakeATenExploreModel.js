@@ -7,12 +7,12 @@
  */
 
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';
+import CountingCommonModel from '../../../../../counting-common/js/common/model/CountingCommonModel.js';
 import makeATen from '../../../makeATen.js';
 import MakeATenQueryParameters from '../../common/MakeATenQueryParameters.js';
-import MakeATenCommonModel from '../../common/model/MakeATenCommonModel.js';
 import Cue from './Cue.js';
 
-class MakeATenExploreModel extends MakeATenCommonModel {
+class MakeATenExploreModel extends CountingCommonModel {
   constructor() {
 
     super();

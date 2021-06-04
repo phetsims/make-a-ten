@@ -6,11 +6,11 @@
  * @author Sharfudeen Ashraf
  */
 
+import CountingCommonModel from '../../../../../counting-common/js/common/model/CountingCommonModel.js';
 import makeATen from '../../../makeATen.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
-import MakeATenCommonModel from '../../common/model/MakeATenCommonModel.js';
 
-class MakeATenAddingModel extends MakeATenCommonModel {
+class MakeATenAddingModel extends CountingCommonModel {
   constructor() {
     super();
 

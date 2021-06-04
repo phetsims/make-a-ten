@@ -7,15 +7,15 @@
  */
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
+import BaseNumber from '../../../../../counting-common/js/common/model/BaseNumber.js';
+import PaperNumber from '../../../../../counting-common/js/common/model/PaperNumber.js';
+import BaseNumberNode from '../../../../../counting-common/js/common/view/BaseNumberNode.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import merge from '../../../../../phet-core/js/merge.js';
 import HBox from '../../../../../scenery/js/nodes/HBox.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Panel from '../../../../../sun/js/Panel.js';
 import makeATen from '../../../makeATen.js';
-import BaseNumber from '../../common/model/BaseNumber.js';
-import PaperNumber from '../../common/model/PaperNumber.js';
-import BaseNumberNode from '../../common/view/BaseNumberNode.js';
 
 const MAX_SUM = 9999;
 

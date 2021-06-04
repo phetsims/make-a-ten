@@ -7,6 +7,7 @@
  * @author Sharfudeen Ashraf
  */
 
+import CountingCommonView from '../../../../../counting-common/js/common/view/CountingCommonView.js';
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import Color from '../../../../../scenery/js/util/Color.js';
@@ -15,14 +16,13 @@ import editMage from '../../../../images/edit_png.js';
 import makeATen from '../../../makeATen.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import AdditionTermsNode from '../../common/view/AdditionTermsNode.js';
-import MakeATenCommonView from '../../common/view/MakeATenCommonView.js';
 import ActiveTerm from '../model/ActiveTerm.js';
 import KeyboardPanel from './KeyboardPanel.js';
 
 // constants
 const MAX_DIGITS = 3;
 
-class MakeATenAddingScreenView extends MakeATenCommonView {
+class MakeATenAddingScreenView extends CountingCommonView {
 
   /**
    * @param {MakeATenAddingModel} model

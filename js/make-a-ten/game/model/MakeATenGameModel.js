@@ -8,6 +8,7 @@
 
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';
 import Property from '../../../../../axon/js/Property.js';
+import CountingCommonModel from '../../../../../counting-common/js/common/model/CountingCommonModel.js';
 import levelIcon10 from '../../../../images/level-10_png.js';
 import levelIcon1 from '../../../../images/level-1_png.js';
 import levelIcon2 from '../../../../images/level-2_png.js';
@@ -21,7 +22,6 @@ import levelIcon9 from '../../../../images/level-9_png.js';
 import makeATen from '../../../makeATen.js';
 import makeATenStrings from '../../../makeATenStrings.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
-import MakeATenCommonModel from '../../common/model/MakeATenCommonModel.js';
 import GameState from './GameState.js';
 import Level from './Level.js';
 import NumberChallengeFactory from './NumberChallengeFactory.js';
@@ -40,7 +40,7 @@ const level9DescriptionString = makeATenStrings.level9Description;
 
 // Level icons
 
-class MakeATenGameModel extends MakeATenCommonModel {
+class MakeATenGameModel extends CountingCommonModel {
   constructor() {
     super();
 

@@ -6,6 +6,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import CountingCommonConstants from '../../../../../counting-common/js/common/CountingCommonConstants.js';
 import handImage from '../../../../../scenery-phet/images/hand_png.js';
 import ArrowNode from '../../../../../scenery-phet/js/ArrowNode.js';
 import Image from '../../../../../scenery/js/nodes/Image.js';
@@ -13,7 +14,6 @@ import Node from '../../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import Color from '../../../../../scenery/js/util/Color.js';
 import makeATen from '../../../makeATen.js';
-import MakeATenConstants from '../../common/MakeATenConstants.js';
 
 class SplitCueNode extends Node {
   /**
@@ -29,7 +29,7 @@ class SplitCueNode extends Node {
     this.cue = cue;
 
     const arrowOptions = {
-      fill: MakeATenConstants.CUE_FILL,
+      fill: CountingCommonConstants.CUE_FILL,
       stroke: null,
       headHeight: 14,
       headWidth: 22,
@@ -39,7 +39,7 @@ class SplitCueNode extends Node {
     };
 
     this.seeThroughRectangle = new Rectangle( 0, 0, 100, 100, {
-      fill: new Color( MakeATenConstants.CUE_FILL ).withAlpha( 0.2 )
+      fill: new Color( CountingCommonConstants.CUE_FILL ).withAlpha( 0.2 )
     } );
     this.addChild( this.seeThroughRectangle );
 
