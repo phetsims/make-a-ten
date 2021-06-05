@@ -1,4 +1,4 @@
-// Copyright 2016-2020, University of Colorado Boulder
+// Copyright 2016-2021, University of Colorado Boulder
 
 /**
  * Panel that contains a 100, 10 and 1, which can be clicked/dragged to create draggable paper numbers.
