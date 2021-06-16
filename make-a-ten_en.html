@@ -37,6 +37,7 @@
           "../sherpa/lib/Tween-r12.js"
         ],
         "phetLibs": [
+          "counting-common",
           "twixt",
           "vegas"
         ],
@@ -54,6 +55,10 @@
     };
   window.phet.chipper.stringRepos =
     [
+      {
+        "repo": "counting-common",
+        "requirejsNamespace": "COUNTING_COMMON"
+      },
       {
         "repo": "joist",
         "requirejsNamespace": "JOIST"
