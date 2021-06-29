@@ -57,7 +57,8 @@ class StartGameLevelNode extends Node {
     const button = new LevelSelectionButton( level.iconNode, level.scoreProperty, {
       listener: fireCallback,
       baseColor: level.color,
-      scoreDisplayConstructor: ScoreDisplayNumberAndStar
+      scoreDisplayConstructor: ScoreDisplayNumberAndStar,
+      soundPlayerIndex: level.number - 1
     } );
     button.scale( 0.9 );
     button.center = center;
