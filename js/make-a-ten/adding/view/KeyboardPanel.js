@@ -14,8 +14,8 @@ import NumberEntryControl from '../../../../../scenery-phet/js/NumberEntryContro
 import PhetColorScheme from '../../../../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import VBox from '../../../../../scenery/js/nodes/VBox.js';
-import Panel from '../../../../../sun/js/Panel.js';
 import TextPushButton from '../../../../../sun/js/buttons/TextPushButton.js';
+import Panel from '../../../../../sun/js/Panel.js';
 import makeATen from '../../../makeATen.js';
 import makeATenStrings from '../../../makeATenStrings.js';
 
