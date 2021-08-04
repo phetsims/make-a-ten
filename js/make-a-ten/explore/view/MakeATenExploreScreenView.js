@@ -228,7 +228,7 @@ class MakeATenExploreScreenView extends CountingCommonView {
         const basePaperNumber = new PaperNumber( baseNumber.numberValue, paperNumber.positionProperty.value );
 
         // Set its destination to the proper target (with the offset so that it will disappear once centered).
-        let targetPosition = this.explorePanel.getOriginPosition( baseNumber.digitLength );
+        let targetPosition = this.explorePanel.digitLengthToTargetNode[ baseNumber.digitLength ].getOriginPosition();
         const paperCenterOffset = new PaperNumber( baseNumber.numberValue, new Vector2( 0, 0 ) ).getLocalBounds().center;
         targetPosition = targetPosition.minus( paperCenterOffset );
         basePaperNumber.setDestination( targetPosition, true );

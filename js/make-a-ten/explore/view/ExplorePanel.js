@@ -4,20 +4,14 @@
  * Panel that contains a 100, 10 and 1, which can be clicked/dragged to create draggable paper numbers.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Chris Klusendorf (PhET Interactive Simulations)
  */
 
-import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
-import BaseNumber from '../../../../../counting-common/js/common/model/BaseNumber.js';
-import PaperNumber from '../../../../../counting-common/js/common/model/PaperNumber.js';
-import BaseNumberNode from '../../../../../counting-common/js/common/view/BaseNumberNode.js';
-import Vector2 from '../../../../../dot/js/Vector2.js';
+import CountingCreatorNode from '../../../../../counting-common/js/common/view/CountingCreatorNode.js';
 import merge from '../../../../../phet-core/js/merge.js';
 import HBox from '../../../../../scenery/js/nodes/HBox.js';
-import Node from '../../../../../scenery/js/nodes/Node.js';
 import Panel from '../../../../../sun/js/Panel.js';
 import makeATen from '../../../makeATen.js';
-
-const MAX_SUM = 9999;
 
 class ExplorePanel extends Panel {
   /**
@@ -32,95 +26,27 @@ class ExplorePanel extends Panel {
       stroke: 'black',
       lineWidth: 1.5,
       xMargin: 30,
-      yMargin: 5,
+      yMargin: 18,
       resize: false
     }, options );
 
-    function createTarget( place ) {
-      const numberValue = Math.pow( 10, place );
-      const node = new Node( {
-        cursor: 'pointer',
-        // empirically determined stacking
-        children: [ new Vector2( -8, -8 ), new Vector2( 0, 0 ) ].map( offset => {
-          const paperNode = new BaseNumberNode( new BaseNumber( 1, place ), 1 );
-          paperNode.scale( 0.64, 0.55 );
-          paperNode.translation = offset;
-          return paperNode;
-        } )
-      } );
-      node.touchArea = node.localBounds.dilatedX( 15 ).dilatedY( 5 );
-
-      // We need to be disabled if adding this number would increase the sum past the maximum sum.
-      new DerivedProperty( [ sumProperty ], sum => sum + numberValue <= MAX_SUM ).linkAttribute( node, 'visible' );
-
-      node.addInputListener( {
-        down: event => {
-          if ( !event.canStartPress() ) { return; }
-
-          // We want this relative to the screen view, so it is guaranteed to be the proper view coordinates.
-          const viewPosition = screenView.globalToLocalPoint( event.pointer.point );
-          const paperNumber = new PaperNumber( numberValue, new Vector2( 0, 0 ) );
-
-          // Once we have the number's bounds, we set the position so that our pointer is in the middle of the drag target.
-          paperNumber.setDestination( viewPosition.minus( paperNumber.getDragTargetOffset() ), false );
-
-          // Create and start dragging the new paper number node
-          screenView.addAndDragNumber( event, paperNumber );
-        }
-      } );
-
-      return node;
-    }
-
-    const hundredTarget = createTarget( 2 );
-    const tenTarget = createTarget( 1 );
-    const oneTarget = createTarget( 0 );
+    const hundredTargetNode = new CountingCreatorNode( 2, screenView, sumProperty );
+    const tenTargetNode = new CountingCreatorNode( 1, screenView, sumProperty );
+    const oneTargetNode = new CountingCreatorNode( 0, screenView, sumProperty );
 
     const box = new HBox( {
-      children: [ hundredTarget, tenTarget, oneTarget ],
+      children: [ hundredTargetNode, tenTargetNode, oneTargetNode ],
       spacing: 30
     } );
 
     super( box, options );
 
-    // @private {MakeATenExploreScreenView}
-    this.screenView = screenView;
-    this.hundredTarget = hundredTarget;
-    this.tenTarget = tenTarget;
-    this.oneTarget = oneTarget;
-  }
-
-  /**
-   * Given a specified number of digits for a paper number, return the view coordinates of the closest matching
-   * target, so that it can animate back to this position.
-   * @public
-   *
-   * @param {number} digits
-   * @returns {Vector2}
-   */
-  getOriginPosition( digits ) {
-    let target;
-    switch( digits ) {
-      case 1:
-        target = this.oneTarget;
-        break;
-      case 2:
-        target = this.tenTarget;
-        break;
-      case 3:
-        target = this.hundredTarget;
-        break;
-      default:
-        // Probably something big, no better place to send it
-        target = this.hundredTarget;
-    }
-
-    // Trail to screenView, not including the screenView
-    let trail = this.screenView.getUniqueLeafTrailTo( target );
-    trail = trail.slice( 1, trail.length );
-
-    // Transformed to view coordinates
-    return trail.localToGlobalPoint( target.localBounds.center );
+    // @public (read-only)
+    this.digitLengthToTargetNode = {
+      1: oneTargetNode,
+      2: tenTargetNode,
+      3: hundredTargetNode
+    };
   }
 }
 
