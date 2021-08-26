@@ -45,7 +45,8 @@ class ExplorePanel extends Panel {
     this.digitLengthToTargetNode = {
       1: oneTargetNode,
       2: tenTargetNode,
-      3: hundredTargetNode
+      3: hundredTargetNode,
+      4: hundredTargetNode
     };
   }
 }
