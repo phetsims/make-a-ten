@@ -5,7 +5,7 @@
       "path": "../counting-common"
     },
     {
-      "path": "../twixt"
+      "path": "../twixt/tsconfig-module.json"
     },
     {
       "path": "../vegas"
