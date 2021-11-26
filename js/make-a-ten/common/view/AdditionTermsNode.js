@@ -10,10 +10,10 @@
 import Property from '../../../../../axon/js/Property.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import HBox from '../../../../../scenery/js/nodes/HBox.js';
-import Node from '../../../../../scenery/js/nodes/Node.js';
-import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
-import Text from '../../../../../scenery/js/nodes/Text.js';
+import { HBox } from '../../../../../scenery/js/imports.js';
+import { Node } from '../../../../../scenery/js/imports.js';
+import { Rectangle } from '../../../../../scenery/js/imports.js';
+import { Text } from '../../../../../scenery/js/imports.js';
 import makeATen from '../../../makeATen.js';
 import ActiveTerm from '../../adding/model/ActiveTerm.js';
 import MakeATenConstants from '../MakeATenConstants.js';

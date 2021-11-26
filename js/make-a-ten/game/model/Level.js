@@ -7,7 +7,7 @@
  */
 
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';
-import Image from '../../../../../scenery/js/nodes/Image.js';
+import { Image } from '../../../../../scenery/js/imports.js';
 import makeATen from '../../../makeATen.js';
 
 class Level {

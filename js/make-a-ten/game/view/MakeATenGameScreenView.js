@@ -13,11 +13,11 @@ import CountingCommonView from '../../../../../counting-common/js/common/view/Co
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import InfoButton from '../../../../../scenery-phet/js/buttons/InfoButton.js';
-import ButtonListener from '../../../../../scenery/js/input/ButtonListener.js';
-import HBox from '../../../../../scenery/js/nodes/HBox.js';
-import Node from '../../../../../scenery/js/nodes/Node.js';
-import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
-import Text from '../../../../../scenery/js/nodes/Text.js';
+import { ButtonListener } from '../../../../../scenery/js/imports.js';
+import { HBox } from '../../../../../scenery/js/imports.js';
+import { Node } from '../../../../../scenery/js/imports.js';
+import { Rectangle } from '../../../../../scenery/js/imports.js';
+import { Text } from '../../../../../scenery/js/imports.js';
 import Easing from '../../../../../twixt/js/Easing.js';
 import TransitionNode from '../../../../../twixt/js/TransitionNode.js';
 import GameAudioPlayer from '../../../../../vegas/js/GameAudioPlayer.js';

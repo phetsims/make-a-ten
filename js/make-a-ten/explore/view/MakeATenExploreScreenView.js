@@ -12,8 +12,8 @@ import CountingCommonView from '../../../../../counting-common/js/common/view/Co
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import HBox from '../../../../../scenery/js/nodes/HBox.js';
-import Text from '../../../../../scenery/js/nodes/Text.js';
+import { HBox } from '../../../../../scenery/js/imports.js';
+import { Text } from '../../../../../scenery/js/imports.js';
 import Checkbox from '../../../../../sun/js/Checkbox.js';
 import makeATen from '../../../makeATen.js';
 import makeATenStrings from '../../../makeATenStrings.js';
