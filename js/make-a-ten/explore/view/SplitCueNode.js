@@ -84,9 +84,8 @@ class SplitCueNode extends Node {
 
     if ( visible && paperNumber ) {
       const position = paperNumber.positionProperty.value;
-      const localBounds = paperNumber.getLocalBounds();
       this.setTranslation( position );
-      this.arrowContainer.setTranslation( localBounds.right - 22, localBounds.top + 15 );
+      this.arrowContainer.setTranslation( paperNumber.localBounds.right - 22, paperNumber.localBounds.top + 15 );
     }
   }
 
@@ -98,9 +97,7 @@ class SplitCueNode extends Node {
     const paperNumber = this.cue.paperNumberProperty.value;
 
     if ( paperNumber ) {
-      const bounds = paperNumber.getLocalBounds();
-      const boundaryY = paperNumber.getBoundaryY();
-      this.seeThroughRectangle.setRectBounds( bounds.withMaxY( boundaryY ) );
+      this.seeThroughRectangle.setRectBounds( paperNumber.localBounds.withMaxY( paperNumber.getBoundaryY() ) );
     }
   }
 }

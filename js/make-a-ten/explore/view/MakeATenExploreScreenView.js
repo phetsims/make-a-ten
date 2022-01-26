@@ -127,7 +127,7 @@ class MakeATenExploreScreenView extends CountingCommonView {
     // Compute the local point on the number that would need to go into the return zone.
     // This point is a bit farther down than the exact center, as it was annoying to "miss" the return zone
     // slightly by being too high (while the mouse WAS in the return zone).
-    const localBounds = paperNumber.getLocalBounds();
+    const localBounds = paperNumber.localBounds;
     const localReturnPoint = localBounds.center.plus( localBounds.centerBottom ).dividedScalar( 2 );
 
     // And the bounds of our panel
@@ -229,7 +229,7 @@ class MakeATenExploreScreenView extends CountingCommonView {
 
         // Set its destination to the proper target (with the offset so that it will disappear once centered).
         let targetPosition = this.explorePanel.digitLengthToTargetNode[ baseNumber.digitLength ].getOriginPosition();
-        const paperCenterOffset = new PaperNumber( baseNumber.numberValue, new Vector2( 0, 0 ) ).getLocalBounds().center;
+        const paperCenterOffset = new PaperNumber( baseNumber.numberValue, new Vector2( 0, 0 ) ).localBounds.center;
         targetPosition = targetPosition.minus( paperCenterOffset );
         basePaperNumber.setDestination( targetPosition, true );
 
