@@ -1,4 +1,4 @@
-// Copyright 2016-2021, University of Colorado Boulder
+// Copyright 2016-2022, University of Colorado Boulder
 
 /**
  * Cue that informs the user they can drag from the upper-half to split (pull apart) numbers.
