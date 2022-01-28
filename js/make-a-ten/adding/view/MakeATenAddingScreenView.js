@@ -12,7 +12,7 @@ import { Image } from '../../../../../scenery/js/imports.js';
 import { Rectangle } from '../../../../../scenery/js/imports.js';
 import { Color } from '../../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
-import editMage from '../../../../images/edit_png.js';
+import edit_png from '../../../../images/edit_png.js';
 import makeATen from '../../../makeATen.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import AdditionTermsNode from '../../common/view/AdditionTermsNode.js';
@@ -37,7 +37,7 @@ class MakeATenAddingScreenView extends CountingCommonView {
       return new RectangularPushButton( {
         touchAreaXDilation: 10,
         touchAreaYDilation: 10,
-        content: new Image( editMage, { scale: 0.5 } ),
+        content: new Image( edit_png, { scale: 0.5 } ),
         listener: () => {
           model.additionTerms.activeTermProperty.value = term;
         },

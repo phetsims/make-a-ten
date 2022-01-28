@@ -9,8 +9,8 @@
 
 import Property from '../../../../axon/js/Property.js';
 import Screen from '../../../../joist/js/Screen.js';
-import exploreHomeScreenImage from '../../../images/explore-home-screen_png.js';
-import exploreNavBarImage from '../../../images/explore-nav-bar_png.js';
+import exploreHomeScreen_png from '../../../images/exploreHomeScreen_png.js';
+import exploreNavBar_png from '../../../images/exploreNavBar_png.js';
 import makeATen from '../../makeATen.js';
 import makeATenStrings from '../../makeATenStrings.js';
 import MakeATenConstants from '../common/MakeATenConstants.js';
@@ -24,8 +24,8 @@ class MakeATenExploreScreen extends Screen {
     const options = {
       name: makeATenStrings.screen.explore,
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( exploreHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( exploreNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
+      homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( exploreHomeScreen_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( exploreNavBar_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
     };
 
     super(

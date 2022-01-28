@@ -9,8 +9,8 @@
 
 import Property from '../../../../axon/js/Property.js';
 import Screen from '../../../../joist/js/Screen.js';
-import addingHomeScreenImage from '../../../images/adding-home-screen_png.js';
-import addingNavBarImage from '../../../images/adding-nav-bar_png.js';
+import addingHomeScreen_png from '../../../images/addingHomeScreen_png.js';
+import addingNavBar_png from '../../../images/addingNavBar_png.js';
 import makeATen from '../../makeATen.js';
 import makeATenStrings from '../../makeATenStrings.js';
 import MakeATenConstants from '../common/MakeATenConstants.js';
@@ -24,8 +24,8 @@ class MakeATenAddingScreen extends Screen {
     const options = {
       name: makeATenStrings.screen.adding,
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( addingHomeScreenImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( addingNavBarImage, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
+      homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( addingHomeScreen_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( addingNavBar_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
     };
 
     super(

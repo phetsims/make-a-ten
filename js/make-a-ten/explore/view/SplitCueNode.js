@@ -7,7 +7,7 @@
  */
 
 import CountingCommonConstants from '../../../../../counting-common/js/common/CountingCommonConstants.js';
-import handImage from '../../../../../scenery-phet/images/hand_png.js';
+import hand_png from '../../../../../scenery-phet/images/hand_png.js';
 import ArrowNode from '../../../../../scenery-phet/js/ArrowNode.js';
 import { Image } from '../../../../../scenery/js/imports.js';
 import { Node } from '../../../../../scenery/js/imports.js';
@@ -46,7 +46,7 @@ class SplitCueNode extends Node {
     this.arrowContainer = new Node( {
       children: [
         new ArrowNode( 0, 0, 30, -30, arrowOptions ),
-        new Image( handImage, {
+        new Image( hand_png, {
           scale: 0.3,
           rotation: Math.PI / 6 - Math.PI / 5
         } )

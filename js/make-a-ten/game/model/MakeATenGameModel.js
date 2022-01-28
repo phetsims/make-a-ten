@@ -9,16 +9,16 @@
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';
 import Property from '../../../../../axon/js/Property.js';
 import CountingCommonModel from '../../../../../counting-common/js/common/model/CountingCommonModel.js';
-import levelIcon10 from '../../../../images/level-10_png.js';
-import levelIcon1 from '../../../../images/level-1_png.js';
-import levelIcon2 from '../../../../images/level-2_png.js';
-import levelIcon3 from '../../../../images/level-3_png.js';
-import levelIcon4 from '../../../../images/level-4_png.js';
-import levelIcon5 from '../../../../images/level-5_png.js';
-import levelIcon6 from '../../../../images/level-6_png.js';
-import levelIcon7 from '../../../../images/level-7_png.js';
-import levelIcon8 from '../../../../images/level-8_png.js';
-import levelIcon9 from '../../../../images/level-9_png.js';
+import level10_png from '../../../../images/level10_png.js';
+import level1_png from '../../../../images/level1_png.js';
+import level2_png from '../../../../images/level2_png.js';
+import level3_png from '../../../../images/level3_png.js';
+import level4_png from '../../../../images/level4_png.js';
+import level5_png from '../../../../images/level5_png.js';
+import level6_png from '../../../../images/level6_png.js';
+import level7_png from '../../../../images/level7_png.js';
+import level8_png from '../../../../images/level8_png.js';
+import level9_png from '../../../../images/level9_png.js';
 import makeATen from '../../../makeATen.js';
 import makeATenStrings from '../../../makeATenStrings.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
@@ -50,16 +50,16 @@ class MakeATenGameModel extends CountingCommonModel {
 
     // @public {Array.<Level>} - All of the game levels for this screen.
     this.levels = [
-      new Level( 1, '#FC4280', levelIcon1, level1DescriptionString, numberChallengeFactory ),
-      new Level( 2, '#FC4280', levelIcon2, level2DescriptionString, numberChallengeFactory ),
-      new Level( 3, '#FC4280', levelIcon3, level3DescriptionString, numberChallengeFactory ),
-      new Level( 4, '#06A5AD', levelIcon4, level4DescriptionString, numberChallengeFactory ),
-      new Level( 5, '#06A5AD', levelIcon5, level5DescriptionString, numberChallengeFactory ),
-      new Level( 6, '#06A5AD', levelIcon6, level6DescriptionString, numberChallengeFactory ),
-      new Level( 7, '#06A5AD', levelIcon7, level7DescriptionString, numberChallengeFactory ),
-      new Level( 8, '#9778CC', levelIcon8, level8DescriptionString, numberChallengeFactory ),
-      new Level( 9, '#9778CC', levelIcon9, level9DescriptionString, numberChallengeFactory ),
-      new Level( 10, '#9778CC', levelIcon10, level10DescriptionString, numberChallengeFactory )
+      new Level( 1, '#FC4280', level1_png, level1DescriptionString, numberChallengeFactory ),
+      new Level( 2, '#FC4280', level2_png, level2DescriptionString, numberChallengeFactory ),
+      new Level( 3, '#FC4280', level3_png, level3DescriptionString, numberChallengeFactory ),
+      new Level( 4, '#06A5AD', level4_png, level4DescriptionString, numberChallengeFactory ),
+      new Level( 5, '#06A5AD', level5_png, level5DescriptionString, numberChallengeFactory ),
+      new Level( 6, '#06A5AD', level6_png, level6DescriptionString, numberChallengeFactory ),
+      new Level( 7, '#06A5AD', level7_png, level7DescriptionString, numberChallengeFactory ),
+      new Level( 8, '#9778CC', level8_png, level8DescriptionString, numberChallengeFactory ),
+      new Level( 9, '#9778CC', level9_png, level9DescriptionString, numberChallengeFactory ),
+      new Level( 10, '#9778CC', level10_png, level10DescriptionString, numberChallengeFactory )
     ];
 
     // @public {Property.<Level>} - The current level
