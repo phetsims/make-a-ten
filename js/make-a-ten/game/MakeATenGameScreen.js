@@ -1,4 +1,4 @@
-// Copyright 2016-2020, University of Colorado Boulder
+// Copyright 2016-2022, University of Colorado Boulder
 
 /**
  * Game screen for make-a-ten. Includes 10 levels, where the goal for each is to combine the 2 numbers together into
