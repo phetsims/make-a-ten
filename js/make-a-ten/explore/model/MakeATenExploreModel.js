@@ -52,7 +52,6 @@ class MakeATenExploreModel extends CountingCommonModel {
    * @param {number} dt
    */
   step( dt ) {
-    super.step( dt );
 
     // Cap large dt values, which can occur when the tab containing
     // the sim had been hidden and then re-shown
