@@ -17,9 +17,10 @@ class ExplorePanel extends Panel {
   /**
    * @param {MakeATenExploreScreenView} screenView
    * @param {NumberProperty} sumProperty
+   * @param {Emitter} resetEmitter
    * @param {Object} [options] - Passed to Node
    */
-  constructor( screenView, sumProperty, options ) {
+  constructor( screenView, sumProperty, resetEmitter, options ) {
 
     options = merge( {
       fill: 'rgb(208,222,239)',
@@ -30,9 +31,9 @@ class ExplorePanel extends Panel {
       resize: false
     }, options );
 
-    const hundredTargetNode = new CountingCreatorNode( 2, screenView, sumProperty );
-    const tenTargetNode = new CountingCreatorNode( 1, screenView, sumProperty );
-    const oneTargetNode = new CountingCreatorNode( 0, screenView, sumProperty );
+    const hundredTargetNode = new CountingCreatorNode( 2, screenView, sumProperty, resetEmitter );
+    const tenTargetNode = new CountingCreatorNode( 1, screenView, sumProperty, resetEmitter );
+    const oneTargetNode = new CountingCreatorNode( 0, screenView, sumProperty, resetEmitter );
 
     const box = new HBox( {
       children: [ hundredTargetNode, tenTargetNode, oneTargetNode ],

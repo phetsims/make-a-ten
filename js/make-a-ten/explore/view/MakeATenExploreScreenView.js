@@ -66,7 +66,7 @@ class MakeATenExploreScreenView extends CountingCommonView {
     this.addChild( this.sumNode );
 
     // @private {ExplorePanel} - Shows 100,10,1 that can be dragged.
-    this.explorePanel = new ExplorePanel( this, model.sumProperty );
+    this.explorePanel = new ExplorePanel( this, model.sumProperty, model.resetEmitter );
     this.addChild( this.explorePanel );
 
     const hideSumText = new Text( hideTotalString, {
