@@ -7,7 +7,7 @@
  * @author Sharfudeen Ashraf
  */
 
-import Property from '../../../../../axon/js/Property.js';
+import Multilink from '../../../../../axon/js/Multilink.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { HBox } from '../../../../../scenery/js/imports.js';
@@ -82,16 +82,16 @@ class AdditionTermsNode extends Node {
 
     // Add highlights if applicable
     if ( highlightBorders ) {
-      Property.multilink( [ additionTerms.leftTermProperty, additionTerms.activeTermProperty ], ( leftTerm, activeTerm ) => {
+      Multilink.multilink( [ additionTerms.leftTermProperty, additionTerms.activeTermProperty ], ( leftTerm, activeTerm ) => {
         leftNumberDisplayBackground.stroke = ( leftTerm === 0 || activeTerm === ActiveTerm.LEFT ) ? STROKE_COLOR : null;
         leftNumberDisplayBackground.fill = activeTerm === ActiveTerm.LEFT ? 'white' : null;
       } );
-      Property.multilink( [ additionTerms.rightTermProperty, additionTerms.activeTermProperty ], ( rightTerm, activeTerm ) => {
+      Multilink.multilink( [ additionTerms.rightTermProperty, additionTerms.activeTermProperty ], ( rightTerm, activeTerm ) => {
         rightNumberDisplayBackground.stroke = ( rightTerm === 0 || activeTerm === ActiveTerm.RIGHT ) ? STROKE_COLOR : null;
         rightNumberDisplayBackground.fill = activeTerm === ActiveTerm.RIGHT ? 'white' : null;
       } );
 
-      Property.multilink( [ additionTerms.leftTermProperty, additionTerms.rightTermProperty, additionTerms.activeTermProperty ], () => {
+      Multilink.multilink( [ additionTerms.leftTermProperty, additionTerms.rightTermProperty, additionTerms.activeTermProperty ], () => {
         equalsSignText.visible = additionTerms.hasBothTerms();
       } );
     }
