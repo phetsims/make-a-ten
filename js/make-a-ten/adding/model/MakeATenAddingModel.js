@@ -8,11 +8,12 @@
 
 import CountingCommonModel from '../../../../../counting-common/js/common/model/CountingCommonModel.js';
 import makeATen from '../../../makeATen.js';
+import MakeATenConstants from '../../common/MakeATenConstants.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
 
 class MakeATenAddingModel extends CountingCommonModel {
   constructor() {
-    super();
+    super( MakeATenConstants.MAX_SUM );
 
     // @public {AdditionTerms}
     this.additionTerms = new AdditionTerms();

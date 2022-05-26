@@ -6,25 +6,16 @@
  * @author Sharfudeen Ashraf
  */
 
-import NumberProperty from '../../../../../axon/js/NumberProperty.js';
 import CountingCommonModel from '../../../../../counting-common/js/common/model/CountingCommonModel.js';
-import Range from '../../../../../dot/js/Range.js';
 import makeATen from '../../../makeATen.js';
+import MakeATenConstants from '../../common/MakeATenConstants.js';
 import MakeATenQueryParameters from '../../common/MakeATenQueryParameters.js';
 import Cue from './Cue.js';
-
-// constants
-const MAX_SUM = 9999;
 
 class MakeATenExploreModel extends CountingCommonModel {
   constructor() {
 
-    super();
-
-    // @public {NumberProperty} - The total sum of the current numbers
-    this.sumProperty = new NumberProperty( 0, {
-      range: new Range( 0, MAX_SUM )
-    } );
+    super( MakeATenConstants.MAX_SUM );
 
     // @public {Cue} - Visually indicates numbers can be split (pulled apart)
     this.splitCue = new Cue();
@@ -97,7 +88,6 @@ class MakeATenExploreModel extends CountingCommonModel {
   reset() {
     super.reset();
 
-    this.sumProperty.reset();
     this.splitCue.reset();
     this.addInitialNumbers();
   }

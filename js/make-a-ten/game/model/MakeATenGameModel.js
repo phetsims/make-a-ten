@@ -21,6 +21,7 @@ import level8_png from '../../../../images/level8_png.js';
 import level9_png from '../../../../images/level9_png.js';
 import makeATen from '../../../makeATen.js';
 import makeATenStrings from '../../../makeATenStrings.js';
+import MakeATenConstants from '../../common/MakeATenConstants.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
 import GameState from './GameState.js';
 import Level from './Level.js';
@@ -42,7 +43,7 @@ const level9DescriptionString = makeATenStrings.level9Description;
 
 class MakeATenGameModel extends CountingCommonModel {
   constructor() {
-    super();
+    super( MakeATenConstants.MAX_SUM );
 
     // Created here, since due to the initialization of dotRandom to support PhET-iO, we need to delay until the model
     // is created (can't do at static load time), thus we have a separate challenge factory.
