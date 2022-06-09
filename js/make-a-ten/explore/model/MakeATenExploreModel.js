@@ -53,18 +53,6 @@ class MakeATenExploreModel extends CountingCommonModel {
   }
 
   /**
-   * Updates the total sum of the paper numbers.
-   * @private
-   */
-  calculateTotal() {
-    let total = 0;
-    this.paperNumbers.forEach( paperNumber => {
-      total += paperNumber.numberValueProperty.value;
-    } );
-    this.sumProperty.value = total;
-  }
-
-  /**
    * Adds any required initial numbers.
    * @private
    */
