@@ -79,7 +79,7 @@ class MakeATenExploreScreenView extends CountingCommonView {
     } );
 
     // @private {Checkbox} - When checked, hides the sum in the upper-left
-    this.hideSumCheckbox = new Checkbox( hideSumText, this.hideSumProperty, {
+    this.hideSumCheckbox = new Checkbox( this.hideSumProperty, hideSumText, {
       spacing: 10,
       boxWidth: 30
     } );
