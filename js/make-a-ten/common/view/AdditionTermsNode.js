@@ -10,10 +10,7 @@
 import Multilink from '../../../../../axon/js/Multilink.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { HBox } from '../../../../../scenery/js/imports.js';
-import { Node } from '../../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../../scenery/js/imports.js';
-import { Text } from '../../../../../scenery/js/imports.js';
+import { HBox, Node, Rectangle, Text } from '../../../../../scenery/js/imports.js';
 import makeATen from '../../../makeATen.js';
 import ActiveTerm from '../../adding/model/ActiveTerm.js';
 import MakeATenConstants from '../MakeATenConstants.js';

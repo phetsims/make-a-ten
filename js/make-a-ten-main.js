@@ -8,10 +8,10 @@
 
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
-import makeATenStrings from './makeATenStrings.js';
 import MakeATenAddingScreen from './make-a-ten/adding/MakeATenAddingScreen.js';
 import MakeATenExploreScreen from './make-a-ten/explore/MakeATenExploreScreen.js';
 import MakeATenGameScreen from './make-a-ten/game/MakeATenGameScreen.js';
+import makeATenStrings from './makeATenStrings.js';
 
 const makeATenTitleString = makeATenStrings[ 'make-a-ten' ].title;
 

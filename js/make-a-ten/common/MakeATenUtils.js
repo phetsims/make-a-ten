@@ -7,9 +7,7 @@
  */
 
 import ScreenIcon from '../../../../joist/js/ScreenIcon.js';
-import { Image } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
+import { Image, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import makeATen from '../../makeATen.js';
 
 const MakeATenUtils = {

@@ -8,9 +8,7 @@
  */
 
 import CountingCommonView from '../../../../../counting-common/js/common/view/CountingCommonView.js';
-import { Image } from '../../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../../scenery/js/imports.js';
-import { Color } from '../../../../../scenery/js/imports.js';
+import { Color, Image, Rectangle } from '../../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
 import edit_png from '../../../../images/edit_png.js';
 import makeATen from '../../../makeATen.js';
