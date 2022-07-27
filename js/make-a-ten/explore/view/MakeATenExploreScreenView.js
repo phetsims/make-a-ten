@@ -149,7 +149,7 @@ class MakeATenExploreScreenView extends CountingCommonView {
     paperNumberNode.splitEmitter.addListener( this.numberSplitListener );
     paperNumberNode.interactionStartedEmitter.addListener( this.numberInteractionListener );
     paperNumber.endAnimationEmitter.addListener( this.numberAnimationFinishedListener );
-    paperNumber.endDragEmitter.addListener( this.numberDragFinishedListener );
+    paperNumberNode.endDragEmitter.addListener( this.numberDragFinishedListener );
   }
 
   /**
@@ -160,7 +160,7 @@ class MakeATenExploreScreenView extends CountingCommonView {
     const paperNumberNode = this.findPaperNumberNode( paperNumber );
 
     // Remove listeners
-    paperNumber.endDragEmitter.removeListener( this.numberDragFinishedListener );
+    paperNumberNode.endDragEmitter.removeListener( this.numberDragFinishedListener );
     paperNumber.endAnimationEmitter.removeListener( this.numberAnimationFinishedListener );
     paperNumberNode.interactionStartedEmitter.removeListener( this.numberInteractionListener );
     paperNumberNode.splitEmitter.removeListener( this.numberSplitListener );
@@ -213,9 +213,11 @@ class MakeATenExploreScreenView extends CountingCommonView {
    * Called when a paper number has finished being dragged.
    * @private
    *
-   * @param {PaperNumber} paperNumber
+   * @param {PaperNumberNode} paperNumberNode
    */
-  onNumberDragFinished( paperNumber ) {
+  onNumberDragFinished( paperNumberNode ) {
+    const paperNumber = paperNumberNode.paperNumber;
+
     // Return it to the panel if it's been dropped in the panel.
     if ( this.isNumberInReturnZone( paperNumber ) ) {
       const baseNumbers = paperNumber.baseNumbers;
