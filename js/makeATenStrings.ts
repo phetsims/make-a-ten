@@ -11,48 +11,48 @@ import makeATen from './makeATen.js';
 type StringsType = {
   'make-a-ten': {
     'title': string;
-    'titleProperty': TReadOnlyProperty<string>;
+    'titleStringProperty': TReadOnlyProperty<string>;
   };
   'screen': {
     'adding': string;
-    'addingProperty': TReadOnlyProperty<string>;
+    'addingStringProperty': TReadOnlyProperty<string>;
     'explore': string;
-    'exploreProperty': TReadOnlyProperty<string>;
+    'exploreStringProperty': TReadOnlyProperty<string>;
     'game': string;
-    'gameProperty': TReadOnlyProperty<string>;
+    'gameStringProperty': TReadOnlyProperty<string>;
   };
   'hideTotal': string;
-  'hideTotalProperty': TReadOnlyProperty<string>;
+  'hideTotalStringProperty': TReadOnlyProperty<string>;
   'submit': string;
-  'submitProperty': TReadOnlyProperty<string>;
+  'submitStringProperty': TReadOnlyProperty<string>;
   'next': string;
-  'nextProperty': TReadOnlyProperty<string>;
+  'nextStringProperty': TReadOnlyProperty<string>;
   'pattern': {
     'level': {
       '0levelNumber': string;
-      '0levelNumberProperty': TReadOnlyProperty<string>;
+      '0levelNumberStringProperty': TReadOnlyProperty<string>;
     }
   };
   'level1Description': string;
-  'level1DescriptionProperty': TReadOnlyProperty<string>;
+  'level1DescriptionStringProperty': TReadOnlyProperty<string>;
   'level2Description': string;
-  'level2DescriptionProperty': TReadOnlyProperty<string>;
+  'level2DescriptionStringProperty': TReadOnlyProperty<string>;
   'level3Description': string;
-  'level3DescriptionProperty': TReadOnlyProperty<string>;
+  'level3DescriptionStringProperty': TReadOnlyProperty<string>;
   'level4Description': string;
-  'level4DescriptionProperty': TReadOnlyProperty<string>;
+  'level4DescriptionStringProperty': TReadOnlyProperty<string>;
   'level5Description': string;
-  'level5DescriptionProperty': TReadOnlyProperty<string>;
+  'level5DescriptionStringProperty': TReadOnlyProperty<string>;
   'level6Description': string;
-  'level6DescriptionProperty': TReadOnlyProperty<string>;
+  'level6DescriptionStringProperty': TReadOnlyProperty<string>;
   'level7Description': string;
-  'level7DescriptionProperty': TReadOnlyProperty<string>;
+  'level7DescriptionStringProperty': TReadOnlyProperty<string>;
   'level8Description': string;
-  'level8DescriptionProperty': TReadOnlyProperty<string>;
+  'level8DescriptionStringProperty': TReadOnlyProperty<string>;
   'level9Description': string;
-  'level9DescriptionProperty': TReadOnlyProperty<string>;
+  'level9DescriptionStringProperty': TReadOnlyProperty<string>;
   'level10Description': string;
-  'level10DescriptionProperty': TReadOnlyProperty<string>;
+  'level10DescriptionStringProperty': TReadOnlyProperty<string>;
 };
 
 const makeATenStrings = getStringModule( 'MAKE_A_TEN' ) as StringsType;
