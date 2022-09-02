@@ -13,7 +13,7 @@ import MakeATenExploreScreen from './make-a-ten/explore/MakeATenExploreScreen.js
 import MakeATenGameScreen from './make-a-ten/game/MakeATenGameScreen.js';
 import makeATenStrings from './makeATenStrings.js';
 
-const makeATenTitleString = makeATenStrings[ 'make-a-ten' ].title;
+const makeATenTitleStringProperty = makeATenStrings[ 'make-a-ten' ].titleStringProperty;
 
 const simOptions = {
   credits: {
@@ -26,6 +26,6 @@ const simOptions = {
 };
 
 simLauncher.launch( () => {
-  const sim = new Sim( makeATenTitleString, [ new MakeATenExploreScreen(), new MakeATenAddingScreen(), new MakeATenGameScreen() ], simOptions );
+  const sim = new Sim( makeATenTitleStringProperty, [ new MakeATenExploreScreen(), new MakeATenAddingScreen(), new MakeATenGameScreen() ], simOptions );
   sim.start();
 } );
