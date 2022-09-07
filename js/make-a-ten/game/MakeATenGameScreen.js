@@ -13,7 +13,7 @@ import Screen from '../../../../joist/js/Screen.js';
 import gameHomeScreen_png from '../../../images/gameHomeScreen_png.js';
 import gameNavBar_png from '../../../images/gameNavBar_png.js';
 import makeATen from '../../makeATen.js';
-import makeATenStrings from '../../makeATenStrings.js';
+import MakeATenStrings from '../../MakeATenStrings.js';
 import MakeATenConstants from '../common/MakeATenConstants.js';
 import MakeATenUtils from '../common/MakeATenUtils.js';
 import MakeATenGameModel from './model/MakeATenGameModel.js';
@@ -23,7 +23,7 @@ class MakeATenGameScreen extends Screen {
   constructor() {
 
     const options = {
-      name: makeATenStrings.screen.game,
+      name: MakeATenStrings.screen.game,
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( gameHomeScreen_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( gameNavBar_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR )

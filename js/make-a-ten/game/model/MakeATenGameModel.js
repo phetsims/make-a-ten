@@ -20,7 +20,7 @@ import level7_png from '../../../../images/level7_png.js';
 import level8_png from '../../../../images/level8_png.js';
 import level9_png from '../../../../images/level9_png.js';
 import makeATen from '../../../makeATen.js';
-import makeATenStrings from '../../../makeATenStrings.js';
+import MakeATenStrings from '../../../MakeATenStrings.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
 import GameState from './GameState.js';
@@ -28,16 +28,16 @@ import Level from './Level.js';
 import NumberChallengeFactory from './NumberChallengeFactory.js';
 
 // Level descriptions
-const level10DescriptionString = makeATenStrings.level10Description;
-const level1DescriptionString = makeATenStrings.level1Description;
-const level2DescriptionString = makeATenStrings.level2Description;
-const level3DescriptionString = makeATenStrings.level3Description;
-const level4DescriptionString = makeATenStrings.level4Description;
-const level5DescriptionString = makeATenStrings.level5Description;
-const level6DescriptionString = makeATenStrings.level6Description;
-const level7DescriptionString = makeATenStrings.level7Description;
-const level8DescriptionString = makeATenStrings.level8Description;
-const level9DescriptionString = makeATenStrings.level9Description;
+const level10DescriptionString = MakeATenStrings.level10Description;
+const level1DescriptionString = MakeATenStrings.level1Description;
+const level2DescriptionString = MakeATenStrings.level2Description;
+const level3DescriptionString = MakeATenStrings.level3Description;
+const level4DescriptionString = MakeATenStrings.level4Description;
+const level5DescriptionString = MakeATenStrings.level5Description;
+const level6DescriptionString = MakeATenStrings.level6Description;
+const level7DescriptionString = MakeATenStrings.level7Description;
+const level8DescriptionString = MakeATenStrings.level8Description;
+const level9DescriptionString = MakeATenStrings.level9Description;
 
 // Level icons
 

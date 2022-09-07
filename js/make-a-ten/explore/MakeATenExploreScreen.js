@@ -12,7 +12,7 @@ import Screen from '../../../../joist/js/Screen.js';
 import exploreHomeScreen_png from '../../../images/exploreHomeScreen_png.js';
 import exploreNavBar_png from '../../../images/exploreNavBar_png.js';
 import makeATen from '../../makeATen.js';
-import makeATenStrings from '../../makeATenStrings.js';
+import MakeATenStrings from '../../MakeATenStrings.js';
 import MakeATenConstants from '../common/MakeATenConstants.js';
 import MakeATenUtils from '../common/MakeATenUtils.js';
 import MakeATenExploreModel from './model/MakeATenExploreModel.js';
@@ -22,7 +22,7 @@ class MakeATenExploreScreen extends Screen {
   constructor() {
 
     const options = {
-      name: makeATenStrings.screen.explore,
+      name: MakeATenStrings.screen.explore,
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( exploreHomeScreen_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( exploreNavBar_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR )

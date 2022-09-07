@@ -11,10 +11,10 @@ import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { Node, Text, VBox } from '../../../../../scenery/js/imports.js';
 import Dialog from '../../../../../sun/js/Dialog.js';
 import makeATen from '../../../makeATen.js';
-import makeATenStrings from '../../../makeATenStrings.js';
+import MakeATenStrings from '../../../MakeATenStrings.js';
 
 // Template for inserting the level number
-const patternLevel0LevelNumberString = makeATenStrings.pattern.level[ '0levelNumber' ];
+const patternLevel0LevelNumberString = MakeATenStrings.pattern.level[ '0levelNumber' ];
 
 const LEVEL_NUMBER_FONT = new PhetFont( { size: 14, weight: 'bold' } );
 const LEVEL_DESCRIPTION_FONT = new PhetFont( 14 );

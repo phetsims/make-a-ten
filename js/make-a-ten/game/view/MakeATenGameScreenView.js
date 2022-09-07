@@ -20,7 +20,7 @@ import GameAudioPlayer from '../../../../../vegas/js/GameAudioPlayer.js';
 import InfiniteStatusBar from '../../../../../vegas/js/InfiniteStatusBar.js';
 import RewardDialog from '../../../../../vegas/js/RewardDialog.js';
 import makeATen from '../../../makeATen.js';
-import makeATenStrings from '../../../makeATenStrings.js';
+import MakeATenStrings from '../../../MakeATenStrings.js';
 import AdditionTermsNode from '../../common/view/AdditionTermsNode.js';
 import GameState from '../model/GameState.js';
 import InfoDialog from './InfoDialog.js';
@@ -28,8 +28,8 @@ import MakeATenRewardNode from './MakeATenRewardNode.js';
 import NextArrowButton from './NextArrowButton.js';
 import StartGameLevelNode from './StartGameLevelNode.js';
 
-const nextString = makeATenStrings.next;
-const patternLevel0LevelNumberString = makeATenStrings.pattern.level[ '0levelNumber' ];
+const nextString = MakeATenStrings.next;
+const patternLevel0LevelNumberString = MakeATenStrings.pattern.level[ '0levelNumber' ];
 
 class MakeATenGameScreenView extends CountingCommonView {
 

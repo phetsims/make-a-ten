@@ -17,9 +17,9 @@ import { VBox } from '../../../../../scenery/js/imports.js';
 import TextPushButton from '../../../../../sun/js/buttons/TextPushButton.js';
 import Panel from '../../../../../sun/js/Panel.js';
 import makeATen from '../../../makeATen.js';
-import makeATenStrings from '../../../makeATenStrings.js';
+import MakeATenStrings from '../../../MakeATenStrings.js';
 
-const submitString = makeATenStrings.submit;
+const submitString = MakeATenStrings.submit;
 
 class KeyboardPanel extends Panel {
 

@@ -16,12 +16,12 @@ import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { HBox, Text } from '../../../../../scenery/js/imports.js';
 import Checkbox from '../../../../../sun/js/Checkbox.js';
 import makeATen from '../../../makeATen.js';
-import makeATenStrings from '../../../makeATenStrings.js';
+import MakeATenStrings from '../../../MakeATenStrings.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import ExplorePanel from './ExplorePanel.js';
 import SplitCueNode from './SplitCueNode.js';
 
-const hideTotalString = makeATenStrings.hideTotal;
+const hideTotalString = MakeATenStrings.hideTotal;
 
 // constants
 const EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );

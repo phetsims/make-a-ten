@@ -55,8 +55,8 @@ type StringsType = {
   'level10DescriptionStringProperty': TReadOnlyProperty<string>;
 };
 
-const makeATenStrings = getStringModule( 'MAKE_A_TEN' ) as StringsType;
+const MakeATenStrings = getStringModule( 'MAKE_A_TEN' ) as StringsType;
 
-makeATen.register( 'makeATenStrings', makeATenStrings );
+makeATen.register( 'MakeATenStrings', MakeATenStrings );
 
-export default makeATenStrings;
+export default MakeATenStrings;
