@@ -22,7 +22,7 @@ class MakeATenExploreScreen extends Screen {
   constructor() {
 
     const options = {
-      name: MakeATenStrings.screen.explore,
+      name: MakeATenStrings.screen.exploreStringProperty,
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( exploreHomeScreen_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( exploreNavBar_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR )

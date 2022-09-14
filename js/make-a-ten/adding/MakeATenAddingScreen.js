@@ -22,7 +22,7 @@ class MakeATenAddingScreen extends Screen {
   constructor() {
 
     const options = {
-      name: MakeATenStrings.screen.adding,
+      name: MakeATenStrings.screen.addingStringProperty,
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( addingHomeScreen_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( addingNavBar_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR )

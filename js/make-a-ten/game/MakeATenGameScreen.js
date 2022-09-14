@@ -23,7 +23,7 @@ class MakeATenGameScreen extends Screen {
   constructor() {
 
     const options = {
-      name: MakeATenStrings.screen.game,
+      name: MakeATenStrings.screen.gameStringProperty,
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( gameHomeScreen_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( gameNavBar_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
