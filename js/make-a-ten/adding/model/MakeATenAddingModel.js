@@ -20,11 +20,11 @@ class MakeATenAddingModel extends CountingCommonModel {
   }
 
   /**
-   * Clears the play area and places paper numbers corresponding to the additionTerms.
+   * Clears the play area and places counting objects corresponding to the additionTerms.
    * @public
    */
   setupTerms() {
-    this.removeAllPaperNumbers();
+    this.removeAllCountingObjects();
     this.addMultipleNumbers( [
       this.additionTerms.leftTermProperty.value,
       this.additionTerms.rightTermProperty.value

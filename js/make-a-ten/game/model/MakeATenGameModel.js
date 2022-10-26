@@ -79,8 +79,8 @@ class MakeATenGameModel extends CountingCommonModel {
     this.additionTerms = new AdditionTerms();
 
     // Check for when the challenge is completed
-    this.paperNumbers.lengthProperty.link( ( newLength, oldLength ) => {
-      // Check oldLength to make sure it's not from the paper numbers just added.
+    this.countingObjects.lengthProperty.link( ( newLength, oldLength ) => {
+      // Check oldLength to make sure it's not from the counting objects just added.
       if ( newLength === 1 && oldLength === 2 && this.gameStateProperty.value === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
         this.gameStateProperty.value = GameState.CORRECT_ANSWER;
       }
@@ -108,7 +108,7 @@ class MakeATenGameModel extends CountingCommonModel {
    * @param {Level} level
    */
   startLevel( level ) {
-    this.removeAllPaperNumbers();
+    this.removeAllCountingObjects();
 
     this.currentLevelProperty.value = level;
 
@@ -132,7 +132,7 @@ class MakeATenGameModel extends CountingCommonModel {
    * @public
    */
   moveToNextChallenge() {
-    this.removeAllPaperNumbers();
+    this.removeAllCountingObjects();
 
     this.currentChallengeProperty.value = this.currentLevelProperty.value.generateChallenge();
     this.gameStateProperty.value = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
@@ -147,13 +147,13 @@ class MakeATenGameModel extends CountingCommonModel {
   }
 
   /**
-   * Creates paper numbers for the specified challenge.
+   * Creates counting objects for the specified challenge.
    * @public
    *
    * @param {NumberChallenge} numberChallenge
    */
   setupChallenge( numberChallenge ) {
-    this.removeAllPaperNumbers();
+    this.removeAllCountingObjects();
     this.additionTerms.leftTermProperty.value = numberChallenge.leftTerm;
     this.additionTerms.rightTermProperty.value = numberChallenge.rightTerm;
     this.addMultipleNumbers( [ numberChallenge.leftTerm, numberChallenge.rightTerm ] );

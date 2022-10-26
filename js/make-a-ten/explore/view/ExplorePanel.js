@@ -1,7 +1,7 @@
 // Copyright 2016-2022, University of Colorado Boulder
 
 /**
- * Panel that contains a 100, 10 and 1, which can be clicked/dragged to create draggable paper numbers.
+ * Panel that contains a 100, 10 and 1, which can be clicked/dragged to create draggable counting objects.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  * @author Chris Klusendorf (PhET Interactive Simulations)

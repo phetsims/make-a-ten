@@ -1,7 +1,7 @@
 // Copyright 2016-2021, University of Colorado Boulder
 
 /**
- * Common move/split cue model. The cue represents a visual indicator that sticks to a paper number, and lets the user
+ * Common move/split cue model. The cue represents a visual indicator that sticks to a counting object, and lets the user
  * know they can do an operation. It will fade away when the operation is performed, but will return upon reset all.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
@@ -25,8 +25,8 @@ const CueState = Object.freeze( {
 
 class Cue {
   constructor() {
-    // @public {Property.<PaperNumber|null>} - What PaperNumber the cue is attached to.
-    this.paperNumberProperty = new Property( null );
+    // @public {Property.<CountingObject|null>} - What CountingObject the cue is attached to.
+    this.countingObjectProperty = new Property( null );
 
     // @public {BooleanProperty} - Whether the cue should be visible at all
     this.visibilityProperty = new BooleanProperty( false );
@@ -60,18 +60,18 @@ class Cue {
    * Attaches the cue to the number (if it hasn't faded fully).
    * @public
    *
-   * @param {PaperNumber} paperNumber
+   * @param {CountingObject} countingObject
    */
-  attachToNumber( paperNumber ) {
+  attachToNumber( countingObject ) {
     if ( this.stateProperty.value === CueState.FADED ) { return; }
 
     this.stateProperty.value = ( this.stateProperty.value === CueState.FADING ) ? this.stateProperty.value : CueState.ATTACHED;
-    this.paperNumberProperty.value = paperNumber;
+    this.countingObjectProperty.value = countingObject;
     this.visibilityProperty.value = true;
   }
 
   /**
-   * Detach from the current paper number, without fading.
+   * Detach from the current counting object, without fading.
    * @public
    */
   detach() {
@@ -115,7 +115,7 @@ class Cue {
     this.stateProperty.value = CueState.UNATTACHED;
     this.visibilityProperty.value = false;
     this.opacityProperty.value = 1;
-    this.paperNumberProperty.value = null;
+    this.countingObjectProperty.value = null;
   }
 
   /**
@@ -126,7 +126,7 @@ class Cue {
     this.stateProperty.value = CueState.FADED;
     this.visibilityProperty.value = false;
     this.opacityProperty.value = 1;
-    this.paperNumberProperty.value = null;
+    this.countingObjectProperty.value = null;
   }
 }
 

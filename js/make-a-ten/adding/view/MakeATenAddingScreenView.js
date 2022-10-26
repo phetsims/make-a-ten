@@ -58,8 +58,8 @@ class MakeATenAddingScreenView extends CountingCommonView {
     this.addChild( leftEditButton );
     this.addChild( rightEditButton );
 
-    // Where all of the paper numbers go (from supertype)
-    this.addChild( this.paperNumberLayerNode );
+    // Where all of the counting objects go (from supertype)
+    this.addChild( this.countingObjectLayerNode );
 
     function onNumberSubmit( value ) {
       if ( model.additionTerms.activeTermProperty.value === ActiveTerm.LEFT ) {

@@ -119,8 +119,8 @@ class MakeATenGameScreenView extends CountingCommonView {
       this.nextChallengeButton.visible = gameState === GameState.CORRECT_ANSWER;
     } );
 
-    // Add the paper number layer from our supertype
-    this.challengeLayer.addChild( this.paperNumberLayerNode );
+    // Add the counting object layer from our supertype
+    this.challengeLayer.addChild( this.countingObjectLayerNode );
 
     const levelNumberText = new Text( '', {
       font: new PhetFont( { size: 18, weight: 'bold' } ),

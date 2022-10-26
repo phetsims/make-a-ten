@@ -57,16 +57,16 @@ class SplitCueNode extends Node {
     cue.visibilityProperty.linkAttribute( this, 'visible' );
     cue.opacityProperty.linkAttribute( this, 'opacity' );
     cue.visibilityProperty.link( updatePositionListener ); // update position when we become visible
-    cue.paperNumberProperty.link( ( newPaperNumber, oldPaperNumber ) => {
-      if ( newPaperNumber ) {
-        newPaperNumber.positionProperty.link( updatePositionListener ); // translation
-        newPaperNumber.numberValueProperty.link( updatePositionListener ); // may have changed bounds
-        newPaperNumber.numberValueProperty.link( updateRectangleListener ); // may have changed bounds
+    cue.countingObjectProperty.link( ( newCountingObject, oldCountingObject ) => {
+      if ( newCountingObject ) {
+        newCountingObject.positionProperty.link( updatePositionListener ); // translation
+        newCountingObject.numberValueProperty.link( updatePositionListener ); // may have changed bounds
+        newCountingObject.numberValueProperty.link( updateRectangleListener ); // may have changed bounds
       }
-      if ( oldPaperNumber ) {
-        oldPaperNumber.numberValueProperty.unlink( updateRectangleListener );
-        oldPaperNumber.numberValueProperty.unlink( updatePositionListener );
-        oldPaperNumber.positionProperty.unlink( updatePositionListener );
+      if ( oldCountingObject ) {
+        oldCountingObject.numberValueProperty.unlink( updateRectangleListener );
+        oldCountingObject.numberValueProperty.unlink( updatePositionListener );
+        oldCountingObject.positionProperty.unlink( updatePositionListener );
       }
     } );
   }
@@ -77,12 +77,12 @@ class SplitCueNode extends Node {
    */
   updatePosition() {
     const visible = this.cue.visibilityProperty.value;
-    const paperNumber = this.cue.paperNumberProperty.value;
+    const countingObject = this.cue.countingObjectProperty.value;
 
-    if ( visible && paperNumber ) {
-      const position = paperNumber.positionProperty.value;
+    if ( visible && countingObject ) {
+      const position = countingObject.positionProperty.value;
       this.setTranslation( position );
-      this.arrowContainer.setTranslation( paperNumber.localBounds.right - 22, paperNumber.localBounds.top + 15 );
+      this.arrowContainer.setTranslation( countingObject.localBounds.right - 22, countingObject.localBounds.top + 15 );
     }
   }
 
@@ -91,10 +91,10 @@ class SplitCueNode extends Node {
    * @private
    */
   updateRectangle() {
-    const paperNumber = this.cue.paperNumberProperty.value;
+    const countingObject = this.cue.countingObjectProperty.value;
 
-    if ( paperNumber ) {
-      this.seeThroughRectangle.setRectBounds( paperNumber.localBounds.withMaxY( paperNumber.getBoundaryY() ) );
+    if ( countingObject ) {
+      this.seeThroughRectangle.setRectBounds( countingObject.localBounds.withMaxY( countingObject.getBoundaryY() ) );
     }
   }
 }

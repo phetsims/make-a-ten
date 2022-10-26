@@ -23,14 +23,14 @@ class MakeATenExploreModel extends CountingCommonModel {
     // @private {Function} - To be called when we need to recalculate the total
     const calculateTotalListener = this.calculateTotal.bind( this );
 
-    this.paperNumbers.lengthProperty.link( calculateTotalListener );
+    this.countingObjects.lengthProperty.link( calculateTotalListener );
 
-    // Listen to number changes of paper numbers
-    this.paperNumbers.addItemAddedListener( paperNumber => {
-      paperNumber.numberValueProperty.link( calculateTotalListener );
+    // Listen to number changes of counting objects
+    this.countingObjects.addItemAddedListener( countingObject => {
+      countingObject.numberValueProperty.link( calculateTotalListener );
     } );
-    this.paperNumbers.addItemRemovedListener( paperNumber => {
-      paperNumber.numberValueProperty.unlink( calculateTotalListener );
+    this.countingObjects.addItemRemovedListener( countingObject => {
+      countingObject.numberValueProperty.unlink( calculateTotalListener );
     } );
 
     this.addInitialNumbers();
@@ -61,9 +61,9 @@ class MakeATenExploreModel extends CountingCommonModel {
     this.addMultipleNumbers( MakeATenQueryParameters.exploreNumbers );
 
     // Attach cues to any available numbers
-    this.paperNumbers.forEach( paperNumber => {
-      if ( paperNumber.numberValueProperty.value > 1 ) {
-        this.splitCue.attachToNumber( paperNumber );
+    this.countingObjects.forEach( countingObject => {
+      if ( countingObject.numberValueProperty.value > 1 ) {
+        this.splitCue.attachToNumber( countingObject );
       }
     } );
   }

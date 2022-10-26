@@ -8,7 +8,7 @@
  */
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
-import PaperNumber from '../../../../../counting-common/js/common/model/PaperNumber.js';
+import CountingObject from '../../../../../counting-common/js/common/model/CountingObject.js';
 import CountingCommonView from '../../../../../counting-common/js/common/view/CountingCommonView.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
@@ -34,16 +34,16 @@ class MakeATenExploreScreenView extends CountingCommonView {
 
     super( model );
 
-    // @private {Function} - Called with function( paperNumberNode ) on number splits
+    // @private {Function} - Called with function( countingObjectNode ) on number splits
     this.numberSplitListener = this.onNumberSplit.bind( this );
 
-    // @private {Function} - Called with function( paperNumberNode ) when a number begins to be interacted with.
+    // @private {Function} - Called with function( countingObjectNode ) when a number begins to be interacted with.
     this.numberInteractionListener = this.onNumberInteractionStarted.bind( this );
 
-    // @private {Function} - Called with function( paperNumber ) when a number finishes animation
+    // @private {Function} - Called with function( countingObject ) when a number finishes animation
     this.numberAnimationFinishedListener = this.onNumberAnimationFinished.bind( this );
 
-    // @private {Function} - Called with function( paperNumber ) when a number finishes being dragged
+    // @private {Function} - Called with function( countingObject ) when a number finishes being dragged
     this.numberDragFinishedListener = this.onNumberDragFinished.bind( this );
 
     this.finishInitialization();
@@ -89,7 +89,7 @@ class MakeATenExploreScreenView extends CountingCommonView {
       this.sumNode.visible = !hideSum;
     } );
 
-    this.addChild( this.paperNumberLayerNode );
+    this.addChild( this.countingObjectLayerNode );
 
     this.addChild( new SplitCueNode( model.splitCue ) );
 
@@ -116,24 +116,24 @@ class MakeATenExploreScreenView extends CountingCommonView {
   }
 
   /**
-   * Whether the paper number is predominantly over the explore panel (should be collected).
+   * Whether the counting object is predominantly over the explore panel (should be collected).
    * @private
    *
-   * @param {PaperNumber} paperNumber
+   * @param {CountingObject} countingObject
    * @returns {boolean}
    */
-  isNumberInReturnZone( paperNumber ) {
+  isNumberInReturnZone( countingObject ) {
     // Compute the local point on the number that would need to go into the return zone.
     // This point is a bit farther down than the exact center, as it was annoying to "miss" the return zone
     // slightly by being too high (while the mouse WAS in the return zone).
-    const localBounds = paperNumber.localBounds;
+    const localBounds = countingObject.localBounds;
     const localReturnPoint = localBounds.center.plus( localBounds.centerBottom ).dividedScalar( 2 );
 
     // And the bounds of our panel
     const panelBounds = this.explorePanel.bounds.withMaxY( this.visibleBoundsProperty.value.bottom );
 
     // View coordinate of our return point
-    const paperCenter = paperNumber.positionProperty.value.plus( localReturnPoint );
+    const paperCenter = countingObject.positionProperty.value.plus( localReturnPoint );
 
     return panelBounds.containsPoint( paperCenter );
   }
@@ -142,104 +142,104 @@ class MakeATenExploreScreenView extends CountingCommonView {
    * @public
    * @override
    */
-  onPaperNumberAdded( paperNumber ) {
-    const paperNumberNode = super.onPaperNumberAdded( paperNumber );
+  onCountingObjectAdded( countingObject ) {
+    const countingObjectNode = super.onCountingObjectAdded( countingObject );
 
     // Add listeners
-    paperNumberNode.splitEmitter.addListener( this.numberSplitListener );
-    paperNumberNode.interactionStartedEmitter.addListener( this.numberInteractionListener );
-    paperNumber.endAnimationEmitter.addListener( this.numberAnimationFinishedListener );
-    paperNumberNode.endDragEmitter.addListener( this.numberDragFinishedListener );
+    countingObjectNode.splitEmitter.addListener( this.numberSplitListener );
+    countingObjectNode.interactionStartedEmitter.addListener( this.numberInteractionListener );
+    countingObject.endAnimationEmitter.addListener( this.numberAnimationFinishedListener );
+    countingObjectNode.endDragEmitter.addListener( this.numberDragFinishedListener );
   }
 
   /**
    * @public
    * @override
    */
-  onPaperNumberRemoved( paperNumber ) {
-    const paperNumberNode = this.findPaperNumberNode( paperNumber );
+  onCountingObjectRemoved( countingObject ) {
+    const countingObjectNode = this.findCountingObjectNode( countingObject );
 
     // Remove listeners
-    paperNumberNode.endDragEmitter.removeListener( this.numberDragFinishedListener );
-    paperNumber.endAnimationEmitter.removeListener( this.numberAnimationFinishedListener );
-    paperNumberNode.interactionStartedEmitter.removeListener( this.numberInteractionListener );
-    paperNumberNode.splitEmitter.removeListener( this.numberSplitListener );
+    countingObjectNode.endDragEmitter.removeListener( this.numberDragFinishedListener );
+    countingObject.endAnimationEmitter.removeListener( this.numberAnimationFinishedListener );
+    countingObjectNode.interactionStartedEmitter.removeListener( this.numberInteractionListener );
+    countingObjectNode.splitEmitter.removeListener( this.numberSplitListener );
 
     // Detach any attached cues
-    if ( this.model.splitCue.paperNumberProperty.value === paperNumber ) {
+    if ( this.model.splitCue.countingObjectProperty.value === countingObject ) {
       this.model.splitCue.detach();
     }
 
-    super.onPaperNumberRemoved( paperNumber );
+    super.onCountingObjectRemoved( countingObject );
   }
 
   /**
-   * Called when a paper number node is split.
+   * Called when a counting object node is split.
    * @private
    *
-   * @param {PaperNumberNode} paperNumberNode
+   * @param {CountingObjectNode} countingObjectNode
    */
-  onNumberSplit( paperNumberNode ) {
+  onNumberSplit( countingObjectNode ) {
     this.model.splitCue.triggerFade();
   }
 
   /**
-   * Called when a paper number node starts being interacted with.
+   * Called when a counting object node starts being interacted with.
    * @private
    *
-   * @param {PaperNumberNode} paperNumberNode
+   * @param {CountingObjectNode} countingObjectNode
    */
-  onNumberInteractionStarted( paperNumberNode ) {
-    const paperNumber = paperNumberNode.paperNumber;
-    if ( paperNumber.numberValueProperty.value > 1 ) {
-      this.model.splitCue.attachToNumber( paperNumber );
+  onNumberInteractionStarted( countingObjectNode ) {
+    const countingObject = countingObjectNode.countingObject;
+    if ( countingObject.numberValueProperty.value > 1 ) {
+      this.model.splitCue.attachToNumber( countingObject );
     }
   }
 
   /**
-   * Called when a paper number has finished animating to its destination.
+   * Called when a counting object has finished animating to its destination.
    * @private
    *
-   * @param {PaperNumber} paperNumber
+   * @param {CountingObject} countingObject
    */
-  onNumberAnimationFinished( paperNumber ) {
+  onNumberAnimationFinished( countingObject ) {
     // If it animated to the return zone, it's probably split and meant to be returned.
-    if ( this.isNumberInReturnZone( paperNumber ) ) {
-      this.model.removePaperNumber( paperNumber );
+    if ( this.isNumberInReturnZone( countingObject ) ) {
+      this.model.removeCountingObject( countingObject );
     }
   }
 
   /**
-   * Called when a paper number has finished being dragged.
+   * Called when a counting object has finished being dragged.
    * @private
    *
-   * @param {PaperNumberNode} paperNumberNode
+   * @param {CountingObjectNode} countingObjectNode
    */
-  onNumberDragFinished( paperNumberNode ) {
-    const paperNumber = paperNumberNode.paperNumber;
+  onNumberDragFinished( countingObjectNode ) {
+    const countingObject = countingObjectNode.countingObject;
 
     // Return it to the panel if it's been dropped in the panel.
-    if ( this.isNumberInReturnZone( paperNumber ) ) {
-      const baseNumbers = paperNumber.baseNumbers;
+    if ( this.isNumberInReturnZone( countingObject ) ) {
+      const baseNumbers = countingObject.baseNumbers;
 
-      // Split it into a PaperNumber for each of its base numbers, and animate them to their targets in the
+      // Split it into a CountingObject for each of its base numbers, and animate them to their targets in the
       // explore panel.
       for ( let i = baseNumbers.length - 1; i >= 0; i-- ) {
         const baseNumber = baseNumbers[ i ];
-        const basePaperNumber = new PaperNumber( baseNumber.numberValue, paperNumber.positionProperty.value );
+        const baseCountingObject = new CountingObject( baseNumber.numberValue, countingObject.positionProperty.value );
 
         // Set its destination to the proper target (with the offset so that it will disappear once centered).
         let targetPosition = this.explorePanel.digitLengthToTargetNode[ baseNumber.digitLength ].getOriginPosition();
-        const paperCenterOffset = new PaperNumber( baseNumber.numberValue, new Vector2( 0, 0 ) ).localBounds.center;
+        const paperCenterOffset = new CountingObject( baseNumber.numberValue, new Vector2( 0, 0 ) ).localBounds.center;
         targetPosition = targetPosition.minus( paperCenterOffset );
-        basePaperNumber.setDestination( targetPosition, true );
+        baseCountingObject.setDestination( targetPosition, true );
 
-        // Add the new base paper number
-        this.model.addPaperNumber( basePaperNumber );
+        // Add the new base counting object
+        this.model.addCountingObject( baseCountingObject );
       }
 
-      // Remove the original paper number (as we have added its components).
-      this.model.removePaperNumber( paperNumber );
+      // Remove the original counting object (as we have added its components).
+      this.model.removeCountingObject( countingObject );
     }
   }
 
