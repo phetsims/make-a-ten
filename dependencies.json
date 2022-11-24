@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "make-a-ten": {
-    "sha": "66792ba2634f1bf8e1c8b897ed254ee8e9a25db9",
+    "sha": "ee9549d0f03dd6b222fd258952b00d3f4791cdd7",
     "branch": "1.0"
   },
   "phet-core": {
@@ -49,7 +49,7 @@
     "branch": "HEAD"
   },
   "scenery": {
-    "sha": "4e92d3158218739996563dd5b624a2d0491d0b7f",
+    "sha": "2715f8043c56340a2d13dc4eb9729144656f545f",
     "branch": "HEAD"
   },
   "scenery-phet": {
