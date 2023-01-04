@@ -1,4 +1,4 @@
-// Copyright 2015-2022, University of Colorado Boulder
+// Copyright 2015-2023, University of Colorado Boulder
 
 /**
  * Adding screenview for Make a Ten. Allows entering two numbers with a keypad, so that the user can experiment with
