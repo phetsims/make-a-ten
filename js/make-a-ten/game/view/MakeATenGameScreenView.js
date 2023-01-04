@@ -9,7 +9,7 @@
  */
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
-import CountingCommonView from '../../../../../counting-common/js/common/view/CountingCommonView.js';
+import CountingCommonScreenView from '../../../../../counting-common/js/common/view/CountingCommonScreenView.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import InfoButton from '../../../../../scenery-phet/js/buttons/InfoButton.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
@@ -31,7 +31,7 @@ import StartGameLevelNode from './StartGameLevelNode.js';
 const nextString = MakeATenStrings.next;
 const patternLevel0LevelNumberString = MakeATenStrings.pattern.level[ '0levelNumber' ];
 
-class MakeATenGameScreenView extends CountingCommonView {
+class MakeATenGameScreenView extends CountingCommonScreenView {
 
   /**
    * @param {MakeATenGameModel} model

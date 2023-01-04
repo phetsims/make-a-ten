@@ -9,7 +9,7 @@
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import CountingObject from '../../../../../counting-common/js/common/model/CountingObject.js';
-import CountingCommonView from '../../../../../counting-common/js/common/view/CountingCommonView.js';
+import CountingCommonScreenView from '../../../../../counting-common/js/common/view/CountingCommonScreenView.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
@@ -26,7 +26,7 @@ const hideTotalString = MakeATenStrings.hideTotal;
 // constants
 const EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
 
-class MakeATenExploreScreenView extends CountingCommonView {
+class MakeATenExploreScreenView extends CountingCommonScreenView {
   /**
    * @param {MakeATenExploreModel} model
    */

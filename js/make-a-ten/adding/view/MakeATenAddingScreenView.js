@@ -7,7 +7,7 @@
  * @author Sharfudeen Ashraf
  */
 
-import CountingCommonView from '../../../../../counting-common/js/common/view/CountingCommonView.js';
+import CountingCommonScreenView from '../../../../../counting-common/js/common/view/CountingCommonScreenView.js';
 import { Color, Image, Rectangle } from '../../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
 import edit_png from '../../../../images/edit_png.js';
@@ -20,7 +20,7 @@ import KeyboardPanel from './KeyboardPanel.js';
 // constants
 const MAX_DIGITS = 3;
 
-class MakeATenAddingScreenView extends CountingCommonView {
+class MakeATenAddingScreenView extends CountingCommonScreenView {
 
   /**
    * @param {MakeATenAddingModel} model
