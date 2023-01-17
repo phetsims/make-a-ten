@@ -31,10 +31,10 @@ class ExplorePanel extends Panel {
       resize: false
     }, options );
 
-    const addAndDragNumber = screenView.addAndDragNumber.bind( screenView );
-    const hundredTargetNode = new CountingCreatorNode( 2, screenView, sumProperty, resetEmitter, addAndDragNumber );
-    const tenTargetNode = new CountingCreatorNode( 1, screenView, sumProperty, resetEmitter, addAndDragNumber );
-    const oneTargetNode = new CountingCreatorNode( 0, screenView, sumProperty, resetEmitter, addAndDragNumber );
+    const addAndDragCountingObject = screenView.addAndDragCountingObject.bind( screenView );
+    const hundredTargetNode = new CountingCreatorNode( 2, screenView, sumProperty, resetEmitter, addAndDragCountingObject );
+    const tenTargetNode = new CountingCreatorNode( 1, screenView, sumProperty, resetEmitter, addAndDragCountingObject );
+    const oneTargetNode = new CountingCreatorNode( 0, screenView, sumProperty, resetEmitter, addAndDragCountingObject );
 
     const box = new HBox( {
       children: [ hundredTargetNode, tenTargetNode, oneTargetNode ],
