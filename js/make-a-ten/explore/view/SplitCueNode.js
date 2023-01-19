@@ -88,6 +88,8 @@ class SplitCueNode extends Node {
 
   /**
    * Updates the size of the semi-transparent rectangle.
+   * TODO: This function should know about the size of the countingObject's handle instead of using getBoundaryY, see
+   *  https://github.com/phetsims/counting-common/issues/13
    * @private
    */
   updateRectangle() {
