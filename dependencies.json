@@ -1,5 +1,5 @@
 {
-  "comment": "# make-a-ten 1.0.23-rc.1 Thu Feb 02 2023 13:09:17 GMT-0700 (Mountain Standard Time)",
+  "comment": "# make-a-ten 1.0.23 Thu Feb 02 2023 13:10:04 GMT-0700 (Mountain Standard Time)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "make-a-ten": {
-    "sha": "703dee669266abf3fd0a1757f40d825b18711070",
+    "sha": "8fa2f2e76e6a3754dfdfc500671985e52ec8c6f6",
     "branch": "1.0"
   },
   "phet-core": {
