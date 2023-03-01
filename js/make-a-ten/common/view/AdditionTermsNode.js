@@ -68,12 +68,12 @@ class AdditionTermsNode extends Node {
     }
 
     additionTerms.leftTermProperty.link( term => {
-      leftTermText.text = term ? term : '';
+      leftTermText.string = term ? term : '';
       layout();
     } );
 
     additionTerms.rightTermProperty.link( term => {
-      rightTermText.text = term ? term : '';
+      rightTermText.string = term ? term : '';
       layout();
     } );
 

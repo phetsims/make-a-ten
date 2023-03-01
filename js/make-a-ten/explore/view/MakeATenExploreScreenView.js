@@ -52,7 +52,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
     this.hideSumProperty = new BooleanProperty( false );
 
     const sumText = new Text( '0', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
-    model.sumProperty.linkAttribute( sumText, 'text' );
+    model.sumProperty.linkAttribute( sumText, 'string' );
 
     // @private {HBox} - Displays the sum of our numbers and an equals sign, e.g. "256 ="
     this.sumNode = new HBox( {
