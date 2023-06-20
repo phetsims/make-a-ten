@@ -5,54 +5,54 @@
  */
 /* eslint-disable */
 import getStringModule from '../../chipper/js/getStringModule.js';
-import LinkableProperty from '../../axon/js/LinkableProperty.js';
+import type LocalizedStringProperty from '../../chipper/js/LocalizedStringProperty.js';
 import makeATen from './makeATen.js';
 
 type StringsType = {
   'make-a-ten': {
     'title': string;
-    'titleStringProperty': LinkableProperty<string>;
+    'titleStringProperty': LocalizedStringProperty;
   };
   'screen': {
     'adding': string;
-    'addingStringProperty': LinkableProperty<string>;
+    'addingStringProperty': LocalizedStringProperty;
     'explore': string;
-    'exploreStringProperty': LinkableProperty<string>;
+    'exploreStringProperty': LocalizedStringProperty;
     'game': string;
-    'gameStringProperty': LinkableProperty<string>;
+    'gameStringProperty': LocalizedStringProperty;
   };
   'hideTotal': string;
-  'hideTotalStringProperty': LinkableProperty<string>;
+  'hideTotalStringProperty': LocalizedStringProperty;
   'submit': string;
-  'submitStringProperty': LinkableProperty<string>;
+  'submitStringProperty': LocalizedStringProperty;
   'next': string;
-  'nextStringProperty': LinkableProperty<string>;
+  'nextStringProperty': LocalizedStringProperty;
   'pattern': {
     'level': {
       '0levelNumber': string;
-      '0levelNumberStringProperty': LinkableProperty<string>;
+      '0levelNumberStringProperty': LocalizedStringProperty;
     }
   };
   'level1Description': string;
-  'level1DescriptionStringProperty': LinkableProperty<string>;
+  'level1DescriptionStringProperty': LocalizedStringProperty;
   'level2Description': string;
-  'level2DescriptionStringProperty': LinkableProperty<string>;
+  'level2DescriptionStringProperty': LocalizedStringProperty;
   'level3Description': string;
-  'level3DescriptionStringProperty': LinkableProperty<string>;
+  'level3DescriptionStringProperty': LocalizedStringProperty;
   'level4Description': string;
-  'level4DescriptionStringProperty': LinkableProperty<string>;
+  'level4DescriptionStringProperty': LocalizedStringProperty;
   'level5Description': string;
-  'level5DescriptionStringProperty': LinkableProperty<string>;
+  'level5DescriptionStringProperty': LocalizedStringProperty;
   'level6Description': string;
-  'level6DescriptionStringProperty': LinkableProperty<string>;
+  'level6DescriptionStringProperty': LocalizedStringProperty;
   'level7Description': string;
-  'level7DescriptionStringProperty': LinkableProperty<string>;
+  'level7DescriptionStringProperty': LocalizedStringProperty;
   'level8Description': string;
-  'level8DescriptionStringProperty': LinkableProperty<string>;
+  'level8DescriptionStringProperty': LocalizedStringProperty;
   'level9Description': string;
-  'level9DescriptionStringProperty': LinkableProperty<string>;
+  'level9DescriptionStringProperty': LocalizedStringProperty;
   'level10Description': string;
-  'level10DescriptionStringProperty': LinkableProperty<string>;
+  'level10DescriptionStringProperty': LocalizedStringProperty;
 };
 
 const MakeATenStrings = getStringModule( 'MAKE_A_TEN' ) as StringsType;
