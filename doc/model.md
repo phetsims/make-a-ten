@@ -1,4 +1,3 @@
-
 # Model documentation
 
 ### Adding numbers

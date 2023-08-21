@@ -1,4 +1,3 @@
-
 # Implementation Notes
 
 ## Model
@@ -15,10 +14,10 @@ Commonly used model terms:
 - numberValue: The full value of a number, e.g. 1024
 - place: The location of a digit in a number, with 0 indicating the 1's place, 1 indicating the 10s place, etc.
 - digit: Single-digit numeric value. For example, for the base number 20, its digit is 2 and its place is 1, such that
-         ```numberValue = digit * 10^place```.
+  ```numberValue = digit * 10^place```.
 - digitLength: Number of digits in a number (including zeros), so 1024 has a digit length of 4.
 - terms: Multiple screens have numbers set on the left and right, which are part of a formula "a + b = sum". a and b
-         are the terms, generally described as the leftTerm and rightTerm, such that ```leftTerm + rightTerm = sum```.
+  are the terms, generally described as the leftTerm and rightTerm, such that ```leftTerm + rightTerm = sum```.
 
 The game model tracks level-specific information in Level objects, created on startup, and the level/currentLevel/etc.
 is based on an object reference (instead of integers like used in other sims). Where possible, all of the game
