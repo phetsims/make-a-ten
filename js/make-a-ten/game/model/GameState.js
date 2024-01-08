@@ -2,6 +2,7 @@
 
 /**
  * Possible game states.
+ * @author Sharfudeen Ashraf
  */
 
 import makeATen from '../../../makeATen.js';

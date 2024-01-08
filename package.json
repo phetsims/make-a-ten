@@ -37,6 +37,17 @@
     ]
   },
   "eslintConfig": {
-    "extends": "../chipper/eslint/sim_eslintrc.js"
+    "extends": "../chipper/eslint/sim_eslintrc.js",
+    "overrides": [
+      {
+        "files": [
+          "**/*.js",
+          "**/*.ts"
+        ],
+        "rules": {
+          "author-annotation": "error"
+        }
+      }
+    ]
   }
 }
