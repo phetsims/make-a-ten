@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "make-a-ten": {
-    "sha": "28bed051b957243568721811bca27c314085f2c8",
+    "sha": "2022b0e9d57e563032f43aea56fb19f80822bb4b",
     "branch": "1.0"
   },
   "phet-core": {
@@ -37,7 +37,7 @@
     "branch": "HEAD"
   },
   "phetcommon": {
-    "sha": "24b7702c58de2f3d65d41b51fdced9bfa8886b64",
+    "sha": "840444b77a835daeb32f326d88219431cd87a4d1",
     "branch": "HEAD"
   },
   "phetmarks": {
