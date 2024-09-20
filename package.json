@@ -47,6 +47,16 @@
         "rules": {
           "author-annotation": "error"
         }
+      },
+      {
+        "files": [
+          "**/*.ts"
+        ],
+        "parserOptions": {
+          "project": [
+            "../make-a-ten/tsconfig.json"
+          ]
+        }
       }
     ]
   }
