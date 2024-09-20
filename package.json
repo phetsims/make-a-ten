@@ -54,7 +54,7 @@
         ],
         "parserOptions": {
           "project": [
-            "../make-a-ten/tsconfig.json"
+            "../chipper/tsconfig/eslint-all/tsconfig.json"
           ]
         }
       }
