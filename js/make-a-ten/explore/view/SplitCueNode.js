@@ -9,7 +9,10 @@
 import CountingCommonConstants from '../../../../../counting-common/js/common/CountingCommonConstants.js';
 import hand_png from '../../../../../scenery-phet/images/hand_png.js';
 import ArrowNode from '../../../../../scenery-phet/js/ArrowNode.js';
-import { Color, Image, Node, Rectangle } from '../../../../../scenery/js/imports.js';
+import Image from '../../../../../scenery/js/nodes/Image.js';
+import Node from '../../../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
+import Color from '../../../../../scenery/js/util/Color.js';
 import makeATen from '../../../makeATen.js';
 
 class SplitCueNode extends Node {

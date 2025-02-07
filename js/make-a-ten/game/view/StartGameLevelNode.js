@@ -10,7 +10,7 @@
 
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import ScreenView from '../../../../../joist/js/ScreenView.js';
-import { Node } from '../../../../../scenery/js/imports.js';
+import Node from '../../../../../scenery/js/nodes/Node.js';
 import LevelSelectionButton from '../../../../../vegas/js/LevelSelectionButton.js';
 import ScoreDisplayNumberAndStar from '../../../../../vegas/js/ScoreDisplayNumberAndStar.js';
 import makeATen from '../../../makeATen.js';

@@ -13,7 +13,8 @@ import CountingCommonScreenView from '../../../../../counting-common/js/common/v
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Text } from '../../../../../scenery/js/imports.js';
+import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
+import Text from '../../../../../scenery/js/nodes/Text.js';
 import Checkbox from '../../../../../sun/js/Checkbox.js';
 import makeATen from '../../../makeATen.js';
 import MakeATenStrings from '../../../MakeATenStrings.js';

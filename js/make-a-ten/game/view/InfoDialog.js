@@ -8,7 +8,9 @@
 
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { Node, Text, VBox } from '../../../../../scenery/js/imports.js';
+import VBox from '../../../../../scenery/js/layout/nodes/VBox.js';
+import Node from '../../../../../scenery/js/nodes/Node.js';
+import Text from '../../../../../scenery/js/nodes/Text.js';
 import Dialog from '../../../../../sun/js/Dialog.js';
 import makeATen from '../../../makeATen.js';
 import MakeATenStrings from '../../../MakeATenStrings.js';

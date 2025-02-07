@@ -12,7 +12,9 @@ import merge from '../../../../../phet-core/js/merge.js';
 import ArrowShape from '../../../../../scenery-phet/js/ArrowShape.js';
 import PhetColorScheme from '../../../../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Path, Text } from '../../../../../scenery/js/imports.js';
+import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
+import Path from '../../../../../scenery/js/nodes/Path.js';
+import Text from '../../../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
 import makeATen from '../../../makeATen.js';
 
