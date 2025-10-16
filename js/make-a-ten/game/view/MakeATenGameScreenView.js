@@ -208,7 +208,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     this.rewardNodeBoundsListener = this.visibleBoundsProperty.linkAttribute( this.rewardNode, 'canvasBounds' );
 
     const rewardDialog = new RewardDialog( this.model.currentLevelProperty, 10, {
-      keepGoingButtonListener: () => {
+      dismissListener: () => {
         this.hideReward();
         rewardDialog.dispose();
 
