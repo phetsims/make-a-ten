@@ -1,4 +1,4 @@
-// Copyright 2015, University of Colorado Boulder
+// Copyright 2016-2017, University of Colorado Boulder
 
 /**
  * Adding screen for Make a Ten. Allows entering two numbers with a keypad, so that the user can experiment with adding
