@@ -3,7 +3,7 @@
 /**
  * Represents a game level. Contains information and the ability to generate challenges for the particular level.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';

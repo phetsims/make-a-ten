@@ -4,7 +4,7 @@
  * Generates a pair of numbers that will need to be added together as a challenge.
  *
  * @author Sharfudeen Ashraf
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import dotRandom from '../../../../../dot/js/dotRandom.js';

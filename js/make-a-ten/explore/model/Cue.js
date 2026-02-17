@@ -4,7 +4,7 @@
  * Common move/split cue model. The cue represents a visual indicator that sticks to a counting object, and lets the user
  * know they can do an operation. It will fade away when the operation is performed, but will return upon reset all.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';

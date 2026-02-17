@@ -3,7 +3,7 @@
 /**
  * Cue that informs the user they can drag from the upper-half to split (pull apart) numbers.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import CountingCommonConstants from '../../../../../counting-common/js/common/CountingCommonConstants.js';

@@ -3,7 +3,7 @@
 /**
  * Shows a reward, and allows the user to (a) keep going with the current level, or (b) go back to the level selection.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import BaseNumber from '../../../../../counting-common/js/common/model/BaseNumber.js';
