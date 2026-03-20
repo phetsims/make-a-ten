@@ -13,7 +13,6 @@ import ScreenView from '../../../../../joist/js/ScreenView.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import LevelSelectionButton from '../../../../../vegas/js/LevelSelectionButton.js';
 import ScoreDisplayNumberAndStar from '../../../../../vegas/js/ScoreDisplayNumberAndStar.js';
-import makeATen from '../../../makeATen.js';
 
 // Constants
 const X_OFFSET = 170;
@@ -65,7 +64,5 @@ class StartGameLevelNode extends Node {
     this.addChild( button );
   }
 }
-
-makeATen.register( 'StartGameLevelNode', StartGameLevelNode );
 
 export default StartGameLevelNode;

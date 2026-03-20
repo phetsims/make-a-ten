@@ -8,7 +8,6 @@
 
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';
 import Image from '../../../../../scenery/js/nodes/Image.js';
-import makeATen from '../../../makeATen.js';
 
 class Level {
   /**
@@ -57,7 +56,5 @@ class Level {
     return this.numberChallengeFactory.generateChallenge( this.number - 1 );
   }
 }
-
-makeATen.register( 'Level', Level );
 
 export default Level;

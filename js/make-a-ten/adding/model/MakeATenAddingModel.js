@@ -7,7 +7,6 @@
  */
 
 import CountingCommonModel from '../../../../../counting-common/js/common/model/CountingCommonModel.js';
-import makeATen from '../../../makeATen.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
 
@@ -42,7 +41,5 @@ class MakeATenAddingModel extends CountingCommonModel {
     this.additionTerms.reset();
   }
 }
-
-makeATen.register( 'MakeATenAddingModel', MakeATenAddingModel );
 
 export default MakeATenAddingModel;

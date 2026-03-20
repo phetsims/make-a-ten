@@ -7,8 +7,6 @@
  * @author Sharfudeen Ashraf
  */
 
-import makeATen from '../../../makeATen.js';
-
 class NumberChallenge {
   /**
    * @param {number} leftTerm
@@ -25,7 +23,5 @@ class NumberChallenge {
     Object.freeze( this );
   }
 }
-
-makeATen.register( 'NumberChallenge', NumberChallenge );
 
 export default NumberChallenge;

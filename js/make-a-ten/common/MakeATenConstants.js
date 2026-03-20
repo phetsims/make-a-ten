@@ -6,8 +6,6 @@
  * @author Sharfudeen Ashraf
  */
 
-import makeATen from '../../makeATen.js';
-
 const MakeATenConstants = {
 
   // Common colors
@@ -15,7 +13,5 @@ const MakeATenConstants = {
   EQUATION_FILL: 'rgb(0,0,0)',
   MAX_SUM: 9999
 };
-
-makeATen.register( 'MakeATenConstants', MakeATenConstants );
 
 export default MakeATenConstants;

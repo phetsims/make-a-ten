@@ -7,7 +7,6 @@
  */
 
 import { QueryStringMachine } from '../../../../query-string-machine/js/QueryStringMachineModule.js';
-import makeATen from '../../makeATen.js';
 
 const MakeATenQueryParameters = QueryStringMachine.getAll( {
 
@@ -21,7 +20,5 @@ const MakeATenQueryParameters = QueryStringMachine.getAll( {
     defaultValue: [ 10 ]
   }
 } );
-
-makeATen.register( 'MakeATenQueryParameters', MakeATenQueryParameters );
 
 export default MakeATenQueryParameters;

@@ -7,7 +7,6 @@
  */
 
 import CountingCommonModel from '../../../../../counting-common/js/common/model/CountingCommonModel.js';
-import makeATen from '../../../makeATen.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import MakeATenQueryParameters from '../../common/MakeATenQueryParameters.js';
 import Cue from './Cue.js';
@@ -80,7 +79,5 @@ class MakeATenExploreModel extends CountingCommonModel {
     this.addInitialNumbers();
   }
 }
-
-makeATen.register( 'MakeATenExploreModel', MakeATenExploreModel );
 
 export default MakeATenExploreModel;

@@ -23,7 +23,6 @@ import TransitionNode from '../../../../../twixt/js/TransitionNode.js';
 import GameAudioPlayer from '../../../../../vegas/js/GameAudioPlayer.js';
 import InfiniteStatusBar from '../../../../../vegas/js/InfiniteStatusBar.js';
 import RewardDialog from '../../../../../vegas/js/RewardDialog.js';
-import makeATen from '../../../makeATen.js';
 import MakeATenStrings from '../../../MakeATenStrings.js';
 import AdditionTermsNode from '../../common/view/AdditionTermsNode.js';
 import GameState from '../model/GameState.js';
@@ -262,5 +261,4 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
   }
 }
 
-makeATen.register( 'MakeATenGameScreenView', MakeATenGameScreenView );
 export default MakeATenGameScreenView;

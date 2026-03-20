@@ -10,7 +10,6 @@
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';
 import Property from '../../../../../axon/js/Property.js';
-import makeATen from '../../../makeATen.js';
 
 // constants
 const FADE_SPEED = 0.8;
@@ -129,7 +128,5 @@ class Cue {
     this.countingObjectProperty.value = null;
   }
 }
-
-makeATen.register( 'Cue', Cue );
 
 export default Cue;

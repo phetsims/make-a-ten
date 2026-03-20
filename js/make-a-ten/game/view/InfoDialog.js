@@ -12,7 +12,6 @@ import VBox from '../../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import Dialog from '../../../../../sun/js/Dialog.js';
-import makeATen from '../../../makeATen.js';
 import MakeATenStrings from '../../../MakeATenStrings.js';
 
 // Template for inserting the level number
@@ -59,5 +58,4 @@ class InfoDialog extends Dialog {
   }
 }
 
-makeATen.register( 'InfoDialog', InfoDialog );
 export default InfoDialog;

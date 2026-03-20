@@ -16,7 +16,6 @@ import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
 import Path from '../../../../../scenery/js/nodes/Path.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
-import makeATen from '../../../makeATen.js';
 
 // constants
 const LABEL_FONT = new PhetFont( { size: 20, weight: 'bold' } );
@@ -52,5 +51,4 @@ class NextArrowButton extends RectangularPushButton {
   }
 }
 
-makeATen.register( 'NextArrowButton', NextArrowButton );
 export default NextArrowButton;

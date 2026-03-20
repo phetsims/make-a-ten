@@ -11,7 +11,6 @@ import CountingCreatorNode from '../../../../../counting-common/js/common/view/C
 import merge from '../../../../../phet-core/js/merge.js';
 import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
 import Panel from '../../../../../sun/js/Panel.js';
-import makeATen from '../../../makeATen.js';
 
 class ExplorePanel extends Panel {
   /**
@@ -53,5 +52,4 @@ class ExplorePanel extends Panel {
   }
 }
 
-makeATen.register( 'ExplorePanel', ExplorePanel );
 export default ExplorePanel;

@@ -8,7 +8,6 @@
  */
 
 import dotRandom from '../../../../../dot/js/dotRandom.js';
-import makeATen from '../../../makeATen.js';
 import NumberChallenge from './NumberChallenge.js';
 
 class NumberChallengeFactory {
@@ -195,7 +194,5 @@ class NumberChallengeFactory {
     return challenges;
   }
 }
-
-makeATen.register( 'NumberChallengeFactory', NumberChallengeFactory );
 
 export default NumberChallengeFactory;

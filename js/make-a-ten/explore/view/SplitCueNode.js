@@ -13,7 +13,6 @@ import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import Color from '../../../../../scenery/js/util/Color.js';
-import makeATen from '../../../makeATen.js';
 
 class SplitCueNode extends Node {
   /**
@@ -103,7 +102,5 @@ class SplitCueNode extends Node {
     }
   }
 }
-
-makeATen.register( 'SplitCueNode', SplitCueNode );
 
 export default SplitCueNode;

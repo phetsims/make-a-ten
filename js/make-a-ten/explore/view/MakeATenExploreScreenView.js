@@ -16,7 +16,6 @@ import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import Checkbox from '../../../../../sun/js/Checkbox.js';
-import makeATen from '../../../makeATen.js';
 import MakeATenStrings from '../../../MakeATenStrings.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import ExplorePanel from './ExplorePanel.js';
@@ -254,7 +253,5 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
     this.hideSumProperty.reset();
   }
 }
-
-makeATen.register( 'MakeATenExploreScreenView', MakeATenExploreScreenView );
 
 export default MakeATenExploreScreenView;

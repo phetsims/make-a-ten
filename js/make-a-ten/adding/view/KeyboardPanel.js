@@ -16,7 +16,6 @@ import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import VBox from '../../../../../scenery/js/layout/nodes/VBox.js';
 import TextPushButton from '../../../../../sun/js/buttons/TextPushButton.js';
 import Panel from '../../../../../sun/js/Panel.js';
-import makeATen from '../../../makeATen.js';
 import MakeATenStrings from '../../../MakeATenStrings.js';
 
 const submitString = MakeATenStrings.submit;
@@ -80,5 +79,4 @@ class KeyboardPanel extends Panel {
   }
 }
 
-makeATen.register( 'KeyboardPanel', KeyboardPanel );
 export default KeyboardPanel;

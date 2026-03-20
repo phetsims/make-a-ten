@@ -6,14 +6,10 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import makeATen from '../../../makeATen.js';
-
 const ActiveTerm = Object.freeze( {
   LEFT: 'LEFT',
   RIGHT: 'RIGHT',
   NONE: 'NONE'
 } );
-
-makeATen.register( 'ActiveTerm', ActiveTerm );
 
 export default ActiveTerm;

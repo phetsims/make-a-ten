@@ -8,7 +8,6 @@
 
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';
 import Property from '../../../../../axon/js/Property.js';
-import makeATen from '../../../makeATen.js';
 import ActiveTerm from '../../adding/model/ActiveTerm.js';
 
 class AdditionTerms {
@@ -43,7 +42,5 @@ class AdditionTerms {
     this.activeTermProperty.reset();
   }
 }
-
-makeATen.register( 'AdditionTerms', AdditionTerms );
 
 export default AdditionTerms;

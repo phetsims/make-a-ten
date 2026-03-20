@@ -60,6 +60,4 @@ type StringsType = {
 
 const MakeATenStrings = getStringModule( 'MAKE_A_TEN' ) as StringsType;
 
-makeATen.register( 'MakeATenStrings', MakeATenStrings );
-
 export default MakeATenStrings;

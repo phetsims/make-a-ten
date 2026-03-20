@@ -19,7 +19,6 @@ import level6_png from '../../../../images/level6_png.js';
 import level7_png from '../../../../images/level7_png.js';
 import level8_png from '../../../../images/level8_png.js';
 import level9_png from '../../../../images/level9_png.js';
-import makeATen from '../../../makeATen.js';
 import MakeATenStrings from '../../../MakeATenStrings.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
@@ -176,7 +175,5 @@ class MakeATenGameModel extends CountingCommonModel {
     }
   }
 }
-
-makeATen.register( 'MakeATenGameModel', MakeATenGameModel );
 
 export default MakeATenGameModel;

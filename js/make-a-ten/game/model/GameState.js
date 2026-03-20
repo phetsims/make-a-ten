@@ -5,8 +5,6 @@
  * @author Sharfudeen Ashraf
  */
 
-import makeATen from '../../../makeATen.js';
-
 const GameState = Object.freeze( {
   // Shows level selection buttons
   CHOOSING_LEVEL: 'CHOOSING_LEVEL',
@@ -17,7 +15,5 @@ const GameState = Object.freeze( {
   // In a level, challenge completed (can move to next challenge)
   CORRECT_ANSWER: 'CORRECT_ANSWER'
 } );
-
-makeATen.register( 'GameState', GameState );
 
 export default GameState;

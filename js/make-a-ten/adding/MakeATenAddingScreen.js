@@ -11,7 +11,6 @@ import Property from '../../../../axon/js/Property.js';
 import Screen from '../../../../joist/js/Screen.js';
 import addingHomeScreen_png from '../../../images/addingHomeScreen_png.js';
 import addingNavBar_png from '../../../images/addingNavBar_png.js';
-import makeATen from '../../makeATen.js';
 import MakeATenStrings from '../../MakeATenStrings.js';
 import MakeATenConstants from '../common/MakeATenConstants.js';
 import MakeATenUtils from '../common/MakeATenUtils.js';
@@ -35,5 +34,4 @@ class MakeATenAddingScreen extends Screen {
   }
 }
 
-makeATen.register( 'MakeATenAddingScreen', MakeATenAddingScreen );
 export default MakeATenAddingScreen;
