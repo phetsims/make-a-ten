@@ -10,6 +10,7 @@
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import CountingCommonScreenView from '../../../../../counting-common/js/common/view/CountingCommonScreenView.js';
+import type Bounds2 from '../../../../../dot/js/Bounds2.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import InfoButton from '../../../../../scenery-phet/js/buttons/InfoButton.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
@@ -64,7 +65,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
   private rewardNode: MakeATenRewardNode | null;
 
   // See showReward()
-  private rewardNodeBoundsListener: ( ( value: unknown ) => void ) | null;
+  private rewardNodeBoundsListener: ( ( value: Bounds2 ) => void ) | null;
 
   private readonly rewardBarrier: Rectangle;
   private gameModel: MakeATenGameModel;
@@ -222,6 +223,8 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     this.addChild( this.rewardNode );
     this.rewardNodeBoundsListener = this.visibleBoundsProperty.linkAttribute( this.rewardNode, 'canvasBounds' );
 
+    // TODO: See https://github.com/phetsims/make-a-ten/issues/311
+    // @ts-expect-error - currentLevelProperty is a Property<Level>, but this 1:1 port preserves the original runtime call.
     const rewardDialog = new RewardDialog( this.gameModel.currentLevelProperty, 10, {
       dismissListener: () => {
         this.hideReward();
@@ -255,6 +258,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
    */
   private onGameStateChange( gameState: GameState ): void {
     if ( gameState === 'PRESENTING_INTERACTIVE_CHALLENGE' ) {
+      // @ts-expect-error - currentChallengeProperty is populated for this state, but the Property type allows null.
       this.gameModel.setupChallenge( this.gameModel.currentChallengeProperty.value );
     }
     if ( gameState === 'CORRECT_ANSWER' ) {

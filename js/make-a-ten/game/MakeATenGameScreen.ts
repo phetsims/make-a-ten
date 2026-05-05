@@ -10,6 +10,7 @@
 
 import Property from '../../../../axon/js/Property.js';
 import Screen from '../../../../joist/js/Screen.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import gameHomeScreen_png from '../../../images/gameHomeScreen_png.js';
 import gameNavBar_png from '../../../images/gameNavBar_png.js';
 import MakeATenStrings from '../../MakeATenStrings.js';
@@ -25,7 +26,8 @@ class MakeATenGameScreen extends Screen<MakeATenGameModel, MakeATenGameScreenVie
       name: MakeATenStrings.screen.gameStringProperty,
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( gameHomeScreen_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( gameNavBar_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
+      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( gameNavBar_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      tandem: Tandem.OPT_OUT
     };
 
     super(

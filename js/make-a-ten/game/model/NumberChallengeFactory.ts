@@ -67,7 +67,7 @@ class NumberChallengeFactory {
     this.withNineCount = 0;
 
     // Level 3. Single digits such that 10 < sum < 20.
-    this.underTwentyChallenges = [].concat(
+    this.underTwentyChallenges = ( [] as NumberChallenge[] ).concat(
       this.sumsOverTenChallenges( 9, true, true ),
       this.sumsOverTenChallenges( 8, true, true ),
       this.sumsOverTenChallenges( 7, true, true ),
@@ -144,7 +144,7 @@ class NumberChallengeFactory {
    *                    term for every challenge.
    */
   private sumsOverTenChallenges( bigNumber: number, includeLeftBiggest: boolean, includeRightBiggest: boolean ): NumberChallenge[] {
-    const challenges = [];
+    const challenges: NumberChallenge[] = [];
 
     for ( let i = 11 - bigNumber; i < bigNumber; i++ ) {
       if ( includeLeftBiggest ) {
@@ -165,7 +165,7 @@ class NumberChallengeFactory {
    * Generates an array of challenges where terms are at least minimumNumber, with a combined maximum sum.
    */
   private sumsUpTo( minimumNumber: number, maximumSum: number ): NumberChallenge[] {
-    const challenges = [];
+    const challenges: NumberChallenge[] = [];
 
     for ( let left = minimumNumber; left < maximumSum; left++ ) {
       for ( let right = minimumNumber; left + right <= maximumSum; right++ ) {
@@ -181,7 +181,7 @@ class NumberChallengeFactory {
    * sum >= minimumSum.
    */
   private sumsDownTo( minimumNumber: number, maximumNumber: number, minimumSum: number ): NumberChallenge[] {
-    const challenges = [];
+    const challenges: NumberChallenge[] = [];
 
     for ( let left = minimumNumber; left <= maximumNumber; left++ ) {
       // Start with minimumNumber, OR if that would result in an invalid sum, the number that would add up to the sum
@@ -197,7 +197,7 @@ class NumberChallengeFactory {
    * For level 8, adding single digit numbers to multiples of 100.
    */
   private addWithSinglesThreeDigitChallenges( isLeftBiggest: boolean ): NumberChallenge[] {
-    const challenges = [];
+    const challenges: NumberChallenge[] = [];
 
     for ( let left = 100; left <= 900; left += 100 ) {
       for ( let right = 1; right <= 9; right++ ) {

@@ -9,6 +9,7 @@
 
 import Property from '../../../../axon/js/Property.js';
 import Screen from '../../../../joist/js/Screen.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import addingHomeScreen_png from '../../../images/addingHomeScreen_png.js';
 import addingNavBar_png from '../../../images/addingNavBar_png.js';
 import MakeATenStrings from '../../MakeATenStrings.js';
@@ -24,7 +25,8 @@ class MakeATenAddingScreen extends Screen<MakeATenAddingModel, MakeATenAddingScr
       name: MakeATenStrings.screen.addingStringProperty,
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( addingHomeScreen_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( addingNavBar_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
+      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( addingNavBar_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      tandem: Tandem.OPT_OUT
     } as const;
 
     super(

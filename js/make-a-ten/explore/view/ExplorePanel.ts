@@ -7,8 +7,8 @@
  * @author Chris Klusendorf (PhET Interactive Simulations)
  */
 
-import type Emitter from '../../../../../axon/js/Emitter.js';
 import type NumberProperty from '../../../../../axon/js/NumberProperty.js';
+import type { TReadOnlyEmitter } from '../../../../../axon/js/TEmitter.js';
 import CountingCreatorNode from '../../../../../counting-common/js/common/view/CountingCreatorNode.js';
 import merge from '../../../../../phet-core/js/merge.js';
 import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
@@ -25,7 +25,7 @@ class ExplorePanel extends Panel {
    * @param resetEmitter
    * @param options - Passed to Node
    */
-  public constructor( screenView: MakeATenExploreScreenView, sumProperty: NumberProperty, resetEmitter: Emitter, options?: object ) {
+  public constructor( screenView: MakeATenExploreScreenView, sumProperty: NumberProperty, resetEmitter: TReadOnlyEmitter, options?: object ) {
 
     // TODO: optionize, see https://github.com/phetsims/make-a-ten/issues/311
     // eslint-disable-next-line phet/bad-typescript-text

@@ -16,7 +16,7 @@ const MakeATenUtils = {
   /**
    * Creates an icon using an image over a background fill.
    */
-  createIconWithBackgroundColor( image: HTMLImageElement, backgroundFill: TPaint ): Node {
+  createIconWithBackgroundColor( image: HTMLImageElement, backgroundFill: TPaint ): ScreenIcon {
     const imageNode = new Image( image );
 
     return new ScreenIcon( new Node( {

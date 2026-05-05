@@ -149,7 +149,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
     return panelBounds.containsPoint( paperCenter );
   }
 
-  public override onCountingObjectAdded( countingObject: CountingObject ): void {
+  public override onCountingObjectAdded( countingObject: CountingObject ): CountingObjectNode {
     const countingObjectNode = super.onCountingObjectAdded( countingObject );
 
     // Add listeners
@@ -157,6 +157,8 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
     countingObjectNode.interactionStartedEmitter.addListener( this.numberInteractionListener );
     countingObject.endAnimationEmitter.addListener( this.numberAnimationFinishedListener );
     countingObjectNode.endDragEmitter.addListener( this.numberDragFinishedListener );
+
+    return countingObjectNode;
   }
 
   public override onCountingObjectRemoved( countingObject: CountingObject ): void {

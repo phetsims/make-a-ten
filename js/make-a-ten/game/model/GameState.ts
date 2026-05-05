@@ -5,17 +5,9 @@
  * @author Sharfudeen Ashraf
  */
 
-const GameStateValues = [
-  // Shows level selection buttons
-  'CHOOSING_LEVEL',
-
-  // In a level, challenge not completed
-  'PRESENTING_INTERACTIVE_CHALLENGE',
-
-  // In a level, challenge completed (can move to next challenge)
-  'CORRECT_ANSWER'
-] as const;
-
-type GameState = typeof GameStateValues[ number ];
+type GameState =
+  'CHOOSING_LEVEL' | // Shows level selection buttons
+  'PRESENTING_INTERACTIVE_CHALLENGE' | // In a level, challenge not completed
+  'CORRECT_ANSWER'; // In a level, challenge completed (can move to next challenge)
 
 export default GameState;

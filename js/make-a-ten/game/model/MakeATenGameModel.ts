@@ -85,9 +85,9 @@ class MakeATenGameModel extends CountingCommonModel {
 
     this.currentScoreProperty = new NumberProperty( 0 );
 
-    this.currentChallengeProperty = new Property( null );
+    this.currentChallengeProperty = new Property<NumberChallenge | null>( null );
 
-    this.gameStateProperty = new Property( 'CHOOSING_LEVEL' );
+    this.gameStateProperty = new Property<GameState>( 'CHOOSING_LEVEL' );
 
     this.additionTerms = new AdditionTerms();
 
