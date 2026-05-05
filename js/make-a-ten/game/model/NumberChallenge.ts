@@ -8,11 +8,16 @@
  */
 
 class NumberChallenge {
+
+  // The left-hand term for addition
+  public readonly leftTerm: number;
+
+  // The right-hand term for addition
+  public readonly rightTerm: number;
+
   public constructor( leftTerm: number, rightTerm: number ) {
-    // @public {number} - The left-hand term for addition
     this.leftTerm = leftTerm;
 
-    // @public {number} - The right-hand term for addition
     this.rightTerm = rightTerm;
 
     // This object is immutable

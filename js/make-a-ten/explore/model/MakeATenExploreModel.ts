@@ -12,14 +12,17 @@ import MakeATenQueryParameters from '../../common/MakeATenQueryParameters.js';
 import Cue from './Cue.js';
 
 class MakeATenExploreModel extends CountingCommonModel {
+
+  // Visually indicates numbers can be split (pulled apart)
+  public readonly splitCue: Cue;
+
   public constructor() {
 
     super( MakeATenConstants.MAX_SUM );
 
-    // @public {Cue} - Visually indicates numbers can be split (pulled apart)
     this.splitCue = new Cue();
 
-    // @private {Function} - To be called when we need to recalculate the total
+    // To be called when we need to recalculate the total
     const calculateTotalListener = this.calculateTotal.bind( this );
 
     this.countingObjects.lengthProperty.link( calculateTotalListener );

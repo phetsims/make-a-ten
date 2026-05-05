@@ -22,6 +22,8 @@ const submitString = MakeATenStrings.submit;
 
 class KeyboardPanel extends Panel {
 
+  private readonly numberEntryControl: NumberEntryControl;
+
   /**
    * @param onSubmit - function( numberEntryValue: {number} ), called when the submit button is pressed.
    * @param maxDigits
@@ -62,7 +64,6 @@ class KeyboardPanel extends Panel {
       backgroundPickable: true
     } );
 
-    // @private
     this.numberEntryControl = numberEntryControl;
   }
 

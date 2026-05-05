@@ -21,13 +21,15 @@ const X_OFFSET = 170;
 const Y_OFFSET = 160;
 
 class StartGameLevelNode extends Node {
+
+  private readonly model: MakeATenGameModel;
+
   /**
    * @param model - Our model
    */
   public constructor( model: MakeATenGameModel ) {
     super();
 
-    // @private {MakeATenGameModel}
     this.model = model;
 
     // Add the level buttons

@@ -24,6 +24,10 @@ const STROKE_COLOR = '#000';
 const LAYOUT_MULTIPLIER = 1 / 8; // Fraction offset of the text from the background's border
 
 class AdditionTermsNode extends Node {
+
+  public readonly getLeftAlignment: () => number;
+  public readonly getRightAlignment: () => number;
+
   /**
    * @param additionTerms - Our model, contains information about the left/right and active terms
    * @param highlightBorders - Whether there should be highlighted borders around the active term.
@@ -105,7 +109,6 @@ class AdditionTermsNode extends Node {
     // Unchanging layout position of the right text node
     rightTermText.left = rightNumberDisplayBackground.left + rightNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
 
-    // @public
     this.getLeftAlignment = () => leftTermText.right;
     this.getRightAlignment = () => rightTermText.left;
   }

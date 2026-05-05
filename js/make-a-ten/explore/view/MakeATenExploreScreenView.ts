@@ -29,31 +29,50 @@ const hideTotalString = MakeATenStrings.hideTotal;
 const EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
 
 class MakeATenExploreScreenView extends CountingCommonScreenView {
+
+  // Called with function( countingObjectNode ) on number splits
+  private readonly numberSplitListener: ( countingObjectNode: CountingObjectNode ) => void;
+
+  // Called with function( countingObjectNode ) when a number begins to be interacted with.
+  private readonly numberInteractionListener: ( countingObjectNode: CountingObjectNode ) => void;
+
+  // Called with function( countingObject ) when a number finishes animation
+  private readonly numberAnimationFinishedListener: ( countingObject: CountingObject ) => void;
+
+  // Called with function( countingObject ) when a number finishes being dragged
+  private readonly numberDragFinishedListener: ( countingObjectNode: CountingObjectNode ) => void;
+
+  // Whether the total (sum) is hidden
+  private readonly hideSumProperty: BooleanProperty;
+
+  // Displays the sum of our numbers and an equals sign, e.g. "256 ="
+  private readonly sumNode: HBox;
+
+  // Shows 100,10,1 that can be dragged.
+  private readonly explorePanel: ExplorePanel;
+
+  // When checked, hides the sum in the upper-left
+  private readonly hideSumCheckbox: Checkbox;
+
   public constructor( model: MakeATenExploreModel ) {
 
     super( model );
 
-    // @private {Function} - Called with function( countingObjectNode ) on number splits
     this.numberSplitListener = this.onNumberSplit.bind( this );
 
-    // @private {Function} - Called with function( countingObjectNode ) when a number begins to be interacted with.
     this.numberInteractionListener = this.onNumberInteractionStarted.bind( this );
 
-    // @private {Function} - Called with function( countingObject ) when a number finishes animation
     this.numberAnimationFinishedListener = this.onNumberAnimationFinished.bind( this );
 
-    // @private {Function} - Called with function( countingObject ) when a number finishes being dragged
     this.numberDragFinishedListener = this.onNumberDragFinished.bind( this );
 
     this.finishInitialization();
 
-    // @private {BooleanProperty} - Whether the total (sum) is hidden
     this.hideSumProperty = new BooleanProperty( false );
 
     const sumText = new Text( '0', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
     model.sumProperty.linkAttribute( sumText, 'string' );
 
-    // @private {HBox} - Displays the sum of our numbers and an equals sign, e.g. "256 ="
     this.sumNode = new HBox( {
       children: [
         sumText,
@@ -63,7 +82,6 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
 
     this.addChild( this.sumNode );
 
-    // @private {ExplorePanel} - Shows 100,10,1 that can be dragged.
     this.explorePanel = new ExplorePanel( this, model.sumProperty, model.resetEmitter );
     this.addChild( this.explorePanel );
 
@@ -76,7 +94,6 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
       fill: 'black'
     } );
 
-    // @private {Checkbox} - When checked, hides the sum in the upper-left
     this.hideSumCheckbox = new Checkbox( this.hideSumProperty, hideSumText, {
       spacing: 10,
       boxWidth: 30

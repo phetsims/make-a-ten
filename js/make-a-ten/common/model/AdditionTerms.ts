@@ -11,14 +11,21 @@ import Property from '../../../../../axon/js/Property.js';
 import ActiveTerm from '../../adding/model/ActiveTerm.js';
 
 class AdditionTerms {
+
+  // The left-hand term for the addition.
+  public readonly leftTermProperty: NumberProperty;
+
+  // The left-hand term for the addition.
+  public readonly rightTermProperty: NumberProperty;
+
+  // The active term being edited (left, right or none basically)
+  public readonly activeTermProperty: Property<string>;
+
   public constructor() {
-    // @public {NumberProperty} - The left-hand term for the addition.
     this.leftTermProperty = new NumberProperty( 0 );
 
-    // @public {NumberProperty} - The left-hand term for the addition.
     this.rightTermProperty = new NumberProperty( 0 );
 
-    // @public {Property.<ActiveTerm>} - The active term being edited (left, right or none basically)
     this.activeTermProperty = new Property( ActiveTerm.NONE );
   }
 

@@ -16,6 +16,11 @@ import Color from '../../../../../scenery/js/util/Color.js';
 import type Cue from '../model/Cue.js';
 
 class SplitCueNode extends Node {
+
+  private readonly cue: Cue;
+  private readonly seeThroughRectangle: Rectangle;
+  private readonly arrowContainer: Node;
+
   /**
    * @param cue - Our cue model
    */
@@ -25,7 +30,6 @@ class SplitCueNode extends Node {
       usesOpacity: true
     } );
 
-    // @private {Cue}
     this.cue = cue;
 
     const arrowOptions = {

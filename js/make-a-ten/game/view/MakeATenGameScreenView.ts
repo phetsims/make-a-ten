@@ -37,20 +37,47 @@ const patternLevel0LevelNumberString = MakeATenStrings.pattern.level[ '0levelNum
 
 class MakeATenGameScreenView extends CountingCommonScreenView {
 
+  // The "left" half of the sliding layer, displayed first
+  private readonly levelSelectionLayer: Node;
+
+  // The "right" half of the sliding layer, will slide into view when the user selects a level
+  private readonly challengeLayer: Node;
+
+  private readonly transitionNode: TransitionNode;
+
+  // Shows buttons that allow selecting the level to play
+  private readonly startGameLevelNode: StartGameLevelNode;
+
+  // Shows '?' in the corner that pops up the info dialog when clicked.
+  private readonly infoButton: InfoButton;
+
+  // Moves to the next challenge when clicked
+  private readonly nextChallengeButton: NextArrowButton;
+
+  // Status bar at the top of the screen
+  private readonly gameStatusBar: InfiniteStatusBar;
+
+  private readonly gameAudioPlayer: GameAudioPlayer;
+
+  // See showReward()
+  private rewardNode: MakeATenRewardNode | null;
+
+  // See showReward()
+  private rewardNodeBoundsListener: ( ( value: unknown ) => void ) | null;
+
+  private readonly rewardBarrier: Rectangle;
+
   public constructor( model: MakeATenGameModel ) {
     super( model );
 
     this.finishInitialization();
 
-    // @private {Node} - The "left" half of the sliding layer, displayed first
     this.levelSelectionLayer = new Node();
 
-    // @private {Node} - The "right" half of the sliding layer, will slide into view when the user selects a level
     this.challengeLayer = new Node();
 
     const showingLeftProperty = new DerivedProperty( [ model.gameStateProperty ], gameState => gameState === GameState.CHOOSING_LEVEL );
 
-    // @private {TransitionNode}
     this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
       content: this.levelSelectionLayer
     } );
@@ -74,7 +101,6 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     } );
     this.addChild( this.transitionNode );
 
-    // @private {StartGameLevelNode} - Shows buttons that allow selecting the level to play
     this.startGameLevelNode = new StartGameLevelNode( model );
     this.levelSelectionLayer.addChild( this.startGameLevelNode );
 
@@ -85,7 +111,6 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     // info dialog, constructed lazily because Dialog requires sim bounds during construction
     let dialog = null;
 
-    // @private {InfoButton} - Shows '?' in the corner that pops up the info dialog when clicked.
     this.infoButton = new InfoButton( {
       touchAreaXDilation: 7,
       touchAreaYDilation: 7,
@@ -107,7 +132,6 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     additionTermsNode.top = this.layoutBounds.top + 75;
     this.challengeLayer.addChild( additionTermsNode );
 
-    // @private {NextArrowButton} - Moves to the next challenge when clicked
     this.nextChallengeButton = new NextArrowButton( nextString, {
       listener: () => {
         model.moveToNextChallenge();
@@ -141,7 +165,6 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
       spacing: 30
     } );
 
-    // @private {InfiniteStatusBar} - Status bar at the top of the screen
     this.gameStatusBar = new InfiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, statusMessageNode, model.currentScoreProperty, {
       floatToTop: true,
       barFill: new DerivedProperty( [ model.currentLevelProperty ], _.property( 'color' ) ),
@@ -158,13 +181,10 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     // Hook up the update function for handling changes to game state.
     model.gameStateProperty.link( this.onGameStateChange.bind( this ) );
 
-    // @private {RewardNode|null} - see showReward()
     this.rewardNode = null;
 
-    // @private {function|null} - see showReward()
     this.rewardNodeBoundsListener = null;
 
-    // @private {Rectangle}
     this.rewardBarrier = Rectangle.bounds( this.visibleBoundsProperty.value, {
       fill: 'rgba(128,128,128,0.4)'
     } );

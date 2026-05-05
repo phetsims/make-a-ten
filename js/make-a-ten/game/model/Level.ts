@@ -12,6 +12,24 @@ import type NumberChallenge from './NumberChallenge.js';
 import type NumberChallengeFactory from './NumberChallengeFactory.js';
 
 class Level {
+
+  // The level number, from 1 to 10
+  public readonly number: number;
+
+  // The color of the level, used for backgrounds mostly
+  public readonly color: string;
+
+  // A properly sized node for use as an icon representing the level
+  public readonly iconNode: Image;
+
+  // Translated description to be shown in info and the status bar
+  public readonly description: string;
+
+  // The total score for this level
+  public readonly scoreProperty: NumberProperty;
+
+  private readonly numberChallengeFactory: NumberChallengeFactory;
+
   /**
    * @param number - The number of the level, from 1 to 10
    * @param color - The color for the level
@@ -21,22 +39,16 @@ class Level {
    */
   public constructor( number: number, color: string, icon: HTMLImageElement, description: string, numberChallengeFactory: NumberChallengeFactory ) {
 
-    // @public {number} - The level number, from 1 to 10
     this.number = number;
 
-    // @public {number} - The color of the level, used for backgrounds mostly
     this.color = color;
 
-    // @public {Node} - A properly sized node for use as an icon representing the level
     this.iconNode = new Image( icon );
 
-    // @public {string} - Translated description to be shown in info and the status bar
     this.description = description;
 
-    // @public {Property.<number>} - The total score for this level
     this.scoreProperty = new NumberProperty( 0 );
 
-    // @private {NumberChallengeFactory}
     this.numberChallengeFactory = numberChallengeFactory;
   }
 

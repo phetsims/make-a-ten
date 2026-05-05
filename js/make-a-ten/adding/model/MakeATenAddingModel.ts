@@ -11,10 +11,12 @@ import MakeATenConstants from '../../common/MakeATenConstants.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
 
 class MakeATenAddingModel extends CountingCommonModel {
+
+  public readonly additionTerms: AdditionTerms;
+
   public constructor() {
     super( MakeATenConstants.MAX_SUM );
 
-    // @public {AdditionTerms}
     this.additionTerms = new AdditionTerms();
   }
 

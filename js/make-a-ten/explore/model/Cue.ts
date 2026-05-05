@@ -24,17 +24,25 @@ const CueState = Object.freeze( {
 } );
 
 class Cue {
+
+  // What CountingObject the cue is attached to.
+  public readonly countingObjectProperty: Property<CountingObject | null>;
+
+  // Whether the cue should be visible at all
+  public readonly visibilityProperty: BooleanProperty;
+
+  // What the visibility of the cue shoudl be.
+  public readonly opacityProperty: NumberProperty;
+
+  private readonly stateProperty: Property<string>;
+
   public constructor() {
-    // @public {Property.<CountingObject|null>} - What CountingObject the cue is attached to.
     this.countingObjectProperty = new Property( null );
 
-    // @public {BooleanProperty} - Whether the cue should be visible at all
     this.visibilityProperty = new BooleanProperty( false );
 
-    // @public {NumberProperty} - What the visibility of the cue shoudl be.
     this.opacityProperty = new NumberProperty( 1 );
 
-    // @private {Property.<CueState>}
     this.stateProperty = new Property( CueState.UNATTACHED );
   }
 

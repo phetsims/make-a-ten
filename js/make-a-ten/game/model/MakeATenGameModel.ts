@@ -42,6 +42,25 @@ const level9DescriptionString = MakeATenStrings.level9Description;
 // Level icons
 
 class MakeATenGameModel extends CountingCommonModel {
+
+  // All of the game levels for this screen.
+  public readonly levels: Level[];
+
+  // The current level
+  public readonly currentLevelProperty: Property<Level>;
+
+  // The score for whatever the current level is.
+  public readonly currentScoreProperty: NumberProperty;
+
+  // The current challenge when in a level
+  public readonly currentChallengeProperty: Property<NumberChallenge | null>;
+
+  // Current game state
+  public readonly gameStateProperty: Property<string>;
+
+  // Our left and right terms to be added.
+  public readonly additionTerms: AdditionTerms;
+
   public constructor() {
     super( MakeATenConstants.MAX_SUM );
 
@@ -49,7 +68,6 @@ class MakeATenGameModel extends CountingCommonModel {
     // is created (can't do at static load time), thus we have a separate challenge factory.
     const numberChallengeFactory = new NumberChallengeFactory();
 
-    // @public {Array.<Level>} - All of the game levels for this screen.
     this.levels = [
       new Level( 1, '#FC4280', level1_png, level1DescriptionString, numberChallengeFactory ),
       new Level( 2, '#FC4280', level2_png, level2DescriptionString, numberChallengeFactory ),
@@ -63,19 +81,14 @@ class MakeATenGameModel extends CountingCommonModel {
       new Level( 10, '#9778CC', level10_png, level10DescriptionString, numberChallengeFactory )
     ];
 
-    // @public {Property.<Level>} - The current level
     this.currentLevelProperty = new Property( this.levels[ 0 ] );
 
-    // @public {NumberProperty} - The score for whatever the current level is.
     this.currentScoreProperty = new NumberProperty( 0 );
 
-    // @public {Property.<NumberChallenge|null>} - The current challenge when in a level
     this.currentChallengeProperty = new Property( null );
 
-    // @public {Property.<GameState>} - Current game state
     this.gameStateProperty = new Property( GameState.CHOOSING_LEVEL );
 
-    // @public {AdditionTerms} - Our left and right terms to be added.
     this.additionTerms = new AdditionTerms();
 
     // Check for when the challenge is completed

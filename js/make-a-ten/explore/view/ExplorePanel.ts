@@ -16,6 +16,9 @@ import Panel from '../../../../../sun/js/Panel.js';
 import type MakeATenExploreScreenView from './MakeATenExploreScreenView.js';
 
 class ExplorePanel extends Panel {
+
+  public readonly digitLengthToTargetNode: Record<number, CountingCreatorNode>;
+
   /**
    * @param screenView
    * @param sumProperty
@@ -24,6 +27,8 @@ class ExplorePanel extends Panel {
    */
   public constructor( screenView: MakeATenExploreScreenView, sumProperty: NumberProperty, resetEmitter: Emitter, options?: object ) {
 
+    // TODO: optionize, see https://github.com/phetsims/make-a-ten/issues/311
+    // eslint-disable-next-line phet/bad-typescript-text
     options = merge( {
       fill: 'rgb(208,222,239)',
       stroke: 'black',
@@ -45,7 +50,6 @@ class ExplorePanel extends Panel {
 
     super( box, options );
 
-    // @public (read-only)
     this.digitLengthToTargetNode = {
       1: oneTargetNode,
       2: tenTargetNode,

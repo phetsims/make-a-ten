@@ -8,30 +8,65 @@
  */
 
 import dotRandom from '../../../../../dot/js/dotRandom.js';
+import type Random from '../../../../../dot/js/Random.js';
 import NumberChallenge from './NumberChallenge.js';
 
 class NumberChallengeFactory {
+
+  // Stored here because we can't grab a reference until after the sim has launched (and after we
+  // have defined the NumberChallengeFactory type).
+  private readonly random: Random;
+
+  // Enumeration of all possibilities, randomly selected.
+  private readonly tenAndUnderChallenges: NumberChallenge[];
+
+  // Enumeration of all possibilities when the count is even, randomly selected.
+  private readonly withNineLeftChallenges: NumberChallenge[];
+
+  // Enumeration of all possibilities when the count is odd, randomly selected.
+  private readonly withNineRightChallenges: NumberChallenge[];
+
+  // Used for alternation between the 'left' and 'right' varieties.
+  private withNineCount: number;
+
+  // All possible challenges for the "Under Twenty" challenge, and also used for
+  // generating many of the other terms lists.
+  private readonly underTwentyChallenges: NumberChallenge[];
+
+  // All possible challenges for the "Add with Tens" challenge.
+  private readonly addWithTensChallenges: NumberChallenge[];
+
+  // All possible challenges for the "Add with Singles" challenge.
+  private readonly addWithSinglesChallenges: NumberChallenge[];
+
+  // All possible challenges for the "Under Hundreds" challenge.
+  private readonly underHundredsChallenges: NumberChallenge[];
+
+  // All possible challenges for the "Over Hundreds" challenge.
+  private readonly overHundredsChallenges: NumberChallenge[];
+
+  // Enumeration of all possibilities when the count is even, randomly selected.
+  private readonly singlesToHundredsLeftChallenges: NumberChallenge[];
+
+  // Enumeration of all possibilities when the count is odd, randomly selected.
+  private readonly singlesToHundredsRightChallenges: NumberChallenge[];
+
+  // Used for alternation between the 'left' and 'right' varieties.
+  private singlesToHundredsCount: number;
+
   public constructor() {
 
-    // @private {Random} - Stored here because we can't grab a reference until after the sim has launched (and after we
-    //                     have defined the NumberChallengeFactory type).
     this.random = dotRandom;
 
     // Level 1. Single digits that add up to <= 10.
-    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities, randomly selected.
     this.tenAndUnderChallenges = this.sumsUpTo( 1, 10 );
 
     // Level 2. Single digits that add up to >= 11, where one of them is 9
-    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is even, randomly selected.
     this.withNineLeftChallenges = this.sumsOverTenChallenges( 9, true, false );
-    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is odd, randomly selected.
     this.withNineRightChallenges = this.sumsOverTenChallenges( 9, false, true );
-    // @private {number} - Used for alternation between the 'left' and 'right' varieties.
     this.withNineCount = 0;
 
     // Level 3. Single digits such that 10 < sum < 20.
-    // @private {Array.<NumberChallenge>} - All possible challenges for the "Under Twenty" challenge, and also used for
-    //                                      generating many of the other terms lists.
     this.underTwentyChallenges = [].concat(
       this.sumsOverTenChallenges( 9, true, true ),
       this.sumsOverTenChallenges( 8, true, true ),
@@ -40,11 +75,9 @@ class NumberChallengeFactory {
     );
 
     // Level 4. Like level 3 with each number multiplied by 10.
-    // @private {Array.<NumberChallenge>} - All possible challenges for the "Add with Tens" challenge.
     this.addWithTensChallenges = this.underTwentyChallenges.map( challenge => new NumberChallenge( challenge.leftTerm * 10, challenge.rightTerm * 10 ) );
 
     // Level 5. Like level 3, but one number has a random "decade" added to it.
-    // @private {Array.<NumberChallenge>} - All possible challenges for the "Add with Singles" challenge.
     this.addWithSinglesChallenges = [];
     this.underTwentyChallenges.forEach( challenge => {
       for ( let decade = 10; decade <= 80; decade += 10 ) {
@@ -55,19 +88,14 @@ class NumberChallengeFactory {
     } );
 
     // Level 6. Double digit numbers with sum < 100.
-    // @private {Array.<NumberChallenge>} - All possible challenges for the "Under Hundreds" challenge.
     this.underHundredsChallenges = this.sumsUpTo( 11, 99 );
 
     // Level 7. Double digit numbers with sum >= 100
-    // @private {Array.<NumberChallenge>} - All possible challenges for the "Over Hundreds" challenge.
     this.overHundredsChallenges = this.sumsDownTo( 11, 99, 100 );
 
     // Level 8. Single digit numbers added to multiples of 100.
-    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is even, randomly selected.
     this.singlesToHundredsLeftChallenges = this.addWithSinglesThreeDigitChallenges( true );
-    // @private {Array.<NumberChallenge>} - Enumeration of all possibilities when the count is odd, randomly selected.
     this.singlesToHundredsRightChallenges = this.addWithSinglesThreeDigitChallenges( false );
-    // @private {number} - Used for alternation between the 'left' and 'right' varieties.
     this.singlesToHundredsCount = 0;
   }
 
