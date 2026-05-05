@@ -85,21 +85,17 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
       content: this.levelSelectionLayer
     } );
     showingLeftProperty.lazyLink( isLeft => {
+      const ANIMATION_OPTIONS = {
+        duration: 0.4,
+        targetOptions: {
+          easing: Easing.QUADRATIC_IN_OUT
+        }
+      };
       if ( isLeft ) {
-        this.transitionNode.slideRightTo( this.levelSelectionLayer, {
-          duration: 0.4,
-          targetOptions: {
-            easing: Easing.QUADRATIC_IN_OUT
-          }
-        } );
+        this.transitionNode.slideRightTo( this.levelSelectionLayer, ANIMATION_OPTIONS );
       }
       else {
-        this.transitionNode.slideLeftTo( this.challengeLayer, {
-          duration: 0.4,
-          targetOptions: {
-            easing: Easing.QUADRATIC_IN_OUT
-          }
-        } );
+        this.transitionNode.slideLeftTo( this.challengeLayer, ANIMATION_OPTIONS );
       }
     } );
     this.addChild( this.transitionNode );
