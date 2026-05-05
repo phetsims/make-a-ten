@@ -21,7 +21,6 @@ import MakeATenStrings from '../../MakeATenStrings.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import type MakeATenExploreModel from '../model/MakeATenExploreModel.js';
 import ExplorePanel from './ExplorePanel.js';
-import SplitCueNode from './SplitCueNode.js';
 
 // constants
 const EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
@@ -107,8 +106,6 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
     } );
 
     this.addChild( this.countingObjectLayerNode );
-
-    this.addChild( new SplitCueNode( model.splitCue ) );
 
     this.layoutControls();
   }
