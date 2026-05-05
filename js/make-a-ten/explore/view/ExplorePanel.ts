@@ -10,10 +10,13 @@
 import type NumberProperty from '../../../../../axon/js/NumberProperty.js';
 import type { TReadOnlyEmitter } from '../../../../../axon/js/TEmitter.js';
 import CountingCreatorNode from '../../../../../counting-common/js/common/view/CountingCreatorNode.js';
-import merge from '../../../../../phet-core/js/merge.js';
+import optionize, { type EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
-import Panel from '../../../../../sun/js/Panel.js';
+import Panel, { type PanelOptions } from '../../../../../sun/js/Panel.js';
 import type MakeATenExploreScreenView from './MakeATenExploreScreenView.js';
+
+type SelfOptions = EmptySelfOptions;
+export type ExplorePanelOptions = SelfOptions & PanelOptions;
 
 class ExplorePanel extends Panel {
 
@@ -23,20 +26,18 @@ class ExplorePanel extends Panel {
    * @param screenView
    * @param sumProperty
    * @param resetEmitter
-   * @param options - Passed to Node
+   * @param providedOptions - Passed to Panel
    */
-  public constructor( screenView: MakeATenExploreScreenView, sumProperty: NumberProperty, resetEmitter: TReadOnlyEmitter, options?: object ) {
+  public constructor( screenView: MakeATenExploreScreenView, sumProperty: NumberProperty, resetEmitter: TReadOnlyEmitter, providedOptions?: ExplorePanelOptions ) {
 
-    // TODO: optionize, see https://github.com/phetsims/make-a-ten/issues/311
-    // eslint-disable-next-line phet/bad-typescript-text
-    options = merge( {
+    const options = optionize<ExplorePanelOptions, SelfOptions, PanelOptions>()( {
       fill: 'rgb(208,222,239)',
       stroke: 'black',
       lineWidth: 1.5,
       xMargin: 30,
       yMargin: 18,
       resize: false
-    }, options );
+    }, providedOptions );
 
     const addAndDragCountingObject = screenView.addAndDragCountingObject.bind( screenView );
     const hundredTargetNode = new CountingCreatorNode( 2, screenView, sumProperty, resetEmitter, addAndDragCountingObject );
