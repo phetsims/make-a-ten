@@ -6,10 +6,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-const ActiveTerm = Object.freeze( {
-  LEFT: 'LEFT',
-  RIGHT: 'RIGHT',
-  NONE: 'NONE'
-} );
+type ActiveTerm = 'LEFT' | 'RIGHT' | 'NONE';
 
 export default ActiveTerm;

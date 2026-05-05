@@ -56,7 +56,7 @@ class MakeATenGameModel extends CountingCommonModel {
   public readonly currentChallengeProperty: Property<NumberChallenge | null>;
 
   // Current game state
-  public readonly gameStateProperty: Property<string>;
+  public readonly gameStateProperty: Property<GameState>;
 
   // Our left and right terms to be added.
   public readonly additionTerms: AdditionTerms;
@@ -87,15 +87,15 @@ class MakeATenGameModel extends CountingCommonModel {
 
     this.currentChallengeProperty = new Property( null );
 
-    this.gameStateProperty = new Property( GameState.CHOOSING_LEVEL );
+    this.gameStateProperty = new Property( 'CHOOSING_LEVEL' );
 
     this.additionTerms = new AdditionTerms();
 
     // Check for when the challenge is completed
     this.countingObjects.lengthProperty.link( ( newLength, oldLength ) => {
       // Check oldLength to make sure it's not from the counting objects just added.
-      if ( newLength === 1 && oldLength === 2 && this.gameStateProperty.value === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) { // The user has added the two numbers, trigger success state
-        this.gameStateProperty.value = GameState.CORRECT_ANSWER;
+      if ( newLength === 1 && oldLength === 2 && this.gameStateProperty.value === 'PRESENTING_INTERACTIVE_CHALLENGE' ) { // The user has added the two numbers, trigger success state
+        this.gameStateProperty.value = 'CORRECT_ANSWER';
       }
     } );
 
@@ -126,7 +126,7 @@ class MakeATenGameModel extends CountingCommonModel {
     this.currentChallengeProperty.value = level.generateChallenge();
 
     // Change to new game state.
-    this.gameStateProperty.value = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
+    this.gameStateProperty.value = 'PRESENTING_INTERACTIVE_CHALLENGE';
   }
 
   /**
@@ -143,14 +143,14 @@ class MakeATenGameModel extends CountingCommonModel {
     this.removeAllCountingObjects();
 
     this.currentChallengeProperty.value = this.currentLevelProperty.value.generateChallenge();
-    this.gameStateProperty.value = GameState.PRESENTING_INTERACTIVE_CHALLENGE;
+    this.gameStateProperty.value = 'PRESENTING_INTERACTIVE_CHALLENGE';
   }
 
   /**
    * Moves back to the level selection.
    */
   public moveToChoosingLevel(): void {
-    this.gameStateProperty.value = GameState.CHOOSING_LEVEL;
+    this.gameStateProperty.value = 'CHOOSING_LEVEL';
   }
 
   /**

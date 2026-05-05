@@ -18,6 +18,7 @@ import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
+import Dialog from '../../../../../sun/js/Dialog.js';
 import Easing from '../../../../../twixt/js/Easing.js';
 import TransitionNode from '../../../../../twixt/js/TransitionNode.js';
 import GameAudioPlayer from '../../../../../vegas/js/GameAudioPlayer.js';
@@ -66,9 +67,11 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
   private rewardNodeBoundsListener: ( ( value: unknown ) => void ) | null;
 
   private readonly rewardBarrier: Rectangle;
+  private gameModel: MakeATenGameModel;
 
   public constructor( model: MakeATenGameModel ) {
     super( model );
+    this.gameModel = model;
 
     this.finishInitialization();
 
@@ -76,7 +79,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
 
     this.challengeLayer = new Node();
 
-    const showingLeftProperty = new DerivedProperty( [ model.gameStateProperty ], gameState => gameState === GameState.CHOOSING_LEVEL );
+    const showingLeftProperty = new DerivedProperty( [ model.gameStateProperty ], gameState => gameState === 'CHOOSING_LEVEL' );
 
     this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
       content: this.levelSelectionLayer
@@ -109,11 +112,10 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     this.levelSelectionLayer.addChild( this.resetAllButton );
 
     // info dialog, constructed lazily because Dialog requires sim bounds during construction
-    let dialog = null;
+    let dialog: Dialog | null = null;
 
     this.infoButton = new InfoButton( {
-      touchAreaXDilation: 7,
-      touchAreaYDilation: 7,
+      touchAreaDilation: 7,
       listener: () => {
         if ( !dialog ) {
           dialog = new InfoDialog( model.levels );
@@ -141,7 +143,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     } );
     this.challengeLayer.addChild( this.nextChallengeButton );
     model.gameStateProperty.link( gameState => {
-      this.nextChallengeButton.visible = gameState === GameState.CORRECT_ANSWER;
+      this.nextChallengeButton.visible = gameState === 'CORRECT_ANSWER';
     } );
 
     // Add the counting object layer from our supertype
@@ -190,7 +192,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     } );
     this.visibleBoundsProperty.linkAttribute( this.rewardBarrier, 'rectBounds' );
     this.rewardBarrier.addInputListener( new ButtonListener( {
-      fire: event => {
+      fire: () => {
         this.hideReward();
       }
     } ) );
@@ -204,7 +206,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     } );
   }
 
-  public step( dt: number ): void {
+  public override step( dt: number ): void {
     this.rewardNode && this.rewardNode.step( dt );
     this.transitionNode && this.transitionNode.step( dt );
   }
@@ -220,7 +222,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     this.addChild( this.rewardNode );
     this.rewardNodeBoundsListener = this.visibleBoundsProperty.linkAttribute( this.rewardNode, 'canvasBounds' );
 
-    const rewardDialog = new RewardDialog( this.model.currentLevelProperty, 10, {
+    const rewardDialog = new RewardDialog( this.gameModel.currentLevelProperty, 10, {
       dismissListener: () => {
         this.hideReward();
         rewardDialog.dispose();
@@ -228,7 +230,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
       },
       newLevelButtonListener: () => {
         this.hideReward();
-        this.model.moveToChoosingLevel();
+        this.gameModel.moveToChoosingLevel();
         rewardDialog.dispose();
       }
     } );
@@ -239,9 +241,9 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
    * Hides the reward node.
    */
   private hideReward(): void {
-    this.removeChild( this.rewardNode );
+    this.removeChild( this.rewardNode! );
     this.removeChild( this.rewardBarrier );
-    this.visibleBoundsProperty.unlink( this.rewardNodeBoundsListener );
+    this.visibleBoundsProperty.unlink( this.rewardNodeBoundsListener! );
 
     // fully release references
     this.rewardNode = null;
@@ -252,11 +254,11 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
    * When the game state changes, update the view with the appropriate buttons and readouts.
    */
   private onGameStateChange( gameState: GameState ): void {
-    if ( gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) {
-      this.model.setupChallenge( this.model.currentChallengeProperty.value );
+    if ( gameState === 'PRESENTING_INTERACTIVE_CHALLENGE' ) {
+      this.gameModel.setupChallenge( this.gameModel.currentChallengeProperty.value );
     }
-    if ( gameState === GameState.CORRECT_ANSWER ) {
-      this.model.incrementScore();
+    if ( gameState === 'CORRECT_ANSWER' ) {
+      this.gameModel.incrementScore();
       this.gameAudioPlayer.correctAnswer();
     }
   }

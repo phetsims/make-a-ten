@@ -25,7 +25,7 @@ class MakeATenAddingScreen extends Screen<MakeATenAddingModel, MakeATenAddingScr
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( addingHomeScreen_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( addingNavBar_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR )
-    };
+    } as const;
 
     super(
       () => new MakeATenAddingModel(),

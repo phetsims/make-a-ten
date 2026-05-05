@@ -15,14 +15,6 @@ import type CountingObject from '../../../../../counting-common/js/common/model/
 // constants
 const FADE_SPEED = 0.8;
 
-// state enumeration for the cue
-const CueState = Object.freeze( {
-  UNATTACHED: 'UNATTACHED', // "not faded, but not visible"
-  ATTACHED: 'ATTACHED', // "on a number, but not fading"
-  FADING: 'FADING', // "on a number, but fading"
-  FADED: 'FADED' // "faded, will not return until reset all"
-} );
-
 class Cue {
 
   // What CountingObject the cue is attached to.
@@ -31,19 +23,19 @@ class Cue {
   // Whether the cue should be visible at all
   public readonly visibilityProperty: BooleanProperty;
 
-  // What the visibility of the cue shoudl be.
+  // What the visibility of the cue should be.
   public readonly opacityProperty: NumberProperty;
 
   private readonly stateProperty: Property<string>;
 
   public constructor() {
-    this.countingObjectProperty = new Property( null );
+    this.countingObjectProperty = new Property<CountingObject | null>( null );
 
     this.visibilityProperty = new BooleanProperty( false );
 
     this.opacityProperty = new NumberProperty( 1 );
 
-    this.stateProperty = new Property( CueState.UNATTACHED );
+    this.stateProperty = new Property( 'UNATTACHED' );
   }
 
   /**
@@ -52,7 +44,7 @@ class Cue {
    * @param dt - Changed model time
    */
   public step( dt: number ): void {
-    if ( this.stateProperty.value === CueState.FADING ) {
+    if ( this.stateProperty.value === 'FADING' ) {
       // Fade
       this.opacityProperty.value = Math.max( 0, this.opacityProperty.value - FADE_SPEED * dt );
 
@@ -67,9 +59,9 @@ class Cue {
    * Attaches the cue to the number (if it hasn't faded fully).
    */
   public attachToNumber( countingObject: CountingObject ): void {
-    if ( this.stateProperty.value === CueState.FADED ) { return; }
+    if ( this.stateProperty.value === 'FADED' ) { return; }
 
-    this.stateProperty.value = ( this.stateProperty.value === CueState.FADING ) ? this.stateProperty.value : CueState.ATTACHED;
+    this.stateProperty.value = ( this.stateProperty.value === 'FADING' ) ? this.stateProperty.value : 'ATTACHED';
     this.countingObjectProperty.value = countingObject;
     this.visibilityProperty.value = true;
   }
@@ -78,9 +70,9 @@ class Cue {
    * Detach from the current counting object, without fading.
    */
   public detach(): void {
-    if ( this.stateProperty.value === CueState.FADED ) { return; }
+    if ( this.stateProperty.value === 'FADED' ) { return; }
 
-    if ( this.stateProperty.value === CueState.FADING ) {
+    if ( this.stateProperty.value === 'FADING' ) {
       this.changeToFaded();
     }
     else {
@@ -92,10 +84,10 @@ class Cue {
    * The cue will start fading if it hasn't started (or completed) fading already.
    */
   public triggerFade(): void {
-    if ( this.stateProperty.value === CueState.ATTACHED ) {
-      this.stateProperty.value = CueState.FADING;
+    if ( this.stateProperty.value === 'ATTACHED' ) {
+      this.stateProperty.value = 'FADING';
     }
-    else if ( this.stateProperty.value === CueState.UNATTACHED ) {
+    else if ( this.stateProperty.value === 'UNATTACHED' ) {
       // If we're not attached, just immediately switch to fully faded.
       this.changeToFaded();
     }
@@ -112,7 +104,7 @@ class Cue {
    * Changes to an unattached state
    */
   private changeToUnattached(): void {
-    this.stateProperty.value = CueState.UNATTACHED;
+    this.stateProperty.value = 'UNATTACHED';
     this.visibilityProperty.value = false;
     this.opacityProperty.value = 1;
     this.countingObjectProperty.value = null;
@@ -122,7 +114,7 @@ class Cue {
    * Changes to a fully-faded state
    */
   private changeToFaded(): void {
-    this.stateProperty.value = CueState.FADED;
+    this.stateProperty.value = 'FADED';
     this.visibilityProperty.value = false;
     this.opacityProperty.value = 1;
     this.countingObjectProperty.value = null;

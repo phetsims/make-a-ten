@@ -6,7 +6,7 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import BaseNumber from '../../../../../counting-common/js/common/model/BaseNumber.js';
+import BaseNumber, { SingleDigit } from '../../../../../counting-common/js/common/model/BaseNumber.js';
 import BaseNumberNode from '../../../../../counting-common/js/common/view/BaseNumberNode.js';
 import FaceNode from '../../../../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../../../../scenery-phet/js/StarNode.js';
@@ -49,7 +49,7 @@ class MakeATenRewardNode extends RewardNode {
   }
 }
 
-function createNumber( digit, place ): BaseNumberNode {
+function createNumber( digit: SingleDigit, place: number ): BaseNumberNode {
   const node = new BaseNumberNode( new BaseNumber( digit, place ), 1 );
   node.scale( 0.5 );
   return node;

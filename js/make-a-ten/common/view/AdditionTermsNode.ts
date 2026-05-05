@@ -14,7 +14,6 @@ import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import ActiveTerm from '../../adding/model/ActiveTerm.js';
 import MakeATenConstants from '../MakeATenConstants.js';
 import type AdditionTerms from '../model/AdditionTerms.js';
 
@@ -87,12 +86,12 @@ class AdditionTermsNode extends Node {
     // Add highlights if applicable
     if ( highlightBorders ) {
       Multilink.multilink( [ additionTerms.leftTermProperty, additionTerms.activeTermProperty ], ( leftTerm, activeTerm ) => {
-        leftNumberDisplayBackground.stroke = ( leftTerm === 0 || activeTerm === ActiveTerm.LEFT ) ? STROKE_COLOR : null;
-        leftNumberDisplayBackground.fill = activeTerm === ActiveTerm.LEFT ? 'white' : null;
+        leftNumberDisplayBackground.stroke = ( leftTerm === 0 || activeTerm === 'LEFT' ) ? STROKE_COLOR : null;
+        leftNumberDisplayBackground.fill = activeTerm === 'LEFT' ? 'white' : null;
       } );
       Multilink.multilink( [ additionTerms.rightTermProperty, additionTerms.activeTermProperty ], ( rightTerm, activeTerm ) => {
-        rightNumberDisplayBackground.stroke = ( rightTerm === 0 || activeTerm === ActiveTerm.RIGHT ) ? STROKE_COLOR : null;
-        rightNumberDisplayBackground.fill = activeTerm === ActiveTerm.RIGHT ? 'white' : null;
+        rightNumberDisplayBackground.stroke = ( rightTerm === 0 || activeTerm === 'RIGHT' ) ? STROKE_COLOR : null;
+        rightNumberDisplayBackground.fill = activeTerm === 'RIGHT' ? 'white' : null;
       } );
 
       Multilink.multilink( [ additionTerms.leftTermProperty, additionTerms.rightTermProperty, additionTerms.activeTermProperty ], () => {

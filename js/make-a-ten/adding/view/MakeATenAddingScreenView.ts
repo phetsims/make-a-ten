@@ -30,7 +30,7 @@ class MakeATenAddingScreenView extends CountingCommonScreenView {
 
     this.finishInitialization();
 
-    function createEditNumberButton( term ): RectangularPushButton {
+    function createEditNumberButton( term: ActiveTerm ): RectangularPushButton {
       return new RectangularPushButton( {
         touchAreaXDilation: 10,
         touchAreaYDilation: 10,
@@ -49,8 +49,8 @@ class MakeATenAddingScreenView extends CountingCommonScreenView {
     additionTermsNode.left = this.layoutBounds.left + 38;
     additionTermsNode.top = this.layoutBounds.top + 85;
 
-    const leftEditButton = createEditNumberButton( ActiveTerm.LEFT );
-    const rightEditButton = createEditNumberButton( ActiveTerm.RIGHT );
+    const leftEditButton = createEditNumberButton( 'LEFT' );
+    const rightEditButton = createEditNumberButton( 'RIGHT' );
     leftEditButton.top = rightEditButton.top = this.layoutBounds.top + 32;
     leftEditButton.right = additionTermsNode.getLeftAlignment() + additionTermsNode.x;
     rightEditButton.left = additionTermsNode.getRightAlignment() + additionTermsNode.x;
@@ -60,16 +60,16 @@ class MakeATenAddingScreenView extends CountingCommonScreenView {
     // Where all of the counting objects go (from supertype)
     this.addChild( this.countingObjectLayerNode );
 
-    function onNumberSubmit( value ): void {
-      if ( model.additionTerms.activeTermProperty.value === ActiveTerm.LEFT ) {
+    function onNumberSubmit( value: number ): void {
+      if ( model.additionTerms.activeTermProperty.value === 'LEFT' ) {
         model.additionTerms.leftTermProperty.value = value;
       }
-      if ( model.additionTerms.activeTermProperty.value === ActiveTerm.RIGHT ) {
+      if ( model.additionTerms.activeTermProperty.value === 'RIGHT' ) {
         model.additionTerms.rightTermProperty.value = value;
       }
 
       model.setupTerms();
-      model.additionTerms.activeTermProperty.value = ActiveTerm.NONE;
+      model.additionTerms.activeTermProperty.value = 'NONE';
     }
 
     const dimBackground = new Rectangle( {
@@ -77,7 +77,7 @@ class MakeATenAddingScreenView extends CountingCommonScreenView {
     } );
     dimBackground.addInputListener( {
       down: event => {
-        model.additionTerms.activeTermProperty.value = ActiveTerm.NONE; // this will close the keyboard button
+        model.additionTerms.activeTermProperty.value = 'NONE'; // this will close the keyboard button
       }
     } );
     this.visibleBoundsProperty.link( visibleBounds => {
@@ -92,12 +92,12 @@ class MakeATenAddingScreenView extends CountingCommonScreenView {
     keyboardPanel.top = additionTermsNode.top + 120;
 
     model.additionTerms.activeTermProperty.link( term => {
-      keyboardPanel.visible = dimBackground.visible = term !== ActiveTerm.NONE;
+      keyboardPanel.visible = dimBackground.visible = term !== 'NONE';
 
-      if ( term === ActiveTerm.LEFT ) {
+      if ( term === 'LEFT' ) {
         keyboardPanel.setValue( model.additionTerms.leftTermProperty.value );
       }
-      if ( term === ActiveTerm.RIGHT ) {
+      if ( term === 'RIGHT' ) {
         keyboardPanel.setValue( model.additionTerms.rightTermProperty.value );
       }
     } );

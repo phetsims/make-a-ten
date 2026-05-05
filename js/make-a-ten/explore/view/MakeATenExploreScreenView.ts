@@ -53,10 +53,13 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
 
   // When checked, hides the sum in the upper-left
   private readonly hideSumCheckbox: Checkbox;
+  private exploreModel: MakeATenExploreModel;
 
   public constructor( model: MakeATenExploreModel ) {
 
     super( model );
+
+    this.exploreModel = model;
 
     this.numberSplitListener = this.onNumberSplit.bind( this );
 
@@ -166,8 +169,8 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
     countingObjectNode.splitEmitter.removeListener( this.numberSplitListener );
 
     // Detach any attached cues
-    if ( this.model.splitCue.countingObjectProperty.value === countingObject ) {
-      this.model.splitCue.detach();
+    if ( this.exploreModel.splitCue.countingObjectProperty.value === countingObject ) {
+      this.exploreModel.splitCue.detach();
     }
 
     super.onCountingObjectRemoved( countingObject );
@@ -177,7 +180,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
    * Called when a counting object node is split.
    */
   private onNumberSplit( countingObjectNode: CountingObjectNode ): void {
-    this.model.splitCue.triggerFade();
+    this.exploreModel.splitCue.triggerFade();
   }
 
   /**
@@ -186,7 +189,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
   private onNumberInteractionStarted( countingObjectNode: CountingObjectNode ): void {
     const countingObject = countingObjectNode.countingObject;
     if ( countingObject.numberValueProperty.value > 1 ) {
-      this.model.splitCue.attachToNumber( countingObject );
+      this.exploreModel.splitCue.attachToNumber( countingObject );
     }
   }
 

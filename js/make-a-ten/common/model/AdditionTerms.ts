@@ -19,21 +19,21 @@ class AdditionTerms {
   public readonly rightTermProperty: NumberProperty;
 
   // The active term being edited (left, right or none basically)
-  public readonly activeTermProperty: Property<string>;
+  public readonly activeTermProperty: Property<ActiveTerm>;
 
   public constructor() {
     this.leftTermProperty = new NumberProperty( 0 );
 
     this.rightTermProperty = new NumberProperty( 0 );
 
-    this.activeTermProperty = new Property( ActiveTerm.NONE );
+    this.activeTermProperty = new Property<ActiveTerm>( 'NONE' );
   }
 
   /**
    * Returns whether both of the terms have non-zero values (and are not being edited).
    */
   public hasBothTerms(): boolean {
-    return this.activeTermProperty.value === ActiveTerm.NONE && this.leftTermProperty.value > 0 && this.rightTermProperty.value > 0;
+    return this.activeTermProperty.value === 'NONE' && this.leftTermProperty.value > 0 && this.rightTermProperty.value > 0;
   }
 
   /**
