@@ -223,9 +223,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     this.addChild( this.rewardNode );
     this.rewardNodeBoundsListener = this.visibleBoundsProperty.linkAttribute( this.rewardNode, 'canvasBounds' );
 
-    // TODO: See https://github.com/phetsims/make-a-ten/issues/311
-    // @ts-expect-error - currentLevelProperty is a Property<Level>, but this 1:1 port preserves the original runtime call.
-    const rewardDialog = new RewardDialog( this.gameModel.currentLevelProperty, 10, {
+    const rewardDialog = new RewardDialog( this.gameModel.currentLevelProperty.value.number, 10, {
       dismissListener: () => {
         this.hideReward();
         rewardDialog.dispose();
