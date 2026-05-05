@@ -8,16 +8,16 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { TReadOnlyProperty } from '../../../../../axon/js/TReadOnlyProperty.js';
-import optionize, { type EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
-import type StrictOmit from '../../../../../phet-core/js/types/StrictOmit.js';
-import ArrowShape from '../../../../../scenery-phet/js/ArrowShape.js';
-import PhetColorScheme from '../../../../../scenery-phet/js/PhetColorScheme.js';
-import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
-import Path from '../../../../../scenery/js/nodes/Path.js';
-import Text from '../../../../../scenery/js/nodes/Text.js';
-import RectangularPushButton, { type RectangularPushButtonOptions } from '../../../../../sun/js/buttons/RectangularPushButton.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
+import optionize, { type EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import type StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import ArrowShape from '../../../../scenery-phet/js/ArrowShape.js';
+import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import RectangularPushButton, { type RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
 
 // constants
 const LABEL_FONT = new PhetFont( { size: 20, weight: 'bold' } );

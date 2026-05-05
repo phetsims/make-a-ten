@@ -6,11 +6,11 @@
  * @author Sharfudeen Ashraf
  */
 
-import ScreenIcon from '../../../../joist/js/ScreenIcon.js';
-import Image from '../../../../scenery/js/nodes/Image.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
-import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import type TPaint from '../../../../scenery/js/util/TPaint.js';
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
+import Image from '../../../scenery/js/nodes/Image.js';
+import Node from '../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../scenery/js/nodes/Rectangle.js';
+import type TPaint from '../../../scenery/js/util/TPaint.js';
 
 const MakeATenUtils = {
   /**

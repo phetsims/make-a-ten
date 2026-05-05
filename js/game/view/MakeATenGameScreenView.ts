@@ -8,24 +8,24 @@
  * @author Sharfudeen Ashraf
  */
 
-import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
-import CountingCommonScreenView from '../../../../../counting-common/js/common/view/CountingCommonScreenView.js';
-import type Bounds2 from '../../../../../dot/js/Bounds2.js';
-import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
-import InfoButton from '../../../../../scenery-phet/js/buttons/InfoButton.js';
-import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import ButtonListener from '../../../../../scenery/js/input/ButtonListener.js';
-import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
-import Node from '../../../../../scenery/js/nodes/Node.js';
-import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
-import Text from '../../../../../scenery/js/nodes/Text.js';
-import Dialog from '../../../../../sun/js/Dialog.js';
-import Easing from '../../../../../twixt/js/Easing.js';
-import TransitionNode from '../../../../../twixt/js/TransitionNode.js';
-import GameAudioPlayer from '../../../../../vegas/js/GameAudioPlayer.js';
-import InfiniteStatusBar from '../../../../../vegas/js/InfiniteStatusBar.js';
-import RewardDialog from '../../../../../vegas/js/RewardDialog.js';
-import MakeATenStrings from '../../../MakeATenStrings.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import CountingCommonScreenView from '../../../../counting-common/js/common/view/CountingCommonScreenView.js';
+import type Bounds2 from '../../../../dot/js/Bounds2.js';
+import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
+import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import ButtonListener from '../../../../scenery/js/input/ButtonListener.js';
+import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import Dialog from '../../../../sun/js/Dialog.js';
+import Easing from '../../../../twixt/js/Easing.js';
+import TransitionNode from '../../../../twixt/js/TransitionNode.js';
+import GameAudioPlayer from '../../../../vegas/js/GameAudioPlayer.js';
+import InfiniteStatusBar from '../../../../vegas/js/InfiniteStatusBar.js';
+import RewardDialog from '../../../../vegas/js/RewardDialog.js';
+import MakeATenStrings from '../../MakeATenStrings.js';
 import AdditionTermsNode from '../../common/view/AdditionTermsNode.js';
 import GameState from '../model/GameState.js';
 import MakeATenGameModel from '../model/MakeATenGameModel.js';

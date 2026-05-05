@@ -9,14 +9,14 @@
  * @author Andrey Zelenkov (MLearner)
  */
 
-import merge from '../../../../../phet-core/js/merge.js';
-import NumberEntryControl from '../../../../../scenery-phet/js/NumberEntryControl.js';
-import PhetColorScheme from '../../../../../scenery-phet/js/PhetColorScheme.js';
-import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import VBox from '../../../../../scenery/js/layout/nodes/VBox.js';
-import TextPushButton from '../../../../../sun/js/buttons/TextPushButton.js';
-import Panel from '../../../../../sun/js/Panel.js';
-import MakeATenStrings from '../../../MakeATenStrings.js';
+import merge from '../../../../phet-core/js/merge.js';
+import NumberEntryControl from '../../../../scenery-phet/js/NumberEntryControl.js';
+import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
+import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
+import Panel from '../../../../sun/js/Panel.js';
+import MakeATenStrings from '../../MakeATenStrings.js';
 
 class KeyboardPanel extends Panel {
 

@@ -6,8 +6,8 @@
  * @author Sharfudeen Ashraf
  */
 
-import NumberProperty from '../../../../../axon/js/NumberProperty.js';
-import Property from '../../../../../axon/js/Property.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
 import ActiveTerm from '../../adding/model/ActiveTerm.js';
 
 class AdditionTerms {

@@ -7,10 +7,10 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
-import NumberProperty from '../../../../../axon/js/NumberProperty.js';
-import Property from '../../../../../axon/js/Property.js';
-import type CountingObject from '../../../../../counting-common/js/common/model/CountingObject.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import type CountingObject from '../../../../counting-common/js/common/model/CountingObject.js';
 
 // constants
 const FADE_SPEED = 0.8;

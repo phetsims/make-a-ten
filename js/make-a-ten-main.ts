@@ -8,9 +8,9 @@
 
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
-import MakeATenAddingScreen from './make-a-ten/adding/MakeATenAddingScreen.js';
-import MakeATenExploreScreen from './make-a-ten/explore/MakeATenExploreScreen.js';
-import MakeATenGameScreen from './make-a-ten/game/MakeATenGameScreen.js';
+import MakeATenAddingScreen from './adding/MakeATenAddingScreen.js';
+import MakeATenExploreScreen from './explore/MakeATenExploreScreen.js';
+import MakeATenGameScreen from './game/MakeATenGameScreen.js';
 import MakeATenStrings from './MakeATenStrings.js';
 
 const makeATenTitleStringProperty = MakeATenStrings[ 'make-a-ten' ].titleStringProperty;

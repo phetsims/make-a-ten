@@ -6,9 +6,9 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import NumberProperty from '../../../../../axon/js/NumberProperty.js';
-import { TReadOnlyProperty } from '../../../../../axon/js/TReadOnlyProperty.js';
-import Image from '../../../../../scenery/js/nodes/Image.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
 import type NumberChallenge from './NumberChallenge.js';
 import type NumberChallengeFactory from './NumberChallengeFactory.js';
 

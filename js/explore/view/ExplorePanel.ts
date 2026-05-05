@@ -7,12 +7,12 @@
  * @author Chris Klusendorf (PhET Interactive Simulations)
  */
 
-import type NumberProperty from '../../../../../axon/js/NumberProperty.js';
-import type { TReadOnlyEmitter } from '../../../../../axon/js/TEmitter.js';
-import CountingCreatorNode from '../../../../../counting-common/js/common/view/CountingCreatorNode.js';
-import optionize, { type EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
-import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
-import Panel, { type PanelOptions } from '../../../../../sun/js/Panel.js';
+import type NumberProperty from '../../../../axon/js/NumberProperty.js';
+import type { TReadOnlyEmitter } from '../../../../axon/js/TEmitter.js';
+import CountingCreatorNode from '../../../../counting-common/js/common/view/CountingCreatorNode.js';
+import optionize, { type EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
+import Panel, { type PanelOptions } from '../../../../sun/js/Panel.js';
 import type MakeATenExploreScreenView from './MakeATenExploreScreenView.js';
 
 type SelfOptions = EmptySelfOptions;

@@ -8,11 +8,11 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import Vector2 from '../../../../../dot/js/Vector2.js';
-import ScreenView from '../../../../../joist/js/ScreenView.js';
-import Node from '../../../../../scenery/js/nodes/Node.js';
-import LevelSelectionButton from '../../../../../vegas/js/LevelSelectionButton.js';
-import ScoreDisplayNumberAndStar from '../../../../../vegas/js/ScoreDisplayNumberAndStar.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import ScreenView from '../../../../joist/js/ScreenView.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import LevelSelectionButton from '../../../../vegas/js/LevelSelectionButton.js';
+import ScoreDisplayNumberAndStar from '../../../../vegas/js/ScoreDisplayNumberAndStar.js';
 import type Level from '../model/Level.js';
 import type MakeATenGameModel from '../model/MakeATenGameModel.js';
 

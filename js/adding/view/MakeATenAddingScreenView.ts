@@ -7,12 +7,12 @@
  * @author Sharfudeen Ashraf
  */
 
-import CountingCommonScreenView from '../../../../../counting-common/js/common/view/CountingCommonScreenView.js';
-import Image from '../../../../../scenery/js/nodes/Image.js';
-import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
-import Color from '../../../../../scenery/js/util/Color.js';
-import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
-import edit_png from '../../../../images/edit_png.js';
+import CountingCommonScreenView from '../../../../counting-common/js/common/view/CountingCommonScreenView.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import Color from '../../../../scenery/js/util/Color.js';
+import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import edit_png from '../../../images/edit_png.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import AdditionTermsNode from '../../common/view/AdditionTermsNode.js';
 import ActiveTerm from '../model/ActiveTerm.js';

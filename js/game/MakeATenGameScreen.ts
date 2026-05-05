@@ -8,12 +8,12 @@
  * @author Sharfudeen Ashraf
  */
 
-import Property from '../../../../axon/js/Property.js';
-import Screen from '../../../../joist/js/Screen.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import gameHomeScreen_png from '../../../images/gameHomeScreen_png.js';
-import gameNavBar_png from '../../../images/gameNavBar_png.js';
-import MakeATenStrings from '../../MakeATenStrings.js';
+import Property from '../../../axon/js/Property.js';
+import Screen from '../../../joist/js/Screen.js';
+import Tandem from '../../../tandem/js/Tandem.js';
+import gameHomeScreen_png from '../../images/gameHomeScreen_png.js';
+import gameNavBar_png from '../../images/gameNavBar_png.js';
+import MakeATenStrings from '../MakeATenStrings.js';
 import MakeATenConstants from '../common/MakeATenConstants.js';
 import MakeATenUtils from '../common/MakeATenUtils.js';
 import MakeATenGameModel from './model/MakeATenGameModel.js';

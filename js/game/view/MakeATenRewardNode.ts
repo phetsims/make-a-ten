@@ -6,11 +6,11 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import BaseNumber, { SingleDigit } from '../../../../../counting-common/js/common/model/BaseNumber.js';
-import BaseNumberNode from '../../../../../counting-common/js/common/view/BaseNumberNode.js';
-import FaceNode from '../../../../../scenery-phet/js/FaceNode.js';
-import StarNode from '../../../../../scenery-phet/js/StarNode.js';
-import RewardNode from '../../../../../vegas/js/RewardNode.js';
+import BaseNumber, { SingleDigit } from '../../../../counting-common/js/common/model/BaseNumber.js';
+import BaseNumberNode from '../../../../counting-common/js/common/view/BaseNumberNode.js';
+import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
+import StarNode from '../../../../scenery-phet/js/StarNode.js';
+import RewardNode from '../../../../vegas/js/RewardNode.js';
 
 class MakeATenRewardNode extends RewardNode {
   public constructor() {

@@ -6,7 +6,7 @@
  * @author Sharfudeen Ashraf
  */
 
-import CountingCommonModel from '../../../../../counting-common/js/common/model/CountingCommonModel.js';
+import CountingCommonModel from '../../../../counting-common/js/common/model/CountingCommonModel.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import MakeATenQueryParameters from '../../common/MakeATenQueryParameters.js';
 import Cue from './Cue.js';

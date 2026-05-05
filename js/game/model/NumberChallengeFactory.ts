@@ -7,8 +7,8 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import dotRandom from '../../../../../dot/js/dotRandom.js';
-import type Random from '../../../../../dot/js/Random.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
+import type Random from '../../../../dot/js/Random.js';
 import NumberChallenge from './NumberChallenge.js';
 
 class NumberChallengeFactory {

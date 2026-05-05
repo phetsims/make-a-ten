@@ -7,13 +7,13 @@
  * @author Sharfudeen Ashraf
  */
 
-import Multilink from '../../../../../axon/js/Multilink.js';
-import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
-import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import ManualConstraint from '../../../../../scenery/js/layout/constraints/ManualConstraint.js';
-import Node from '../../../../../scenery/js/nodes/Node.js';
-import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
-import Text from '../../../../../scenery/js/nodes/Text.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
 import MakeATenConstants from '../MakeATenConstants.js';
 import type AdditionTerms from '../model/AdditionTerms.js';
 

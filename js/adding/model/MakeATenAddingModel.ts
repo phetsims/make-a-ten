@@ -6,7 +6,7 @@
  * @author Sharfudeen Ashraf
  */
 
-import CountingCommonModel from '../../../../../counting-common/js/common/model/CountingCommonModel.js';
+import CountingCommonModel from '../../../../counting-common/js/common/model/CountingCommonModel.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
 

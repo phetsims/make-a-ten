@@ -6,7 +6,7 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import { QueryStringMachine } from '../../../../query-string-machine/js/QueryStringMachineModule.js';
+import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
 
 const MakeATenQueryParameters = QueryStringMachine.getAll( {
 

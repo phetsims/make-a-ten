@@ -7,17 +7,17 @@
  * @author Sharfudeen Ashraf
  */
 
-import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
-import CountingObject from '../../../../../counting-common/js/common/model/CountingObject.js';
-import CountingCommonScreenView from '../../../../../counting-common/js/common/view/CountingCommonScreenView.js';
-import type CountingObjectNode from '../../../../../counting-common/js/common/view/CountingObjectNode.js';
-import Vector2 from '../../../../../dot/js/Vector2.js';
-import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
-import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
-import Text from '../../../../../scenery/js/nodes/Text.js';
-import Checkbox from '../../../../../sun/js/Checkbox.js';
-import MakeATenStrings from '../../../MakeATenStrings.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import CountingObject from '../../../../counting-common/js/common/model/CountingObject.js';
+import CountingCommonScreenView from '../../../../counting-common/js/common/view/CountingCommonScreenView.js';
+import type CountingObjectNode from '../../../../counting-common/js/common/view/CountingObjectNode.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import Checkbox from '../../../../sun/js/Checkbox.js';
+import MakeATenStrings from '../../MakeATenStrings.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import type MakeATenExploreModel from '../model/MakeATenExploreModel.js';
 import ExplorePanel from './ExplorePanel.js';
