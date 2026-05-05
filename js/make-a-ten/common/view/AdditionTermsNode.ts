@@ -10,7 +10,7 @@
 import Multilink from '../../../../../axon/js/Multilink.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
+import ManualConstraint from '../../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
@@ -21,6 +21,10 @@ import type AdditionTerms from '../model/AdditionTerms.js';
 const EQUATION_FONT = new PhetFont( { size: 45, weight: 'bold' } );
 const STROKE_COLOR = '#000';
 const LAYOUT_MULTIPLIER = 1 / 8; // Fraction offset of the text from the background's border
+const NUMBER_DISPLAY_WIDTH = 100;
+const NUMBER_DISPLAY_HEIGHT = 78;
+const OPERATOR_SPACING = 5;
+const EQUALS_SIGN_SPACING = 20;
 
 class AdditionTermsNode extends Node {
 
@@ -41,8 +45,8 @@ class AdditionTermsNode extends Node {
       visible: highlightBorders
     };
 
-    const leftNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, backgroundOptions );
-    const rightNumberDisplayBackground = new Rectangle( 0, 0, 100, 78, 10, 10, backgroundOptions );
+    const leftNumberDisplayBackground = new Rectangle( 0, 0, NUMBER_DISPLAY_WIDTH, NUMBER_DISPLAY_HEIGHT, 10, 10, backgroundOptions );
+    const rightNumberDisplayBackground = new Rectangle( 0, 0, NUMBER_DISPLAY_WIDTH, NUMBER_DISPLAY_HEIGHT, 10, 10, backgroundOptions );
 
     const plusText = new Text( MathSymbols.PLUS, { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
     const equalsSignText = new Text( MathSymbols.EQUAL_TO, {
@@ -50,37 +54,22 @@ class AdditionTermsNode extends Node {
       fill: MakeATenConstants.EQUATION_FILL
     } );
 
-    const numberDisplayBox = new HBox( {
-      children: [ leftNumberDisplayBackground, plusText, rightNumberDisplayBackground ],
-      spacing: 5,
-      resize: false // since we toggle the stroke
-    } );
-
     const leftTermText = new Text( '', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
     const rightTermText = new Text( '', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
 
-    this.addChild( numberDisplayBox );
+    this.addChild( leftNumberDisplayBackground );
+    this.addChild( plusText );
+    this.addChild( rightNumberDisplayBackground );
     this.addChild( leftTermText );
     this.addChild( rightTermText );
     this.addChild( equalsSignText );
 
-    function layout(): void {
-      if ( !rightTermText.bounds.isEmpty() ) {
-        equalsSignText.left = rightTermText.right + 20;
-      }
-      if ( !leftTermText.bounds.isEmpty() ) {
-        leftTermText.right = leftNumberDisplayBackground.right - leftNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
-      }
-    }
-
     additionTerms.leftTermProperty.link( term => {
       leftTermText.string = term ? term : '';
-      layout();
     } );
 
     additionTerms.rightTermProperty.link( term => {
       rightTermText.string = term ? term : '';
-      layout();
     } );
 
     // Add highlights if applicable
@@ -99,17 +88,38 @@ class AdditionTermsNode extends Node {
       } );
     }
 
-    // Center everything vertically
-    const centerY = numberDisplayBox.centerY;
-    leftTermText.centerY = centerY;
-    rightTermText.centerY = centerY;
-    equalsSignText.centerY = centerY;
+    ManualConstraint.create( this, [
+      leftNumberDisplayBackground,
+      plusText,
+      rightNumberDisplayBackground,
+      leftTermText,
+      rightTermText,
+      equalsSignText
+    ], ( leftNumberDisplayProxy, plusProxy, rightNumberDisplayProxy, leftTermProxy, rightTermProxy, equalsSignProxy ) => {
+      leftNumberDisplayProxy.left = 0;
+      leftNumberDisplayProxy.top = 0;
+      plusProxy.left = leftNumberDisplayProxy.right + OPERATOR_SPACING;
+      plusProxy.centerY = leftNumberDisplayProxy.centerY;
+      rightNumberDisplayProxy.left = plusProxy.right + OPERATOR_SPACING;
+      rightNumberDisplayProxy.top = leftNumberDisplayProxy.top;
 
-    // Unchanging layout position of the right text node
-    rightTermText.left = rightNumberDisplayBackground.left + rightNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
+      leftTermProxy.centerY = leftNumberDisplayProxy.centerY;
+      rightTermProxy.centerY = leftNumberDisplayProxy.centerY;
+      equalsSignProxy.centerY = leftNumberDisplayProxy.centerY;
 
-    this.getLeftAlignment = () => leftTermText.right;
-    this.getRightAlignment = () => rightTermText.left;
+      if ( !leftTermProxy.bounds.isEmpty() ) {
+        leftTermProxy.right = leftNumberDisplayProxy.right - leftNumberDisplayProxy.width * LAYOUT_MULTIPLIER;
+      }
+
+      if ( !rightTermProxy.bounds.isEmpty() ) {
+        rightTermProxy.left = rightNumberDisplayProxy.left + rightNumberDisplayProxy.width * LAYOUT_MULTIPLIER;
+      }
+
+      equalsSignProxy.left = ( rightTermProxy.bounds.isEmpty() ? rightNumberDisplayProxy.right : rightTermProxy.right ) + EQUALS_SIGN_SPACING;
+    } );
+
+    this.getLeftAlignment = () => leftNumberDisplayBackground.right - leftNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
+    this.getRightAlignment = () => rightNumberDisplayBackground.left + rightNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
   }
 }
 
