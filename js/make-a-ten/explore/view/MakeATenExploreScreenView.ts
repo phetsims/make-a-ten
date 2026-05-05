@@ -23,8 +23,6 @@ import type MakeATenExploreModel from '../model/MakeATenExploreModel.js';
 import ExplorePanel from './ExplorePanel.js';
 import SplitCueNode from './SplitCueNode.js';
 
-const hideTotalString = MakeATenStrings.hideTotal;
-
 // constants
 const EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
 
@@ -88,7 +86,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
     this.explorePanel = new ExplorePanel( this, model.sumProperty, model.resetEmitter );
     this.addChild( this.explorePanel );
 
-    const hideSumText = new Text( hideTotalString, {
+    const hideSumText = new Text( MakeATenStrings.hideTotalStringProperty, {
       maxWidth: 150,
       font: new PhetFont( {
         size: 25,

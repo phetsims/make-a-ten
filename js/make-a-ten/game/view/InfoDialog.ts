@@ -16,7 +16,7 @@ import MakeATenStrings from '../../../MakeATenStrings.js';
 import type Level from '../model/Level.js';
 
 // Template for inserting the level number
-const patternLevel0LevelNumberString = MakeATenStrings.pattern.level[ '0levelNumber' ];
+const patternLevel0LevelNumberStringProperty = MakeATenStrings.pattern.level[ '0levelNumberStringProperty' ];
 
 const LEVEL_NUMBER_FONT = new PhetFont( { size: 14, weight: 'bold' } );
 const LEVEL_DESCRIPTION_FONT = new PhetFont( 14 );
@@ -28,7 +28,7 @@ class InfoDialog extends Dialog {
   public constructor( levels: Level[] ) {
     const levelMaxWidth = 100;
 
-    const padWidth = new Text( StringUtils.format( patternLevel0LevelNumberString, '10' ), {
+    const padWidth = new Text( StringUtils.format( patternLevel0LevelNumberStringProperty.value, '10' ), { // TODO: I18n, see https://github.com/phetsims/make-a-ten/issues/310
       font: LEVEL_NUMBER_FONT,
       maxWidth: levelMaxWidth
     } ).width + 20;
@@ -36,11 +36,11 @@ class InfoDialog extends Dialog {
     function createLevelNode( level: Level ): Node {
       return new Node( {
         children: [
-          new Text( StringUtils.format( patternLevel0LevelNumberString, `${level.number}` ), {
+          new Text( StringUtils.format( patternLevel0LevelNumberStringProperty.value, `${level.number}` ), { // TODO: I18n, see https://github.com/phetsims/make-a-ten/issues/310
             font: LEVEL_NUMBER_FONT,
             maxWidth: levelMaxWidth
           } ),
-          new Text( level.description, {
+          new Text( level.descriptionProperty, {
             font: LEVEL_DESCRIPTION_FONT,
             x: padWidth,
             maxWidth: 500

@@ -34,8 +34,7 @@ import MakeATenRewardNode from './MakeATenRewardNode.js';
 import NextArrowButton from './NextArrowButton.js';
 import StartGameLevelNode from './StartGameLevelNode.js';
 
-const nextString = MakeATenStrings.next;
-const patternLevel0LevelNumberString = MakeATenStrings.pattern.level[ '0levelNumber' ];
+const patternLevel0LevelNumberStringProperty = MakeATenStrings.pattern.level[ '0levelNumberStringProperty' ];
 
 class MakeATenGameScreenView extends CountingCommonScreenView {
 
@@ -135,7 +134,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     additionTermsNode.top = this.layoutBounds.top + 75;
     this.challengeLayer.addChild( additionTermsNode );
 
-    this.nextChallengeButton = new NextArrowButton( nextString, {
+    this.nextChallengeButton = new NextArrowButton( MakeATenStrings.nextStringProperty, {
       listener: () => {
         model.moveToNextChallenge();
       },
@@ -160,8 +159,8 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
       pickable: false
     } );
     model.currentLevelProperty.link( level => {
-      levelNumberText.string = StringUtils.format( patternLevel0LevelNumberString, `${level.number}` );
-      levelDescriptionText.string = level.description;
+      levelNumberText.string = StringUtils.format( patternLevel0LevelNumberStringProperty.value, `${level.number}` ); // TODO: I18n, see https://github.com/phetsims/make-a-ten/issues/310
+      levelDescriptionText.string = level.descriptionProperty.value; // TODO: update when descriptionProperty changes, see https://github.com/phetsims/make-a-ten/issues/310
     } );
     const statusMessageNode = new HBox( {
       children: [ levelNumberText, levelDescriptionText ],

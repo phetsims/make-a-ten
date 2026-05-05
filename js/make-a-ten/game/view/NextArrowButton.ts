@@ -8,6 +8,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import { TReadOnlyProperty } from '../../../../../axon/js/TReadOnlyProperty.js';
 import optionize, { type EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import type StrictOmit from '../../../../../phet-core/js/types/StrictOmit.js';
 import ArrowShape from '../../../../../scenery-phet/js/ArrowShape.js';
@@ -26,7 +27,7 @@ export type NextArrowButtonOptions = SelfOptions & StrictOmit<RectangularPushBut
 
 class NextArrowButton extends RectangularPushButton {
 
-  public constructor( buttonText: string, providedOptions?: NextArrowButtonOptions ) {
+  public constructor( buttonText: TReadOnlyProperty<string>, providedOptions?: NextArrowButtonOptions ) {
 
     const arrowShape = new ArrowShape( 0, 0, 28.5, 0, {
       tailWidth: 2,

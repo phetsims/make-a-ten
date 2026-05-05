@@ -7,6 +7,7 @@
  */
 
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';
+import { TReadOnlyProperty } from '../../../../../axon/js/TReadOnlyProperty.js';
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import type NumberChallenge from './NumberChallenge.js';
 import type NumberChallengeFactory from './NumberChallengeFactory.js';
@@ -23,7 +24,7 @@ class Level {
   public readonly iconNode: Image;
 
   // Translated description to be shown in info and the status bar
-  public readonly description: string;
+  public readonly descriptionProperty: TReadOnlyProperty<string>;
 
   // The total score for this level
   public readonly scoreProperty: NumberProperty;
@@ -37,7 +38,7 @@ class Level {
    * @param description - Translated description to be shown in info and the status bar
    * @param numberChallengeFactory - For generating challenges
    */
-  public constructor( number: number, color: string, icon: HTMLImageElement, description: string, numberChallengeFactory: NumberChallengeFactory ) {
+  public constructor( number: number, color: string, icon: HTMLImageElement, description: TReadOnlyProperty<string>, numberChallengeFactory: NumberChallengeFactory ) {
 
     this.number = number;
 
@@ -45,7 +46,7 @@ class Level {
 
     this.iconNode = new Image( icon );
 
-    this.description = description;
+    this.descriptionProperty = description;
 
     this.scoreProperty = new NumberProperty( 0 );
 

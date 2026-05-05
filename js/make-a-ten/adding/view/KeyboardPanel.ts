@@ -18,8 +18,6 @@ import TextPushButton from '../../../../../sun/js/buttons/TextPushButton.js';
 import Panel from '../../../../../sun/js/Panel.js';
 import MakeATenStrings from '../../../MakeATenStrings.js';
 
-const submitString = MakeATenStrings.submit;
-
 class KeyboardPanel extends Panel {
 
   private readonly numberEntryControl: NumberEntryControl;
@@ -39,7 +37,7 @@ class KeyboardPanel extends Panel {
       maxTextWidth: 100
     };
 
-    const submitNumberButton = new TextPushButton( submitString, merge( {
+    const submitNumberButton = new TextPushButton( MakeATenStrings.submitStringProperty, merge( {
       touchAreaXDilation: 20,
       touchAreaYDilation: 7,
       listener: () => {

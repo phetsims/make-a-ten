@@ -13,48 +13,30 @@ import makeATen from './makeATen.js';
 
 type StringsType = {
   'make-a-ten': {
-    'title': string;
     'titleStringProperty': LocalizedStringProperty;
   };
   'screen': {
-    'adding': string;
     'addingStringProperty': LocalizedStringProperty;
-    'explore': string;
     'exploreStringProperty': LocalizedStringProperty;
-    'game': string;
     'gameStringProperty': LocalizedStringProperty;
   };
-  'hideTotal': string;
   'hideTotalStringProperty': LocalizedStringProperty;
-  'submit': string;
   'submitStringProperty': LocalizedStringProperty;
-  'next': string;
   'nextStringProperty': LocalizedStringProperty;
   'pattern': {
     'level': {
-      '0levelNumber': string;
       '0levelNumberStringProperty': LocalizedStringProperty;
     }
   };
-  'level1Description': string;
   'level1DescriptionStringProperty': LocalizedStringProperty;
-  'level2Description': string;
   'level2DescriptionStringProperty': LocalizedStringProperty;
-  'level3Description': string;
   'level3DescriptionStringProperty': LocalizedStringProperty;
-  'level4Description': string;
   'level4DescriptionStringProperty': LocalizedStringProperty;
-  'level5Description': string;
   'level5DescriptionStringProperty': LocalizedStringProperty;
-  'level6Description': string;
   'level6DescriptionStringProperty': LocalizedStringProperty;
-  'level7Description': string;
   'level7DescriptionStringProperty': LocalizedStringProperty;
-  'level8Description': string;
   'level8DescriptionStringProperty': LocalizedStringProperty;
-  'level9Description': string;
   'level9DescriptionStringProperty': LocalizedStringProperty;
-  'level10Description': string;
   'level10DescriptionStringProperty': LocalizedStringProperty;
 };
 
