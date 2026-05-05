@@ -17,7 +17,7 @@ class Level {
    * @param {string} description - Translated description to be shown in info and the status bar
    * @param {NumberChallengeFactory} numberChallengeFactory - For generating challenges
    */
-  constructor( number, color, icon, description, numberChallengeFactory ) {
+   public constructor( number, color, icon, description, numberChallengeFactory ) {
 
     // @public {number} - The level number, from 1 to 10
     this.number = number;
@@ -42,7 +42,7 @@ class Level {
    * Resets all of our mutable state to the initial values.
    * @public
    */
-  reset() {
+  reset(): void {
     this.scoreProperty.reset();
   }
 

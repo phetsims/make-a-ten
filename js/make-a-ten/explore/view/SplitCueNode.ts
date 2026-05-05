@@ -18,7 +18,7 @@ class SplitCueNode extends Node {
   /**
    * @param {Cue} cue - Our cue model
    */
-  constructor( cue ) {
+   public constructor( cue ) {
     super( {
       pickable: false,
       usesOpacity: true
@@ -77,7 +77,7 @@ class SplitCueNode extends Node {
    * Updates the position of the cue.
    * @private
    */
-  updatePosition() {
+  updatePosition(): void {
     const visible = this.cue.visibilityProperty.value;
     const countingObject = this.cue.countingObjectProperty.value;
 
@@ -94,7 +94,7 @@ class SplitCueNode extends Node {
    *  https://github.com/phetsims/counting-common/issues/13
    * @private
    */
-  updateRectangle() {
+  updateRectangle(): void {
     const countingObject = this.cue.countingObjectProperty.value;
 
     if ( countingObject ) {

@@ -11,7 +11,7 @@ import Property from '../../../../../axon/js/Property.js';
 import ActiveTerm from '../../adding/model/ActiveTerm.js';
 
 class AdditionTerms {
-  constructor() {
+   public constructor() {
     // @public {NumberProperty} - The left-hand term for the addition.
     this.leftTermProperty = new NumberProperty( 0 );
 
@@ -28,7 +28,7 @@ class AdditionTerms {
    *
    * @returns {boolean}
    */
-  hasBothTerms() {
+  hasBothTerms(): boolean {
     return this.activeTermProperty.value === ActiveTerm.NONE && this.leftTermProperty.value > 0 && this.rightTermProperty.value > 0;
   }
 
@@ -36,7 +36,7 @@ class AdditionTerms {
    * Reset all of the terms
    * @public
    */
-  reset() {
+  reset(): void {
     this.leftTermProperty.reset();
     this.rightTermProperty.reset();
     this.activeTermProperty.reset();

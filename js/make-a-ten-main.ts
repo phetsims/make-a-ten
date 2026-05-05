@@ -15,17 +15,15 @@ import MakeATenStrings from './MakeATenStrings.js';
 
 const makeATenTitleStringProperty = MakeATenStrings[ 'make-a-ten' ].titleStringProperty;
 
-const simOptions = {
-  credits: {
-    leadDesign: 'Beth Stade, Amanda McGarry',
-    softwareDevelopment: 'Jonathan Olson, Sharfudeen Ashraf',
-    team: 'Ariel Paul, Kathy Perkins',
-    graphicArts: 'Mariah Hermsmeyer, Amanda McGarry',
-    qualityAssurance: 'Steele Dalton, Bryce Griebenow, Ethan Johnson, Ben Roberts'
-  }
-};
-
 simLauncher.launch( () => {
-  const sim = new Sim( makeATenTitleStringProperty, [ new MakeATenExploreScreen(), new MakeATenAddingScreen(), new MakeATenGameScreen() ], simOptions );
+  const sim = new Sim( makeATenTitleStringProperty, [ new MakeATenExploreScreen(), new MakeATenAddingScreen(), new MakeATenGameScreen() ], {
+    credits: {
+      leadDesign: 'Beth Stade, Amanda McGarry',
+      softwareDevelopment: 'Jonathan Olson, Sharfudeen Ashraf',
+      team: 'Ariel Paul, Kathy Perkins',
+      graphicArts: 'Mariah Hermsmeyer, Amanda McGarry',
+      qualityAssurance: 'Steele Dalton, Bryce Griebenow, Ethan Johnson, Ben Roberts'
+    }
+  } );
   sim.start();
 } );

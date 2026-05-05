@@ -24,7 +24,7 @@ class InfoDialog extends Dialog {
   /**
    * @param {Array.<Level>} levels - All game levels
    */
-  constructor( levels ) {
+   public constructor( levels ) {
     const levelMaxWidth = 100;
 
     const padWidth = new Text( StringUtils.format( patternLevel0LevelNumberString, '10' ), {

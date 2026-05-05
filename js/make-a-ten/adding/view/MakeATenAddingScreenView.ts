@@ -26,13 +26,13 @@ class MakeATenAddingScreenView extends CountingCommonScreenView {
   /**
    * @param {MakeATenAddingModel} model
    */
-  constructor( model ) {
+   public constructor( model ) {
 
     super( model );
 
     this.finishInitialization();
 
-    function createEditNumberButton( term ) {
+    function createEditNumberButton( term ): RectangularPushButton {
       return new RectangularPushButton( {
         touchAreaXDilation: 10,
         touchAreaYDilation: 10,
@@ -62,7 +62,7 @@ class MakeATenAddingScreenView extends CountingCommonScreenView {
     // Where all of the counting objects go (from supertype)
     this.addChild( this.countingObjectLayerNode );
 
-    function onNumberSubmit( value ) {
+    function onNumberSubmit( value ): void {
       if ( model.additionTerms.activeTermProperty.value === ActiveTerm.LEFT ) {
         model.additionTerms.leftTermProperty.value = value;
       }

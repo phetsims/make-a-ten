@@ -41,7 +41,7 @@ const level9DescriptionString = MakeATenStrings.level9Description;
 // Level icons
 
 class MakeATenGameModel extends CountingCommonModel {
-  constructor() {
+   public constructor() {
     super( MakeATenConstants.MAX_SUM );
 
     // Created here, since due to the initialization of dotRandom to support PhET-iO, we need to delay until the model
@@ -106,7 +106,7 @@ class MakeATenGameModel extends CountingCommonModel {
    *
    * @param {Level} level
    */
-  startLevel( level ) {
+  startLevel( level ): void {
     this.removeAllCountingObjects();
 
     this.currentLevelProperty.value = level;
@@ -122,7 +122,7 @@ class MakeATenGameModel extends CountingCommonModel {
    * Increments the score of the current level.
    * @public
    */
-  incrementScore() {
+  incrementScore(): void {
     this.currentLevelProperty.value.scoreProperty.value++;
   }
 
@@ -130,7 +130,7 @@ class MakeATenGameModel extends CountingCommonModel {
    * Moves to the next challenge (the current challenge's solution was correct).
    * @public
    */
-  moveToNextChallenge() {
+  moveToNextChallenge(): void {
     this.removeAllCountingObjects();
 
     this.currentChallengeProperty.value = this.currentLevelProperty.value.generateChallenge();
@@ -141,7 +141,7 @@ class MakeATenGameModel extends CountingCommonModel {
    * Moves back to the level selection.
    * @public
    */
-  moveToChoosingLevel() {
+  moveToChoosingLevel(): void {
     this.gameStateProperty.value = GameState.CHOOSING_LEVEL;
   }
 
@@ -151,7 +151,7 @@ class MakeATenGameModel extends CountingCommonModel {
    *
    * @param {NumberChallenge} numberChallenge
    */
-  setupChallenge( numberChallenge ) {
+  setupChallenge( numberChallenge ): void {
     this.removeAllCountingObjects();
     this.additionTerms.leftTermProperty.value = numberChallenge.leftTerm;
     this.additionTerms.rightTermProperty.value = numberChallenge.rightTerm;
@@ -162,7 +162,7 @@ class MakeATenGameModel extends CountingCommonModel {
    * Resets our game model.
    * @public
    */
-  reset() {
+  reset(): void {
     super.reset();
 
     this.currentLevelProperty.reset();

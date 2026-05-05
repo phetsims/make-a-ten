@@ -19,7 +19,7 @@ class ExplorePanel extends Panel {
    * @param {Emitter} resetEmitter
    * @param {Object} [options] - Passed to Node
    */
-  constructor( screenView, sumProperty, resetEmitter, options ) {
+   public constructor( screenView, sumProperty, resetEmitter, options ) {
 
     options = merge( {
       fill: 'rgb(208,222,239)',

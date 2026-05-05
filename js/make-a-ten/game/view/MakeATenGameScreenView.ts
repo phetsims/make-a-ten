@@ -26,6 +26,7 @@ import RewardDialog from '../../../../../vegas/js/RewardDialog.js';
 import MakeATenStrings from '../../../MakeATenStrings.js';
 import AdditionTermsNode from '../../common/view/AdditionTermsNode.js';
 import GameState from '../model/GameState.js';
+import MakeATenGameModel from '../model/MakeATenGameModel.js';
 import InfoDialog from './InfoDialog.js';
 import MakeATenRewardNode from './MakeATenRewardNode.js';
 import NextArrowButton from './NextArrowButton.js';
@@ -36,10 +37,7 @@ const patternLevel0LevelNumberString = MakeATenStrings.pattern.level[ '0levelNum
 
 class MakeATenGameScreenView extends CountingCommonScreenView {
 
-  /**
-   * @param {MakeATenGameModel} model
-   */
-  constructor( model ) {
+  public constructor( model: MakeATenGameModel ) {
     super( model );
 
     this.finishInitialization();
@@ -189,7 +187,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
   /**
    * @public
    */
-  step( dt ) {
+  step( dt ): void {
     this.rewardNode && this.rewardNode.step( dt );
     this.transitionNode && this.transitionNode.step( dt );
   }
@@ -198,7 +196,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
    * Shows the reward node.
    * @private
    */
-  showReward() {
+  showReward(): void {
     this.gameAudioPlayer.gameOverPerfectScore();
 
     this.rewardNode = new MakeATenRewardNode();
@@ -225,7 +223,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
    * Hides the reward node.
    * @private
    */
-  hideReward() {
+  hideReward(): void {
     this.removeChild( this.rewardNode );
     this.removeChild( this.rewardBarrier );
     this.visibleBoundsProperty.unlink( this.rewardNodeBoundsListener );
@@ -241,7 +239,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
    *
    * @param {GameState} gameState
    */
-  onGameStateChange( gameState ) {
+  onGameStateChange( gameState ): void {
     if ( gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) {
       this.model.setupChallenge( this.model.currentChallengeProperty.value );
     }

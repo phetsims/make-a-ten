@@ -23,7 +23,7 @@ const CueState = Object.freeze( {
 } );
 
 class Cue {
-  constructor() {
+   public constructor() {
     // @public {Property.<CountingObject|null>} - What CountingObject the cue is attached to.
     this.countingObjectProperty = new Property( null );
 
@@ -43,7 +43,7 @@ class Cue {
    *
    * @param {number} dt - Changed model time
    */
-  step( dt ) {
+  step( dt ): void {
     if ( this.stateProperty.value === CueState.FADING ) {
       // Fade
       this.opacityProperty.value = Math.max( 0, this.opacityProperty.value - FADE_SPEED * dt );
@@ -61,7 +61,7 @@ class Cue {
    *
    * @param {CountingObject} countingObject
    */
-  attachToNumber( countingObject ) {
+  attachToNumber( countingObject ): void {
     if ( this.stateProperty.value === CueState.FADED ) { return; }
 
     this.stateProperty.value = ( this.stateProperty.value === CueState.FADING ) ? this.stateProperty.value : CueState.ATTACHED;
@@ -73,7 +73,7 @@ class Cue {
    * Detach from the current counting object, without fading.
    * @public
    */
-  detach() {
+  detach(): void {
     if ( this.stateProperty.value === CueState.FADED ) { return; }
 
     if ( this.stateProperty.value === CueState.FADING ) {
@@ -88,7 +88,7 @@ class Cue {
    * The cue will start fading if it hasn't started (or completed) fading already.
    * @public
    */
-  triggerFade() {
+  triggerFade(): void {
     if ( this.stateProperty.value === CueState.ATTACHED ) {
       this.stateProperty.value = CueState.FADING;
     }
@@ -102,7 +102,7 @@ class Cue {
    * Resets the cue to the initial state.
    * @public
    */
-  reset() {
+  reset(): void {
     this.changeToUnattached();
   }
 
@@ -110,7 +110,7 @@ class Cue {
    * Changes to an unattached state
    * @private
    */
-  changeToUnattached() {
+  changeToUnattached(): void {
     this.stateProperty.value = CueState.UNATTACHED;
     this.visibilityProperty.value = false;
     this.opacityProperty.value = 1;
@@ -121,7 +121,7 @@ class Cue {
    * Changes to a fully-faded state
    * @private
    */
-  changeToFaded() {
+  changeToFaded(): void {
     this.stateProperty.value = CueState.FADED;
     this.visibilityProperty.value = false;
     this.opacityProperty.value = 1;

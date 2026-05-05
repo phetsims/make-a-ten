@@ -27,7 +27,7 @@ class AdditionTermsNode extends Node {
    * @param {AdditionTerms} additionTerms - Our model, contains information about the left/right and active terms
    * @param {boolean} highlightBorders - Whether there should be highlighted borders around the active term.
    */
-  constructor( additionTerms, highlightBorders ) {
+   public constructor( additionTerms, highlightBorders ) {
     super();
 
     const backgroundOptions = {
@@ -60,7 +60,7 @@ class AdditionTermsNode extends Node {
     this.addChild( rightTermText );
     this.addChild( equalsSignText );
 
-    function layout() {
+    function layout(): void {
       if ( !rightTermText.bounds.isEmpty() ) {
         equalsSignText.left = rightTermText.right + 20;
       }

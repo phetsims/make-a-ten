@@ -13,7 +13,7 @@ import StarNode from '../../../../../scenery-phet/js/StarNode.js';
 import RewardNode from '../../../../../vegas/js/RewardNode.js';
 
 class MakeATenRewardNode extends RewardNode {
-  constructor() {
+   public constructor() {
     super( {
       nodes: RewardNode.createRandomNodes( [
         new StarNode(),
@@ -49,7 +49,7 @@ class MakeATenRewardNode extends RewardNode {
   }
 }
 
-function createNumber( digit, place ) {
+function createNumber( digit, place ): BaseNumberNode {
   const node = new BaseNumberNode( new BaseNumber( digit, place ), 1 );
   node.scale( 0.5 );
   return node;

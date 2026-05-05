@@ -17,8 +17,8 @@ import MakeATenUtils from '../common/MakeATenUtils.js';
 import MakeATenAddingModel from './model/MakeATenAddingModel.js';
 import MakeATenAddingScreenView from './view/MakeATenAddingScreenView.js';
 
-class MakeATenAddingScreen extends Screen {
-  constructor() {
+class MakeATenAddingScreen extends Screen<MakeATenAddingModel, MakeATenAddingScreenView> {
+  public  public constructor() {
 
     const options = {
       name: MakeATenStrings.screen.addingStringProperty,

@@ -30,7 +30,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
   /**
    * @param {MakeATenExploreModel} model
    */
-  constructor( model ) {
+   public constructor( model ) {
 
     super( model );
 
@@ -100,7 +100,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
    * @public
    * @override
    */
-  layoutControls() {
+  layoutControls(): void {
     super.layoutControls();
 
     const visibleBounds = this.visibleBoundsProperty.value;
@@ -142,7 +142,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
    * @public
    * @override
    */
-  onCountingObjectAdded( countingObject ) {
+  onCountingObjectAdded( countingObject ): void {
     const countingObjectNode = super.onCountingObjectAdded( countingObject );
 
     // Add listeners
@@ -156,7 +156,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
    * @public
    * @override
    */
-  onCountingObjectRemoved( countingObject ) {
+  onCountingObjectRemoved( countingObject ): void {
     const countingObjectNode = this.findCountingObjectNode( countingObject );
 
     // Remove listeners
@@ -179,7 +179,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
    *
    * @param {CountingObjectNode} countingObjectNode
    */
-  onNumberSplit( countingObjectNode ) {
+  onNumberSplit( countingObjectNode ): void {
     this.model.splitCue.triggerFade();
   }
 
@@ -189,7 +189,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
    *
    * @param {CountingObjectNode} countingObjectNode
    */
-  onNumberInteractionStarted( countingObjectNode ) {
+  onNumberInteractionStarted( countingObjectNode ): void {
     const countingObject = countingObjectNode.countingObject;
     if ( countingObject.numberValueProperty.value > 1 ) {
       this.model.splitCue.attachToNumber( countingObject );
@@ -202,7 +202,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
    *
    * @param {CountingObject} countingObject
    */
-  onNumberAnimationFinished( countingObject ) {
+  onNumberAnimationFinished( countingObject ): void {
     // If it animated to the return zone, it's probably split and meant to be returned.
     if ( this.isNumberInReturnZone( countingObject ) ) {
       this.model.removeCountingObject( countingObject );
@@ -215,7 +215,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
    *
    * @param {CountingObjectNode} countingObjectNode
    */
-  onNumberDragFinished( countingObjectNode ) {
+  onNumberDragFinished( countingObjectNode ): void {
     const countingObject = countingObjectNode.countingObject;
 
     // Return it to the panel if it's been dropped in the panel.
@@ -247,7 +247,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
    * @public
    * @override
    */
-  reset() {
+  reset(): void {
     super.reset();
 
     this.hideSumProperty.reset();

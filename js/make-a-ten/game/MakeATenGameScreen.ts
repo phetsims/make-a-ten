@@ -18,8 +18,8 @@ import MakeATenUtils from '../common/MakeATenUtils.js';
 import MakeATenGameModel from './model/MakeATenGameModel.js';
 import MakeATenGameScreenView from './view/MakeATenGameScreenView.js';
 
-class MakeATenGameScreen extends Screen {
-  constructor() {
+class MakeATenGameScreen extends Screen<MakeATenGameModel, MakeATenGameScreenView> {
+  public  public constructor() {
 
     const options = {
       name: MakeATenStrings.screen.gameStringProperty,

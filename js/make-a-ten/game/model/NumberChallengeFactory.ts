@@ -11,7 +11,7 @@ import dotRandom from '../../../../../dot/js/dotRandom.js';
 import NumberChallenge from './NumberChallenge.js';
 
 class NumberChallengeFactory {
-  constructor() {
+   public constructor() {
 
     // @private {Random} - Stored here because we can't grab a reference until after the sim has launched (and after we
     //                     have defined the NumberChallengeFactory type).
@@ -120,7 +120,7 @@ class NumberChallengeFactory {
    *                             term for every challenge.
    * @returns {Array.<NumberChallenge>}
    */
-  sumsOverTenChallenges( bigNumber, includeLeftBiggest, includeRightBiggest ) {
+  sumsOverTenChallenges( bigNumber, includeLeftBiggest, includeRightBiggest ): NumberChallenge[] {
     const challenges = [];
 
     for ( let i = 11 - bigNumber; i < bigNumber; i++ ) {
@@ -144,7 +144,7 @@ class NumberChallengeFactory {
    *
    * @returns {Array.<NumberChallenge>}
    */
-  sumsUpTo( minimumNumber, maximumSum ) {
+  sumsUpTo( minimumNumber, maximumSum ): NumberChallenge[] {
     const challenges = [];
 
     for ( let left = minimumNumber; left < maximumSum; left++ ) {
@@ -163,7 +163,7 @@ class NumberChallengeFactory {
    *
    * @returns {Array.<NumberChallenge>}
    */
-  sumsDownTo( minimumNumber, maximumNumber, minimumSum ) {
+  sumsDownTo( minimumNumber, maximumNumber, minimumSum ): NumberChallenge[] {
     const challenges = [];
 
     for ( let left = minimumNumber; left <= maximumNumber; left++ ) {
@@ -182,7 +182,7 @@ class NumberChallengeFactory {
    *
    * @returns {Array.<NumberChallenge>}
    */
-  addWithSinglesThreeDigitChallenges( isLeftBiggest ) {
+  addWithSinglesThreeDigitChallenges( isLeftBiggest ): NumberChallenge[] {
     const challenges = [];
 
     for ( let left = 100; left <= 900; left += 100 ) {

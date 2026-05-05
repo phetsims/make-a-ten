@@ -17,8 +17,8 @@ import MakeATenUtils from '../common/MakeATenUtils.js';
 import MakeATenExploreModel from './model/MakeATenExploreModel.js';
 import MakeATenExploreScreenView from './view/MakeATenExploreScreenView.js';
 
-class MakeATenExploreScreen extends Screen {
-  constructor() {
+class MakeATenExploreScreen extends Screen<MakeATenExploreModel, MakeATenExploreScreenView> {
+  public  public constructor() {
 
     const options = {
       name: MakeATenStrings.screen.exploreStringProperty,

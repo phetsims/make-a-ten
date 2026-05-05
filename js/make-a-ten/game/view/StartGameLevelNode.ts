@@ -22,7 +22,7 @@ class StartGameLevelNode extends Node {
   /**
    * @param {MakeATenGameModel} model - Our model
    */
-  constructor( model ) {
+   public constructor( model ) {
     super();
 
     // @private {MakeATenGameModel}
@@ -49,7 +49,7 @@ class StartGameLevelNode extends Node {
    * @param {number} xOffset - How many buttons to the right of the horizontal center should we be?
    * @param {number} yOffset - How many buttons to the bottom of the vertical center should we be?
    */
-  addLevelButton( level, xOffset, yOffset ) {
+  addLevelButton( level, xOffset, yOffset ): void {
     const fireCallback = this.model.startLevel.bind( this.model, level );
     const center = ScreenView.DEFAULT_LAYOUT_BOUNDS.center.plus( new Vector2( xOffset * X_OFFSET, yOffset * Y_OFFSET ) );
 

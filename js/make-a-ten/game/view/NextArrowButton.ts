@@ -26,7 +26,7 @@ class NextArrowButton extends RectangularPushButton {
    * @param {string} buttonText
    * @param {Object} [options]
    */
-  constructor( buttonText, options ) {
+   public constructor( buttonText, options ) {
 
     const arrowShape = new ArrowShape( 0, 0, 28.5, 0, {
       tailWidth: 2,

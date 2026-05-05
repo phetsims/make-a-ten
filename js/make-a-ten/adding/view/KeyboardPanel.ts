@@ -26,7 +26,7 @@ class KeyboardPanel extends Panel {
    * @param {function} onSubmit - function( numberEntryValue: {number} ), called when the submit button is pressed.
    * @param {number} maxDigits
    */
-  constructor( onSubmit, maxDigits ) {
+  public constructor( onSubmit, maxDigits ) {
 
     const numberEntryControl = new NumberEntryControl( { maxDigits: maxDigits, readoutFont: new PhetFont( 25 ) } );
 
@@ -68,13 +68,8 @@ class KeyboardPanel extends Panel {
 
   /**
    * Sets the readout value of the keypad
-   * @public
-   *
-   * @param {number} value
    */
-  setValue( value ) {
-    assert && assert( typeof value === 'number' );
-
+  public setValue( value: number ): void {
     this.numberEntryControl.setValue( value );
   }
 }
