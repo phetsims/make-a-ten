@@ -7,19 +7,22 @@
  * @author Chris Klusendorf (PhET Interactive Simulations)
  */
 
+import type Emitter from '../../../../../axon/js/Emitter.js';
+import type NumberProperty from '../../../../../axon/js/NumberProperty.js';
 import CountingCreatorNode from '../../../../../counting-common/js/common/view/CountingCreatorNode.js';
 import merge from '../../../../../phet-core/js/merge.js';
 import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
 import Panel from '../../../../../sun/js/Panel.js';
+import type MakeATenExploreScreenView from './MakeATenExploreScreenView.js';
 
 class ExplorePanel extends Panel {
   /**
-   * @param {MakeATenExploreScreenView} screenView
-   * @param {NumberProperty} sumProperty
-   * @param {Emitter} resetEmitter
-   * @param {Object} [options] - Passed to Node
+   * @param screenView
+   * @param sumProperty
+   * @param resetEmitter
+   * @param options - Passed to Node
    */
-   public constructor( screenView, sumProperty, resetEmitter, options ) {
+  public constructor( screenView: MakeATenExploreScreenView, sumProperty: NumberProperty, resetEmitter: Emitter, options?: object ) {
 
     options = merge( {
       fill: 'rgb(208,222,239)',

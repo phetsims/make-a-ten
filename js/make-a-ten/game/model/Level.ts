@@ -8,16 +8,18 @@
 
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';
 import Image from '../../../../../scenery/js/nodes/Image.js';
+import type NumberChallenge from './NumberChallenge.js';
+import type NumberChallengeFactory from './NumberChallengeFactory.js';
 
 class Level {
   /**
-   * @param {number} number - The number of the level, from 1 to 10
-   * @param {string} color - The color for the level
-   * @param {HTMLImageElement} icon - Image to be shown as the icon for the level
-   * @param {string} description - Translated description to be shown in info and the status bar
-   * @param {NumberChallengeFactory} numberChallengeFactory - For generating challenges
+   * @param number - The number of the level, from 1 to 10
+   * @param color - The color for the level
+   * @param icon - Image to be shown as the icon for the level
+   * @param description - Translated description to be shown in info and the status bar
+   * @param numberChallengeFactory - For generating challenges
    */
-   public constructor( number, color, icon, description, numberChallengeFactory ) {
+  public constructor( number: number, color: string, icon: HTMLImageElement, description: string, numberChallengeFactory: NumberChallengeFactory ) {
 
     // @public {number} - The level number, from 1 to 10
     this.number = number;
@@ -40,19 +42,15 @@ class Level {
 
   /**
    * Resets all of our mutable state to the initial values.
-   * @public
    */
-  reset(): void {
+  public reset(): void {
     this.scoreProperty.reset();
   }
 
   /**
    * Creates a NumberChallenge that should be used as the next challenge for this level.
-   * @public
-   *
-   * @returns {NumberChallenge}
    */
-  generateChallenge() {
+  public generateChallenge(): NumberChallenge {
     return this.numberChallengeFactory.generateChallenge( this.number - 1 );
   }
 }

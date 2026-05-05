@@ -23,10 +23,10 @@ const submitString = MakeATenStrings.submit;
 class KeyboardPanel extends Panel {
 
   /**
-   * @param {function} onSubmit - function( numberEntryValue: {number} ), called when the submit button is pressed.
-   * @param {number} maxDigits
+   * @param onSubmit - function( numberEntryValue: {number} ), called when the submit button is pressed.
+   * @param maxDigits
    */
-  public constructor( onSubmit, maxDigits ) {
+  public constructor( onSubmit: ( numberEntryValue: number ) => void, maxDigits: number ) {
 
     const numberEntryControl = new NumberEntryControl( { maxDigits: maxDigits, readoutFont: new PhetFont( 25 ) } );
 

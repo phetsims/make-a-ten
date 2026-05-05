@@ -13,12 +13,13 @@ import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import Color from '../../../../../scenery/js/util/Color.js';
+import type Cue from '../model/Cue.js';
 
 class SplitCueNode extends Node {
   /**
-   * @param {Cue} cue - Our cue model
+   * @param cue - Our cue model
    */
-   public constructor( cue ) {
+  public constructor( cue: Cue ) {
     super( {
       pickable: false,
       usesOpacity: true
@@ -75,9 +76,8 @@ class SplitCueNode extends Node {
 
   /**
    * Updates the position of the cue.
-   * @private
    */
-  updatePosition(): void {
+  private updatePosition(): void {
     const visible = this.cue.visibilityProperty.value;
     const countingObject = this.cue.countingObjectProperty.value;
 
@@ -92,9 +92,8 @@ class SplitCueNode extends Node {
    * Updates the size of the semi-transparent rectangle.
    * TODO: This function should know about the size of the countingObject's handle instead of using getBoundaryY, see
    *  https://github.com/phetsims/counting-common/issues/13
-   * @private
    */
-  updateRectangle(): void {
+  private updateRectangle(): void {
     const countingObject = this.cue.countingObjectProperty.value;
 
     if ( countingObject ) {

@@ -13,6 +13,7 @@ import Node from '../../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import Dialog from '../../../../../sun/js/Dialog.js';
 import MakeATenStrings from '../../../MakeATenStrings.js';
+import type Level from '../model/Level.js';
 
 // Template for inserting the level number
 const patternLevel0LevelNumberString = MakeATenStrings.pattern.level[ '0levelNumber' ];
@@ -22,9 +23,9 @@ const LEVEL_DESCRIPTION_FONT = new PhetFont( 14 );
 
 class InfoDialog extends Dialog {
   /**
-   * @param {Array.<Level>} levels - All game levels
+   * @param levels - All game levels
    */
-   public constructor( levels ) {
+  public constructor( levels: Level[] ) {
     const levelMaxWidth = 100;
 
     const padWidth = new Text( StringUtils.format( patternLevel0LevelNumberString, '10' ), {

@@ -16,6 +16,7 @@ import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import ActiveTerm from '../../adding/model/ActiveTerm.js';
 import MakeATenConstants from '../MakeATenConstants.js';
+import type AdditionTerms from '../model/AdditionTerms.js';
 
 // constants
 const EQUATION_FONT = new PhetFont( { size: 45, weight: 'bold' } );
@@ -24,10 +25,10 @@ const LAYOUT_MULTIPLIER = 1 / 8; // Fraction offset of the text from the backgro
 
 class AdditionTermsNode extends Node {
   /**
-   * @param {AdditionTerms} additionTerms - Our model, contains information about the left/right and active terms
-   * @param {boolean} highlightBorders - Whether there should be highlighted borders around the active term.
+   * @param additionTerms - Our model, contains information about the left/right and active terms
+   * @param highlightBorders - Whether there should be highlighted borders around the active term.
    */
-   public constructor( additionTerms, highlightBorders ) {
+  public constructor( additionTerms: AdditionTerms, highlightBorders: boolean ) {
     super();
 
     const backgroundOptions = {

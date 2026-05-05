@@ -11,7 +11,7 @@ import dotRandom from '../../../../../dot/js/dotRandom.js';
 import NumberChallenge from './NumberChallenge.js';
 
 class NumberChallengeFactory {
-   public constructor() {
+  public constructor() {
 
     // @private {Random} - Stored here because we can't grab a reference until after the sim has launched (and after we
     //                     have defined the NumberChallengeFactory type).
@@ -73,11 +73,8 @@ class NumberChallengeFactory {
 
   /**
    * Creates a random challenge for a specific level.
-   * @public
-   *
-   * @returns {NumberChallenge}
    */
-  generateChallenge( level ) {
+  public generateChallenge( level: number ): NumberChallenge {
     switch( level ) {
       case 0:
         return this.random.sample( this.tenAndUnderChallenges );
@@ -109,18 +106,16 @@ class NumberChallengeFactory {
   /**
    * Generates an array of challenges whose sum >= 11, where one of the numbers is the bigNumber, and the other is
    * less than or equal to bigNumber.
-   * @private
    *
    * For example, if the bigNumber is 8, the result will include:
    * - (8,8) always
    * - (8,7), (8,6), (8,5), (8,4), (8,3) if includeLeftBiggest is true
    * - (7,8), (6,8), (5,8), (4,8), (3,8) if includeRightBiggest is true
    *
-   * @param {number} bigNumber - The largest number to be included in the challenges. Guaranteed to be at least one
-   *                             term for every challenge.
-   * @returns {Array.<NumberChallenge>}
+   * @param bigNumber - The largest number to be included in the challenges. Guaranteed to be at least one
+   *                    term for every challenge.
    */
-  sumsOverTenChallenges( bigNumber, includeLeftBiggest, includeRightBiggest ): NumberChallenge[] {
+  private sumsOverTenChallenges( bigNumber: number, includeLeftBiggest: boolean, includeRightBiggest: boolean ): NumberChallenge[] {
     const challenges = [];
 
     for ( let i = 11 - bigNumber; i < bigNumber; i++ ) {
@@ -140,11 +135,8 @@ class NumberChallengeFactory {
 
   /**
    * Generates an array of challenges where terms are at least minimumNumber, with a combined maximum sum.
-   * @private
-   *
-   * @returns {Array.<NumberChallenge>}
    */
-  sumsUpTo( minimumNumber, maximumSum ): NumberChallenge[] {
+  private sumsUpTo( minimumNumber: number, maximumSum: number ): NumberChallenge[] {
     const challenges = [];
 
     for ( let left = minimumNumber; left < maximumSum; left++ ) {
@@ -159,11 +151,8 @@ class NumberChallengeFactory {
   /**
    * Generates an array of challenges where terms satisfy minimumNumber <= term <= maximumNumber, and the sum is
    * sum >= minimumSum.
-   * @private
-   *
-   * @returns {Array.<NumberChallenge>}
    */
-  sumsDownTo( minimumNumber, maximumNumber, minimumSum ): NumberChallenge[] {
+  private sumsDownTo( minimumNumber: number, maximumNumber: number, minimumSum: number ): NumberChallenge[] {
     const challenges = [];
 
     for ( let left = minimumNumber; left <= maximumNumber; left++ ) {
@@ -178,11 +167,8 @@ class NumberChallengeFactory {
 
   /**
    * For level 8, adding single digit numbers to multiples of 100.
-   * @private
-   *
-   * @returns {Array.<NumberChallenge>}
    */
-  addWithSinglesThreeDigitChallenges( isLeftBiggest ): NumberChallenge[] {
+  private addWithSinglesThreeDigitChallenges( isLeftBiggest: boolean ): NumberChallenge[] {
     const challenges = [];
 
     for ( let left = 100; left <= 900; left += 100 ) {

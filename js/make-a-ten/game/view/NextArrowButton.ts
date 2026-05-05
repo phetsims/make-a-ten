@@ -15,18 +15,14 @@ import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
 import Path from '../../../../../scenery/js/nodes/Path.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
+import RectangularPushButton, { type RectangularPushButtonOptions } from '../../../../../sun/js/buttons/RectangularPushButton.js';
 
 // constants
 const LABEL_FONT = new PhetFont( { size: 20, weight: 'bold' } );
 
 class NextArrowButton extends RectangularPushButton {
 
-  /**
-   * @param {string} buttonText
-   * @param {Object} [options]
-   */
-   public constructor( buttonText, options ) {
+  public constructor( buttonText: string, options?: RectangularPushButtonOptions ) {
 
     const arrowShape = new ArrowShape( 0, 0, 28.5, 0, {
       tailWidth: 2,

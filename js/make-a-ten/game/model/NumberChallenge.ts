@@ -8,11 +8,7 @@
  */
 
 class NumberChallenge {
-  /**
-   * @param {number} leftTerm
-   * @param {number} rightTerm
-   */
-   public constructor( leftTerm, rightTerm ) {
+  public constructor( leftTerm: number, rightTerm: number ) {
     // @public {number} - The left-hand term for addition
     this.leftTerm = leftTerm;
 

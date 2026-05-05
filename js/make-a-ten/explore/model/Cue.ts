@@ -10,6 +10,7 @@
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';
 import Property from '../../../../../axon/js/Property.js';
+import type CountingObject from '../../../../../counting-common/js/common/model/CountingObject.js';
 
 // constants
 const FADE_SPEED = 0.8;
@@ -23,7 +24,7 @@ const CueState = Object.freeze( {
 } );
 
 class Cue {
-   public constructor() {
+  public constructor() {
     // @public {Property.<CountingObject|null>} - What CountingObject the cue is attached to.
     this.countingObjectProperty = new Property( null );
 
@@ -39,11 +40,10 @@ class Cue {
 
   /**
    * Step the cue (handle opacity if fading).
-   * @public
    *
-   * @param {number} dt - Changed model time
+   * @param dt - Changed model time
    */
-  step( dt ): void {
+  public step( dt: number ): void {
     if ( this.stateProperty.value === CueState.FADING ) {
       // Fade
       this.opacityProperty.value = Math.max( 0, this.opacityProperty.value - FADE_SPEED * dt );
@@ -57,11 +57,8 @@ class Cue {
 
   /**
    * Attaches the cue to the number (if it hasn't faded fully).
-   * @public
-   *
-   * @param {CountingObject} countingObject
    */
-  attachToNumber( countingObject ): void {
+  public attachToNumber( countingObject: CountingObject ): void {
     if ( this.stateProperty.value === CueState.FADED ) { return; }
 
     this.stateProperty.value = ( this.stateProperty.value === CueState.FADING ) ? this.stateProperty.value : CueState.ATTACHED;
@@ -71,9 +68,8 @@ class Cue {
 
   /**
    * Detach from the current counting object, without fading.
-   * @public
    */
-  detach(): void {
+  public detach(): void {
     if ( this.stateProperty.value === CueState.FADED ) { return; }
 
     if ( this.stateProperty.value === CueState.FADING ) {
@@ -86,9 +82,8 @@ class Cue {
 
   /**
    * The cue will start fading if it hasn't started (or completed) fading already.
-   * @public
    */
-  triggerFade(): void {
+  public triggerFade(): void {
     if ( this.stateProperty.value === CueState.ATTACHED ) {
       this.stateProperty.value = CueState.FADING;
     }
@@ -100,17 +95,15 @@ class Cue {
 
   /**
    * Resets the cue to the initial state.
-   * @public
    */
-  reset(): void {
+  public reset(): void {
     this.changeToUnattached();
   }
 
   /**
    * Changes to an unattached state
-   * @private
    */
-  changeToUnattached(): void {
+  private changeToUnattached(): void {
     this.stateProperty.value = CueState.UNATTACHED;
     this.visibilityProperty.value = false;
     this.opacityProperty.value = 1;
@@ -119,9 +112,8 @@ class Cue {
 
   /**
    * Changes to a fully-faded state
-   * @private
    */
-  changeToFaded(): void {
+  private changeToFaded(): void {
     this.stateProperty.value = CueState.FADED;
     this.visibilityProperty.value = false;
     this.opacityProperty.value = 1;

@@ -11,7 +11,7 @@ import MakeATenConstants from '../../common/MakeATenConstants.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
 
 class MakeATenAddingModel extends CountingCommonModel {
-   public constructor() {
+  public constructor() {
     super( MakeATenConstants.MAX_SUM );
 
     // @public {AdditionTerms}
@@ -20,9 +20,8 @@ class MakeATenAddingModel extends CountingCommonModel {
 
   /**
    * Clears the play area and places counting objects corresponding to the additionTerms.
-   * @public
    */
-  setupTerms(): void {
+  public setupTerms(): void {
     this.removeAllCountingObjects();
     this.addMultipleNumbers( [
       this.additionTerms.leftTermProperty.value,
@@ -32,10 +31,8 @@ class MakeATenAddingModel extends CountingCommonModel {
 
   /**
    * Resets values to their original state
-   * @public
-   * @override
    */
-  reset(): void {
+  public override reset(): void {
     super.reset();
 
     this.additionTerms.reset();

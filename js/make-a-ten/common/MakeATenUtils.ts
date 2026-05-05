@@ -10,17 +10,13 @@ import ScreenIcon from '../../../../joist/js/ScreenIcon.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import type TPaint from '../../../../scenery/js/util/TPaint.js';
 
 const MakeATenUtils = {
   /**
    * Creates an icon using an image over a background fill.
-   * @public
-   *
-   * @param {HTMLImageElement} image
-   * @param {scenery.fill} backgroundFill
-   * @returns {Node}
    */
-  createIconWithBackgroundColor( image, backgroundFill ) {
+  createIconWithBackgroundColor( image: HTMLImageElement, backgroundFill: TPaint ): Node {
     const imageNode = new Image( image );
 
     return new ScreenIcon( new Node( {

@@ -24,6 +24,7 @@ import MakeATenConstants from '../../common/MakeATenConstants.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
 import GameState from './GameState.js';
 import Level from './Level.js';
+import type NumberChallenge from './NumberChallenge.js';
 import NumberChallengeFactory from './NumberChallengeFactory.js';
 
 // Level descriptions
@@ -41,7 +42,7 @@ const level9DescriptionString = MakeATenStrings.level9Description;
 // Level icons
 
 class MakeATenGameModel extends CountingCommonModel {
-   public constructor() {
+  public constructor() {
     super( MakeATenConstants.MAX_SUM );
 
     // Created here, since due to the initialization of dotRandom to support PhET-iO, we need to delay until the model
@@ -102,11 +103,8 @@ class MakeATenGameModel extends CountingCommonModel {
 
   /**
    * Starts a new challenge with the level specified
-   * @public
-   *
-   * @param {Level} level
    */
-  startLevel( level ): void {
+  public startLevel( level: Level ): void {
     this.removeAllCountingObjects();
 
     this.currentLevelProperty.value = level;
@@ -120,17 +118,15 @@ class MakeATenGameModel extends CountingCommonModel {
 
   /**
    * Increments the score of the current level.
-   * @public
    */
-  incrementScore(): void {
+  public incrementScore(): void {
     this.currentLevelProperty.value.scoreProperty.value++;
   }
 
   /**
    * Moves to the next challenge (the current challenge's solution was correct).
-   * @public
    */
-  moveToNextChallenge(): void {
+  public moveToNextChallenge(): void {
     this.removeAllCountingObjects();
 
     this.currentChallengeProperty.value = this.currentLevelProperty.value.generateChallenge();
@@ -139,19 +135,15 @@ class MakeATenGameModel extends CountingCommonModel {
 
   /**
    * Moves back to the level selection.
-   * @public
    */
-  moveToChoosingLevel(): void {
+  public moveToChoosingLevel(): void {
     this.gameStateProperty.value = GameState.CHOOSING_LEVEL;
   }
 
   /**
    * Creates counting objects for the specified challenge.
-   * @public
-   *
-   * @param {NumberChallenge} numberChallenge
    */
-  setupChallenge( numberChallenge ): void {
+  public setupChallenge( numberChallenge: NumberChallenge ): void {
     this.removeAllCountingObjects();
     this.additionTerms.leftTermProperty.value = numberChallenge.leftTerm;
     this.additionTerms.rightTermProperty.value = numberChallenge.rightTerm;
@@ -160,9 +152,8 @@ class MakeATenGameModel extends CountingCommonModel {
 
   /**
    * Resets our game model.
-   * @public
    */
-  reset(): void {
+  public override reset(): void {
     super.reset();
 
     this.currentLevelProperty.reset();

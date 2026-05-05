@@ -12,7 +12,7 @@ import MakeATenQueryParameters from '../../common/MakeATenQueryParameters.js';
 import Cue from './Cue.js';
 
 class MakeATenExploreModel extends CountingCommonModel {
-   public constructor() {
+  public constructor() {
 
     super( MakeATenConstants.MAX_SUM );
 
@@ -37,11 +37,8 @@ class MakeATenExploreModel extends CountingCommonModel {
 
   /**
    * Steps forward in time
-   * @public
-   *
-   * @param {number} dt
    */
-  step( dt ): void {
+  public step( dt: number ): void {
 
     // Cap large dt values, which can occur when the tab containing
     // the sim had been hidden and then re-shown
@@ -53,9 +50,8 @@ class MakeATenExploreModel extends CountingCommonModel {
 
   /**
    * Adds any required initial numbers.
-   * @private
    */
-  addInitialNumbers(): void {
+  private addInitialNumbers(): void {
     // Check for an array of numbers, e.g. ?exploreNumbers=10,51, where 0 indicates none
     this.addMultipleNumbers( MakeATenQueryParameters.exploreNumbers );
 
@@ -69,10 +65,8 @@ class MakeATenExploreModel extends CountingCommonModel {
 
   /**
    * Resets values to their original state
-   * @public
-   * @override
    */
-  reset(): void {
+  public override reset(): void {
     super.reset();
 
     this.splitCue.reset();

@@ -13,6 +13,8 @@ import ScreenView from '../../../../../joist/js/ScreenView.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import LevelSelectionButton from '../../../../../vegas/js/LevelSelectionButton.js';
 import ScoreDisplayNumberAndStar from '../../../../../vegas/js/ScoreDisplayNumberAndStar.js';
+import type Level from '../model/Level.js';
+import type MakeATenGameModel from '../model/MakeATenGameModel.js';
 
 // Constants
 const X_OFFSET = 170;
@@ -20,9 +22,9 @@ const Y_OFFSET = 160;
 
 class StartGameLevelNode extends Node {
   /**
-   * @param {MakeATenGameModel} model - Our model
+   * @param model - Our model
    */
-   public constructor( model ) {
+  public constructor( model: MakeATenGameModel ) {
     super();
 
     // @private {MakeATenGameModel}
@@ -43,13 +45,12 @@ class StartGameLevelNode extends Node {
 
   /**
    * Adds a level button at a specified x/y offset (in relation to the center, in button offsets)
-   * @private
    *
-   * @param {Level} level
-   * @param {number} xOffset - How many buttons to the right of the horizontal center should we be?
-   * @param {number} yOffset - How many buttons to the bottom of the vertical center should we be?
+   * @param level
+   * @param xOffset - How many buttons to the right of the horizontal center should we be?
+   * @param yOffset - How many buttons to the bottom of the vertical center should we be?
    */
-  addLevelButton( level, xOffset, yOffset ): void {
+  private addLevelButton( level: Level, xOffset: number, yOffset: number ): void {
     const fireCallback = this.model.startLevel.bind( this.model, level );
     const center = ScreenView.DEFAULT_LAYOUT_BOUNDS.center.plus( new Vector2( xOffset * X_OFFSET, yOffset * Y_OFFSET ) );
 

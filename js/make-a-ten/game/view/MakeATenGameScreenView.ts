@@ -184,19 +184,15 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     } );
   }
 
-  /**
-   * @public
-   */
-  step( dt ): void {
+  public step( dt: number ): void {
     this.rewardNode && this.rewardNode.step( dt );
     this.transitionNode && this.transitionNode.step( dt );
   }
 
   /**
    * Shows the reward node.
-   * @private
    */
-  showReward(): void {
+  private showReward(): void {
     this.gameAudioPlayer.gameOverPerfectScore();
 
     this.rewardNode = new MakeATenRewardNode();
@@ -221,9 +217,8 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
 
   /**
    * Hides the reward node.
-   * @private
    */
-  hideReward(): void {
+  private hideReward(): void {
     this.removeChild( this.rewardNode );
     this.removeChild( this.rewardBarrier );
     this.visibleBoundsProperty.unlink( this.rewardNodeBoundsListener );
@@ -235,11 +230,8 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
 
   /**
    * When the game state changes, update the view with the appropriate buttons and readouts.
-   * @private
-   *
-   * @param {GameState} gameState
    */
-  onGameStateChange( gameState ): void {
+  private onGameStateChange( gameState: GameState ): void {
     if ( gameState === GameState.PRESENTING_INTERACTIVE_CHALLENGE ) {
       this.model.setupChallenge( this.model.currentChallengeProperty.value );
     }
@@ -250,11 +242,9 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
   }
 
   /**
-   * @public
-   * @override
-   * @returns {number} - Amount in view coordinates to leave at the top of the screen.
+   * @returns Amount in view coordinates to leave at the top of the screen.
    */
-  getTopBoundsOffset() {
+  public override getTopBoundsOffset(): number {
     return this.gameStatusBar.height;
   }
 }

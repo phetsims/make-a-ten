@@ -13,7 +13,7 @@ import StarNode from '../../../../../scenery-phet/js/StarNode.js';
 import RewardNode from '../../../../../vegas/js/RewardNode.js';
 
 class MakeATenRewardNode extends RewardNode {
-   public constructor() {
+  public constructor() {
     super( {
       nodes: RewardNode.createRandomNodes( [
         new StarNode(),

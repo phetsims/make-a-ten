@@ -10,6 +10,7 @@
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import CountingObject from '../../../../../counting-common/js/common/model/CountingObject.js';
 import CountingCommonScreenView from '../../../../../counting-common/js/common/view/CountingCommonScreenView.js';
+import type CountingObjectNode from '../../../../../counting-common/js/common/view/CountingObjectNode.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
@@ -18,6 +19,7 @@ import Text from '../../../../../scenery/js/nodes/Text.js';
 import Checkbox from '../../../../../sun/js/Checkbox.js';
 import MakeATenStrings from '../../../MakeATenStrings.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
+import type MakeATenExploreModel from '../model/MakeATenExploreModel.js';
 import ExplorePanel from './ExplorePanel.js';
 import SplitCueNode from './SplitCueNode.js';
 
@@ -27,10 +29,7 @@ const hideTotalString = MakeATenStrings.hideTotal;
 const EQUATION_FONT = new PhetFont( { size: 60, weight: 'bold' } );
 
 class MakeATenExploreScreenView extends CountingCommonScreenView {
-  /**
-   * @param {MakeATenExploreModel} model
-   */
-   public constructor( model ) {
+  public constructor( model: MakeATenExploreModel ) {
 
     super( model );
 
@@ -96,11 +95,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
     this.layoutControls();
   }
 
-  /**
-   * @public
-   * @override
-   */
-  layoutControls(): void {
+  public override layoutControls(): void {
     super.layoutControls();
 
     const visibleBounds = this.visibleBoundsProperty.value;
@@ -117,12 +112,8 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
 
   /**
    * Whether the counting object is predominantly over the explore panel (should be collected).
-   * @private
-   *
-   * @param {CountingObject} countingObject
-   * @returns {boolean}
    */
-  isNumberInReturnZone( countingObject ) {
+  private isNumberInReturnZone( countingObject: CountingObject ): boolean {
     // Compute the local point on the number that would need to go into the return zone.
     // This point is a bit farther down than the exact center, as it was annoying to "miss" the return zone
     // slightly by being too high (while the mouse WAS in the return zone).
@@ -138,11 +129,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
     return panelBounds.containsPoint( paperCenter );
   }
 
-  /**
-   * @public
-   * @override
-   */
-  onCountingObjectAdded( countingObject ): void {
+  public override onCountingObjectAdded( countingObject: CountingObject ): void {
     const countingObjectNode = super.onCountingObjectAdded( countingObject );
 
     // Add listeners
@@ -152,11 +139,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
     countingObjectNode.endDragEmitter.addListener( this.numberDragFinishedListener );
   }
 
-  /**
-   * @public
-   * @override
-   */
-  onCountingObjectRemoved( countingObject ): void {
+  public override onCountingObjectRemoved( countingObject: CountingObject ): void {
     const countingObjectNode = this.findCountingObjectNode( countingObject );
 
     // Remove listeners
@@ -175,21 +158,15 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
 
   /**
    * Called when a counting object node is split.
-   * @private
-   *
-   * @param {CountingObjectNode} countingObjectNode
    */
-  onNumberSplit( countingObjectNode ): void {
+  private onNumberSplit( countingObjectNode: CountingObjectNode ): void {
     this.model.splitCue.triggerFade();
   }
 
   /**
    * Called when a counting object node starts being interacted with.
-   * @private
-   *
-   * @param {CountingObjectNode} countingObjectNode
    */
-  onNumberInteractionStarted( countingObjectNode ): void {
+  private onNumberInteractionStarted( countingObjectNode: CountingObjectNode ): void {
     const countingObject = countingObjectNode.countingObject;
     if ( countingObject.numberValueProperty.value > 1 ) {
       this.model.splitCue.attachToNumber( countingObject );
@@ -198,11 +175,8 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
 
   /**
    * Called when a counting object has finished animating to its destination.
-   * @private
-   *
-   * @param {CountingObject} countingObject
    */
-  onNumberAnimationFinished( countingObject ): void {
+  private onNumberAnimationFinished( countingObject: CountingObject ): void {
     // If it animated to the return zone, it's probably split and meant to be returned.
     if ( this.isNumberInReturnZone( countingObject ) ) {
       this.model.removeCountingObject( countingObject );
@@ -211,11 +185,8 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
 
   /**
    * Called when a counting object has finished being dragged.
-   * @private
-   *
-   * @param {CountingObjectNode} countingObjectNode
    */
-  onNumberDragFinished( countingObjectNode ): void {
+  private onNumberDragFinished( countingObjectNode: CountingObjectNode ): void {
     const countingObject = countingObjectNode.countingObject;
 
     // Return it to the panel if it's been dropped in the panel.
@@ -243,11 +214,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
     }
   }
 
-  /**
-   * @public
-   * @override
-   */
-  reset(): void {
+  public override reset(): void {
     super.reset();
 
     this.hideSumProperty.reset();
