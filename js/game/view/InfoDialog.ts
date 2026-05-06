@@ -6,9 +6,9 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
+import GridBox from '../../../../scenery/js/layout/nodes/GridBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Dialog from '../../../../sun/js/Dialog.js';
@@ -26,33 +26,31 @@ class InfoDialog extends Dialog {
    * @param levels - All game levels
    */
   public constructor( levels: Level[] ) {
-    const levelMaxWidth = 100;
-
-    const padWidth = new Text( StringUtils.format( patternLevel0LevelNumberStringProperty.value, '10' ), { // TODO: I18n, see https://github.com/phetsims/make-a-ten/issues/310
-      font: LEVEL_NUMBER_FONT,
-      maxWidth: levelMaxWidth
-    } ).width + 20;
+    const levelNumberMaxWidth = 100;
 
     function createLevelNode( level: Level ): Node {
-      return new Node( {
-        children: [
-          new Text( StringUtils.format( patternLevel0LevelNumberStringProperty.value, `${level.number}` ), { // TODO: I18n, see https://github.com/phetsims/make-a-ten/issues/310
-            font: LEVEL_NUMBER_FONT,
-            maxWidth: levelMaxWidth
-          } ),
-          new Text( level.descriptionProperty, {
-            font: LEVEL_DESCRIPTION_FONT,
-            x: padWidth,
-            maxWidth: 500
-          } )
-        ]
+      return new Text( new PatternStringProperty( patternLevel0LevelNumberStringProperty, {
+        levelNumber: level.number
+      }, {
+        formatNames: [ 'levelNumber' ]
+      } ), {
+        font: LEVEL_NUMBER_FONT,
+        maxWidth: levelNumberMaxWidth
       } );
     }
 
-    const contentNode = new VBox( {
-      align: 'left',
-      spacing: 14,
-      children: levels.map( createLevelNode )
+    const contentNode = new GridBox( {
+      rows: levels.map( level => [
+        createLevelNode( level ),
+        new Text( level.descriptionProperty, {
+          font: LEVEL_DESCRIPTION_FONT,
+          maxWidth: 500
+        } )
+      ] ),
+      xAlign: 'left',
+      yAlign: 'center',
+      xSpacing: 20,
+      ySpacing: 14
     } );
 
     super( contentNode );

@@ -9,9 +9,10 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import CountingCommonScreenView from '../../../../counting-common/js/common/view/CountingCommonScreenView.js';
 import type Bounds2 from '../../../../dot/js/Bounds2.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import ButtonListener from '../../../../scenery/js/input/ButtonListener.js';
@@ -28,6 +29,7 @@ import RewardDialog from '../../../../vegas/js/RewardDialog.js';
 import MakeATenStrings from '../../MakeATenStrings.js';
 import AdditionTermsNode from '../../common/view/AdditionTermsNode.js';
 import GameState from '../model/GameState.js';
+import type Level from '../model/Level.js';
 import MakeATenGameModel from '../model/MakeATenGameModel.js';
 import InfoDialog from './InfoDialog.js';
 import MakeATenRewardNode from './MakeATenRewardNode.js';
@@ -145,18 +147,25 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     // Add the counting object layer from our supertype
     this.challengeLayer.addChild( this.countingObjectLayerNode );
 
-    const levelNumberText = new Text( '', {
+    const currentLevelNumberProperty = new DerivedProperty( [ model.currentLevelProperty ], level => level.number );
+    const currentLevelNumberStringProperty = new PatternStringProperty( patternLevel0LevelNumberStringProperty, {
+      levelNumber: currentLevelNumberProperty
+    }, {
+      formatNames: [ 'levelNumber' ]
+    } );
+    const currentLevelDescriptionProperty = new DynamicProperty<string, string, Level>( model.currentLevelProperty, {
+      derive: 'descriptionProperty'
+    } );
+
+    const levelNumberText = new Text( currentLevelNumberStringProperty, {
       font: new PhetFont( { size: 18, weight: 'bold' } ),
       pickable: false,
       maxWidth: 120
     } );
-    const levelDescriptionText = new Text( '', {
+    const levelDescriptionText = new Text( currentLevelDescriptionProperty, {
       font: new PhetFont( 18 ),
-      pickable: false
-    } );
-    model.currentLevelProperty.link( level => {
-      levelNumberText.string = StringUtils.format( patternLevel0LevelNumberStringProperty.value, `${level.number}` ); // TODO: I18n, see https://github.com/phetsims/make-a-ten/issues/310
-      levelDescriptionText.string = level.descriptionProperty.value; // TODO: update when descriptionProperty changes, see https://github.com/phetsims/make-a-ten/issues/310
+      pickable: false,
+      maxWidth: 600
     } );
     const statusMessageNode = new HBox( {
       children: [ levelNumberText, levelDescriptionText ],
