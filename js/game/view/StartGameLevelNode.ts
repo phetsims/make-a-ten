@@ -8,21 +8,24 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
+import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
+import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import LevelSelectionButton from '../../../../vegas/js/LevelSelectionButton.js';
+import LevelSelectionButtonGroup, { LevelSelectionButtonGroupItem } from '../../../../vegas/js/LevelSelectionButtonGroup.js';
 import ScoreDisplayNumberAndStar from '../../../../vegas/js/ScoreDisplayNumberAndStar.js';
-import type Level from '../model/Level.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import MakeATenQueryParameters from '../../common/MakeATenQueryParameters.js';
 import type MakeATenGameModel from '../model/MakeATenGameModel.js';
 
 // Constants
-const X_OFFSET = 170;
-const Y_OFFSET = 160;
+const BUTTON_SIZE = 150;
+const BUTTON_SCALE = 0.9;
+const X_SPACING = 35 / BUTTON_SCALE;
+const Y_SPACING = 25 / BUTTON_SCALE;
 
 class StartGameLevelNode extends Node {
-
-  private readonly model: MakeATenGameModel;
 
   /**
    * @param model - Our model
@@ -30,41 +33,54 @@ class StartGameLevelNode extends Node {
   public constructor( model: MakeATenGameModel ) {
     super();
 
-    this.model = model;
-
-    // Add the level buttons
-    this.addLevelButton( model.levels[ 0 ], -1, -1 );
-    this.addLevelButton( model.levels[ 1 ], 0, -1 );
-    this.addLevelButton( model.levels[ 2 ], 1, -1 );
-    this.addLevelButton( model.levels[ 3 ], -1.5, 0 );
-    this.addLevelButton( model.levels[ 4 ], -0.5, 0 );
-    this.addLevelButton( model.levels[ 5 ], 0.5, 0 );
-    this.addLevelButton( model.levels[ 6 ], 1.5, 0 );
-    this.addLevelButton( model.levels[ 7 ], -1, 1 );
-    this.addLevelButton( model.levels[ 8 ], 0, 1 );
-    this.addLevelButton( model.levels[ 9 ], 1, 1 );
-  }
-
-  /**
-   * Adds a level button at a specified x/y offset (in relation to the center, in button offsets)
-   *
-   * @param level
-   * @param xOffset - How many buttons to the right of the horizontal center should we be?
-   * @param yOffset - How many buttons to the bottom of the vertical center should we be?
-   */
-  private addLevelButton( level: Level, xOffset: number, yOffset: number ): void {
-    const fireCallback = this.model.startLevel.bind( this.model, level );
-    const center = ScreenView.DEFAULT_LAYOUT_BOUNDS.center.plus( new Vector2( xOffset * X_OFFSET, yOffset * Y_OFFSET ) );
-
-    const button = new LevelSelectionButton( level.iconNode, level.scoreProperty, {
-      listener: fireCallback,
-      baseColor: level.color,
-      createScoreDisplay: scoreProperty => new ScoreDisplayNumberAndStar( scoreProperty ),
-      soundPlayerIndex: level.number - 1
+    const buttonItems: LevelSelectionButtonGroupItem[] = model.levels.map( level => {
+      return {
+        icon: level.iconNode,
+        scoreProperty: level.scoreProperty,
+        buttonListener: () => {
+          model.startLevel( level );
+        },
+        options: {
+          baseColor: level.color,
+          createScoreDisplay: scoreProperty => new ScoreDisplayNumberAndStar( scoreProperty ),
+          soundPlayerIndex: level.number - 1
+        }
+      };
     } );
-    button.scale( 0.9 );
-    button.center = center;
-    this.addChild( button );
+
+    const levelSelectionButtonGroup = new LevelSelectionButtonGroup( buttonItems, {
+      createLayoutNode: ( buttons: LevelSelectionButton[] ) => {
+        assert && assert( buttons.length === 10, 'Make a Ten has 10 game levels' );
+        return new VBox( {
+          children: [
+            new HBox( {
+              children: [ buttons[ 0 ], buttons[ 1 ], buttons[ 2 ] ],
+              spacing: X_SPACING,
+              justify: 'center'
+            } ),
+            new HBox( {
+              children: [ buttons[ 3 ], buttons[ 4 ], buttons[ 5 ], buttons[ 6 ] ],
+              spacing: X_SPACING,
+              justify: 'center'
+            } ),
+            new HBox( {
+              children: [ buttons[ 7 ], buttons[ 8 ], buttons[ 9 ] ],
+              spacing: X_SPACING,
+              justify: 'center'
+            } )
+          ],
+          spacing: Y_SPACING
+        } );
+      },
+      groupButtonWidth: BUTTON_SIZE,
+      groupButtonHeight: BUTTON_SIZE,
+      gameLevels: MakeATenQueryParameters.gameLevels,
+      tandem: Tandem.OPT_OUT
+    } );
+
+    levelSelectionButtonGroup.scale( BUTTON_SCALE );
+    levelSelectionButtonGroup.center = ScreenView.DEFAULT_LAYOUT_BOUNDS.center;
+    this.addChild( levelSelectionButtonGroup );
   }
 }
 
