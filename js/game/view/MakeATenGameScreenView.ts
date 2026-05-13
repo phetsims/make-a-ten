@@ -8,6 +8,7 @@
  * @author Sharfudeen Ashraf
  */
 
+import animationFrameTimer from '../../../../axon/js/animationFrameTimer.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
@@ -26,8 +27,8 @@ import TransitionNode from '../../../../twixt/js/TransitionNode.js';
 import GameAudioPlayer from '../../../../vegas/js/GameAudioPlayer.js';
 import InfiniteStatusBar from '../../../../vegas/js/InfiniteStatusBar.js';
 import RewardDialog from '../../../../vegas/js/RewardDialog.js';
-import MakeATenStrings from '../../MakeATenStrings.js';
 import AdditionTermsNode from '../../common/view/AdditionTermsNode.js';
+import MakeATenStrings from '../../MakeATenStrings.js';
 import GameState from '../model/GameState.js';
 import type Level from '../model/Level.js';
 import MakeATenGameModel from '../model/MakeATenGameModel.js';
@@ -37,6 +38,7 @@ import NextArrowButton from './NextArrowButton.js';
 import StartGameLevelNode from './StartGameLevelNode.js';
 
 const patternLevel0LevelNumberStringProperty = MakeATenStrings.pattern.level[ '0levelNumberStringProperty' ];
+const REWARD_DIALOG_SOLUTION_PADDING = 10;
 
 class MakeATenGameScreenView extends CountingCommonScreenView {
 
@@ -240,6 +242,37 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
       }
     } );
     rewardDialog.show();
+
+    // Wait until the dialog is showing and has had a frame to lay out in the popup layer before comparing bounds.
+    animationFrameTimer.runOnNextTick( () => {
+      this.bumpSolutionLeftOfRewardDialog( rewardDialog );
+    } );
+  }
+
+  /**
+   * If the reward dialog overlaps the user's solution, immediately move the solution above the dialog.
+   */
+  private bumpSolutionLeftOfRewardDialog( rewardDialog: RewardDialog ): void {
+
+    if ( this.isDisposed || rewardDialog.isDisposed || !rewardDialog.isShowingProperty.value ||
+         this.countingObjectLayerNode.children.length === 0 ) {
+      return;
+    }
+
+    const solutionBounds = this.boundsOf( this.countingObjectLayerNode );
+    const rewardDialogBounds = this.boundsOf( rewardDialog );
+
+    if ( solutionBounds.isEmpty() || rewardDialogBounds.isEmpty() ||
+         !solutionBounds.intersectsBounds( rewardDialogBounds ) ) {
+      return;
+    }
+
+    const solutionShiftX = rewardDialogBounds.right - solutionBounds.right;
+    const solutionShiftY = rewardDialogBounds.top - REWARD_DIALOG_SOLUTION_PADDING - solutionBounds.bottom;
+
+    this.gameModel.countingObjects.forEach( countingObject => {
+      countingObject.setDestination( countingObject.positionProperty.value.plusXY( solutionShiftX, solutionShiftY ), false );
+    } );
   }
 
   /**
