@@ -82,7 +82,7 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
 
     this.addChild( this.sumNode );
 
-    this.explorePanel = new ExplorePanel( this, model.sumProperty, model.resetEmitter );
+    this.explorePanel = new ExplorePanel( this, model.sumProperty, model.highestCount, model.resetEmitter );
     this.addChild( this.explorePanel );
 
     const hideSumText = new Text( MakeATenStrings.hideTotalStringProperty, {

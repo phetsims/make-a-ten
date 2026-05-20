@@ -25,10 +25,15 @@ class ExplorePanel extends Panel {
   /**
    * @param screenView
    * @param sumProperty
+   * @param maxSum
    * @param resetEmitter
    * @param providedOptions - Passed to Panel
    */
-  public constructor( screenView: MakeATenExploreScreenView, sumProperty: NumberProperty, resetEmitter: TReadOnlyEmitter, providedOptions?: ExplorePanelOptions ) {
+  public constructor( screenView: MakeATenExploreScreenView,
+                      sumProperty: NumberProperty,
+                      maxSum: number,
+                      resetEmitter: TReadOnlyEmitter,
+                      providedOptions?: ExplorePanelOptions ) {
 
     const options = optionize<ExplorePanelOptions, SelfOptions, PanelOptions>()( {
       fill: 'rgb(208,222,239)',
@@ -40,9 +45,9 @@ class ExplorePanel extends Panel {
     }, providedOptions );
 
     const addAndDragCountingObject = screenView.addAndDragCountingObject.bind( screenView );
-    const hundredTargetNode = new CountingCreatorNode( 2, screenView, sumProperty, resetEmitter, addAndDragCountingObject );
-    const tenTargetNode = new CountingCreatorNode( 1, screenView, sumProperty, resetEmitter, addAndDragCountingObject );
-    const oneTargetNode = new CountingCreatorNode( 0, screenView, sumProperty, resetEmitter, addAndDragCountingObject );
+    const hundredTargetNode = new CountingCreatorNode( 2, screenView, sumProperty, maxSum, resetEmitter, addAndDragCountingObject );
+    const tenTargetNode = new CountingCreatorNode( 1, screenView, sumProperty, maxSum, resetEmitter, addAndDragCountingObject );
+    const oneTargetNode = new CountingCreatorNode( 0, screenView, sumProperty, maxSum, resetEmitter, addAndDragCountingObject );
 
     const box = new HBox( {
       children: [ hundredTargetNode, tenTargetNode, oneTargetNode ],
