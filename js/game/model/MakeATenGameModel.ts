@@ -9,16 +9,16 @@
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import CountingCommonModel from '../../../../counting-common/js/common/model/CountingCommonModel.js';
-import level10_png from '../../../images/level10_png.js';
-import level1_png from '../../../images/level1_png.js';
-import level2_png from '../../../images/level2_png.js';
-import level3_png from '../../../images/level3_png.js';
-import level4_png from '../../../images/level4_png.js';
-import level5_png from '../../../images/level5_png.js';
-import level6_png from '../../../images/level6_png.js';
-import level7_png from '../../../images/level7_png.js';
-import level8_png from '../../../images/level8_png.js';
-import level9_png from '../../../images/level9_png.js';
+import level10_svg from '../../../images/level10_svg.js';
+import level1_svg from '../../../images/level1_svg.js';
+import level2_svg from '../../../images/level2_svg.js';
+import level3_svg from '../../../images/level3_svg.js';
+import level4_svg from '../../../images/level4_svg.js';
+import level5_svg from '../../../images/level5_svg.js';
+import level6_svg from '../../../images/level6_svg.js';
+import level7_svg from '../../../images/level7_svg.js';
+import level8_svg from '../../../images/level8_svg.js';
+import level9_svg from '../../../images/level9_svg.js';
 import MakeATenStrings from '../../MakeATenStrings.js';
 import MakeATenConstants from '../../common/MakeATenConstants.js';
 import AdditionTerms from '../../common/model/AdditionTerms.js';
@@ -57,16 +57,16 @@ class MakeATenGameModel extends CountingCommonModel {
     const numberChallengeFactory = new NumberChallengeFactory();
 
     this.levels = [
-      new Level( 1, '#FC4280', level1_png, MakeATenStrings.level1DescriptionStringProperty, numberChallengeFactory ),
-      new Level( 2, '#FC4280', level2_png, MakeATenStrings.level2DescriptionStringProperty, numberChallengeFactory ),
-      new Level( 3, '#FC4280', level3_png, MakeATenStrings.level3DescriptionStringProperty, numberChallengeFactory ),
-      new Level( 4, '#06A5AD', level4_png, MakeATenStrings.level4DescriptionStringProperty, numberChallengeFactory ),
-      new Level( 5, '#06A5AD', level5_png, MakeATenStrings.level5DescriptionStringProperty, numberChallengeFactory ),
-      new Level( 6, '#06A5AD', level6_png, MakeATenStrings.level6DescriptionStringProperty, numberChallengeFactory ),
-      new Level( 7, '#06A5AD', level7_png, MakeATenStrings.level7DescriptionStringProperty, numberChallengeFactory ),
-      new Level( 8, '#9778CC', level8_png, MakeATenStrings.level8DescriptionStringProperty, numberChallengeFactory ),
-      new Level( 9, '#9778CC', level9_png, MakeATenStrings.level9DescriptionStringProperty, numberChallengeFactory ),
-      new Level( 10, '#9778CC', level10_png, MakeATenStrings.level10DescriptionStringProperty, numberChallengeFactory )
+      new Level( 1, '#FC4280', level1_svg, MakeATenStrings.level1DescriptionStringProperty, numberChallengeFactory ),
+      new Level( 2, '#FC4280', level2_svg, MakeATenStrings.level2DescriptionStringProperty, numberChallengeFactory ),
+      new Level( 3, '#FC4280', level3_svg, MakeATenStrings.level3DescriptionStringProperty, numberChallengeFactory ),
+      new Level( 4, '#06A5AD', level4_svg, MakeATenStrings.level4DescriptionStringProperty, numberChallengeFactory ),
+      new Level( 5, '#06A5AD', level5_svg, MakeATenStrings.level5DescriptionStringProperty, numberChallengeFactory ),
+      new Level( 6, '#06A5AD', level6_svg, MakeATenStrings.level6DescriptionStringProperty, numberChallengeFactory ),
+      new Level( 7, '#06A5AD', level7_svg, MakeATenStrings.level7DescriptionStringProperty, numberChallengeFactory ),
+      new Level( 8, '#9778CC', level8_svg, MakeATenStrings.level8DescriptionStringProperty, numberChallengeFactory ),
+      new Level( 9, '#9778CC', level9_svg, MakeATenStrings.level9DescriptionStringProperty, numberChallengeFactory ),
+      new Level( 10, '#9778CC', level10_svg, MakeATenStrings.level10DescriptionStringProperty, numberChallengeFactory )
     ];
 
     this.currentLevelProperty = new Property( this.levels[ 0 ] );
