@@ -11,8 +11,8 @@
 import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import gameHomeScreen_png from '../../images/gameHomeScreen_png.js';
-import gameNavBar_png from '../../images/gameNavBar_png.js';
+import gameHomeScreen_svg from '../../images/gameHomeScreen_svg.js';
+import gameNavBar_svg from '../../images/gameNavBar_svg.js';
 import MakeATenStrings from '../MakeATenStrings.js';
 import MakeATenConstants from '../common/MakeATenConstants.js';
 import MakeATenUtils from '../common/MakeATenUtils.js';
@@ -25,8 +25,8 @@ class MakeATenGameScreen extends Screen<MakeATenGameModel, MakeATenGameScreenVie
     const options = {
       name: MakeATenStrings.screen.gameStringProperty,
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( gameHomeScreen_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( gameNavBar_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( gameHomeScreen_svg, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( gameNavBar_svg, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       tandem: Tandem.OPT_OUT
     };
 

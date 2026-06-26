@@ -10,8 +10,8 @@
 import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import addingHomeScreen_png from '../../images/addingHomeScreen_png.js';
-import addingNavBar_png from '../../images/addingNavBar_png.js';
+import addingHomeScreen_svg from '../../images/addingHomeScreen_svg.js';
+import addingNavBar_svg from '../../images/addingNavBar_svg.js';
 import MakeATenStrings from '../MakeATenStrings.js';
 import MakeATenConstants from '../common/MakeATenConstants.js';
 import MakeATenUtils from '../common/MakeATenUtils.js';
@@ -24,8 +24,8 @@ class MakeATenAddingScreen extends Screen<MakeATenAddingModel, MakeATenAddingScr
     const options = {
       name: MakeATenStrings.screen.addingStringProperty,
       backgroundColorProperty: new Property( MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( addingHomeScreen_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
-      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( addingNavBar_png, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      homeScreenIcon: MakeATenUtils.createIconWithBackgroundColor( addingHomeScreen_svg, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
+      navigationBarIcon: MakeATenUtils.createIconWithBackgroundColor( addingNavBar_svg, MakeATenConstants.SCREEN_BACKGROUND_COLOR ),
       tandem: Tandem.OPT_OUT
     } as const;
 

@@ -1,45 +1,45 @@
 {
-  "addingHomeScreen.png": {
+  "addingHomeScreen.svg": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
     "projectURL": "https://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry"
+    "notes": "created by Amanda McGarry, revised by Catherine Carter"
   },
-  "addingNavBar.png": {
+  "addingNavBar.svg": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
     "projectURL": "https://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry"
+    "notes": "created by Amanda McGarry, revised by Catherine Carter"
   },
-  "exploreHomeScreen.png": {
+  "exploreHomeScreen.svg": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
     "projectURL": "https://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry"
+    "notes": "created by Amanda McGarry, revised by Catherine Carter"
   },
-  "exploreNavBar.png": {
+  "exploreNavBar.svg": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
     "projectURL": "https://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry"
+    "notes": "created by Amanda McGarry, revised by Catherine Carter"
   },
-  "gameHomeScreen.png": {
+  "gameHomeScreen.svg": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
     "projectURL": "https://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Mariah Hermsmeyer"
+    "notes": "created by Mariah Hermsmeyer, revised by Catherine Carter"
   },
-  "gameNavBar.png": {
+  "gameNavBar.svg": {
     "text": [
       "Copyright 2002-2016 University of Colorado Boulder"
     ],
