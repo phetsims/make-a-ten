@@ -8,6 +8,7 @@
  */
 
 import Multilink from '../../../../axon/js/Multilink.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
@@ -26,10 +27,17 @@ const NUMBER_DISPLAY_HEIGHT = 78;
 const OPERATOR_SPACING = 5;
 const EQUALS_SIGN_SPACING = 20;
 
+// The solution (sum) sits this many times EQUALS_SIGN_SPACING past the equals sign, slightly more than the spacing that
+// precedes the equals sign, so the solution reads as a comfortably separated sum. See getSolutionLeftCenter().
+const SOLUTION_SPACING_MULTIPLIER = 1.75;
+
 class AdditionTermsNode extends Node {
 
   public readonly getLeftAlignment: () => number;
   public readonly getRightAlignment: () => number;
+
+  // The equals sign, retained so clients can position the solution (the sum) just past it. See getSolutionLeftCenter().
+  private readonly equalsSignText: Text;
 
   /**
    * @param additionTerms - Our model, contains information about the left/right and active terms
@@ -53,6 +61,8 @@ class AdditionTermsNode extends Node {
       font: EQUATION_FONT,
       fill: MakeATenConstants.EQUATION_FILL
     } );
+
+    this.equalsSignText = equalsSignText;
 
     const leftTermText = new Text( '', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
     const rightTermText = new Text( '', { font: EQUATION_FONT, fill: MakeATenConstants.EQUATION_FILL } );
@@ -120,6 +130,21 @@ class AdditionTermsNode extends Node {
 
     this.getLeftAlignment = () => leftNumberDisplayBackground.right - leftNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
     this.getRightAlignment = () => rightNumberDisplayBackground.left + rightNumberDisplayBackground.width * LAYOUT_MULTIPLIER;
+  }
+
+  /**
+   * Returns the point, in the global coordinate frame, where the left-center of the solution (the sum) should be placed
+   * so it reads as part of the equation, e.g. "12 + 100 = 112". The solution sits SOLUTION_SPACING_MULTIPLIER times
+   * EQUALS_SIGN_SPACING past the equals sign, giving it a bit more breathing room than the spacing that precedes the
+   * equals sign. See https://github.com/phetsims/make-a-ten/issues/284.
+   *
+   * @returns the global-frame position for the solution's left-center
+   */
+  public getSolutionLeftCenter(): Vector2 {
+    return this.localToGlobalPoint( new Vector2(
+      this.equalsSignText.right + EQUALS_SIGN_SPACING * SOLUTION_SPACING_MULTIPLIER,
+      this.equalsSignText.centerY
+    ) );
   }
 }
 

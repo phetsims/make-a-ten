@@ -38,7 +38,10 @@ import NextArrowButton from './NextArrowButton.js';
 import StartGameLevelNode from './StartGameLevelNode.js';
 
 const patternLevel0LevelNumberStringProperty = MakeATenStrings.pattern.level[ '0levelNumberStringProperty' ];
-const REWARD_DIALOG_SOLUTION_PADDING = 10;
+
+// Fraction of the solution's height to raise it by, compensating for the paper number's grab handle. See
+// positionSolutionAsSum().
+const SOLUTION_HANDLE_BALANCE_FRACTION = 0.1;
 
 class MakeATenGameScreenView extends CountingCommonScreenView {
 
@@ -72,6 +75,9 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
 
   private readonly rewardBarrier: Rectangle;
   private gameModel: MakeATenGameModel;
+
+  // The "12 + 100 = " equation, retained so the solution can be moved to read as the sum when the reward is shown.
+  private readonly additionTermsNode: AdditionTermsNode;
 
   public constructor( model: MakeATenGameModel ) {
     super( model );
@@ -129,10 +135,10 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     this.levelSelectionLayer.addChild( this.infoButton );
 
     // The node that display "12 + 100 = "
-    const additionTermsNode = new AdditionTermsNode( model.additionTerms, false );
-    additionTermsNode.left = this.layoutBounds.left + 38;
-    additionTermsNode.top = this.layoutBounds.top + 75;
-    this.challengeLayer.addChild( additionTermsNode );
+    this.additionTermsNode = new AdditionTermsNode( model.additionTerms, false );
+    this.additionTermsNode.left = this.layoutBounds.left + 38;
+    this.additionTermsNode.top = this.layoutBounds.top + 75;
+    this.challengeLayer.addChild( this.additionTermsNode );
 
     this.nextChallengeButton = new NextArrowButton( MakeATenStrings.nextStringProperty, {
       listener: () => {
@@ -243,33 +249,35 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     } );
     rewardDialog.show();
 
-    // Wait until the dialog is showing and has had a frame to lay out in the popup layer before comparing bounds.
+    // Wait one frame so the solution and equation bounds have settled before repositioning the solution.
     animationFrameTimer.runOnNextTick( () => {
-      this.bumpSolutionAboveRewardDialog( rewardDialog );
+      this.positionSolutionAsSum();
     } );
   }
 
   /**
-   * If the reward dialog overlaps the user's solution, immediately move the solution above the dialog, horizontally
-   * centered on the dialog so it reads like the sum of the equation.
+   * Moves the user's solution to the right of the equals sign so it reads as the sum of the equation (e.g.
+   * "12 + 100 = 112"). This is done whenever the reward is shown so the solution stays visible alongside the equation
+   * instead of being obscured by the reward dialog. See https://github.com/phetsims/make-a-ten/issues/284.
    */
-  private bumpSolutionAboveRewardDialog( rewardDialog: RewardDialog ): void {
+  private positionSolutionAsSum(): void {
 
-    if ( this.isDisposed || rewardDialog.isDisposed || !rewardDialog.isShowingProperty.value ||
-         this.countingObjectLayerNode.children.length === 0 ) {
+    if ( this.isDisposed || this.countingObjectLayerNode.children.length === 0 ) {
       return;
     }
 
     const solutionBounds = this.boundsOf( this.countingObjectLayerNode );
-    const rewardDialogBounds = this.boundsOf( rewardDialog );
-
-    if ( solutionBounds.isEmpty() || rewardDialogBounds.isEmpty() ||
-         !solutionBounds.intersectsBounds( rewardDialogBounds ) ) {
+    if ( solutionBounds.isEmpty() ) {
       return;
     }
 
-    const solutionShiftX = rewardDialogBounds.centerX - solutionBounds.centerX;
-    const solutionShiftY = rewardDialogBounds.top - REWARD_DIALOG_SOLUTION_PADDING - solutionBounds.bottom;
+    // Anchor the solution's left-center just past the equals sign, in this view's local coordinate frame.
+    const solutionLeftCenter = this.globalToLocalPoint( this.additionTermsNode.getSolutionLeftCenter() );
+    const solutionShiftX = solutionLeftCenter.x - solutionBounds.left;
+
+    // The paper number's grab handle hangs below the digits, weighting the bounds low, so nudge the solution up by a
+    // fraction of its height to keep the digits visually balanced with the equation.
+    const solutionShiftY = solutionLeftCenter.y - solutionBounds.centerY - SOLUTION_HANDLE_BALANCE_FRACTION * solutionBounds.height;
 
     this.gameModel.countingObjects.forEach( countingObject => {
       countingObject.setDestination( countingObject.positionProperty.value.plusXY( solutionShiftX, solutionShiftY ), false );
