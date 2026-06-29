@@ -245,14 +245,15 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
 
     // Wait until the dialog is showing and has had a frame to lay out in the popup layer before comparing bounds.
     animationFrameTimer.runOnNextTick( () => {
-      this.bumpSolutionLeftOfRewardDialog( rewardDialog );
+      this.bumpSolutionAboveRewardDialog( rewardDialog );
     } );
   }
 
   /**
-   * If the reward dialog overlaps the user's solution, immediately move the solution above the dialog.
+   * If the reward dialog overlaps the user's solution, immediately move the solution above the dialog, horizontally
+   * centered on the dialog so it reads like the sum of the equation.
    */
-  private bumpSolutionLeftOfRewardDialog( rewardDialog: RewardDialog ): void {
+  private bumpSolutionAboveRewardDialog( rewardDialog: RewardDialog ): void {
 
     if ( this.isDisposed || rewardDialog.isDisposed || !rewardDialog.isShowingProperty.value ||
          this.countingObjectLayerNode.children.length === 0 ) {
@@ -267,7 +268,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
       return;
     }
 
-    const solutionShiftX = rewardDialogBounds.right - solutionBounds.right;
+    const solutionShiftX = rewardDialogBounds.centerX - solutionBounds.centerX;
     const solutionShiftY = rewardDialogBounds.top - REWARD_DIALOG_SOLUTION_PADDING - solutionBounds.bottom;
 
     this.gameModel.countingObjects.forEach( countingObject => {
