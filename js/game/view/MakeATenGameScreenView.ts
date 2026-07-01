@@ -39,10 +39,6 @@ import StartGameLevelNode from './StartGameLevelNode.js';
 
 const patternLevel0LevelNumberStringProperty = MakeATenStrings.pattern.level[ '0levelNumberStringProperty' ];
 
-// Fraction of the solution's height to raise it by, compensating for the paper number's grab handle. See
-// positionSolutionAsSum().
-const SOLUTION_HANDLE_BALANCE_FRACTION = 0.1;
-
 class MakeATenGameScreenView extends CountingCommonScreenView {
 
   // The "left" half of the sliding layer, displayed first
@@ -277,7 +273,7 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
 
     // The paper number's grab handle hangs below the digits, weighting the bounds low, so nudge the solution up by a
     // fraction of its height to keep the digits visually balanced with the equation.
-    const solutionShiftY = solutionLeftCenter.y - solutionBounds.centerY - SOLUTION_HANDLE_BALANCE_FRACTION * solutionBounds.height;
+    const solutionShiftY = solutionLeftCenter.y - solutionBounds.centerY;
 
     this.gameModel.countingObjects.forEach( countingObject => {
       countingObject.setDestination( countingObject.positionProperty.value.plusXY( solutionShiftX, solutionShiftY ), false );
