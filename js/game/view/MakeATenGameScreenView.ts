@@ -12,6 +12,7 @@ import animationFrameTimer from '../../../../axon/js/animationFrameTimer.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import CountingCommonScreenView from '../../../../counting-common/js/common/view/CountingCommonScreenView.js';
 import type Bounds2 from '../../../../dot/js/Bounds2.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
@@ -68,6 +69,12 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
 
   // See showReward()
   private rewardNodeBoundsListener: ( ( value: Bounds2 ) => void ) | null;
+
+  // Dialog shown when a level reaches a perfect score. Constructed lazily and reused, see showReward().
+  private rewardDialog: RewardDialog | null;
+
+  // The number of the level currently being played, for the status bar and the reward dialog.
+  private readonly currentLevelNumberProperty: TReadOnlyProperty<number>;
 
   private readonly rewardBarrier: Rectangle;
   private gameModel: MakeATenGameModel;
@@ -151,9 +158,9 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
     // Add the counting object layer from our supertype
     this.challengeLayer.addChild( this.countingObjectLayerNode );
 
-    const currentLevelNumberProperty = new DerivedProperty( [ model.currentLevelProperty ], level => level.number );
+    this.currentLevelNumberProperty = new DerivedProperty( [ model.currentLevelProperty ], level => level.number );
     const currentLevelNumberStringProperty = new PatternStringProperty( patternLevel0LevelNumberStringProperty, {
-      levelNumber: currentLevelNumberProperty
+      levelNumber: this.currentLevelNumberProperty
     }, {
       formatNames: [ 'levelNumber' ]
     } );
@@ -196,13 +203,17 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
 
     this.rewardNodeBoundsListener = null;
 
+    this.rewardDialog = null;
+
     this.rewardBarrier = Rectangle.bounds( this.visibleBoundsProperty.value, {
       fill: 'rgba(128,128,128,0.4)'
     } );
     this.visibleBoundsProperty.linkAttribute( this.rewardBarrier, 'rectBounds' );
     this.rewardBarrier.addInputListener( new ButtonListener( {
       fire: () => {
-        this.hideReward();
+
+        // Route through the dialog so that all dismissal paths clean up the reward via hideCallback.
+        this.rewardDialog && this.rewardDialog.hide();
       }
     } ) );
 
@@ -221,29 +232,40 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
   }
 
   /**
-   * Shows the reward node.
+   * Shows the reward dialog, with the reward animation behind it. The reward's lifetime matches the dialog's via
+   * showCallback/hideCallback, so that every dismissal path (buttons, Escape, clicking away from the dialog) tears
+   * the reward down. See https://github.com/phetsims/vegas/issues/111.
    */
   private showReward(): void {
     this.gameAudioPlayer.gameOverPerfectScore();
 
-    this.rewardNode = new MakeATenRewardNode();
-    this.addChild( this.rewardBarrier );
-    this.addChild( this.rewardNode );
-    this.rewardNodeBoundsListener = this.visibleBoundsProperty.linkAttribute( this.rewardNode, 'canvasBounds' );
+    // Constructed lazily because Dialog requires sim bounds during construction, then reused for later rewards.
+    if ( !this.rewardDialog ) {
+      this.rewardDialog = new RewardDialog( this.currentLevelNumberProperty, 10, {
 
-    const rewardDialog = new RewardDialog( this.gameModel.currentLevelProperty.value.number, 10, {
-      dismissListener: () => {
-        this.hideReward();
-        rewardDialog.dispose();
+        // 'Keep Going', the close button, and the Escape key hide the dialog. Cleanup happens in hideCallback.
+        dismissListener: () => this.rewardDialog!.hide(),
 
-      },
-      newLevelButtonListener: () => {
-        this.hideReward();
-        this.gameModel.moveToChoosingLevel();
-        rewardDialog.dispose();
-      }
-    } );
-    rewardDialog.show();
+        // 'New Level' returns to the level-selection screen.
+        newLevelButtonListener: () => {
+          this.rewardDialog!.hide();
+          this.gameModel.moveToChoosingLevel();
+        },
+
+        // When the dialog is shown, show the reward.
+        showCallback: () => {
+          assert && assert( !this.rewardNode, 'rewardNode is not supposed to exist' );
+          this.rewardNode = new MakeATenRewardNode();
+          this.addChild( this.rewardBarrier );
+          this.addChild( this.rewardNode );
+          this.rewardNodeBoundsListener = this.visibleBoundsProperty.linkAttribute( this.rewardNode, 'canvasBounds' );
+        },
+
+        // When the dialog is hidden by any means, dispose of the reward.
+        hideCallback: () => this.hideReward()
+      } );
+    }
+    this.rewardDialog.show();
 
     // Wait one frame so the solution and equation bounds have settled before repositioning the solution.
     animationFrameTimer.runOnNextTick( () => {
@@ -281,12 +303,20 @@ class MakeATenGameScreenView extends CountingCommonScreenView {
   }
 
   /**
-   * Hides the reward node.
+   * Hides the reward node. Called exclusively via the reward dialog's hideCallback, see showReward().
    */
   private hideReward(): void {
-    this.removeChild( this.rewardNode! );
+    const rewardNode = this.rewardNode!;
+    assert && assert( rewardNode, 'rewardNode is supposed to exist' );
+
+    this.removeChild( rewardNode );
     this.removeChild( this.rewardBarrier );
     this.visibleBoundsProperty.unlink( this.rewardNodeBoundsListener! );
+
+    // Dispose to detach the RewardNode's TransformTracker from its ancestors' transforms. Merely removing it from
+    // the scene graph leaks the tracker, and a later screen change or window resize would fail an assertion in
+    // RewardNode. See https://github.com/phetsims/vegas/issues/111.
+    rewardNode.dispose();
 
     // fully release references
     this.rewardNode = null;
