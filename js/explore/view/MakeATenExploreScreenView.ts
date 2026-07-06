@@ -11,6 +11,8 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CountingObject from '../../../../counting-common/js/common/model/CountingObject.js';
 import CountingCommonScreenView from '../../../../counting-common/js/common/view/CountingCommonScreenView.js';
 import type CountingObjectNode from '../../../../counting-common/js/common/view/CountingObjectNode.js';
+import type { CountingObjectDropResult } from '../../../../counting-common/js/common/view/CountingObjectNode.js';
+import countingObjectSoundPlayer from '../../../../counting-common/js/common/view/countingObjectSoundPlayer.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -36,9 +38,6 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
   // Called with function( countingObject ) when a number finishes animation
   private readonly numberAnimationFinishedListener: ( countingObject: CountingObject ) => void;
 
-  // Called with function( countingObject ) when a number finishes being dragged
-  private readonly numberDragFinishedListener: ( countingObjectNode: CountingObjectNode ) => void;
-
   // Whether the total (sum) is hidden
   private readonly hideSumProperty: BooleanProperty;
 
@@ -63,8 +62,6 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
     this.numberInteractionListener = this.onNumberInteractionStarted.bind( this );
 
     this.numberAnimationFinishedListener = this.onNumberAnimationFinished.bind( this );
-
-    this.numberDragFinishedListener = this.onNumberDragFinished.bind( this );
 
     this.finishInitialization();
 
@@ -151,7 +148,6 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
     countingObjectNode.splitEmitter.addListener( this.numberSplitListener );
     countingObjectNode.interactionStartedEmitter.addListener( this.numberInteractionListener );
     countingObject.endAnimationEmitter.addListener( this.numberAnimationFinishedListener );
-    countingObjectNode.endDragEmitter.addListener( this.numberDragFinishedListener );
 
     return countingObjectNode;
   }
@@ -160,7 +156,6 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
     const countingObjectNode = this.findCountingObjectNode( countingObject );
 
     // Remove listeners
-    countingObjectNode.endDragEmitter.removeListener( this.numberDragFinishedListener );
     countingObject.endAnimationEmitter.removeListener( this.numberAnimationFinishedListener );
     countingObjectNode.interactionStartedEmitter.removeListener( this.numberInteractionListener );
     countingObjectNode.splitEmitter.removeListener( this.numberSplitListener );
@@ -203,11 +198,16 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
   /**
    * Called when a counting object has finished being dragged.
    */
-  private onNumberDragFinished( countingObjectNode: CountingObjectNode ): void {
+  protected override onCountingObjectDragEnded( countingObjectNode: CountingObjectNode, dropResult: CountingObjectDropResult ): void {
     const countingObject = countingObjectNode.countingObject;
+
+    if ( dropResult === 'combined' ) {
+      return;
+    }
 
     // Return it to the panel if it's been dropped in the panel.
     if ( this.isNumberInReturnZone( countingObject ) ) {
+      countingObjectSoundPlayer.playNumberDrawerDropSound();
       const baseNumbers = countingObject.baseNumbers;
 
       // Split it into a CountingObject for each of its base numbers, and animate them to their targets in the
@@ -228,6 +228,9 @@ class MakeATenExploreScreenView extends CountingCommonScreenView {
 
       // Remove the original counting object (as we have added its components).
       this.model.removeCountingObject( countingObject );
+    }
+    else {
+      countingObjectSoundPlayer.playPlayAreaDropSound();
     }
   }
 
