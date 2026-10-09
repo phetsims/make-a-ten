@@ -6,9 +6,10 @@ Two numbers can be added together (by dragging on top) when they satisfy the fol
 
 1. The sum of the two numbers (mod 10,100,1000) would not overflow. Thus 106 + 217 would not be allowed, because
    ( 106 mod 10 ) + ( 217 mod 10 ) = 6 + 7 >= 10.
-2. If both numbers are greater than 10 (but not a multiple of 10) and their sum is less than 100, then their sum can't
-   be a multiple of 10. Thus 61 + 19 would not be allowed, because neither is a multiple of 10, yet their sum (80)
-   is a multiple of 10.
+2. If both numbers are greater than 10 and their sum is less than 100, then their sum is only created in the sim
+   when the sum of their one's digits is less than 10. Thus, 61 + 19 would not be added automatically in the sim
+   because even though their sum is less than 100, the sum of their one's digits (1 + 9) is not less than 10.
+   The sum of 61 + 18 would automatically be created because the sum of their ones' digits (1 + 8) is less than 10.
 
 ### Game levels
 
